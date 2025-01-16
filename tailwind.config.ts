@@ -1,24 +1,25 @@
 /** @type {import('tailwindcss').Config} */
 module.exports = {
-  content: [
-    './src/**/*.{html,ts}',
-    './pages/**/*.{html,ts}',
-    './components/**/*.{html,ts}',
-  ],
+  content: ['./src/**/*.{html,ts}'],
   theme: {
-    theme: {
-      colors: {
-        blue: '#155E95',
-        gray: '#6A80B9',
-        orange: '#F6C794',
-        yellow: '#FFF6B3',
-        tahiti: '#3ab7bf',
+    colors: {
+      primary: '#155E95',
+      secondary: '#6A80B9',
+      third: '#F6C794',
+      yellow: '#FFF6B3',
+    },
+    fontFamily: {
+      sans: ['Graphik', 'sans-serif'],
+      serif: ['Merriweather', 'serif'],
+    },
+    extend: {
+      spacing: {
+        '8xl': '96rem',
+        '9xl': '128rem',
       },
-      fontFamily: {
-        sans: ['Graphik', 'sans-serif'],
-        serif: ['Merriweather', 'serif'],
+      borderRadius: {
+        '4xl': '2rem',
       },
     },
   },
-  plugins: [],
 };
