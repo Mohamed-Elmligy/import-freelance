@@ -1,3 +1,9 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+@import "primeicons/primeicons.css";
+
+.p-password-input,
+.p-password {
+  width: 100%;
+}
