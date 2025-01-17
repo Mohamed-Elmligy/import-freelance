@@ -1,0 +1,59 @@
+<div class="p-4 shadow-2 border-round w-full">
+  <div class="text-center mb-5">
+    <img
+      src="https://pagedone.io/asset/uploads/1702362108.png"
+      alt="Image"
+      height="50"
+      class="mb-3"
+    />
+    <div class="text-900 text-3xl font-medium mb-3">Welcome Back</div>
+    <span class="text-600 font-medium line-height-3"
+      >Don't have an account?</span
+    >
+    <a
+      class="font-medium no-underline ml-2 text-secondary cursor-pointer"
+      [routerLink]="ROUTES.REGISTER"
+      >Register!</a
+    >
+  </div>
+
+  <form [formGroup]="form" (ngSubmit)="submit(form)">
+    <label for="email1" class="block text-900 font-medium mb-2">Email</label>
+    <input
+      id="email1"
+      type="text"
+      placeholder="Email address"
+      pInputText
+      class="w-full mb-3"
+      formControlName="email"
+    />
+
+    <label for="password1" class="block text-900 font-medium mb-2"
+      >Password</label
+    >
+    <p-password
+      autocomplete="true"
+      class="!W-full"
+      [toggleMask]="true"
+      [feedback]="false"
+      formControlName="password"
+    />
+
+    <div class="flex align-items-center justify-content-between mb-6">
+      <a
+        class="font-medium no-underline ml-2 text-secondary text-right cursor-pointer"
+        [routerLink]="ROUTES.VERIFY_USER"
+        >Forgot password?</a
+      >
+    </div>
+
+    <button
+      pButton
+      pRipple
+      label="Sign In"
+      icon="pi pi-user"
+      class="w-full !bg-primary"
+      type="submit"
+    ></button>
+  </form>
+</div>
