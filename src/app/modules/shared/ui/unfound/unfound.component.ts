@@ -1,11 +1,9 @@
 import { Component } from '@angular/core';
+import { RouterLink } from '@angular/router';
 
 @Component({
   selector: 'app-unfound',
-  imports: [],
+  imports: [RouterLink],
   templateUrl: './unfound.component.html',
-  styleUrl: './unfound.component.scss'
 })
-export class UnfoundComponent {
-
-}
+export default class UnfoundComponent {}
