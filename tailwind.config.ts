@@ -7,6 +7,9 @@ module.exports = {
       secondary: '#6A80B9',
       third: '#F6C794',
       yellow: '#FFF6B3',
+      gray: '#80808036',
+      white: '#FFFFFF',
+      dark: '#000000',
     },
     fontFamily: {
       sans: ['Graphik', 'sans-serif'],

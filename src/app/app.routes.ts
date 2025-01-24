@@ -16,4 +16,9 @@ export const routes: Routes = [
     loadChildren: () => import('./modules/main/main.routes'),
     // canMatch: [mainModuleGuard],
   },
+  {
+    path: '**',
+    loadComponent: () =>
+      import('./modules/shared/ui/unfound/unfound.component'),
+  },
 ];

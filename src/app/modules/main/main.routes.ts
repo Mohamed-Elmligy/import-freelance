@@ -1,26 +1,35 @@
 import { Routes } from '@angular/router';
 
 const main_routes: Routes = [
-  { path: '', redirectTo: 'login', pathMatch: 'full' },
+  { path: '', redirectTo: 'home', pathMatch: 'full' },
   {
-    path: 'login',
-    // loadComponent: () => import('./pages/login/login.component'),
+    path: 'home',
+    loadComponent: () => import('./home/home.component'),
   },
   {
-    path: 'register',
-    // loadComponent: () => import('./pages/login/login.component'),
+    path: 'payments',
+    loadComponent: () => import('./main-data/main-data.component'),
   },
   {
-    path: 'verify-otp',
-    // loadComponent: () => import('./pages/verify-otp/verify-otp.component'),
+    path: 'expense',
+    loadComponent: () => import('./main-data/main-data.component'),
   },
   {
-    path: 'forget-password',
-    // loadComponent: () =>
-    // import('./pages/forget-password/forget-password.component'),
+    path: 'partial-repayments',
+    loadComponent: () => import('./main-data/main-data.component'),
+  },
+  {
+    path: 'shipping-data',
+    loadComponent: () => import('./main-data/main-data.component'),
   },
 ];
 
 export default main_routes;
 
-export const main_routes_paths = {} as const;
+export const main_routes_paths = {
+  home: '/main/home',
+  payments: '/main/payments',
+  expense: '/main/expense',
+  partialRepayments: '/main/partial-repayments',
+  shippingData: '/main/shipping-data',
+} as const;
