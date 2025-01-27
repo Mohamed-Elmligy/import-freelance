@@ -42,26 +42,26 @@ export default class SidebarComponent {
           {
             label: 'Payments',
             icon: 'pi pi-wallet',
-            routerLink: this.mainRoutes.payments,
+            routerLink: this.mainRoutes.data,
             queryParams: { type: 'payment' },
           },
           {
             label: 'Expense',
             icon: 'pi pi-dollar',
-            routerLink: this.mainRoutes.expense,
+            routerLink: this.mainRoutes.data,
             queryParams: { type: 'expense' },
           },
           {
             label: 'Partial Repayments',
             icon: 'pi pi-receipt',
-            routerLink: this.mainRoutes.partialRepayments,
+            routerLink: this.mainRoutes.data,
             queryParams: { type: 'partial' },
           },
 
           {
             label: 'Shipping Data',
             icon: 'pi pi-cart-arrow-down',
-            routerLink: this.mainRoutes.shippingData,
+            routerLink: this.mainRoutes.data,
             queryParams: { type: 'shipping' },
           },
         ],

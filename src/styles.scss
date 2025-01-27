@@ -7,3 +7,17 @@
 .p-password {
   width: 100%;
 }
+
+.p-drawer-custom {
+  .p-drawer-header {
+    display: none !important;
+  }
+  .p-drawer-content {
+    padding: 0 !important;
+  }
+}
+
+.p-menu {
+  width: 100% !important;
+  height: 100% !important;
+}
