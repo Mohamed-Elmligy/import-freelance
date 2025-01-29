@@ -10,6 +10,7 @@ import {
 } from '@angular/forms';
 import { RouterLink } from '@angular/router';
 import { auth_routes_paths } from '../auth.routes';
+import { main_routes_paths } from '../../main/main.routes';
 
 @Component({
   selector: 'app-login',
@@ -23,7 +24,8 @@ import { auth_routes_paths } from '../auth.routes';
   templateUrl: './login.component.html',
 })
 export default class LoginComponent {
-  protected ROUTES = auth_routes_paths;
+  protected auth_routes = auth_routes_paths;
+  protected main_routes = main_routes_paths;
   private formBuilder = inject(FormBuilder);
 
   protected form = this.formBuilder.group({
