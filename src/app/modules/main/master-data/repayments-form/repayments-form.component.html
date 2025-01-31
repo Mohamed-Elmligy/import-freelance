@@ -1,0 +1,74 @@
+<div class="surface-section px-4 py-5 md:px-6 lg:px-8">
+  <div class="flex align-baseline flex-col lg:justify-between lg:flex-row">
+    <div>
+      <div class="font-medium text-3xl text-900">CREATE REPAYMENTS</div>
+    </div>
+    <div class="mt-3 lg:mt-0">
+      <div class="card flex justify-center">
+        <p-breadcrumb class="max-w-full" [model]="items">
+          <ng-template #item let-item>
+            <ng-container *ngIf="item.route; else elseBlock">
+              <a
+                [routerLink]="item.route"
+                class="p-breadcrumb-item-link"
+                [queryParams]="item.queryParams"
+              >
+                <span
+                  [ngClass]="[item.icon ? item.icon : '', 'text-color']"
+                ></span>
+                <span class="text-dark">{{ item.label }}</span>
+              </a>
+            </ng-container>
+            <ng-template #elseBlock>
+              <a [href]="item.url">
+                <span class="text-color">{{ item.label }}</span>
+              </a>
+            </ng-template>
+          </ng-template>
+        </p-breadcrumb>
+      </div>
+    </div>
+  </div>
+</div>
+
+<form class="max-w-3xl mx-auto">
+  <div class="grid grid-cols-2">
+    <p-floatlabel variant="on" class="md:col-span-1 sm:col-span-2 my-2">
+      <input pInputText id="name" autocomplete="off" />
+      <label for="name">Name</label>
+    </p-floatlabel>
+    <p-floatlabel variant="on" class="md:col-span-1 sm:col-span-2 my-2">
+      <input pInputText id="invoice" autocomplete="off" />
+      <label for="invoice">Invoice number</label>
+    </p-floatlabel>
+    <p-floatlabel variant="on" class="md:col-span-1 sm:col-span-2 my-2">
+      <input pInputText id="supplier" autocomplete="off" />
+      <label for="supplier">Supplier</label>
+    </p-floatlabel>
+    <p-floatlabel variant="on" class="md:col-span-1 sm:col-span-2 my-2">
+      <input pInputText id="batch" autocomplete="off" />
+      <label for="batch">Batch</label>
+    </p-floatlabel>
+    <p-floatlabel variant="on" class="md:col-span-1 sm:col-span-2 my-2">
+      <input pInputText id="remaining" autocomplete="off" />
+      <label for="remaining">The remaining amount</label>
+    </p-floatlabel>
+    <p-floatlabel variant="on" class="md:col-span-1 sm:col-span-2 my-2">
+      <p-datepicker inputId="date" showIcon iconDisplay="input" />
+      <label for="date">Date</label>
+    </p-floatlabel>
+  </div>
+  <div class="grid grid-cols-2">
+    <p-button
+      class="md:col-span-1 sm:col-span-2 my-2 !text-xs"
+      label="Save"
+      [raised]="true"
+    />
+    <p-button
+      class="md:col-span-1 sm:col-span-2 my-2 !text-xs"
+      label="Clear"
+      [raised]="true"
+      severity="contrast"
+    />
+  </div>
+</form>

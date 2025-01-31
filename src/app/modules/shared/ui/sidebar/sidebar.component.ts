@@ -32,7 +32,7 @@ export default class SidebarComponent {
         separator: true,
       },
       {
-        label: 'Actions',
+        label: 'Master Data',
         items: [
           {
             label: 'Home',
@@ -67,6 +67,16 @@ export default class SidebarComponent {
         ],
       },
       {
+        label: 'Invoice',
+        items: [
+          {
+            label: 'Create Invoice',
+            icon: 'pi pi-receipt',
+            routerLink: this.mainRoutes.createInvoice,
+          },
+        ],
+      },
+      {
         label: 'Reports',
         items: [
           {
@@ -89,11 +99,7 @@ export default class SidebarComponent {
           {
             label: 'Settings',
             icon: 'pi pi-cog',
-          },
-          {
-            label: 'Messages',
-            icon: 'pi pi-inbox',
-            badge: '2',
+            routerLink: this.mainRoutes.settings,
           },
           {
             label: 'Logout',
