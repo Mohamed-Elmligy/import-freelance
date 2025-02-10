@@ -23,5 +23,9 @@
   "add": "Add",
   "search": "Search",
   "arabic": "Arabic",
-  "english": "English"
+  "english": "English",
+  "currentPassword": "Current Password",
+  "newPassword": "New Password",
+  "confirmPassword": "Confirm New Password",
+  "save": "Save"
 }

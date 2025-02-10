@@ -6,6 +6,7 @@ import {
   Validators,
 } from '@angular/forms';
 import { RouterModule } from '@angular/router';
+import { TranslateModule } from '@ngx-translate/core';
 import { ButtonModule } from 'primeng/button';
 import { InputTextModule } from 'primeng/inputtext';
 import { PasswordModule } from 'primeng/password';
@@ -18,6 +19,7 @@ import { PasswordModule } from 'primeng/password';
     ButtonModule,
     ReactiveFormsModule,
     RouterModule,
+    TranslateModule,
   ],
   templateUrl: './reset-password.component.html',
 })

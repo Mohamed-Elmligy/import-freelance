@@ -23,5 +23,9 @@
   "add": "اضافة",
   "search": "بحث",
   "arabic": "العربية",
-  "english": "الانجليزية"
+  "english": "الانجليزية",
+  "currentPassword": "كلمة المرور الحالية",
+  "newPassword": "كلمة المرور الجديدة",
+  "confirmPassword": "تأكيد كلمة المرور",
+  "save": "حفظ"
 }
