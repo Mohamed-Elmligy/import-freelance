@@ -1,10 +1,15 @@
 <div class="card">
-  <p-tabs value="0">
+  <p-tabs value="0" scrollable>
     <p-tablist>
-      <p-tab value="0"
-        ><i class="pi pi-user-edit me-1"></i> Profile Settings</p-tab
+      <p-tab value="0">
+        <i class="pi pi-user-edit me-1"></i> {{ "profileSettings" | translate }}
+      </p-tab>
+      <p-tab value="1"
+        ><i class="pi pi-key mx-1"></i> {{ "resetPassword" | translate }}</p-tab
       >
-      <p-tab value="1"><i class="pi pi-key mx-1"></i> Reset Password</p-tab>
+      <p-tab value="2"
+        ><i class="pi pi-heart mx-1"></i> {{ "personalize" | translate }}</p-tab
+      >
     </p-tablist>
     <p-tabpanels>
       <p-tabpanel value="0">
@@ -14,6 +19,9 @@
       </p-tabpanel>
       <p-tabpanel value="1">
         <p class="m-0"><app-reset-password /></p>
+      </p-tabpanel>
+      <p-tabpanel value="2">
+        <p class="m-0"><app-personalize /></p>
       </p-tabpanel>
     </p-tabpanels>
   </p-tabs>

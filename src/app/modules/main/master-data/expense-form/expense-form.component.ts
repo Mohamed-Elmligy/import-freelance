@@ -32,9 +32,9 @@ export default class ExpenseFormComponent {
       {
         icon: 'pi pi-dollar',
         route: this.mainPaths.data,
-        queryParams: { type: 'expense' },
+        queryParams: { type: 'expenses' },
       },
-      { label: 'expense form', route: this.mainPaths.expense },
+      { label: 'expense form', route: this.mainPaths.expenses },
     ];
   }
 }

@@ -11,22 +11,22 @@ const main_routes: Routes = [
     loadComponent: () => import('./master-data/main-data/main-data.component'),
   },
   {
-    path: 'payment',
+    path: 'payments',
     loadComponent: () =>
       import('./master-data/payment-form/payment-form.component'),
   },
   {
-    path: 'expense',
+    path: 'expenses',
     loadComponent: () =>
       import('./master-data/expense-form/expense-form.component'),
   },
   {
-    path: 'partial',
+    path: 'transactions',
     loadComponent: () =>
       import('./master-data/repayments-form/repayments-form.component'),
   },
   {
-    path: 'shipping',
+    path: 'shippingData',
     loadComponent: () =>
       import('./master-data/shipping-data-form/shipping-data-form.component'),
   },
@@ -46,10 +46,10 @@ export default main_routes;
 export const main_routes_paths = {
   home: '/main/home',
   data: '/main/data',
-  payment: '/main/payment',
-  expense: '/main/expense',
-  repayments: '/main/partial',
-  shippingData: '/main/shipping',
+  payments: '/main/payments',
+  expenses: '/main/expenses',
+  transactions: '/main/transactions',
+  shippingData: '/main/shippingData',
   createInvoice: '/main/create-invoice',
   settings: '/main/settings',
 } as const;

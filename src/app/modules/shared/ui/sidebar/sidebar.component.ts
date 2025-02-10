@@ -8,6 +8,7 @@ import { main_routes_paths } from '../../../main/main.routes';
 import { auth_routes_paths } from '../../../auth/auth.routes';
 import { RouterLink, RouterModule } from '@angular/router';
 import { CommonModule } from '@angular/common';
+import { TranslateModule } from '@ngx-translate/core';
 
 @Component({
   selector: 'app-sidebar',
@@ -19,6 +20,7 @@ import { CommonModule } from '@angular/common';
     RouterLink,
     CommonModule,
     RouterModule,
+    TranslateModule,
   ],
   templateUrl: './sidebar.component.html',
 })
@@ -32,52 +34,52 @@ export default class SidebarComponent {
         separator: true,
       },
       {
-        label: 'Master Data',
+        label: 'masterData',
         items: [
           {
-            label: 'Home',
+            label: 'home',
             icon: 'pi pi-home',
             routerLink: this.mainRoutes.home,
           },
           {
-            label: 'Payments',
+            label: 'payments',
             icon: 'pi pi-wallet',
             routerLink: this.mainRoutes.data,
-            queryParams: { type: 'payment' },
+            queryParams: { type: 'payments' },
           },
           {
-            label: 'Expense',
+            label: 'expenses',
             icon: 'pi pi-dollar',
             routerLink: this.mainRoutes.data,
-            queryParams: { type: 'expense' },
+            queryParams: { type: 'expenses' },
           },
           {
-            label: 'Partial Repayments',
+            label: 'transactions',
             icon: 'pi pi-receipt',
             routerLink: this.mainRoutes.data,
-            queryParams: { type: 'partial' },
+            queryParams: { type: 'transactions' },
           },
 
           {
-            label: 'Shipping Data',
+            label: 'shippingData',
             icon: 'pi pi-cart-arrow-down',
             routerLink: this.mainRoutes.data,
-            queryParams: { type: 'shipping' },
+            queryParams: { type: 'shippingData' },
           },
         ],
       },
       {
-        label: 'Invoice',
+        label: 'invoice',
         items: [
           {
-            label: 'Create Invoice',
+            label: 'createInvoice',
             icon: 'pi pi-receipt',
             routerLink: this.mainRoutes.createInvoice,
           },
         ],
       },
       {
-        label: 'Reports',
+        label: 'reports',
         items: [
           {
             label: 'Client financial report',
@@ -94,15 +96,15 @@ export default class SidebarComponent {
         ],
       },
       {
-        label: 'Profile',
+        label: 'profile',
         items: [
           {
-            label: 'Settings',
+            label: 'settings',
             icon: 'pi pi-cog',
             routerLink: this.mainRoutes.settings,
           },
           {
-            label: 'Logout',
+            label: 'logout',
             icon: 'pi pi-sign-out',
             routerLink: this.authRoutes.LOGIN,
           },

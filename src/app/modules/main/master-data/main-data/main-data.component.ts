@@ -12,6 +12,8 @@ import { InputIcon } from 'primeng/inputicon';
 import { IconField } from 'primeng/iconfield';
 import { InputTextModule } from 'primeng/inputtext';
 import { FormsModule } from '@angular/forms';
+import { TranslateModule } from '@ngx-translate/core';
+import { LanguagesService } from '../../../shared/services/languages.service';
 
 @Component({
   selector: 'app-main-data',
@@ -28,6 +30,7 @@ import { FormsModule } from '@angular/forms';
     IconField,
     InputTextModule,
     FormsModule,
+    TranslateModule,
   ],
   templateUrl: './main-data.component.html',
 })
@@ -40,11 +43,11 @@ export default class MainDataComponent {
 
   private _liveAnnouncer = inject(LiveAnnouncer);
   private activateRoute = inject(ActivatedRoute);
+  languageService = inject(LanguagesService);
   private router = inject(Router);
 
   ngOnInit() {
     this.activateRoute.queryParams.subscribe((param: any) => {
-      console.log(param.type);
       this.listType.set(param.type);
     });
   }

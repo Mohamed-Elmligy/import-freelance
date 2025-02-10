@@ -33,7 +33,7 @@ export default class RepaymentsFormComponent {
         route: this.mainPaths.data,
         queryParams: { type: 'partial' },
       },
-      { label: 'payment form', route: this.mainPaths.payment },
+      { label: 'payment form', route: this.mainPaths.payments },
     ];
   }
 }

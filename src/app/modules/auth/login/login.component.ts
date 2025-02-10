@@ -11,6 +11,7 @@ import {
 import { RouterLink } from '@angular/router';
 import { auth_routes_paths } from '../auth.routes';
 import { main_routes_paths } from '../../main/main.routes';
+import { NgOptimizedImage } from '@angular/common';
 
 @Component({
   selector: 'app-login',
@@ -20,6 +21,7 @@ import { main_routes_paths } from '../../main/main.routes';
     ButtonModule,
     ReactiveFormsModule,
     RouterLink,
+    NgOptimizedImage,
   ],
   templateUrl: './login.component.html',
 })

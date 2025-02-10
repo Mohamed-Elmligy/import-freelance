@@ -3,6 +3,8 @@ import { CommonModule } from '@angular/common';
 import { TabsModule } from 'primeng/tabs';
 import ResetPasswordComponent from '../reset-password/reset-password.component';
 import ProfileSettingsComponent from '../profile-settings/profile-settings.component';
+import { PersonalizeComponent } from '../personalize/personalize.component';
+import { TranslateModule } from '@ngx-translate/core';
 @Component({
   selector: 'app-settings',
   imports: [
@@ -10,6 +12,8 @@ import ProfileSettingsComponent from '../profile-settings/profile-settings.compo
     CommonModule,
     ResetPasswordComponent,
     ProfileSettingsComponent,
+    PersonalizeComponent,
+    TranslateModule,
   ],
   templateUrl: './settings.component.html',
 })

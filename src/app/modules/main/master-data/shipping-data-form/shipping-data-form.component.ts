@@ -33,7 +33,7 @@ export default class ShippingDataFormComponent {
         route: this.mainPaths.data,
         queryParams: { type: 'shipping' },
       },
-      { label: 'payment form', route: this.mainPaths.payment },
+      { label: 'payment form', route: this.mainPaths.payments },
     ];
   }
 }

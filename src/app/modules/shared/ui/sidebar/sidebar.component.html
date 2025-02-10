@@ -86,7 +86,7 @@
     </span>
   </ng-template>
   <ng-template #submenuheader let-category>
-    <span class="text-primary font-bold">{{ category.label }}</span>
+    <span class="text-primary font-bold">{{ category.label | translate }}</span>
   </ng-template>
   <ng-template #item let-item>
     <a
@@ -97,7 +97,7 @@
       [routerLinkActive]="'bg-primary !text-white'"
     >
       <span [class]="item.icon"></span>
-      <span class="ml-2">{{ item.label }}</span>
+      <span class="ml-2">{{ item.label | translate }}</span>
       @if (item.badge) {
       <p-badge class="ml-auto" [value]="item.badge" />
       }
