@@ -7,7 +7,7 @@ import { AvatarModule } from 'primeng/avatar';
 import { main_routes_paths } from '../../../main/main.routes';
 import { auth_routes_paths } from '../../../auth/auth.routes';
 import { RouterLink, RouterModule } from '@angular/router';
-import { CommonModule } from '@angular/common';
+import { CommonModule, NgOptimizedImage } from '@angular/common';
 import { TranslateModule } from '@ngx-translate/core';
 
 @Component({
@@ -21,6 +21,7 @@ import { TranslateModule } from '@ngx-translate/core';
     CommonModule,
     RouterModule,
     TranslateModule,
+    NgOptimizedImage,
   ],
   templateUrl: './sidebar.component.html',
 })
@@ -78,23 +79,23 @@ export default class SidebarComponent {
           },
         ],
       },
-      {
-        label: 'reports',
-        items: [
-          {
-            label: 'Client financial report',
-            icon: 'pi pi-file-export',
-          },
-          {
-            label: 'Supplier Financial Report',
-            icon: 'pi pi-file-export',
-          },
-          {
-            label: 'Overall report',
-            icon: 'pi pi-file-export',
-          },
-        ],
-      },
+      // {
+      //   label: 'reports',
+      //   items: [
+      //     {
+      //       label: 'Client financial report',
+      //       icon: 'pi pi-file-export',
+      //     },
+      //     {
+      //       label: 'Supplier Financial Report',
+      //       icon: 'pi pi-file-export',
+      //     },
+      //     {
+      //       label: 'Overall report',
+      //       icon: 'pi pi-file-export',
+      //     },
+      //   ],
+      // },
       {
         label: 'profile',
         items: [

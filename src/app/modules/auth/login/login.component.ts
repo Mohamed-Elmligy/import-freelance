@@ -12,6 +12,7 @@ import { RouterLink } from '@angular/router';
 import { auth_routes_paths } from '../auth.routes';
 import { main_routes_paths } from '../../main/main.routes';
 import { NgOptimizedImage } from '@angular/common';
+import { TranslateModule } from '@ngx-translate/core';
 
 @Component({
   selector: 'app-login',
@@ -21,7 +22,7 @@ import { NgOptimizedImage } from '@angular/common';
     ButtonModule,
     ReactiveFormsModule,
     RouterLink,
-    NgOptimizedImage,
+    TranslateModule,
   ],
   templateUrl: './login.component.html',
 })

@@ -9,10 +9,17 @@ import { RouterLink } from '@angular/router';
 import { InputOtpModule } from 'primeng/inputotp';
 import { ButtonModule } from 'primeng/button';
 import { auth_routes_paths } from '../auth.routes';
+import { TranslateModule } from '@ngx-translate/core';
 
 @Component({
   selector: 'app-verify-otp',
-  imports: [ReactiveFormsModule, RouterLink, InputOtpModule, ButtonModule],
+  imports: [
+    ReactiveFormsModule,
+    RouterLink,
+    InputOtpModule,
+    ButtonModule,
+    TranslateModule,
+  ],
   templateUrl: './verify-otp.component.html',
 })
 export default class VerifyOtpComponent {

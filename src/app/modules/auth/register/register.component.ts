@@ -10,6 +10,7 @@ import { ButtonModule } from 'primeng/button';
 import { InputTextModule } from 'primeng/inputtext';
 import { PasswordModule } from 'primeng/password';
 import { auth_routes_paths } from '../auth.routes';
+import { TranslateModule } from '@ngx-translate/core';
 
 @Component({
   selector: 'app-register',
@@ -19,6 +20,7 @@ import { auth_routes_paths } from '../auth.routes';
     ButtonModule,
     ReactiveFormsModule,
     RouterLink,
+    TranslateModule,
   ],
   templateUrl: './register.component.html',
 })

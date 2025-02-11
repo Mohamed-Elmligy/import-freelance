@@ -27,5 +27,16 @@
   "currentPassword": "Current Password",
   "newPassword": "New Password",
   "confirmPassword": "Confirm New Password",
-  "save": "Save"
+  "save": "Save",
+  "welcome": "Welcome",
+  "haveAccount": "Do not have Account?",
+  "register": "Register",
+  "email": "Email",
+  "password": "Password",
+  "forgotPassword": "Forgot password?",
+  "worry": "Don't Worry",
+  "createNewPassword": "you can now create new password",
+  "emailVer": "Email Verification",
+  "emailCode": "Enter the 4-digit verification code that was sent to your Email.",
+  "confirmOTP": "Confirm OTP"
 }

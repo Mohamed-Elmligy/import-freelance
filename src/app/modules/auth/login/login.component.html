@@ -1,27 +1,22 @@
 <div class="p-4 shadow-2 border-round w-full">
-  <div class="text-center mb-5">
-    <img
-      ngSrc="../../../../assets/logo.jpeg"
-      width="400"
-      height="200"
-      priority
-      alt="Image"
-      height="50"
-      class="mb-3"
-    />
-    <div class="text-900 text-3xl font-medium mb-3">Welcome Back</div>
-    <span class="text-600 font-medium line-height-3"
-      >Don't have an account?</span
-    >
+  <div class="text-center mb-5 mx-auto">
+    <div class="text-900 text-3xl font-medium mb-3">
+      {{ "welcome" | translate }}
+    </div>
+    <span class="text-600 font-medium line-height-3">{{
+      "haveAccount" | translate
+    }}</span>
     <a
       class="font-medium no-underline ml-2 text-secondary cursor-pointer"
       [routerLink]="auth_routes.REGISTER"
-      >Register!</a
+      >{{ "register" | translate }}!</a
     >
   </div>
 
   <form [formGroup]="form" (ngSubmit)="submit(form)">
-    <label for="email1" class="block text-900 font-medium mb-2">Email</label>
+    <label for="email1" class="block text-900 font-medium mb-2">{{
+      "email" | translate
+    }}</label>
     <input
       id="email1"
       type="text"
@@ -31,9 +26,9 @@
       formControlName="email"
     />
 
-    <label for="password1" class="block text-900 font-medium mb-2"
-      >Password</label
-    >
+    <label for="password1" class="block text-900 font-medium mb-2">{{
+      "password" | translate
+    }}</label>
     <p-password
       autocomplete="true"
       class="!W-full"
@@ -46,14 +41,14 @@
       <a
         class="font-medium no-underline ml-2 text-secondary text-right cursor-pointer"
         [routerLink]="auth_routes.VERIFY_USER"
-        >Forgot password?</a
+        >{{ "forgotPassword" | translate }}</a
       >
     </div>
 
     <button
       pButton
       pRipple
-      label="Sign In"
+      [label]="'signin' | translate"
       icon="pi pi-user"
       class="w-full !bg-primary"
       type="submit"
