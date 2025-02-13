@@ -11,6 +11,19 @@ const main_routes: Routes = [
     loadComponent: () => import('./master-data/main-data/main-data.component'),
   },
   {
+    path: 'customers',
+    loadComponent: () => import('./master-data/customers/customers.component'),
+  },
+  {
+    path: 'suppliers',
+    loadComponent: () => import('./master-data/suppliers/suppliers.component'),
+  },
+  {
+    path: 'itemsCategory',
+    loadComponent: () =>
+      import('./master-data/items-category/items-category.component'),
+  },
+  {
     path: 'payments',
     loadComponent: () =>
       import('./master-data/payment-form/payment-form.component'),
@@ -47,6 +60,9 @@ export const main_routes_paths = {
   home: '/main/home',
   data: '/main/data',
   payments: '/main/payments',
+  customers: '/main/customers',
+  suppliers: '/main/suppliers',
+  itemsCategory: '/main/itemsCategory',
   expenses: '/main/expenses',
   transactions: '/main/transactions',
   shippingData: '/main/shippingData',

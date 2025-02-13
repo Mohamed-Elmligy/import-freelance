@@ -4,7 +4,7 @@
   "customers": "العملاء",
   "suppliers": "الموردين",
   "itemsCategory": "فئة البضائع",
-  "payments": "المدفوعات",
+  "payments": "الدفعات",
   "expenses": "المصروفات",
   "transactions": "التسديدات",
   "invoices": "الفواتير",
@@ -38,5 +38,17 @@
   "createNewPassword": "قم بتعيين كلمة مرور جديده الان",
   "emailVer": "التاكد عبر البريد الالكترونى",
   "emailCode": "قم بادخال الاربع ارقام الذى تم ارسالهم على بريدك الالكترونى",
-  "confirmOTP": "تاكيد رمز التحقق"
+  "confirmOTP": "تاكيد رمز التحقق",
+  "name": "اسم العميل",
+  "code": "كود العميل",
+  "actions": "إجراءات",
+  "description": "الوصف",
+  "amount": "ألمبلغ",
+  "paymentDate": "تاريخ الدفعة",
+  "containerNumber": "رقم الحاوية",
+  "expenseDate": "تاريخ المصروف",
+  "invoiceNumber": "رقم الفاتورة",
+  "supplierName": "اسم المورد",
+  "transactionDate": "تاريخ الحركة",
+  "contatierSequance": "مسلسل الحاوية"
 }

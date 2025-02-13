@@ -43,6 +43,24 @@ export default class SidebarComponent {
             routerLink: this.mainRoutes.home,
           },
           {
+            label: 'customers',
+            icon: 'pi pi-users',
+            routerLink: this.mainRoutes.data,
+            queryParams: { type: 'customers' },
+          },
+          {
+            label: 'suppliers',
+            icon: 'pi pi-truck',
+            routerLink: this.mainRoutes.data,
+            queryParams: { type: 'suppliers' },
+          },
+          {
+            label: 'itemsCategory',
+            icon: 'pi pi-objects-column',
+            routerLink: this.mainRoutes.data,
+            queryParams: { type: 'itemsCategory' },
+          },
+          {
             label: 'payments',
             icon: 'pi pi-wallet',
             routerLink: this.mainRoutes.data,
@@ -70,7 +88,7 @@ export default class SidebarComponent {
         ],
       },
       {
-        label: 'invoice',
+        label: 'invoices',
         items: [
           {
             label: 'createInvoice',
@@ -79,23 +97,25 @@ export default class SidebarComponent {
           },
         ],
       },
-      // {
-      //   label: 'reports',
-      //   items: [
-      //     {
-      //       label: 'Client financial report',
-      //       icon: 'pi pi-file-export',
-      //     },
-      //     {
-      //       label: 'Supplier Financial Report',
-      //       icon: 'pi pi-file-export',
-      //     },
-      //     {
-      //       label: 'Overall report',
-      //       icon: 'pi pi-file-export',
-      //     },
-      //   ],
-      // },
+      {
+        label: 'reports',
+        icon: 'pi pi-file-export',
+        routerLink: this.mainRoutes.createInvoice,
+        // items: [
+        //   {
+        //     label: 'Client financial report',
+        //     icon: 'pi pi-file-export',
+        //   },
+        //   {
+        //     label: 'Supplier Financial Report',
+        //     icon: 'pi pi-file-export',
+        //   },
+        //   {
+        //     label: 'Overall report',
+        //     icon: 'pi pi-file-export',
+        //   },
+        // ],
+      },
       {
         label: 'profile',
         items: [

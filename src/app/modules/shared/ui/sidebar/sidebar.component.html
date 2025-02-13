@@ -1,14 +1,21 @@
-<p-menu [model]="items" class="flex justify-center w-full">
-  <ng-template #start>
+<p-menu [model]="items" class="flex justify-center w-full !rounded-3xl m-2">
+  <ng-template #start class="!rounded-3xl !p-0">
     <img
-      ngSrc="../../../../../assets/logo.jpeg"
-      height="100"
-      width="300"
+      ngSrc="../../../../../assets/logoSmall.jpeg"
+      height="329"
+      width="1024"
       alt="ship master logo"
+      class="rounded-t-md"
+      priority
     />
   </ng-template>
   <ng-template #submenuheader let-category>
-    <span class="text-primary font-bold">{{ category.label | translate }}</span>
+    <span
+      class="text-primary font-bold"
+      [ngClass]="category.routerLink ? 'cursor-pointer' : ''"
+      [routerLink]="category.routerLink"
+      >{{ category.label | translate }}</span
+    >
   </ng-template>
   <ng-template #item let-item>
     <a

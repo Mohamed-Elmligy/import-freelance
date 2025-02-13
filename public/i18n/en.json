@@ -38,5 +38,17 @@
   "createNewPassword": "you can now create new password",
   "emailVer": "Email Verification",
   "emailCode": "Enter the 4-digit verification code that was sent to your Email.",
-  "confirmOTP": "Confirm OTP"
+  "confirmOTP": "Confirm OTP",
+  "name": "Customer Name",
+  "code": "Customer Code",
+  "actions": "Actions",
+  "description": "Description",
+  "amount": "Amount",
+  "paymentDate": "Payment Date",
+  "containerNumber": "Container Number",
+  "expenseDate": "Expense Date",
+  "invoiceNumber": "Invoice Number",
+  "supplierName": "Supplier Name",
+  "transactionDate": "Transaction Date",
+  "contatierSequance": "Container Sequence"
 }
