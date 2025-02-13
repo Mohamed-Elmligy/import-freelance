@@ -50,5 +50,6 @@
   "invoiceNumber": "Invoice Number",
   "supplierName": "Supplier Name",
   "transactionDate": "Transaction Date",
-  "contatierSequance": "Container Sequence"
+  "contatierSequance": "Container Sequence",
+  "clear": "Clear"
 }

@@ -1,7 +1,9 @@
 <div class="surface-section px-4 py-5 md:px-6 lg:px-8">
   <div class="flex align-baseline flex-col lg:justify-between lg:flex-row">
     <div>
-      <div class="font-medium text-3xl text-900">CREATE PAYMENT</div>
+      <div class="font-medium text-3xl text-900">
+        {{ "payments" | translate }}
+      </div>
     </div>
     <div class="mt-3 lg:mt-0">
       <div class="card flex justify-center">
@@ -60,12 +62,12 @@
   <div class="grid grid-cols-2">
     <p-button
       class="md:col-span-1 sm:col-span-2 my-2 !text-xs"
-      label="Save"
+      [label]="'save' | translate"
       [raised]="true"
     />
     <p-button
       class="md:col-span-1 sm:col-span-2 my-2 !text-xs"
-      label="Clear"
+      [label]="'clear' | translate"
       [raised]="true"
       severity="contrast"
     />

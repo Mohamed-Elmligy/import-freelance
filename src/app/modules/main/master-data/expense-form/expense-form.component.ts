@@ -38,7 +38,7 @@ export default class ExpenseFormComponent {
         route: this.mainPaths.data,
         queryParams: { type: 'expenses' },
       },
-      { label: 'expense form', route: this.mainPaths.expenses },
+      { label: 'expenses', route: this.mainPaths.expenses },
     ];
   }
 }

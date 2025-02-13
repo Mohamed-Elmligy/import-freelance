@@ -50,5 +50,6 @@
   "invoiceNumber": "رقم الفاتورة",
   "supplierName": "اسم المورد",
   "transactionDate": "تاريخ الحركة",
-  "contatierSequance": "مسلسل الحاوية"
+  "contatierSequance": "مسلسل الحاوية",
+  "clear": "مسح"
 }
