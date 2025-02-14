@@ -100,7 +100,7 @@ export default class SidebarComponent {
       {
         label: 'reports',
         icon: 'pi pi-file-export',
-        routerLink: this.mainRoutes.createInvoice,
+        routerLink: this.mainRoutes.downloadReports,
         // items: [
         //   {
         //     label: 'Client financial report',
@@ -110,6 +110,8 @@ export default class SidebarComponent {
         //     label: 'Supplier Financial Report',
         //     icon: 'pi pi-file-export',
         //   },
+        expenss report 
+        shipment report
         //   {
         //     label: 'Overall report',
         //     icon: 'pi pi-file-export',

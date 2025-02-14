@@ -49,6 +49,11 @@ const main_routes: Routes = [
       import('./invoice/create-invoice/create-invoice.component'),
   },
   {
+    path: 'downloadReports',
+    loadComponent: () =>
+      import('./reports/download-reports/download-reports.component'),
+  },
+  {
     path: 'settings',
     loadComponent: () => import('./profile/settings/settings.component'),
   },
@@ -68,4 +73,5 @@ export const main_routes_paths = {
   shippingData: '/main/shippingData',
   createInvoice: '/main/create-invoice',
   settings: '/main/settings',
+  downloadReports: '/main/downloadReports',
 } as const;
