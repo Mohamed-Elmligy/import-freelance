@@ -17,7 +17,7 @@
 
 <aside
   id="default-sidebar"
-  class="overflow-y-scroll overflow-x-hidden scr fixed top-0 z-40 w-64 h-screen transition-transform -translate-x-full sm:translate-x-0 hidden lg:block"
+  class="overflow-y-auto overflow-x-hidden scr fixed top-0 z-40 w-64 h-screen transition-transform -translate-x-full sm:translate-x-0 hidden lg:block"
   [ngClass]="languageService.layoutDir() == 'ltr' ? 'left-0' : 'right-0'"
   aria-label="Sidebar"
 >
@@ -30,7 +30,7 @@
   [ngClass]="languageService.layoutDir() == 'ltr' ? 'lg:ml-64' : 'lg:mr-64'"
 >
   <div
-    class="p-4 border-2 border-primary border-dashed rounded-lg dark:border-gray-700 overflow-x-auto"
+    class="p-4 border-2 border-primary border-dashed rounded-lg dark:border-gray-700 overflow-x-auto min-h-lvh"
   >
     <router-outlet></router-outlet>
   </div>

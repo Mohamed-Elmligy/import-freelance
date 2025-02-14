@@ -33,26 +33,40 @@
   </div>
 </div>
 
-<form class="max-w-3xl mx-auto">
+<form class="max-w-3xl mx-auto" [formGroup]="form" (ngSubmit)="submit(form)">
   <div class="grid grid-cols-3">
-    <p-floatlabel variant="on" class="md:col-span-2 sm:col-span-2 my-2">
-      <input pInputText id="name" autocomplete="off" class="w-full" />
+    <p-floatlabel variant="on" class="md:col-span-2 col-span-3 my-2">
+      <input
+        pInputText
+        id="name"
+        autocomplete="off"
+        class="w-full"
+        formControlName="name"
+      />
       <label for="name">{{ "name" | translate }}</label>
     </p-floatlabel>
   </div>
   <div class="grid grid-cols-3">
-    <p-floatlabel variant="on" class="md:col-span-1 sm:col-span-2 my-2">
+    <p-floatlabel variant="on" class="md:col-span-1 col-span-3 my-2">
       <p-datepicker
         inputId="date"
         showIcon
         iconDisplay="input"
+        [showButtonBar]="true"
         class="w-full"
+        formControlName="paymentDate"
       />
       <label for="date">{{ "paymentDate" | translate }}</label>
     </p-floatlabel>
 
-    <p-floatlabel variant="on" class="md:col-span-1 sm:col-span-2 my-2">
-      <input pInputText id="payment" autocomplete="off" class="w-full" />
+    <p-floatlabel variant="on" class="md:col-span-1 col-span-3 my-2">
+      <input
+        pInputText
+        id="payment"
+        autocomplete="off"
+        class="w-full"
+        formControlName="amount"
+      />
       <label for="payment">{{ "amount" | translate }}</label>
     </p-floatlabel>
   </div>
@@ -65,6 +79,7 @@
         cols="30"
         style="resize: none"
         class="h-full w-full"
+        formControlName="description"
       ></textarea>
       <label for="Statement">{{ "description" | translate }}</label>
     </p-floatlabel>
@@ -74,12 +89,14 @@
       class="md:col-span-1 sm:col-span-2 my-2 !text-xs"
       [label]="'save' | translate"
       [raised]="true"
+      type="submit"
     />
     <p-button
       class="md:col-span-1 sm:col-span-2 my-2 !text-xs"
       [label]="'clear' | translate"
       [raised]="true"
       severity="contrast"
+      (onClick)="reset(form)"
     />
   </div>
 </form>

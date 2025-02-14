@@ -5,30 +5,65 @@
         {{ listType() | translate }}
       </div>
     </div>
-    <div class="mt-3 lg:mt-0">
-      <button
-        pButton
-        pRipple
-        [label]="'add' | translate"
-        icon="pi pi-plus"
-        class="!bg-primary"
-        (click)="createForm()"
-      ></button>
-    </div>
   </div>
 </div>
 
 <div class="mat-elevation-z8">
-  <p-iconfield class="my-2">
-    <p-inputicon styleClass="pi pi-search" />
-    <input
-      type="text"
-      pInputText
-      [placeholder]="'search' | translate"
-      (keyup)="applyFilter($event)"
-      #input
-    />
-  </p-iconfield>
+  <p-panel [toggleable]="true">
+    <ng-template #header>
+      <p-toolbar class="my-4 w-full">
+        <ng-template #center>
+          <p-iconfield iconPosition="left">
+            <p-inputicon styleClass="pi pi-search" />
+            <input
+              type="text"
+              pInputText
+              [placeholder]="'search' | translate"
+              (keyup)="applyFilter($event)"
+            />
+          </p-iconfield>
+        </ng-template>
+        <ng-template #end>
+          <button
+            pButton
+            pRipple
+            [label]="'add' | translate"
+            icon="pi pi-plus"
+            class="!bg-primary"
+            (click)="createForm()"
+          ></button>
+        </ng-template>
+      </p-toolbar>
+    </ng-template>
+
+    <div class="flex flex-row align-baseline justify-around">
+      <div class="grid md:grid-cols-4 sm:grid-cols-1">
+        <p-floatlabel variant="on" class="col-span-1">
+          <input pInputText id="user_name" class="" />
+          <label for="user_name">{{ "name" | translate }}</label>
+        </p-floatlabel>
+
+        <p-float-label variant="on" class="col-span-1">
+          <p-datepicker
+            [iconDisplay]="'input'"
+            [showIcon]="true"
+            inputId="icondisplay"
+            selectionMode="range"
+            [readonlyInput]="true"
+            [showButtonBar]="true"
+          />
+          <label for="on_label">{{ "date" | translate }}</label>
+        </p-float-label>
+      </div>
+      <p-button
+        icon="pi pi-refresh"
+        [rounded]="true"
+        [text]="true"
+        outlined="true"
+        severity="info"
+      />
+    </div>
+  </p-panel>
 
   <table
     mat-table

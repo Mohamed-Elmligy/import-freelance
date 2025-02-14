@@ -8,9 +8,10 @@ import { BreadcrumbModule } from 'primeng/breadcrumb';
 import { RouterModule } from '@angular/router';
 import { CommonModule } from '@angular/common';
 import { main_routes_paths } from '../../main.routes';
-import { ButtonModule } from 'primeng/button';
 import { TranslateModule } from '@ngx-translate/core';
 import { TextareaModule } from 'primeng/textarea';
+import { ButtonGroupModule } from 'primeng/buttongroup';
+import { ButtonModule } from 'primeng/button';
 
 @Component({
   selector: 'app-expense-form',
@@ -22,9 +23,10 @@ import { TextareaModule } from 'primeng/textarea';
     BreadcrumbModule,
     RouterModule,
     CommonModule,
-    ButtonModule,
     TextareaModule,
     TranslateModule,
+    ButtonGroupModule,
+    ButtonModule,
   ],
   templateUrl: './expense-form.component.html',
 })

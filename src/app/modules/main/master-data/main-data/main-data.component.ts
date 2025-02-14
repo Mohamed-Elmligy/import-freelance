@@ -14,6 +14,12 @@ import { InputTextModule } from 'primeng/inputtext';
 import { FormsModule } from '@angular/forms';
 import { TranslateModule } from '@ngx-translate/core';
 import { LanguagesService } from '../../../shared/services/languages.service';
+import { FloatLabelModule } from 'primeng/floatlabel';
+import { ToolbarModule } from 'primeng/toolbar';
+import { Toolbar } from 'primeng/toolbar';
+import { PanelModule } from 'primeng/panel';
+import { DatePickerModule } from 'primeng/datepicker';
+
 import {
   CUSTOMERS,
   expenses,
@@ -23,6 +29,7 @@ import {
   suppliers,
   transactions,
 } from './table.data';
+import { MenuItem } from 'primeng/api';
 
 @Component({
   selector: 'app-main-data',
@@ -40,6 +47,11 @@ import {
     InputTextModule,
     FormsModule,
     TranslateModule,
+    FloatLabelModule,
+    ToolbarModule,
+    Toolbar,
+    PanelModule,
+    DatePickerModule,
   ],
   templateUrl: './main-data.component.html',
 })
@@ -55,6 +67,7 @@ export default class MainDataComponent {
   private activateRoute = inject(ActivatedRoute);
   languageService = inject(LanguagesService);
   private router = inject(Router);
+  items: MenuItem[] | undefined;
 
   ngOnInit() {
     this.activateRoute.queryParams.subscribe((param: any) => {
