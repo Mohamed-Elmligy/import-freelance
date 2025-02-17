@@ -16,6 +16,7 @@
       icon="pi pi-check"
       class="w-full !bg-primary mt-10"
       type="submit"
+      [disabled]="!form.valid"
       [routerLink]="ROUTES.FORGET_PASSWORD"
     ></button>
   </form>

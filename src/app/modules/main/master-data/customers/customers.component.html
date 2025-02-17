@@ -1,1 +1,85 @@
-<p>customers works!</p>
+<div class="surface-section px-4 py-5 md:px-6 lg:px-8">
+  <div class="flex align-baseline flex-col lg:justify-between lg:flex-row">
+    <div>
+      <div class="font-medium text-3xl text-900">
+        {{ "customers" | translate }}
+      </div>
+    </div>
+    <div class="mt-3 lg:mt-0">
+      <div class="card flex justify-center">
+        <p-breadcrumb class="max-w-full" [model]="items">
+          <ng-template #item let-item>
+            <ng-container *ngIf="item.route; else elseBlock">
+              <a
+                [routerLink]="item.route"
+                class="p-breadcrumb-item-link"
+                [queryParams]="item.queryParams"
+              >
+                <span
+                  [ngClass]="[item.icon ? item.icon : '', 'text-color']"
+                ></span>
+                <span class="text-dark">{{ item.label | translate }}</span>
+              </a>
+            </ng-container>
+            <ng-template #elseBlock>
+              <a [href]="item.url">
+                <span class="text-color">{{ item.label | translate }}</span>
+              </a>
+            </ng-template>
+          </ng-template>
+        </p-breadcrumb>
+      </div>
+    </div>
+  </div>
+</div>
+
+<form class="max-w-3xl mx-auto" [formGroup]="form" (ngSubmit)="submit(form)">
+  <div class="grid grid-cols-2 gap-5">
+    <p-floatlabel variant="on" class="md:col-span-1 col-span-2 my-2">
+      <input
+        pInputText
+        id="name"
+        autocomplete="off"
+        formControlName="name"
+        class="w-full"
+      />
+      <label for="name">{{ "name" | translate }}</label>
+    </p-floatlabel>
+    <p-floatlabel variant="on" class="md:col-span-1 col-span-2 my-2">
+      <input
+        pInputText
+        id="email"
+        autocomplete="off"
+        formControlName="email"
+        class="w-full"
+      />
+      <label for="email">{{ "email" | translate }}</label>
+    </p-floatlabel>
+    <p-floatlabel variant="on" class="md:col-span-1 col-span-2 my-2">
+      <input
+        pInputText
+        id="customerCode"
+        autocomplete="off"
+        formControlName="customerCode"
+        class="w-full"
+      />
+      <label for="customerCode">{{ "code" | translate }}</label>
+    </p-floatlabel>
+  </div>
+  <div class="grid grid-cols-2">
+    <p-button
+      class="md:col-span-1 sm:col-span-2 my-2 !text-xs"
+      [label]="'save' | translate"
+      [raised]="true"
+      type="submit"
+    />
+    <p-button
+      class="md:col-span-1 sm:col-span-2 my-2 !text-xs"
+      [label]="'clear' | translate"
+      [raised]="true"
+      severity="contrast"
+      type="button"
+      (onClick)="reset(form)"
+    />
+  </div>
+</form>

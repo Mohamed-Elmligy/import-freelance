@@ -5,7 +5,7 @@
     </div>
     <span class="text-600 font-medium line-height-3">{{
       "haveAccount" | translate
-    }}</span>
+    }} </span>
     <a
       class="font-medium no-underline ml-2 text-secondary cursor-pointer"
       [routerLink]="auth_routes.REGISTER"
@@ -20,23 +20,31 @@
     <input
       id="email1"
       type="text"
-      placeholder="Email address"
+      [placeholder]="'email'|translate"
       pInputText
       class="w-full mb-3"
+      autocomplete="email"
       formControlName="email"
+      [ngClass]="form.get('email')?.errors? 'ng-invalid ng-dirty':''"
     />
+    @if (form.get('email')?.hasError('required')) {
+      <p-message severity="error" variant="simple" size="small">{{'requeridInput'|translate}}</p-message>
+    }
 
-    <label for="password1" class="block text-900 font-medium mb-2">{{
+    <label for="password" class="block text-900 font-medium mb-2" [ngClass]="form.get('password')?.errors? 'ng-invalid ng-dirty':''">{{
       "password" | translate
     }}</label>
     <p-password
-      autocomplete="true"
       class="!W-full"
       [toggleMask]="true"
+      [autocomplete]="'password'|translate"
+      [placeholder]="'password'|translate"
       [feedback]="false"
       formControlName="password"
     />
-
+    @if (form.get('password')?.errors) {
+      <p-message severity="error" variant="simple" size="small">{{'requeridInput'|translate}}</p-message>
+    }
     <div class="flex align-items-center justify-content-between mb-6">
       <a
         class="font-medium no-underline ml-2 text-secondary text-right cursor-pointer"

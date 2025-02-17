@@ -1,5 +1,11 @@
-import { Component } from '@angular/core';
-import { FormsModule } from '@angular/forms';
+import { Component, inject } from '@angular/core';
+import {
+  FormBuilder,
+  FormGroup,
+  FormsModule,
+  ReactiveFormsModule,
+  Validators,
+} from '@angular/forms';
 import { FloatLabelModule } from 'primeng/floatlabel';
 import { InputTextModule } from 'primeng/inputtext';
 import { DatePicker } from 'primeng/datepicker';
@@ -9,6 +15,7 @@ import { RouterModule } from '@angular/router';
 import { CommonModule } from '@angular/common';
 import { main_routes_paths } from '../../main.routes';
 import { ButtonModule } from 'primeng/button';
+import { TranslateModule } from '@ngx-translate/core';
 @Component({
   selector: 'app-shipping-data-form',
   imports: [
@@ -20,20 +27,41 @@ import { ButtonModule } from 'primeng/button';
     RouterModule,
     CommonModule,
     ButtonModule,
+    TranslateModule,
+    ReactiveFormsModule,
   ],
   templateUrl: './shipping-data-form.component.html',
 })
 export default class ShippingDataFormComponent {
   mainPaths = main_routes_paths;
   items: MenuItem[] | undefined;
+
+  private formBuilder = inject(FormBuilder);
+
+  protected form = this.formBuilder.group({
+    name: [null, [Validators.required]],
+    contatierSequance: [null, [Validators.required]],
+    containerNumber: [null, [Validators.required]],
+    ShippingDate: [null, [Validators.required]],
+    port: [null, [Validators.required]],
+  });
+
+  submit(form: FormGroup) {
+    console.log(form.value);
+  }
+
+  reset(form: FormGroup) {
+    form.reset();
+  }
+
   ngOnInit() {
     this.items = [
       {
         icon: 'pi pi-cart-arrow-down',
         route: this.mainPaths.data,
-        queryParams: { type: 'shipping' },
+        queryParams: { type: 'shippingData' },
       },
-      { label: 'payment form', route: this.mainPaths.payments },
+      { label: 'shippingData', route: this.mainPaths.shippingData },
     ];
   }
 }

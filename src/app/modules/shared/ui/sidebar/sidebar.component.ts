@@ -91,30 +91,53 @@ export default class SidebarComponent {
         label: 'invoices',
         items: [
           {
-            label: 'createInvoice',
+            label: 'invoices',
             icon: 'pi pi-receipt',
-            routerLink: this.mainRoutes.createInvoice,
+            routerLink: this.mainRoutes.data,
+            queryParams: { type: 'invoices' },
           },
         ],
       },
       {
         label: 'reports',
-        icon: 'pi pi-file-export',
-        routerLink: this.mainRoutes.downloadReports,
-        // items: [
-        //   {
-        //     label: 'Client financial report',
-        //     icon: 'pi pi-file-export',
-        //   },
-        //   {
-        //     label: 'Supplier Financial Report',
-        //     icon: 'pi pi-file-export',
-        //   },
-        //   {
-        //     label: 'Overall report',
-        //     icon: 'pi pi-file-export',
-        //   },
-        // ],
+        items: [
+          {
+            label: 'shipmantReport',
+            icon: 'pi pi-file-excel',
+            routerLink: this.mainRoutes.data,
+            queryParams: { type: 'shipmantReport', report: 'true' },
+          },
+          {
+            label: 'totalPayments',
+            icon: 'pi pi-file-excel',
+            routerLink: this.mainRoutes.data,
+            queryParams: { type: 'totalPayments', report: 'true' },
+          },
+          {
+            label: 'totalBalance',
+            icon: 'pi pi-file-excel',
+            routerLink: this.mainRoutes.data,
+            queryParams: { type: 'totalBalance', report: 'true' },
+          },
+          {
+            label: 'totalExpenses',
+            icon: 'pi pi-file-excel',
+            routerLink: this.mainRoutes.data,
+            queryParams: { type: 'totalExpenses', report: 'true' },
+          },
+          {
+            label: 'totalPaids',
+            icon: 'pi pi-file-excel',
+            routerLink: this.mainRoutes.data,
+            queryParams: { type: 'totalPaids', report: 'true' },
+          },
+          {
+            label: 'officeBalance',
+            icon: 'pi pi-file-excel',
+            routerLink: this.mainRoutes.data,
+            queryParams: { type: 'officeBalance', report: 'true' },
+          },
+        ],
       },
       {
         label: 'profile',

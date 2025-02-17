@@ -33,25 +33,38 @@
   </div>
 </div>
 
-<form class="max-w-3xl mx-auto">
+<form class="max-w-3xl mx-auto" [formGroup]="form" (ngSubmit)="submit(form)">
   <div class="grid grid-cols-3">
     <p-floatlabel variant="on" class="col-span-3 my-2">
-      <input pInputText id="name" autocomplete="off" class="w-full" />
+      <input
+        pInputText
+        id="name"
+        autocomplete="off"
+        class="w-full"
+        formControlName="name"
+      />
       <label for="name">{{ "name" | translate }}</label>
     </p-floatlabel>
   </div>
-  <div class="grid grid-cols-3">
+  <div class="grid grid-cols-3 gap-6 my-2">
     <p-floatlabel variant="on" class="md:col-span-1 col-span-3 my-2">
       <input
         pInputText
         id="containerNumber"
         autocomplete="off"
         class="w-full m-0 md:mx-2"
+        formControlName="containerNumber"
       />
       <label for="containerNumber">{{ "containerNumber" | translate }}</label>
     </p-floatlabel>
     <p-floatlabel variant="on" class="md:col-span-1 col-span-3 my-2">
-      <input pInputText id="amount" autocomplete="off" class="w-full" />
+      <input
+        pInputText
+        id="amount"
+        autocomplete="off"
+        class="w-full"
+        formControlName="amount"
+      />
       <label for="payment">{{ "amount" | translate }}</label>
     </p-floatlabel>
     <p-floatlabel variant="on" class="md:col-span-1 col-span-3 my-2">
@@ -60,11 +73,12 @@
         showIcon
         iconDisplay="input"
         class="w-full"
+        formControlName="expenseDate"
       />
       <label for="date">{{ "expenseDate" | translate }}</label>
     </p-floatlabel>
   </div>
-  <div class="grid grid-cols-3">
+  <div class="grid grid-cols-3 my-2">
     <p-floatlabel variant="on" class="col-span-3">
       <textarea
         pTextarea
@@ -72,14 +86,25 @@
         rows="5"
         cols="30"
         class="h-full w-full"
+        formControlName="description"
       ></textarea>
       <label for="description">{{ "description" | translate }}</label>
     </p-floatlabel>
   </div>
-  <div class="grid grid-cols-3">
-    <p-buttongroup>
-      <p-button label="Save" icon="pi pi-check" />
-      <p-button label="Cancel" icon="pi pi-times" />
-    </p-buttongroup>
+  <div class="grid grid-cols-2">
+    <p-button
+      class="md:col-span-1 sm:col-span-2 my-2 !text-xs"
+      [label]="'save' | translate"
+      [raised]="true"
+      type="submit"
+    />
+    <p-button
+      class="md:col-span-1 sm:col-span-2 my-2 !text-xs"
+      [label]="'clear' | translate"
+      [raised]="true"
+      severity="contrast"
+      type="button"
+      (onClick)="reset(form)"
+    />
   </div>
 </form>

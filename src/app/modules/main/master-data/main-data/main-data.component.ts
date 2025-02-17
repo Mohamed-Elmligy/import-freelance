@@ -23,10 +23,17 @@ import { DatePickerModule } from 'primeng/datepicker';
 import {
   CUSTOMERS,
   expenses,
+  invoices,
   itemsCategory,
+  officeBalance,
   payments,
+  shipmantReport,
   shippingData,
   suppliers,
+  totalBalance,
+  totalExpenses,
+  totalPaids,
+  totalPayments,
   transactions,
 } from './table.data';
 import { MenuItem } from 'primeng/api';
@@ -60,7 +67,7 @@ export default class MainDataComponent {
   dataSource!: MatTableDataSource<any>;
   tableColumns: string[] = [];
   listType = signal<string>('');
-
+  isReport = signal<boolean>(false);
   @ViewChild(MatPaginator) paginator!: MatPaginator;
 
   private _liveAnnouncer = inject(LiveAnnouncer);
@@ -72,6 +79,8 @@ export default class MainDataComponent {
   ngOnInit() {
     this.activateRoute.queryParams.subscribe((param: any) => {
       this.listType.set(param.type);
+      if (param.report == 'true') this.isReport.set(true);
+      else this.isReport.set(false);
       switch (param.type) {
         case 'customers':
           this.displayedColumns = Object.keys(CUSTOMERS[0]);
@@ -108,6 +117,41 @@ export default class MainDataComponent {
           this.displayedColumns = Object.keys(shippingData[0]);
           this.dataSource = new MatTableDataSource<any>(shippingData);
           break;
+        case 'shipmantReport':
+          this.tableColumns = Object.keys(shipmantReport[0]);
+          this.displayedColumns = Object.keys(shipmantReport[0]);
+          this.dataSource = new MatTableDataSource<any>(shipmantReport);
+          break;
+        case 'totalPayments':
+          this.tableColumns = Object.keys(totalPayments[0]);
+          this.displayedColumns = Object.keys(totalPayments[0]);
+          this.dataSource = new MatTableDataSource<any>(totalPayments);
+          break;
+        case 'totalBalance':
+          this.tableColumns = Object.keys(totalBalance[0]);
+          this.displayedColumns = Object.keys(totalBalance[0]);
+          this.dataSource = new MatTableDataSource<any>(totalBalance);
+          break;
+        case 'totalExpenses':
+          this.tableColumns = Object.keys(totalExpenses[0]);
+          this.displayedColumns = Object.keys(totalExpenses[0]);
+          this.dataSource = new MatTableDataSource<any>(totalExpenses);
+          break;
+        case 'totalPaids':
+          this.tableColumns = Object.keys(totalPaids[0]);
+          this.displayedColumns = Object.keys(totalPaids[0]);
+          this.dataSource = new MatTableDataSource<any>(totalPaids);
+          break;
+        case 'officeBalance':
+          this.tableColumns = Object.keys(officeBalance[0]);
+          this.displayedColumns = Object.keys(officeBalance[0]);
+          this.dataSource = new MatTableDataSource<any>(officeBalance);
+          break;
+        case 'invoices':
+          this.tableColumns = Object.keys(invoices[0]);
+          this.displayedColumns = Object.keys(invoices[0]);
+          this.dataSource = new MatTableDataSource<any>(invoices);
+          break;
       }
     });
   }
@@ -122,6 +166,11 @@ export default class MainDataComponent {
       this._liveAnnouncer.announce(`Sorted ${sortState.direction}ending`);
     } else {
       this._liveAnnouncer.announce('Sorting cleared');
+    }
+  }
+
+  downloadFile() {
+    if (this.listType()) {
     }
   }
 

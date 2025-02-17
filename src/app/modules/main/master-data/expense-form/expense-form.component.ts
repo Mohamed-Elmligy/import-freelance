@@ -1,5 +1,11 @@
-import { Component } from '@angular/core';
-import { FormsModule } from '@angular/forms';
+import { Component, inject } from '@angular/core';
+import {
+  FormBuilder,
+  FormGroup,
+  FormsModule,
+  ReactiveFormsModule,
+  Validators,
+} from '@angular/forms';
 import { FloatLabelModule } from 'primeng/floatlabel';
 import { InputTextModule } from 'primeng/inputtext';
 import { DatePicker } from 'primeng/datepicker';
@@ -10,7 +16,6 @@ import { CommonModule } from '@angular/common';
 import { main_routes_paths } from '../../main.routes';
 import { TranslateModule } from '@ngx-translate/core';
 import { TextareaModule } from 'primeng/textarea';
-import { ButtonGroupModule } from 'primeng/buttongroup';
 import { ButtonModule } from 'primeng/button';
 
 @Component({
@@ -25,14 +30,33 @@ import { ButtonModule } from 'primeng/button';
     CommonModule,
     TextareaModule,
     TranslateModule,
-    ButtonGroupModule,
     ButtonModule,
+    ReactiveFormsModule,
   ],
   templateUrl: './expense-form.component.html',
 })
 export default class ExpenseFormComponent {
   mainPaths = main_routes_paths;
   items: MenuItem[] | undefined;
+
+  private formBuilder = inject(FormBuilder);
+
+  protected form = this.formBuilder.group({
+    name: [null, [Validators.required]],
+    containerNumber: [null, [Validators.required]],
+    amount: [null, [Validators.required]],
+    expenseDate: [null, [Validators.required]],
+    description: [null, [Validators.required]],
+  });
+
+  submit(form: FormGroup) {
+    console.log(form.value);
+  }
+
+  reset(form: FormGroup) {
+    form.reset();
+  }
+
   ngOnInit() {
     this.items = [
       {

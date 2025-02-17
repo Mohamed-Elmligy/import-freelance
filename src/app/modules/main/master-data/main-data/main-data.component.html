@@ -9,6 +9,7 @@
 </div>
 
 <div class="mat-elevation-z8">
+  @if (!isReport()) {
   <p-panel [toggleable]="true">
     <ng-template #header>
       <p-toolbar class="my-4 w-full">
@@ -64,6 +65,31 @@
       />
     </div>
   </p-panel>
+  }@if (isReport()) {
+  <p-toolbar class="my-4 w-full">
+    <ng-template #center>
+      <p-iconfield iconPosition="left">
+        <p-inputicon styleClass="pi pi-search" />
+        <input
+          type="text"
+          pInputText
+          [placeholder]="'search' | translate"
+          (keyup)="applyFilter($event)"
+        />
+      </p-iconfield>
+    </ng-template>
+    <ng-template #end>
+      <button
+        pButton
+        pRipple
+        [label]="'download' | translate"
+        icon="pi pi-cloud-download"
+        class="!bg-primary"
+        (click)="downloadFile()"
+      ></button>
+    </ng-template>
+  </p-toolbar>
+  }
 
   <table
     mat-table

@@ -26,7 +26,7 @@ export default class VerifyOtpComponent {
   protected ROUTES = auth_routes_paths;
   private formBuilder = inject(FormBuilder);
   protected form = this.formBuilder.group({
-    otp: [null, [Validators.required, Validators.minLength(8)]],
+    otp: [null, [Validators.required, Validators.minLength(4)]],
   });
   submit(form: FormGroup) {
     console.log(form.value);

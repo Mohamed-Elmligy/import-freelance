@@ -11,6 +11,7 @@ import { InputTextModule } from 'primeng/inputtext';
 import { PasswordModule } from 'primeng/password';
 import { auth_routes_paths } from '../auth.routes';
 import { TranslateModule } from '@ngx-translate/core';
+import { MessageModule } from 'primeng/message';
 
 @Component({
   selector: 'app-register',
@@ -21,6 +22,7 @@ import { TranslateModule } from '@ngx-translate/core';
     ReactiveFormsModule,
     RouterLink,
     TranslateModule,
+    MessageModule,
   ],
   templateUrl: './register.component.html',
 })
