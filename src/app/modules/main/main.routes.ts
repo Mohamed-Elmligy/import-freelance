@@ -44,7 +44,7 @@ const main_routes: Routes = [
       import('./master-data/shipping-data-form/shipping-data-form.component'),
   },
   {
-    path: 'create-invoice',
+    path: 'invoices',
     loadComponent: () =>
       import('./invoice/create-invoice/create-invoice.component'),
   },
@@ -71,7 +71,7 @@ export const main_routes_paths = {
   expenses: '/main/expenses',
   transactions: '/main/transactions',
   shippingData: '/main/shippingData',
-  createInvoice: '/main/create-invoice',
+  invoices: '/main/invoices',
   settings: '/main/settings',
   downloadReports: '/main/downloadReports',
 } as const;

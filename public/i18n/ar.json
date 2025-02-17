@@ -75,7 +75,10 @@
   "customer_code": "كود العميل",
   "customer_name": "اسم العميل",
   "store_number": "رقم المحل",
-  "total_invoice": "اجمالى الفواتير",
+  "total_invoices": "اجمالى الفواتير",
+  "total_invoice": "اجمالى فاتورة",
+  "net_invoice": "صافى فاتورة",
+  "discount_invoice": "خصم فاتورة",
   "paid": "المدفوع",
   "remains": "المتبقى",
   "invoice_number": "رقم الفاتورة",
@@ -87,5 +90,11 @@
   "supplier": "الموزع",
   "invoiceDate": "تاريخ الفاتورة",
   "totalAmount": "اجمالى المبلغ",
-  "netAmount": "صافى المبلغ"
+  "netAmount": "صافى المبلغ",
+  "firstBatchNumber": "اجمالى الدفعة الاولى",
+  "firstBatchDate": "تاريخ الدفعة الاولى",
+  "secondBatchNumber": "اجمالى الدفعة الثانية",
+  "secondBatchDate": "تاريخ الدفعة الثانية",
+  "thirdBatchNumber": "اجمالى الدفعة الثالثة",
+  "thirdBatchDate": "تاريخ الدفعة الثالثة"
 }

@@ -75,7 +75,10 @@
   "customer_code": "Customer Code",
   "customer_name": "Customer Name",
   "store_number ": "Store Number ",
-  "total_invoice": "Total Invoices",
+  "total_invoices": "Total Invoices",
+  "total_invoice": "Total invoice",
+  "net_invoice": "Net Invoice",
+  "discount_invoice": "Discount Invoice",
   "paid": "Paid",
   "remains": "Remains",
   "invoice_number": "Invoice Number",
@@ -87,5 +90,11 @@
   "supplier": "Supplier",
   "invoiceDate": "Invoice Date",
   "totalAmount": "Total Amount",
-  "netAmount": "Net Amount"
+  "netAmount": "Net Amount",
+  "firstBatchNumber": "First Batch Number",
+  "firstBatchDate": "First Batch Date",
+  "secondBatchNumber": "Second Batch Number",
+  "secondBatchDate": "Second Batch Date",
+  "thirdBatchNumber": "Third Batch Number",
+  "thirdBatchDate": "Third Batch Date"
 }
