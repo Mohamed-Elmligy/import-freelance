@@ -64,6 +64,7 @@ export default class CreateInvoiceComponent {
     boxQnt: [null, [Validators.required]],
     totalCBM: [null, [Validators.required]],
     totalWeight: [null, [Validators.required]],
+    invoice_date: [null, [Validators.required]],
     firstBatchNumber: [null, [Validators.required]],
     firstBatchDate: [null, [Validators.required]],
     secondBatchNumber: [null, [Validators.required]],

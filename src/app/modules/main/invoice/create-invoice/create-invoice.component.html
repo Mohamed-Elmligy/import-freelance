@@ -34,7 +34,7 @@
 </div>
 
 <form class="max-w-7xl mx-auto" [formGroup]="form" (ngSubmit)="submit(form)">
-  <div class="grid grid-cols-3 gap-5">
+  <div class="grid grid-cols-2 gap-5">
     <p-floatlabel variant="on" class="md:col-span-1 col-span-3 my-2">
       <input
         pInputText
@@ -44,48 +44,6 @@
         class="w-full"
       />
       <label for="name">{{ "name" | translate }}</label>
-    </p-floatlabel>
-    <p-floatlabel variant="on" class="md:col-span-1 col-span-3 my-2">
-      <input
-        pInputText
-        id="total_invoice"
-        autocomplete="off"
-        formControlName="total_invoice"
-        class="w-full"
-      />
-      <label for="total_invoice">{{ "total_invoice" | translate }}</label>
-    </p-floatlabel>
-    <p-floatlabel variant="on" class="md:col-span-1 col-span-3 my-2">
-      <input
-        pInputText
-        id="discount_invoice"
-        autocomplete="off"
-        formControlName="discount_invoice"
-        class="w-full"
-      />
-      <label for="discount_invoice">{{ "discount_invoice" | translate }}</label>
-    </p-floatlabel>
-  </div>
-  <div class="grid grid-cols-3 gap-5">
-    <p-floatlabel variant="on" class="md:col-span-1 col-span-3 my-2">
-      <input
-        pInputText
-        id="net_invoice"
-        autocomplete="off"
-        formControlName="net_invoice"
-        class="w-full"
-      />
-      <label for="net_invoice">{{ "net_invoice" | translate }}</label>
-    </p-floatlabel>
-    <p-floatlabel variant="on" class="md:col-span-1 col-span-3 my-2">
-      <input
-        pInputText
-        id="invoice_number"
-        autocomplete="off"
-        formControlName="invoice_number"
-        class="w-full"
-      />
-      <label for="invoice_number">{{ "invoice_number" | translate }}</label>
     </p-floatlabel>
     <p-floatlabel variant="on" class="md:col-span-1 col-span-3 my-2">
       <input
@@ -102,33 +60,55 @@
     <p-floatlabel variant="on" class="md:col-span-1 col-span-3 my-2">
       <input
         pInputText
-        id="boxQnt"
+        id="invoice_number"
         autocomplete="off"
-        formControlName="boxQnt"
+        formControlName="invoice_number"
         class="w-full"
       />
+      <label for="invoice_number">{{ "invoice_number" | translate }}</label>
+    </p-floatlabel>
+    <p-floatlabel variant="on" class="md:col-span-1 col-span-3 my-2">
+      <input
+        pInputText
+        id="discount_invoice"
+        autocomplete="off"
+        formControlName="discount_invoice"
+        class="w-full"
+      />
+      <label for="discount_invoice">{{ "discount_invoice" | translate }}</label>
+    </p-floatlabel>
+    <p-floatlabel variant="on" class="md:col-span-1 col-span-3 my-2">
+      <input
+        pInputText
+        id="net_invoice"
+        autocomplete="off"
+        formControlName="invoice_date"
+        class="w-full"
+      />
+      <label for="net_invoice">{{ "تاريخ الفاتورة" | translate }}</label>
+    </p-floatlabel>
+  </div>
+  <div class="grid grid-cols-5 gap-5">
+    <div class="md:col-span-1 col-span-3 my-2">
+      <label for="total_invoice">{{ "total_invoice" | translate }}</label>
+      <p>550000,30</p>
+    </div>
+    <div class="md:col-span-1 col-span-3 my-2">
+      <label for="net_invoice">{{ "net_invoice" | translate }}</label>
+      <p>550000,30</p>
+    </div>
+    <div class="md:col-span-1 col-span-3 my-2">
       <label for="boxQnt">{{ "boxQnt" | translate }}</label>
-    </p-floatlabel>
-    <p-floatlabel variant="on" class="md:col-span-1 col-span-3 my-2">
-      <input
-        pInputText
-        id="totalCBM"
-        autocomplete="off"
-        formControlName="totalCBM"
-        class="w-full"
-      />
+      <p>550000,30</p>
+    </div>
+    <div class="md:col-span-1 col-span-3 my-2">
       <label for="totalCBM">{{ "totalCBM" | translate }}</label>
-    </p-floatlabel>
-    <p-floatlabel variant="on" class="md:col-span-1 col-span-3 my-2">
-      <input
-        pInputText
-        id="totalWeight"
-        autocomplete="off"
-        formControlName="totalWeight"
-        class="w-full"
-      />
+      <p>550000,30</p>
+    </div>
+    <div class="md:col-span-1 col-span-3 my-2">
       <label for="totalWeight">{{ "totalWeight" | translate }}</label>
-    </p-floatlabel>
+      <p>550000,30</p>
+    </div>
   </div>
 
   <div class="grid md:grid-cols-6 grid-cols-1 gap-5">
@@ -433,7 +413,7 @@
     </p-panel>
     }
   </div>
-  <!-- 
+
   <div class="flex flex-col">
     <div class="overflow-x-auto">
       <div class="min-w-full inline-block align-middle">
@@ -607,7 +587,7 @@
         </div>
       </div>
     </div>
-  </div> -->
+  </div>
 
   <div class="grid grid-cols-2">
     <p-button
