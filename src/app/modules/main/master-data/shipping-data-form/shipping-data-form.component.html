@@ -34,52 +34,71 @@
 </div>
 
 <form class="max-w-3xl mx-auto" [formGroup]="form" (ngSubmit)="submit(form)">
-  <div class="grid grid-cols-2">
-    <p-floatlabel variant="on" class="md:col-span-1 sm:col-span-2 my-2">
-      <input pInputText id="name" autocomplete="off" formControlName="name" />
+  <div class="grid grid-cols-4 gap-5">
+    <p-floatlabel class="col-span-4 my-2" variant="on">
+      <p-multiselect
+        id="name"
+        [options]="cities"
+        optionLabel="name"
+        filter
+        [maxSelectedLabels]="3"
+        styleClass="w-full"
+        formControlName="name"
+        display="chip"
+      />
       <label for="name">{{ "name" | translate }}</label>
     </p-floatlabel>
-    <p-floatlabel variant="on" class="md:col-span-1 sm:col-span-2 my-2">
+
+    <p-floatlabel variant="on" class="md:col-span-2 sm:col-span-4 my-2">
       <input
         pInputText
         id="Container"
         autocomplete="off"
         formControlName="contatierSequance"
+        class="w-full"
       />
       <label for="Container">{{ "contatierSequance" | translate }}</label>
     </p-floatlabel>
-    <p-floatlabel variant="on" class="md:col-span-1 sm:col-span-2 my-2">
+    <p-floatlabel variant="on" class="md:col-span-2 sm:col-span-4 my-2">
       <input
         pInputText
         id="number"
         autocomplete="off"
+        class="w-full"
         formControlName="containerNumber"
       />
       <label for="number">{{ "containerNumber" | translate }}</label>
     </p-floatlabel>
-    <p-floatlabel variant="on" class="md:col-span-1 sm:col-span-2 my-2">
+    <p-floatlabel variant="on" class="md:col-span-2 sm:col-span-4 my-2">
       <p-datepicker
         inputId="date"
         showIcon
         iconDisplay="input"
         formControlName="ShippingDate"
+        styleClass="w-full"
       />
       <label for="date">{{ "ShippingDate" | translate }}</label>
     </p-floatlabel>
-    <p-floatlabel variant="on" class="md:col-span-1 sm:col-span-2 my-2">
-      <input pInputText id="port" autocomplete="off" formControlName="port" />
+    <p-floatlabel variant="on" class="md:col-span-2 sm:col-span-4 my-2">
+      <input
+        pInputText
+        id="port"
+        autocomplete="off"
+        formControlName="port"
+        class="w-full"
+      />
       <label for="port">{{ "port" | translate }}</label>
     </p-floatlabel>
   </div>
-  <div class="grid grid-cols-2">
+  <div class="grid grid-cols-4">
     <p-button
-      class="md:col-span-1 sm:col-span-2 my-2 !text-xs"
+      class="md:col-span-2 sm:col-span-4 my-2 !text-xs"
       [label]="'save' | translate"
       [raised]="true"
       type="submint"
     />
     <p-button
-      class="md:col-span-1 sm:col-span-2 my-2 !text-xs"
+      class="md:col-span-2 sm:col-span-4 my-2 !text-xs"
       [label]="'clear' | translate"
       [raised]="true"
       severity="contrast"

@@ -33,7 +33,7 @@
   </div>
 </div>
 
-<form class="max-w-7xl mx-auto" [formGroup]="form" (ngSubmit)="submit(form)">
+<form class="max-w-full mx-auto" [formGroup]="form" (ngSubmit)="submit(form)">
   <div class="grid grid-cols-2 gap-5">
     <p-floatlabel variant="on" class="md:col-span-1 col-span-3 my-2">
       <input
@@ -89,24 +89,34 @@
     </p-floatlabel>
   </div>
   <div class="grid grid-cols-5 gap-5">
-    <div class="md:col-span-1 col-span-3 my-2">
-      <label for="total_invoice">{{ "total_invoice" | translate }}</label>
+    <div class="md:col-span-1 col-span-3 my-2 bg-gray m-auto p-5 rounded-md">
+      <label class="text-md font-bold" for="total_invoice">{{
+        "total_invoice" | translate
+      }}</label>
       <p>550000,30</p>
     </div>
-    <div class="md:col-span-1 col-span-3 my-2">
-      <label for="net_invoice">{{ "net_invoice" | translate }}</label>
+    <div class="md:col-span-1 col-span-3 my-2 bg-gray m-auto p-5 rounded-md">
+      <label class="text-md font-bold" for="net_invoice">{{
+        "net_invoice" | translate
+      }}</label>
       <p>550000,30</p>
     </div>
-    <div class="md:col-span-1 col-span-3 my-2">
-      <label for="boxQnt">{{ "boxQnt" | translate }}</label>
+    <div class="md:col-span-1 col-span-3 my-2 bg-gray m-auto p-5 rounded-md">
+      <label class="text-md font-bold" for="boxQnt">{{
+        "boxQnt" | translate
+      }}</label>
       <p>550000,30</p>
     </div>
-    <div class="md:col-span-1 col-span-3 my-2">
-      <label for="totalCBM">{{ "totalCBM" | translate }}</label>
+    <div class="md:col-span-1 col-span-3 my-2 bg-gray m-auto p-5 rounded-md">
+      <label class="text-md font-bold" for="totalCBM">{{
+        "totalCBM" | translate
+      }}</label>
       <p>550000,30</p>
     </div>
-    <div class="md:col-span-1 col-span-3 my-2">
-      <label for="totalWeight">{{ "totalWeight" | translate }}</label>
+    <div class="md:col-span-1 col-span-3 my-2 bg-gray m-auto p-5 rounded-md">
+      <label class="text-md font-bold" for="totalWeight">{{
+        "totalWeight" | translate
+      }}</label>
       <p>550000,30</p>
     </div>
   </div>
@@ -127,7 +137,7 @@
         inputId="firstBatchDate"
         showIcon
         iconDisplay="input"
-        class="w-full"
+        styleClass="w-full"
         formControlName="firstBatchDate"
       />
       <label for="date">{{ "firstBatchDate" | translate }}</label>
@@ -150,7 +160,7 @@
         inputId="secondBatchDate"
         showIcon
         iconDisplay="input"
-        class="w-full"
+        styleClass="w-full"
         formControlName="secondBatchDate"
       />
       <label for="date">{{ "secondBatchDate" | translate }}</label>
@@ -171,258 +181,39 @@
         inputId="thirdBatchDate"
         showIcon
         iconDisplay="input"
-        class="w-full"
+        styleClass="w-full"
         formControlName="thirdBatchDate"
       />
       <label for="date">{{ "thirdBatchDate" | translate }}</label>
     </p-floatlabel>
   </div>
 
-  <div class="card" formArrayName="items">
-    @for (itemLine of itemsFormArray.controls; track $index) {
-    <p-panel [toggleable]="true">
-      <ng-template #header>
-        <div class="flex items-center gap-2">
-          <span class="font-bold">Item Number {{ $index + 1 }}</span>
-        </div>
-      </ng-template>
-      <ng-template #footer>
-        <div class="flex flex-wrap items-center justify-between gap-4">
-          <div class="flex items-center gap-2">
-            <p-button
-              icon="pi pi-plus-circle"
-              severity="info"
-              pTooltip="Add new Item"
-              tooltipPosition="top"
-              rounded
-              text
-              (onClick)="addItem()"
-            ></p-button>
-            <p-button
-              icon="pi pi-trash"
-              pTooltip="Delete Item"
-              tooltipPosition="top"
-              severity="warn"
-              rounded
-              text
-              (onClick)="deleteFormLine($index)"
-            ></p-button>
-          </div>
-          <span class="text-surface-500 dark:text-surface-400"
-            >You Should add one item at least</span
-          >
-        </div>
-      </ng-template>
-      <div [formGroupName]="$index" class="grid grid-cols-7 gap-5">
-        <p-floatlabel
-          variant="on"
-          class="md:col-span-3 lg:col-span-1 col-span-7 my-2"
-        >
-          <input
-            pInputText
-            id="container"
-            autocomplete="off"
-            formControlName="container"
-            class="w-full"
-          />
-          <label for="container">{{ "container" | translate }}</label>
-        </p-floatlabel>
-
-        <p-floatlabel
-          variant="on"
-          class="md:col-span-3 lg:col-span-1 col-span-7 my-2"
-        >
-          <input
-            pInputText
-            id="item"
-            autocomplete="off"
-            formControlName="item"
-            class="w-full"
-          />
-          <label for="item">{{ "item" | translate }}</label>
-        </p-floatlabel>
-
-        <p-floatlabel
-          variant="on"
-          class="md:col-span-3 lg:col-span-1 col-span-7 my-2"
-        >
-          <input
-            pInputText
-            id="desorption"
-            autocomplete="off"
-            formControlName="desorption"
-            class="w-full"
-          />
-          <label for="desorption">{{ "desorption" | translate }}</label>
-        </p-floatlabel>
-
-        <p-floatlabel
-          variant="on"
-          class="md:col-span-3 lg:col-span-1 col-span-7 my-2"
-        >
-          <input
-            pInputText
-            id="boxQnt"
-            autocomplete="off"
-            formControlName="boxQnt"
-            class="w-full"
-          />
-          <label for="boxQnt">{{ "boxQnt" | translate }}</label>
-        </p-floatlabel>
-
-        <p-floatlabel
-          variant="on"
-          class="md:col-span-3 lg:col-span-1 col-span-7 my-2"
-        >
-          <input
-            pInputText
-            id="qunNumber"
-            autocomplete="off"
-            formControlName="qunNumber"
-            class="w-full"
-          />
-          <label for="qunNumber">{{ "qunNumber" | translate }}</label>
-        </p-floatlabel>
-
-        <p-floatlabel
-          variant="on"
-          class="md:col-span-3 lg:col-span-1 col-span-7 my-2"
-        >
-          <input
-            pInputText
-            id="price"
-            autocomplete="off"
-            formControlName="price"
-            class="w-full"
-          />
-          <label for="price">{{ "price" | translate }}</label>
-        </p-floatlabel>
-
-        <p-floatlabel
-          variant="on"
-          class="md:col-span-3 lg:col-span-1 col-span-7 my-2"
-        >
-          <input
-            pInputText
-            id="total_price"
-            autocomplete="off"
-            formControlName="total_price"
-            class="w-full"
-          />
-          <label for="total_price">{{ "total_price" | translate }}</label>
-        </p-floatlabel>
-
-        <p-floatlabel
-          variant="on"
-          class="md:col-span-3 lg:col-span-1 col-span-7 my-2"
-        >
-          <input
-            pInputText
-            id="CBM_store"
-            autocomplete="off"
-            formControlName="CBM_store"
-            class="w-full"
-          />
-          <label for="CBM_store">{{ "CBM_store" | translate }}</label>
-        </p-floatlabel>
-
-        <p-floatlabel
-          variant="on"
-          class="md:col-span-3 lg:col-span-1 col-span-7 my-2"
-        >
-          <input
-            pInputText
-            id="CBM_height"
-            autocomplete="off"
-            formControlName="CBM_height"
-            class="w-full"
-          />
-          <label for="CBM_height">{{ "CBM_height" | translate }}</label>
-        </p-floatlabel>
-
-        <p-floatlabel
-          variant="on"
-          class="md:col-span-3 lg:col-span-1 col-span-7 my-2"
-        >
-          <input
-            pInputText
-            id="CBM_width"
-            autocomplete="off"
-            formControlName="CBM_width"
-            class="w-full"
-          />
-          <label for="CBM_width">{{ "CBM_width" | translate }}</label>
-        </p-floatlabel>
-
-        <p-floatlabel
-          variant="on"
-          class="md:col-span-3 lg:col-span-1 col-span-7 my-2"
-        >
-          <input
-            pInputText
-            id="CBM_length"
-            autocomplete="off"
-            formControlName="CBM_length"
-            class="w-full"
-          />
-          <label for="CBM_length">{{ "CBM_length" | translate }}</label>
-        </p-floatlabel>
-
-        <p-floatlabel
-          variant="on"
-          class="md:col-span-3 lg:col-span-1 col-span-7 my-2"
-        >
-          <input
-            pInputText
-            id="total_CBM"
-            autocomplete="off"
-            formControlName="total_CBM"
-            class="w-full"
-          />
-          <label for="total_CBM">{{ "total_CBM" | translate }}</label>
-        </p-floatlabel>
-
-        <p-floatlabel
-          variant="on"
-          class="md:col-span-3 lg:col-span-1 col-span-7 my-2"
-        >
-          <input
-            pInputText
-            id="weight"
-            autocomplete="off"
-            formControlName="weight"
-            class="w-full"
-          />
-          <label for="weight">{{ "weight" | translate }}</label>
-        </p-floatlabel>
-
-        <p-floatlabel
-          variant="on"
-          class="md:col-span-3 lg:col-span-1 col-span-7 my-2"
-        >
-          <input
-            pInputText
-            id="total_weight"
-            autocomplete="off"
-            formControlName="total_weight"
-            class="w-full"
-          />
-          <label for="total_weight">{{ "total_weight" | translate }}</label>
-        </p-floatlabel>
-      </div>
-    </p-panel>
-    }
-  </div>
-
   <div class="flex flex-col">
     <div class="overflow-x-auto">
       <div class="min-w-full inline-block align-middle">
-        <h2>{{ "REQUIRED_PRODUCTS" | translate }}</h2>
-        <div class="overflow-hidden border rounded-lg border-gray-300">
+        <div class="flex flex-row align-baseline justify-between">
+          <h1 class="text-2xl">{{ "invoices" | translate }}</h1>
+          <p-button
+            icon="pi pi-plus-circle"
+            severity="info"
+            pTooltip="Add new Item"
+            tooltipPosition="top"
+            [label]="'add' | translate"
+            class="m-2"
+            (onClick)="addItem()"
+          ></p-button>
+        </div>
+        <div class="overflow-x-scroll border rounded-lg border-gray-300">
           <div formArrayName="items">
             <table class="min-w-full rounded-xl">
               <thead>
                 <tr class="bg-gray">
+                  <th
+                    scope="col"
+                    class="p-5 text-left text-sm leading-6 font-semibold text-gray-900 capitalize"
+                  >
+                    {{ "number" | translate }}<span class="text-danger">*</span>
+                  </th>
                   <th
                     scope="col"
                     class="p-5 text-left text-sm leading-6 font-semibold text-gray-900 capitalize"
@@ -517,71 +308,188 @@
                 </tr>
               </thead>
               <tbody class="divide-y divide-gray-300">
-                <ng-container
-                  *ngFor="
-                    let itemLine of itemsFormArray.controls;
-                    let count = index
-                  "
-                >
-                  <tr [formGroupName]="count" class="table_row">
+                @for (itemLine of itemsFormArray.controls; track $index) {
+                <ng-container>
+                  <tr [formGroupName]="$index" class="table_row">
+                    <td>
+                      <p class="text-center">
+                        {{ $index + 1 }}
+                      </p>
+                    </td>
                     <td
                       class="p-5 whitespace-nowrap text-sm leading-6 font-medium text-wight"
-                    ></td>
-                    <td
-                      class="p-5 whitespace-nowrap text-sm leading-6 font-medium text-wight"
-                    ></td>
-                    <td
-                      class="p-5 whitespace-nowrap text-sm leading-6 font-medium text-wight"
-                    ></td>
-                    <td
-                      class="p-5 whitespace-nowrap text-sm leading-6 font-medium text-wight"
-                    ></td>
-                    <td
-                      class="p-5 whitespace-nowrap text-sm leading-6 font-medium text-wight"
-                    ></td>
-                    <td
-                      class="p-5 whitespace-nowrap text-sm leading-6 font-medium text-wight"
-                    ></td>
-                    <td
-                      class="p-5 whitespace-nowrap text-sm leading-6 font-medium text-wight"
-                    ></td>
-                    <td
-                      class="p-5 whitespace-nowrap text-sm leading-6 font-medium text-wight"
-                    ></td>
+                    >
+                      <input
+                        pInputText
+                        id="container"
+                        autocomplete="off"
+                        formControlName="container"
+                        class="w-full"
+                      />
+                    </td>
 
                     <td
                       class="p-5 whitespace-nowrap text-sm leading-6 font-medium text-wight"
-                    ></td>
+                    >
+                      <input
+                        pInputText
+                        id="item"
+                        autocomplete="off"
+                        formControlName="item"
+                        class="w-full"
+                      />
+                    </td>
+
                     <td
                       class="p-5 whitespace-nowrap text-sm leading-6 font-medium text-wight"
                     >
-                      <button
-                        (click)="[deleteFormLine(count)]"
-                        type="button"
-                        mat-raised-button
-                        color="warn"
-                      >
-                        {{ "DELETE" | translate }}
-                      </button>
+                      <input
+                        pInputText
+                        id="desorption"
+                        autocomplete="off"
+                        formControlName="desorption"
+                        class="w-full"
+                      />
+                    </td>
+
+                    <td
+                      class="p-5 whitespace-nowrap text-sm leading-6 font-medium text-wight"
+                    >
+                      <input
+                        pInputText
+                        id="boxQnt"
+                        autocomplete="off"
+                        formControlName="boxQnt"
+                        class="w-full"
+                      />
+                    </td>
+
+                    <td
+                      class="p-5 whitespace-nowrap text-sm leading-6 font-medium text-wight"
+                    >
+                      <input
+                        pInputText
+                        id="qunNumber"
+                        autocomplete="off"
+                        formControlName="qunNumber"
+                        class="w-full"
+                      />
+                    </td>
+
+                    <td
+                      class="p-5 whitespace-nowrap text-sm leading-6 font-medium text-wight"
+                    >
+                      <input
+                        pInputText
+                        id="price"
+                        autocomplete="off"
+                        formControlName="price"
+                        class="w-full"
+                      />
+                    </td>
+
+                    <td>
+                      <input
+                        pInputText
+                        id="total_price"
+                        autocomplete="off"
+                        formControlName="total_price"
+                        class="w-full"
+                      />
+                    </td>
+
+                    <td
+                      class="p-5 whitespace-nowrap text-sm leading-6 font-medium text-wight"
+                    >
+                      <input
+                        pInputText
+                        id="CBM_store"
+                        autocomplete="off"
+                        formControlName="CBM_store"
+                        class="w-full"
+                      />
+                    </td>
+
+                    <td
+                      class="p-5 whitespace-nowrap text-sm leading-6 font-medium text-wight"
+                    >
+                      <input
+                        pInputText
+                        id="CBM_height"
+                        autocomplete="off"
+                        formControlName="CBM_height"
+                        class="w-full"
+                      />
+                    </td>
+
+                    <td
+                      class="p-5 whitespace-nowrap text-sm leading-6 font-medium text-wight"
+                    >
+                      <input
+                        pInputText
+                        id="CBM_width"
+                        autocomplete="off"
+                        formControlName="CBM_width"
+                        class="w-full"
+                      />
+                    </td>
+
+                    <td>
+                      <input
+                        pInputText
+                        id="CBM_length"
+                        autocomplete="off"
+                        formControlName="CBM_length"
+                        class="w-full"
+                      />
+                    </td>
+                    <td>
+                      <input
+                        pInputText
+                        id="total_CBM"
+                        autocomplete="off"
+                        formControlName="total_CBM"
+                        class="w-full"
+                      />
+                    </td>
+
+                    <td>
+                      <input
+                        pInputText
+                        id="weight"
+                        autocomplete="off"
+                        formControlName="weight"
+                        class="w-full"
+                      />
+                    </td>
+
+                    <td>
+                      <input
+                        pInputText
+                        id="total_weight"
+                        autocomplete="off"
+                        formControlName="total_weight"
+                        class="w-full"
+                      />
+                    </td>
+
+                    <td
+                      class="p-5 whitespace-nowrap text-sm leading-6 font-medium text-wight"
+                    >
+                      <p-button
+                        icon="pi pi-trash"
+                        pTooltip="Delete Item"
+                        tooltipPosition="top"
+                        severity="warn"
+                        rounded
+                        text
+                        (onClick)="deleteFormLine($index)"
+                      ></p-button>
                     </td>
                   </tr>
                 </ng-container>
+                }
               </tbody>
-              <tfoot>
-                <tr>
-                  <td colspan="2"></td>
-                  <td>
-                    <button
-                      (click)="addItem()"
-                      type="button"
-                      mat-raised-button
-                      color="primary"
-                    >
-                      {{ "NEW_PRODUCT" | translate }}
-                    </button>
-                  </td>
-                </tr>
-              </tfoot>
             </table>
           </div>
         </div>
@@ -589,15 +497,15 @@
     </div>
   </div>
 
-  <div class="grid grid-cols-2">
+  <div class="m-2">
     <p-button
-      class="md:col-span-1 s3 lg:col-span-1:col-span-7 my-2 !text-xs"
+      class="!text-xs"
       [label]="'save' | translate"
       [raised]="true"
       type="submit"
     />
     <p-button
-      class="md:col-span-1 s3 lg:col-span-1:col-span-7 my-2 !text-xs"
+      class="!text-xs mx-2"
       [label]="'clear' | translate"
       [raised]="true"
       severity="contrast"

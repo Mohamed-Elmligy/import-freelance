@@ -17,7 +17,7 @@ import { main_routes_paths } from '../../main.routes';
 import { ButtonModule } from 'primeng/button';
 import { TextareaModule } from 'primeng/textarea';
 import { TranslateModule } from '@ngx-translate/core';
-
+import { MultiSelectModule } from 'primeng/multiselect';
 @Component({
   selector: 'app-payment-form',
   imports: [
@@ -33,10 +33,12 @@ import { TranslateModule } from '@ngx-translate/core';
     TranslateModule,
     FormsModule,
     ReactiveFormsModule,
+    MultiSelectModule,
   ],
   templateUrl: './payment-form.component.html',
 })
 export default class PaymentFormComponent {
+  cities!: City[];
   mainPaths = main_routes_paths;
   items: MenuItem[] | undefined;
 
@@ -66,5 +68,19 @@ export default class PaymentFormComponent {
       },
       { label: 'payments', route: this.mainPaths.payments },
     ];
+
+    this.cities = cities;
   }
+}
+
+export const cities = [
+  { name: 'New York', code: 'NY' },
+  { name: 'Rome', code: 'RM' },
+  { name: 'London', code: 'LDN' },
+  { name: 'Istanbul', code: 'IST' },
+  { name: 'Paris', code: 'PRS' },
+];
+export interface City {
+  name: string;
+  code: string;
 }

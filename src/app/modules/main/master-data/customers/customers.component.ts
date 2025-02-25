@@ -15,6 +15,7 @@ import { ButtonModule } from 'primeng/button';
 import { FloatLabelModule } from 'primeng/floatlabel';
 import { InputTextModule } from 'primeng/inputtext';
 import { main_routes_paths } from '../../main.routes';
+import { TextareaModule } from 'primeng/textarea';
 
 @Component({
   selector: 'app-customers',
@@ -29,6 +30,7 @@ import { main_routes_paths } from '../../main.routes';
     TranslateModule,
     FormsModule,
     ReactiveFormsModule,
+    TextareaModule,
   ],
   templateUrl: './customers.component.html',
   styles: ``,
@@ -42,6 +44,8 @@ export default class CustomersComponent {
     name: [null, [Validators.required]],
     email: [null, [Validators.required]],
     customerCode: [null, [Validators.required]],
+    commission: [null, [Validators.required]],
+    description: [null, [Validators.required]],
   });
 
   submit(form: FormGroup) {

@@ -96,5 +96,7 @@
   "secondBatchNumber": "اجمالى الدفعة الثانية",
   "secondBatchDate": "تاريخ الدفعة الثانية",
   "thirdBatchNumber": "اجمالى الدفعة الثالثة",
-  "thirdBatchDate": "تاريخ الدفعة الثالثة"
+  "thirdBatchDate": "تاريخ الدفعة الثالثة",
+  "commission": "عمولة",
+  "storeNumber": "رقم المحل"
 }

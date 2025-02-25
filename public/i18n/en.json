@@ -96,5 +96,7 @@
   "secondBatchNumber": "Second Batch Number",
   "secondBatchDate": "Second Batch Date",
   "thirdBatchNumber": "Third Batch Number",
-  "thirdBatchDate": "Third Batch Date"
+  "thirdBatchDate": "Third Batch Date",
+  "commission": "Commission",
+  "storeNumber": "Store Number"
 }

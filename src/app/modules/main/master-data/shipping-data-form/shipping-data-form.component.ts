@@ -16,6 +16,8 @@ import { CommonModule } from '@angular/common';
 import { main_routes_paths } from '../../main.routes';
 import { ButtonModule } from 'primeng/button';
 import { TranslateModule } from '@ngx-translate/core';
+import { MultiSelectModule } from 'primeng/multiselect';
+import { cities, City } from '../payment-form/payment-form.component';
 @Component({
   selector: 'app-shipping-data-form',
   imports: [
@@ -29,10 +31,12 @@ import { TranslateModule } from '@ngx-translate/core';
     ButtonModule,
     TranslateModule,
     ReactiveFormsModule,
+    MultiSelectModule,
   ],
   templateUrl: './shipping-data-form.component.html',
 })
 export default class ShippingDataFormComponent {
+  cities!: City[];
   mainPaths = main_routes_paths;
   items: MenuItem[] | undefined;
 
@@ -63,5 +67,6 @@ export default class ShippingDataFormComponent {
       },
       { label: 'shippingData', route: this.mainPaths.shippingData },
     ];
+    this.cities = cities;
   }
 }

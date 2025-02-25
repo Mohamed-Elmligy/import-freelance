@@ -35,13 +35,16 @@
 
 <form class="max-w-3xl mx-auto" [formGroup]="form" (ngSubmit)="submit(form)">
   <div class="grid grid-cols-3">
-    <p-floatlabel variant="on" class="col-span-3 my-2">
-      <input
-        pInputText
+    <p-floatlabel class="col-span-3 my-2" variant="on">
+      <p-multiselect
         id="name"
-        autocomplete="off"
-        class="w-full"
+        [options]="cities"
+        optionLabel="name"
+        filter
+        [maxSelectedLabels]="3"
+        styleClass="w-full"
         formControlName="name"
+        display="chip"
       />
       <label for="name">{{ "name" | translate }}</label>
     </p-floatlabel>
@@ -72,7 +75,7 @@
         inputId="expenseDate"
         showIcon
         iconDisplay="input"
-        class="w-full"
+        styleClass="w-full"
         formControlName="expenseDate"
       />
       <label for="date">{{ "expenseDate" | translate }}</label>
