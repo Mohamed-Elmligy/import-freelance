@@ -35,18 +35,37 @@
 
 <form class="max-w-3xl mx-auto" [formGroup]="form" (ngSubmit)="submit(form)">
   <div class="grid grid-cols-3">
-    <p-floatlabel class="col-span-3 my-2" variant="on">
-      <p-multiselect
-        id="name"
+    <p-floatlabel class="col-span-4 my-2" variant="on">
+      <p-select
         [options]="cities"
         optionLabel="name"
-        filter
-        [maxSelectedLabels]="3"
-        styleClass="w-full"
-        formControlName="name"
-        display="chip"
-      />
-      <label for="name">{{ "name" | translate }}</label>
+        [filter]="true"
+        filterBy="name"
+        [showClear]="true"
+        class="w-full"
+      >
+        <ng-template #selectedItem let-selectedOption>
+          <div class="flex items-center gap-2">
+            <img
+              src="https://primefaces.org/cdn/primeng/images/demo/flag/flag_placeholder.png"
+              [class]="'flag flag-' + selectedCountry"
+              style="width: 18px"
+            />
+            <div>{{ selectedOption.name }}</div>
+          </div>
+        </ng-template>
+        <ng-template let-country #item>
+          <div class="flex items-center gap-2">
+            <img
+              src="https://primefaces.org/cdn/primeng/images/demo/flag/flag_placeholder.png"
+              [class]="'flag flag-' + country.code.toLowerCase()"
+              style="width: 18px"
+            />
+            <div>{{ country.name }}</div>
+          </div>
+        </ng-template>
+      </p-select>
+      <label for="country">{{ "name" | translate }}</label>
     </p-floatlabel>
   </div>
   <div class="grid grid-cols-3 gap-6 my-2">

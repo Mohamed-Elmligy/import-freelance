@@ -1,4 +1,4 @@
-import { Injectable } from '@angular/core';
+import { inject, Injectable } from '@angular/core';
 import {
   HttpEvent,
   HttpInterceptor,
@@ -9,14 +9,14 @@ import {
 import { Observable, throwError } from 'rxjs';
 import { retry, catchError } from 'rxjs/operators';
 import { SecurityService } from '../services/security.service';
+import { MessageService } from 'primeng/api';
 // import { NotificationMessageService } from "../services/notification.message.service";
 
 @Injectable()
 export class ErrorInterceptor implements HttpInterceptor {
-  constructor(
-    // private notificationService: NotificationMessageService,
-    private securityService: SecurityService
-  ) {}
+  constructor() {} // private notificationService: NotificationMessageService,
+  private securityService = inject(SecurityService);
+  private messageService = inject(MessageService);
 
   intercept(
     request: HttpRequest<any>,
@@ -35,14 +35,22 @@ export class ErrorInterceptor implements HttpInterceptor {
             errorModel.detail !==
               'Authentication credentials were not provided.'
           ) {
-            // this.notificationService.showErrorMessage(errorModel.detail);
+            this.messageService.add({
+              severity: 'warn',
+              summary: 'Warn',
+              detail: errorModel.detail,
+            });
             this.securityService.logout();
           } else this.securityService.logout();
         } else if (errorModel.response_id) {
           // validation errors (more than one)
           if (errorModel.warning) {
             const msg: string = this.handleWarningMessage(errorModel.warning);
-            // this.notificationService.showWarningMessage(msg);
+            this.messageService.add({
+              severity: 'warn',
+              summary: 'Warn',
+              detail: msg,
+            });
           } else if (errorModel.message) {
             if (
               typeof errorModel.message == 'object' &&
@@ -51,14 +59,24 @@ export class ErrorInterceptor implements HttpInterceptor {
               const msg: string = this.handleWarningMessage(
                 errorModel.message.sago_errors
               );
-              // this.notificationService.showWarningMessage(msg);
+              this.messageService.add({
+                severity: 'warn',
+                summary: 'Warn',
+                detail: msg,
+              });
             } else {
             }
-            // this.notificationService.showErrorMessage(errorModel.message);
+            this.messageService.add({
+              severity: 'warn',
+              summary: 'Warn',
+              detail: errorModel.detail,
+            });
           } else {
-            // this.notificationService.showErrorMessage(
-            //   "Something went wrong please try again or call support."
-            // );
+            this.messageService.add({
+              severity: 'warn',
+              summary: 'Warn',
+              detail: 'Something went wrong please try again or call support.',
+            });
           }
         }
         // only one message to show
@@ -67,15 +85,25 @@ export class ErrorInterceptor implements HttpInterceptor {
           Object.keys(error.error).length === 1
         ) {
           const msg: string = Object.values(error.error)[0] as string;
-          // this.notificationService.showErrorMessage(msg);
+          this.messageService.add({
+            severity: 'warn',
+            summary: 'Warn',
+            detail: msg,
+          });
         }
         // direct one message
         else if (typeof error.error === 'string' && error.error.length < 200) {
-          // this.notificationService.showErrorMessage(error.error);
+          this.messageService.add({
+            severity: 'warn',
+            summary: 'Warn',
+            detail: error.error,
+          });
         } else {
-          // this.notificationService.showErrorMessage(
-          //   "Something went wrong please try again or call support."
-          // );
+          this.messageService.add({
+            severity: 'warn',
+            summary: 'Warn',
+            detail: 'Something went wrong please try again or call support.',
+          });
         }
         return throwError(error);
       })

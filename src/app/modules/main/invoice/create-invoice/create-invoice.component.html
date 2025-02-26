@@ -42,6 +42,7 @@
         autocomplete="off"
         formControlName="name"
         class="w-full"
+        pSize="small"
       />
       <label for="name">{{ "name" | translate }}</label>
     </p-floatlabel>
@@ -52,6 +53,7 @@
         autocomplete="off"
         formControlName="supplierName"
         class="w-full"
+        pSize="small"
       />
       <label for="supplierName">{{ "supplierName" | translate }}</label>
     </p-floatlabel>
@@ -89,31 +91,31 @@
     </p-floatlabel>
   </div>
   <div class="grid grid-cols-5 gap-5">
-    <div class="md:col-span-1 col-span-3 my-2 bg-gray m-auto p-5 rounded-md">
+    <div class="md:col-span-1 col-span-3 my-2 bg-gray m-auto rounded-md">
       <label class="text-md font-bold" for="total_invoice">{{
         "total_invoice" | translate
       }}</label>
       <p>550000,30</p>
     </div>
-    <div class="md:col-span-1 col-span-3 my-2 bg-gray m-auto p-5 rounded-md">
+    <div class="md:col-span-1 col-span-3 my-2 bg-gray m-auto rounded-md">
       <label class="text-md font-bold" for="net_invoice">{{
         "net_invoice" | translate
       }}</label>
       <p>550000,30</p>
     </div>
-    <div class="md:col-span-1 col-span-3 my-2 bg-gray m-auto p-5 rounded-md">
+    <div class="md:col-span-1 col-span-3 my-2 bg-gray m-auto rounded-md">
       <label class="text-md font-bold" for="boxQnt">{{
         "boxQnt" | translate
       }}</label>
       <p>550000,30</p>
     </div>
-    <div class="md:col-span-1 col-span-3 my-2 bg-gray m-auto p-5 rounded-md">
+    <div class="md:col-span-1 col-span-3 my-2 bg-gray m-auto rounded-md">
       <label class="text-md font-bold" for="totalCBM">{{
         "totalCBM" | translate
       }}</label>
       <p>550000,30</p>
     </div>
-    <div class="md:col-span-1 col-span-3 my-2 bg-gray m-auto p-5 rounded-md">
+    <div class="md:col-span-1 col-span-3 my-2 bg-gray m-auto rounded-md">
       <label class="text-md font-bold" for="totalWeight">{{
         "totalWeight" | translate
       }}</label>
@@ -193,15 +195,6 @@
       <div class="min-w-full inline-block align-middle">
         <div class="flex flex-row align-baseline justify-between">
           <h1 class="text-2xl">{{ "invoices" | translate }}</h1>
-          <p-button
-            icon="pi pi-plus-circle"
-            severity="info"
-            pTooltip="Add new Item"
-            tooltipPosition="top"
-            [label]="'add' | translate"
-            class="m-2"
-            (onClick)="addItem()"
-          ></p-button>
         </div>
         <div class="overflow-x-scroll border rounded-lg border-gray-300">
           <div formArrayName="items">
@@ -210,98 +203,98 @@
                 <tr class="bg-gray">
                   <th
                     scope="col"
-                    class="p-5 text-left text-sm leading-6 font-semibold text-gray-900 capitalize"
+                    class="text-left text-sm leading-6 font-semibold text-gray-900 capitalize"
                   >
                     {{ "number" | translate }}<span class="text-danger">*</span>
                   </th>
                   <th
                     scope="col"
-                    class="p-5 text-left text-sm leading-6 font-semibold text-gray-900 capitalize"
+                    class="text-left text-sm leading-6 font-semibold text-gray-900 capitalize"
                   >
                     {{ "container" | translate
                     }}<span class="text-danger">*</span>
                   </th>
                   <th
                     scope="col"
-                    class="p-5 text-left text-sm leading-6 font-semibold text-gray-900 capitalize"
+                    class="text-left text-sm leading-6 font-semibold text-gray-900 capitalize"
                   >
                     {{ "item" | translate }}
                   </th>
                   <th
                     scope="col"
-                    class="p-5 text-left text-sm leading-6 font-semibold text-gray-900 capitalize"
+                    class="text-left text-sm leading-6 font-semibold text-gray-900 capitalize"
                   >
                     {{ "desorption" | translate }}
                   </th>
                   <th
                     scope="col"
-                    class="p-5 text-left text-sm leading-6 font-semibold text-gray-900 capitalize"
+                    class="text-left text-sm leading-6 font-semibold text-gray-900 capitalize"
                   >
                     {{ "boxQnt" | translate }}
                   </th>
                   <th
                     scope="col"
-                    class="p-5 text-left text-sm leading-6 font-semibold text-gray-900 capitalize"
+                    class="text-left text-sm leading-6 font-semibold text-gray-900 capitalize"
                   >
                     {{ "qunNumber" | translate }}
                   </th>
                   <th
                     scope="col"
-                    class="p-5 text-left text-sm leading-6 font-semibold text-gray-900 capitalize"
+                    class="text-left text-sm leading-6 font-semibold text-gray-900 capitalize"
                   >
                     {{ "price" | translate }}
                   </th>
                   <th
                     scope="col"
-                    class="p-5 text-left text-sm leading-6 font-semibold text-gray-900 capitalize"
+                    class="text-left text-sm leading-6 font-semibold text-gray-900 capitalize"
                   >
                     {{ "total_price" | translate }}
                   </th>
                   <th
                     scope="col"
-                    class="p-5 text-left text-sm leading-6 font-semibold text-gray-900 capitalize"
+                    class="text-left text-sm leading-6 font-semibold text-gray-900 capitalize"
                   >
                     {{ "CBM_store" | translate }}
                   </th>
                   <th
                     scope="col"
-                    class="p-5 text-left text-sm leading-6 font-semibold text-gray-900 capitalize"
+                    class="text-left text-sm leading-6 font-semibold text-gray-900 capitalize"
                   >
                     {{ "CBM_height" | translate }}
                   </th>
                   <th
                     scope="col"
-                    class="p-5 text-left text-sm leading-6 font-semibold text-gray-900 capitalize"
+                    class="text-left text-sm leading-6 font-semibold text-gray-900 capitalize"
                   >
                     {{ "CBM_width" | translate }}
                   </th>
                   <th
                     scope="col"
-                    class="p-5 text-left text-sm leading-6 font-semibold text-gray-900 capitalize"
+                    class="text-left text-sm leading-6 font-semibold text-gray-900 capitalize"
                   >
                     {{ "CBM_length" | translate }}
                   </th>
                   <th
                     scope="col"
-                    class="p-5 text-left text-sm leading-6 font-semibold text-gray-900 capitalize"
+                    class="text-left text-sm leading-6 font-semibold text-gray-900 capitalize"
                   >
                     {{ "total_CBM" | translate }}
                   </th>
                   <th
                     scope="col"
-                    class="p-5 text-left text-sm leading-6 font-semibold text-gray-900 capitalize"
+                    class="text-left text-sm leading-6 font-semibold text-gray-900 capitalize"
                   >
                     {{ "weight" | translate }}
                   </th>
                   <th
                     scope="col"
-                    class="p-5 text-left text-sm leading-6 font-semibold text-gray-900 capitalize"
+                    class="text-left text-sm leading-6 font-semibold text-gray-900 capitalize"
                   >
                     {{ "total_weight" | translate }}
                   </th>
                   <th
                     scope="col"
-                    class="p-5 text-left text-sm leading-6 font-semibold text-gray-900 capitalize"
+                    class="text-left text-sm leading-6 font-semibold text-gray-900 capitalize"
                   >
                     {{ "ACTIONS" | translate }}
                   </th>
@@ -317,7 +310,7 @@
                       </p>
                     </td>
                     <td
-                      class="p-5 whitespace-nowrap text-sm leading-6 font-medium text-wight"
+                      class="whitespace-nowrap text-sm leading-6 font-medium text-wight"
                     >
                       <input
                         pInputText
@@ -325,66 +318,72 @@
                         autocomplete="off"
                         formControlName="container"
                         class="w-full"
+                        pSize="small"
                       />
                     </td>
 
                     <td
-                      class="p-5 whitespace-nowrap text-sm leading-6 font-medium text-wight"
+                      class="whitespace-nowrap text-sm leading-6 font-medium text-wight"
                     >
                       <input
                         pInputText
                         id="item"
                         autocomplete="off"
                         formControlName="item"
-                        class="w-full"
+                        pSize="small"
+                        style="width: 200px !important"
                       />
                     </td>
 
                     <td
-                      class="p-5 whitespace-nowrap text-sm leading-6 font-medium text-wight"
+                      class="whitespace-nowrap text-sm leading-6 font-medium text-wight"
                     >
                       <input
                         pInputText
                         id="desorption"
                         autocomplete="off"
                         formControlName="desorption"
-                        class="w-full"
+                        style="width: 300px !important"
+                        pSize="small"
                       />
                     </td>
 
                     <td
-                      class="p-5 whitespace-nowrap text-sm leading-6 font-medium text-wight"
+                      class="whitespace-nowrap text-sm leading-6 font-medium text-wight"
                     >
                       <input
                         pInputText
                         id="boxQnt"
                         autocomplete="off"
                         formControlName="boxQnt"
-                        class="w-full"
+                        style="width: 75px !important"
+                        pSize="small"
                       />
                     </td>
 
                     <td
-                      class="p-5 whitespace-nowrap text-sm leading-6 font-medium text-wight"
+                      class="whitespace-nowrap text-sm leading-6 font-medium text-wight"
                     >
                       <input
                         pInputText
                         id="qunNumber"
                         autocomplete="off"
                         formControlName="qunNumber"
-                        class="w-full"
+                        style="width: 75px !important"
+                        pSize="small"
                       />
                     </td>
 
                     <td
-                      class="p-5 whitespace-nowrap text-sm leading-6 font-medium text-wight"
+                      class="whitespace-nowrap text-sm leading-6 font-medium text-wight"
                     >
                       <input
                         pInputText
                         id="price"
                         autocomplete="off"
                         formControlName="price"
-                        class="w-full"
+                        style="width: 75px !important"
+                        pSize="small"
                       />
                     </td>
 
@@ -394,43 +393,47 @@
                         id="total_price"
                         autocomplete="off"
                         formControlName="total_price"
-                        class="w-full"
+                        style="width: 75px !important"
+                        pSize="small"
                       />
                     </td>
 
                     <td
-                      class="p-5 whitespace-nowrap text-sm leading-6 font-medium text-wight"
+                      class="whitespace-nowrap text-sm leading-6 font-medium text-wight"
                     >
                       <input
                         pInputText
                         id="CBM_store"
                         autocomplete="off"
                         formControlName="CBM_store"
-                        class="w-full"
+                        style="width: 75px !important"
+                        pSize="small"
                       />
                     </td>
 
                     <td
-                      class="p-5 whitespace-nowrap text-sm leading-6 font-medium text-wight"
+                      class="whitespace-nowrap text-sm leading-6 font-medium text-wight"
                     >
                       <input
                         pInputText
                         id="CBM_height"
                         autocomplete="off"
                         formControlName="CBM_height"
-                        class="w-full"
+                        style="width: 75px !important"
+                        pSize="small"
                       />
                     </td>
 
                     <td
-                      class="p-5 whitespace-nowrap text-sm leading-6 font-medium text-wight"
+                      class="whitespace-nowrap text-sm leading-6 font-medium text-wight"
                     >
                       <input
                         pInputText
                         id="CBM_width"
                         autocomplete="off"
                         formControlName="CBM_width"
-                        class="w-full"
+                        style="width: 75px !important"
+                        pSize="small"
                       />
                     </td>
 
@@ -440,7 +443,8 @@
                         id="CBM_length"
                         autocomplete="off"
                         formControlName="CBM_length"
-                        class="w-full"
+                        style="width: 75px !important"
+                        pSize="small"
                       />
                     </td>
                     <td>
@@ -449,7 +453,8 @@
                         id="total_CBM"
                         autocomplete="off"
                         formControlName="total_CBM"
-                        class="w-full"
+                        style="width: 75px !important"
+                        pSize="small"
                       />
                     </td>
 
@@ -459,7 +464,8 @@
                         id="weight"
                         autocomplete="off"
                         formControlName="weight"
-                        class="w-full"
+                        style="width: 75px !important"
+                        pSize="small"
                       />
                     </td>
 
@@ -469,12 +475,13 @@
                         id="total_weight"
                         autocomplete="off"
                         formControlName="total_weight"
-                        class="w-full"
+                        style="width: 75px !important"
+                        pSize="small"
                       />
                     </td>
 
                     <td
-                      class="p-5 whitespace-nowrap text-sm leading-6 font-medium text-wight"
+                      class="whitespace-nowrap text-sm leading-6 font-medium text-wight"
                     >
                       <p-button
                         icon="pi pi-trash"
@@ -496,6 +503,15 @@
       </div>
     </div>
   </div>
+  <p-button
+    icon="pi pi-plus-circle"
+    severity="info"
+    pTooltip="Add new Item"
+    tooltipPosition="top"
+    [label]="'add' | translate"
+    class="m-2"
+    (onClick)="addItem()"
+  ></p-button>
 
   <div class="m-2">
     <p-button

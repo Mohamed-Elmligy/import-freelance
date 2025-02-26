@@ -17,7 +17,8 @@ import { main_routes_paths } from '../../main.routes';
 import { ButtonModule } from 'primeng/button';
 import { TextareaModule } from 'primeng/textarea';
 import { TranslateModule } from '@ngx-translate/core';
-import { MultiSelectModule } from 'primeng/multiselect';
+import { SelectModule } from 'primeng/select';
+
 @Component({
   selector: 'app-payment-form',
   imports: [
@@ -33,7 +34,7 @@ import { MultiSelectModule } from 'primeng/multiselect';
     TranslateModule,
     FormsModule,
     ReactiveFormsModule,
-    MultiSelectModule,
+    SelectModule,
   ],
   templateUrl: './payment-form.component.html',
 })
@@ -41,6 +42,7 @@ export default class PaymentFormComponent {
   cities!: City[];
   mainPaths = main_routes_paths;
   items: MenuItem[] | undefined;
+  selectedCountry: string | undefined;
 
   private formBuilder = inject(FormBuilder);
 

@@ -89,6 +89,18 @@
       />
       <label for="port">{{ "port" | translate }}</label>
     </p-floatlabel>
+
+    <p-floatlabel variant="on" class="col-span-4">
+      <textarea
+        pTextarea
+        id="description"
+        rows="5"
+        cols="30"
+        class="h-full w-full"
+        formControlName="description"
+      ></textarea>
+      <label for="description">{{ "description" | translate }}</label>
+    </p-floatlabel>
   </div>
   <div class="grid grid-cols-4">
     <p-button

@@ -18,6 +18,7 @@ import { ButtonModule } from 'primeng/button';
 import { TranslateModule } from '@ngx-translate/core';
 import { MultiSelectModule } from 'primeng/multiselect';
 import { cities, City } from '../payment-form/payment-form.component';
+import { TextareaModule } from 'primeng/textarea';
 @Component({
   selector: 'app-shipping-data-form',
   imports: [
@@ -32,6 +33,7 @@ import { cities, City } from '../payment-form/payment-form.component';
     TranslateModule,
     ReactiveFormsModule,
     MultiSelectModule,
+    TextareaModule,
   ],
   templateUrl: './shipping-data-form.component.html',
 })
@@ -48,6 +50,7 @@ export default class ShippingDataFormComponent {
     containerNumber: [null, [Validators.required]],
     ShippingDate: [null, [Validators.required]],
     port: [null, [Validators.required]],
+    description: [null, [Validators.required]],
   });
 
   submit(form: FormGroup) {
