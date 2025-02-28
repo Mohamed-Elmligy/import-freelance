@@ -15,6 +15,7 @@ import { LanguagesService } from './modules/shared/services/languages.service';
 export class AppComponent {
   title = 'import_project';
   languageService = inject(LanguagesService);
+
   ngOnInit() {
     this.languageService.initLanguage();
   }

@@ -2,10 +2,9 @@
 import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
 
-import { ApiService } from './api.service';
 import { BrowserStorageService } from './browser-storage.service';
-import { AUTH_API } from '../apis/auth.api';
-import { UserLoginResponseDto } from '../interfaces/auth.interfaces';
+import { API_AUTH } from '../../modules/auth/auth.api';
+import { HttpService } from './http.service';
 
 @Injectable()
 export class SecurityService {
@@ -28,7 +27,7 @@ export class SecurityService {
 
   private newAccessToken() {
     const refreshToken = this.retrieveToken('refresh');
-    this.API.sendDataToServer<any>(AUTH_API.REFRESH_TOKEN, {
+    this.API.create(API_AUTH.REFRESH_TOKEN, {
       refresh: refreshToken,
     }).subscribe(
       (response: any) => {
@@ -41,9 +40,9 @@ export class SecurityService {
   }
 
   blackListToken() {
-    if (this.browserStorageService.getData('local', 'l_i') != null) {
-      this.API.sendDataToServer(AUTH_API.BLACKLIST_TOKEN, {}).subscribe(() => {
-        this.browserStorageService.removeData('local', this.localKey);
+    if (this.browserStorageService.get('local', 'l_i') != null) {
+      this.API.create(API_AUTH.BLACKLIST_TOKEN, {}).subscribe(() => {
+        this.browserStorageService.remove('local', this.localKey);
       });
     }
   }
@@ -52,7 +51,7 @@ export class SecurityService {
 
   constructor(
     private readonly router: Router,
-    private API: ApiService,
+    private API: HttpService,
     private browserStorageService: BrowserStorageService
   ) {}
 
@@ -61,17 +60,17 @@ export class SecurityService {
   // #region actions
 
   login(response: any) {
-    this.browserStorageService.setData('local', this.localKey, response);
+    this.browserStorageService.set('local', this.localKey, response);
     this.router.navigate(['/pages/dashboard']);
   }
 
   verify(response: any) {
-    this.browserStorageService.setData('local', 'l_i', response);
+    this.browserStorageService.set('local', 'l_i', response);
     this.router.navigate(['verify-user']);
   }
 
   logout() {
-    this.browserStorageService.clearData('local');
+    this.browserStorageService.clear('local');
     this.stopTokenInterval();
     this.router.navigate(['/auth/login']);
     this.blackListToken();
@@ -92,17 +91,13 @@ export class SecurityService {
   // #region retrieve local storage actions
 
   retrieveToken(type: string) {
-    const user = this.browserStorageService.getData('local', this.localKey);
-    return user && typeof user !== 'undefined'
-      ? (user as UserLoginResponseDto)[type]
-      : null;
+    const user = this.browserStorageService.get('local', this.localKey);
+    return user && typeof user !== 'undefined';
   }
 
   retrieveUser() {
-    const user = this.browserStorageService.getData('local', this.localKey);
-    return user && typeof user !== 'undefined'
-      ? (user as UserLoginResponseDto)
-      : null;
+    const user = this.browserStorageService.get('local', this.localKey);
+    return user && typeof user !== 'undefined';
   }
 
   // #endregion

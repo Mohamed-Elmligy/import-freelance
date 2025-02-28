@@ -1,29 +1,29 @@
-import { Injectable } from '@angular/core';
+import { Injectable } from "@angular/core";
 
-import { Observable, Subscription, fromEvent, interval, merge } from 'rxjs';
-import { skipWhile, startWith, switchMap, take } from 'rxjs/operators';
+import { Observable, Subscription, fromEvent, interval, merge } from "rxjs";
+import { skipWhile, startWith, switchMap, take } from "rxjs/operators";
 
 @Injectable({
-  providedIn: 'root',
+  providedIn: "root",
 })
 export class SessionTimeoutService {
-  private idleTime = 1500; // 25 mins
+  private idleTime = 600; // 10 mins
+  sessionSubscription!: Subscription;
+
   private eventStreams$: Observable<any>[] = [];
   private mergedEventStreams$: Observable<any>;
   private events = [
-    [document, 'mousemove'],
-    [document, 'scroll'],
-    [document, 'click'],
-    [document, 'wheel'],
-    [document, 'keyup'],
-    [document, 'visibilitychange'],
+    [document, "visibilitychange"],
+    [document, "mousemove"],
+    [document, "scroll"],
+    [document, "click"],
+    [document, "wheel"],
+    [document, "keyup"],
   ];
 
   constructor() {
     this.events.forEach((event) => {
-      this.eventStreams$.push(
-        fromEvent(event[0] as EventTarget, event[1] as string)
-      );
+      this.eventStreams$.push(fromEvent(event[0] as any, event[1] as string));
     });
     this.mergedEventStreams$ = merge(...this.eventStreams$);
   }
