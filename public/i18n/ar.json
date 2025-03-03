@@ -98,5 +98,7 @@
   "thirdBatchNumber": "اجمالى الدفعة الثالثة",
   "thirdBatchDate": "تاريخ الدفعة الثالثة",
   "commission": "عمولة",
-  "storeNumber": "رقم المحل"
+  "storeNumber": "رقم المحل",
+  "firstName": "الاسم الاول",
+  "lastName": "الاسم الاخير"
 }
