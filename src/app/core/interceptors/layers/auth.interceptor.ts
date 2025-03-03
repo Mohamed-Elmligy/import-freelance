@@ -2,14 +2,13 @@ import { HttpInterceptorFn } from '@angular/common/http';
 import { inject } from '@angular/core';
 import { API_AUTH } from '../../../modules/auth/auth.api';
 import { SecurityService } from '../../services/security.service';
-
 export const authInterceptor: HttpInterceptorFn = (request, next) => {
-  const securityService = SecurityService;
+  // const securityService = inject(SecurityService);
   if (!unAuthenticatedApis.includes(request.url)) {
     const authenticatedRequest = request.clone({
       headers: request.headers.set(
         'Authorization',
-        `Bearer ${securityService.jwtToken}`
+        `Bearer ${inject(SecurityService).jwtToken}`
       ),
     });
     return next(authenticatedRequest);

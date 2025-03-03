@@ -1,9 +1,9 @@
-import { HttpInterceptorFn } from "@angular/common/http";
-import { inject } from "@angular/core";
+import { HttpInterceptorFn } from '@angular/common/http';
+import { inject } from '@angular/core';
 
-import { TranslateService } from "@ngx-translate/core";
+import { TranslateService } from '@ngx-translate/core';
 
-import { environment } from "../../../../environments/environment";
+import { environment } from '../../../../environments/environment';
 
 export const httpInterceptor: HttpInterceptorFn = (request, next) => {
   const translateService = inject(TranslateService);
@@ -12,7 +12,7 @@ export const httpInterceptor: HttpInterceptorFn = (request, next) => {
   let modifiedRequset = request.clone({
     url: `${baseURL}${request.url}`,
     setHeaders: {
-      "Accept-Language": translateService.currentLang,
+      'Accept-Language': translateService.currentLang,
     },
   });
 

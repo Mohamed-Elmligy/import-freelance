@@ -13,20 +13,21 @@ import Lara from '@primeng/themes/lara';
 import { TranslateModule, TranslateLoader } from '@ngx-translate/core';
 import { TranslateHttpLoader } from '@ngx-translate/http-loader';
 import {
+  HttpBackend,
   HttpClient,
   provideHttpClient,
   withInterceptors,
 } from '@angular/common/http';
 import { interceptors } from './core/interceptors';
+import { MultiTranslateHttpLoader } from 'ngx-translate-multi-http-loader';
 
-const httpLoaderFactory: (http: HttpClient) => TranslateHttpLoader = (
-  http: HttpClient
-) => new TranslateHttpLoader(http, './i18n/', '.json');
+export const MultiTranslateLoader = (
+  http: HttpBackend
+): MultiTranslateHttpLoader => new MultiTranslateHttpLoader(http, ['i18n/']);
 
 export const appConfig: ApplicationConfig = {
   providers: [
     provideZoneChangeDetection({ eventCoalescing: true }),
-    provideHttpClient(withInterceptors(interceptors)),
     provideRouter(routes),
     provideAnimationsAsync(),
     providePrimeNG({
@@ -39,15 +40,15 @@ export const appConfig: ApplicationConfig = {
       },
     }),
     provideAnimationsAsync(),
-    provideHttpClient(),
     importProvidersFrom([
       TranslateModule.forRoot({
         loader: {
           provide: TranslateLoader,
-          useFactory: httpLoaderFactory,
-          deps: [HttpClient],
+          useFactory: MultiTranslateLoader,
+          deps: [HttpBackend],
         },
       }),
     ]),
+    provideHttpClient(withInterceptors(interceptors)),
   ],
 };

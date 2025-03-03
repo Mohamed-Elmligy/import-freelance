@@ -4,9 +4,9 @@ import { Router } from '@angular/router';
 
 import { fromEvent, map } from 'rxjs';
 
-import { HttpService } from './http.service';
 import { auth_routes_paths } from '../../modules/auth/auth.routes';
 import { API_AUTH } from '../../modules/auth/auth.api';
+import { ApiService } from './api.service';
 
 // import {
 //   Credentials,
@@ -19,7 +19,7 @@ import { API_AUTH } from '../../modules/auth/auth.api';
   providedIn: 'root',
 })
 export class AuthenticationService {
-  private HTTP = inject(HttpService);
+  private HTTP = inject(ApiService);
   private router = inject(Router);
 
   user: any;
@@ -33,17 +33,18 @@ export class AuthenticationService {
       username: credentials.userName,
       password: credentials.password,
     };
-    return this.HTTP.create<any, any>(API_AUTH.LOGIN, backEndModel).pipe(
-      map((response) => transformLoginInfoModel(response))
-    );
+    return this.HTTP.sendDataToServer<any, any>(
+      API_AUTH.LOGIN,
+      backEndModel
+    ).pipe(map((response) => transformLoginInfoModel(response)));
   }
 
   forgetPassword(userName: string) {
-    return this.HTTP.create(API_AUTH.GET_OTP, { username: userName });
+    return this.HTTP.sendDataToServer(API_AUTH.GET_OTP, { username: userName });
   }
 
   resetPassword(model: any) {
-    return this.HTTP.create(API_AUTH.RESET_PASSWORD, {
+    return this.HTTP.sendDataToServer(API_AUTH.RESET_PASSWORD, {
       username: model.userName,
       password: model.password,
       password_confirm: model.confirmPassword,
@@ -51,18 +52,18 @@ export class AuthenticationService {
   }
 
   verifyUser(model: any) {
-    return this.HTTP.create(API_AUTH.VERIFY, {
+    return this.HTTP.sendDataToServer(API_AUTH.VERIFY, {
       username: model.userName,
       otp: model.otp,
     });
   }
 
   blacklistToken() {
-    return this.HTTP.create(API_AUTH.BLACKLIST_TOKEN, {});
+    return this.HTTP.sendDataToServer(API_AUTH.BLACKLIST_TOKEN, {});
   }
 
   refreshToken() {
-    return this.HTTP.create<any, any>(API_AUTH.REFRESH_TOKEN, {});
+    return this.HTTP.sendDataToServer<any, any>(API_AUTH.REFRESH_TOKEN, {});
   }
 
   logoutUser() {

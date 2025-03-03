@@ -15,7 +15,7 @@ import { _, TranslateModule } from '@ngx-translate/core';
 import { MessageModule } from 'primeng/message';
 import { CommonModule } from '@angular/common';
 import { API_AUTH } from '../auth.api';
-import { HttpService } from '../../../core/services/http.service';
+import { ApiService } from '../../../core/services/api.service';
 
 @Component({
   selector: 'app-login',
@@ -35,7 +35,7 @@ export default class LoginComponent {
   protected auth_routes = auth_routes_paths;
   protected main_routes = main_routes_paths;
   private formBuilder = inject(FormBuilder);
-  private apiService = inject(HttpService);
+  private apiService = inject(ApiService);
   apis = API_AUTH;
   isSubmitted = signal(false);
 
@@ -45,13 +45,10 @@ export default class LoginComponent {
   });
 
   submit(form: FormGroup) {
-    console.log(form.value);
-    if (this.form.valid) {
-      this.apiService
-        .create(this.apis.LOGIN, form.value)
-        .subscribe((res: any) => {
-          console.log(res);
-        });
-    }
+    this.apiService
+      .sendDataToServer(this.apis.LOGIN, form.value)
+      .subscribe((res: any) => {
+        console.log(res);
+      });
   }
 }

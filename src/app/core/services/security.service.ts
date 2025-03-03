@@ -1,16 +1,19 @@
-// angular modules
-import { Injectable } from '@angular/core';
+import { inject, Injectable } from '@angular/core';
 import { Router } from '@angular/router';
-
-import { BrowserStorageService } from './browser-storage.service';
 import { API_AUTH } from '../../modules/auth/auth.api';
-import { HttpService } from './http.service';
+import { BrowserStorageService } from './browser-storage.service';
+import { ApiService } from './api.service';
 
-@Injectable()
+@Injectable({
+  providedIn: 'root',
+})
 export class SecurityService {
   readonly localKey = 'l_i';
   private accessTokenInterval: any;
 
+  router = inject(Router);
+  API = inject(ApiService);
+  browserStorageService = inject(BrowserStorageService);
   get jwtToken() {
     return this.retrieveToken('access');
   }
@@ -27,7 +30,7 @@ export class SecurityService {
 
   private newAccessToken() {
     const refreshToken = this.retrieveToken('refresh');
-    this.API.create(API_AUTH.REFRESH_TOKEN, {
+    this.API.sendDataToServer(API_AUTH.REFRESH_TOKEN, {
       refresh: refreshToken,
     }).subscribe(
       (response: any) => {
@@ -41,21 +44,11 @@ export class SecurityService {
 
   blackListToken() {
     if (this.browserStorageService.get('local', 'l_i') != null) {
-      this.API.create(API_AUTH.BLACKLIST_TOKEN, {}).subscribe(() => {
+      this.API.sendDataToServer(API_AUTH.BLACKLIST_TOKEN, {}).subscribe(() => {
         this.browserStorageService.remove('local', this.localKey);
       });
     }
   }
-
-  // #region constructor
-
-  constructor(
-    private readonly router: Router,
-    private API: HttpService,
-    private browserStorageService: BrowserStorageService
-  ) {}
-
-  // #endregion
 
   // #region actions
 
