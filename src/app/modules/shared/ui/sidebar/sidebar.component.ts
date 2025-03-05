@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, inject, OnInit } from '@angular/core';
 import { MenuItem } from 'primeng/api';
 import { MenuModule } from 'primeng/menu';
 import { BadgeModule } from 'primeng/badge';
@@ -9,6 +9,7 @@ import { auth_routes_paths } from '../../../auth/auth.routes';
 import { RouterLink, RouterModule } from '@angular/router';
 import { CommonModule, NgOptimizedImage } from '@angular/common';
 import { TranslateModule } from '@ngx-translate/core';
+import { SecurityService } from '../../../../core/services/security.service';
 
 @Component({
   selector: 'app-sidebar',
@@ -29,6 +30,7 @@ export default class SidebarComponent {
   items: MenuItem[] | undefined;
   mainRoutes = main_routes_paths;
   authRoutes = auth_routes_paths;
+  public securityService = inject(SecurityService);
   ngOnInit() {
     this.items = [
       {

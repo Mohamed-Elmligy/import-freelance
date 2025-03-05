@@ -43,8 +43,10 @@
         shape="circle"
       />
       <span class="inline-flex flex-col">
-        <span class="font-bold">Amy Elsner</span>
-        <span class="text-sm">Admin</span>
+        <span class="font-bold mx-1">{{ securityService.userFullName }}</span>
+        <span class="text-sm">
+          {{ securityService.userType }}
+        </span>
       </span>
     </button>
   </ng-template>

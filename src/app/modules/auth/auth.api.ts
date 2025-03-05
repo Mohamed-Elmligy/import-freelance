@@ -3,7 +3,7 @@ export const API_AUTH = {
   REFRESH_TOKEN: 'token/refresh/',
   BLACKLIST_TOKEN: 'user/blacklist-refresh',
   REGISTER: 'account/register',
-  GET_OTP: 'user/password/get-otp',
+  FORGET_PASSWORD_REQUEST: 'account/forget-password/request',
   VERIFY: 'user/password/verify-otp',
   RESET_PASSWORD: (id: number) => `account/reset-password/${id}`,
 } as const;

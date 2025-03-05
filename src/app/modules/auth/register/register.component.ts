@@ -67,7 +67,7 @@ export default class RegisterComponent {
             'Success',
             'New user created successfully!'
           );
-          // this.router.navigate([this.auth_routes.LOGIN]);
+          this.router.navigate([this.auth_routes.LOGIN]);
         },
         error: (error) => {
           this.showMessage('error', 'Error', error.error.detail);

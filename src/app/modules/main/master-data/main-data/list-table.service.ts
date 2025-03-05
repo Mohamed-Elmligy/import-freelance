@@ -1,9 +1,14 @@
-import { Injectable } from '@angular/core';
+import { inject, Injectable } from '@angular/core';
+import { ApiService } from '../../../../core/services/api.service';
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class ListTableService {
+  apiService = inject(ApiService);
+  constructor() {}
 
-  constructor() { }
+  getList(type: string) {
+    return this.apiService.getDataFromServer(`${type}/list`);
+  }
 }

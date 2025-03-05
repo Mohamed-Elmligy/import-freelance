@@ -8,18 +8,23 @@ import { ApiService } from './api.service';
   providedIn: 'root',
 })
 export class SecurityService {
-  readonly localKey = 'l_i';
+  readonly localKey = 'jwtToken';
   private accessTokenInterval: any;
 
   router = inject(Router);
   API = inject(ApiService);
   browserStorageService = inject(BrowserStorageService);
+
   get jwtToken() {
     return this.retrieveToken('access');
   }
 
-  get user() {
-    return this.retrieveUser();
+  get userType() {
+    return this.retrieveUserType();
+  }
+
+  get userFullName() {
+    return this.retrieveFullName();
   }
 
   private newAccessTokenJob() {
@@ -43,7 +48,7 @@ export class SecurityService {
   }
 
   blackListToken() {
-    if (this.browserStorageService.get('local', 'l_i') != null) {
+    if (this.browserStorageService.get('local', this.localKey) != null) {
       this.API.sendDataToServer(API_AUTH.BLACKLIST_TOKEN, {}).subscribe(() => {
         this.browserStorageService.remove('local', this.localKey);
       });
@@ -51,16 +56,6 @@ export class SecurityService {
   }
 
   // #region actions
-
-  login(response: any) {
-    this.browserStorageService.set('local', this.localKey, response);
-    this.router.navigate(['/pages/dashboard']);
-  }
-
-  verify(response: any) {
-    this.browserStorageService.set('local', 'l_i', response);
-    this.router.navigate(['verify-user']);
-  }
 
   logout() {
     this.browserStorageService.clear('local');
@@ -84,13 +79,27 @@ export class SecurityService {
   // #region retrieve local storage actions
 
   retrieveToken(type: string) {
-    const user = this.browserStorageService.get('local', this.localKey);
-    return user && typeof user !== 'undefined';
+    const access = this.browserStorageService.get(
+      'local',
+      this.localKey
+    ).access;
+    return access;
   }
 
-  retrieveUser() {
-    const user = this.browserStorageService.get('local', this.localKey);
-    return user && typeof user !== 'undefined';
+  retrieveUserType() {
+    const userType = this.browserStorageService.get(
+      'local',
+      this.localKey
+    ).user_type;
+    return userType;
+  }
+
+  retrieveFullName() {
+    const fullName = this.browserStorageService.get(
+      'local',
+      this.localKey
+    ).full_name;
+    return fullName;
   }
 
   // #endregion

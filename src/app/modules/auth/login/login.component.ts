@@ -1,4 +1,4 @@
-import { Component, inject, signal } from '@angular/core';
+import { Component, inject, OnInit, signal } from '@angular/core';
 import { InputTextModule } from 'primeng/inputtext';
 import { PasswordModule } from 'primeng/password';
 import { ButtonModule } from 'primeng/button';
@@ -36,7 +36,7 @@ import { BrowserStorageService } from '../../../core/services/browser-storage.se
   templateUrl: './login.component.html',
   providers: [MessageService],
 })
-export default class LoginComponent {
+export default class LoginComponent implements OnInit {
   protected auth_routes = auth_routes_paths;
   protected main_routes = main_routes_paths;
   private formBuilder = inject(FormBuilder);
@@ -49,6 +49,10 @@ export default class LoginComponent {
     username: [null, [Validators.required]],
     password: [null, [Validators.required, Validators.minLength(8)]],
   });
+
+  ngOnInit() {
+    this.browserStorage.clear('local');
+  }
 
   showError(msg: string) {
     this.messageService.add({
