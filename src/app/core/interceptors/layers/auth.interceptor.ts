@@ -11,8 +11,6 @@ const unAuthenticatedApisUrls = unAuthenticatedApis.map(
 );
 
 export const authInterceptor: HttpInterceptorFn = (request, next) => {
-  console.log(request.url);
-
   if (!unAuthenticatedApisUrls.includes(request.url)) {
     const authenticatedRequest = request.clone({
       headers: request.headers.set(
@@ -20,11 +18,7 @@ export const authInterceptor: HttpInterceptorFn = (request, next) => {
         `Bearer ${inject(SecurityService).jwtToken}`
       ),
     });
-    console.log('Authenticated API');
-
     return next(authenticatedRequest);
   }
-  console.log('Unauthenticated API');
-
   return next(request);
 };

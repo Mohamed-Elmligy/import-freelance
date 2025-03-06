@@ -20,6 +20,7 @@ import {
 } from '@angular/common/http';
 import { interceptors } from './core/interceptors';
 import { MultiTranslateHttpLoader } from 'ngx-translate-multi-http-loader';
+import { MessageService } from 'primeng/api';
 
 export const MultiTranslateLoader = (
   http: HttpBackend
@@ -50,5 +51,6 @@ export const appConfig: ApplicationConfig = {
       }),
     ]),
     provideHttpClient(withInterceptors(interceptors)),
+    MessageService,
   ],
 };

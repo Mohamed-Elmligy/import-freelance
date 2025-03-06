@@ -80,8 +80,6 @@ export default class MainDataComponent {
   items: MenuItem[] | undefined;
   securityService = inject(SecurityService);
   ngOnInit() {
-    console.log(this.securityService.jwtToken);
-
     this.activateRoute.queryParams.subscribe((param: any) => {
       this.listType.set(param.type);
       if (param.report == 'true') this.isReport.set(true);

@@ -102,5 +102,13 @@ export class SecurityService {
     return fullName;
   }
 
+  retrieveUserCompany() {
+    const company = this.browserStorageService.get(
+      'local',
+      this.localKey
+    ).company;
+    return company;
+  }
+
   // #endregion
 }
