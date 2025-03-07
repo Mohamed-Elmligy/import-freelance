@@ -68,7 +68,10 @@ export default class ExpenseListComponent {
     this.ExpenseService.getList().subscribe((data: any) => {
       this.tableColumns = this.ExpenseService.ExpenseHeaders;
       this.displayedColumns = this.ExpenseService.ExpenseHeaders;
-      this.dataSource = new MatTableDataSource<any>(data.results);
+      let ModifideData = this.ExpenseService.apiModelToComponentModelList(
+        data.results
+      );
+      this.dataSource = new MatTableDataSource<any>(ModifideData);
       this.resultsLength = data.count;
     });
   }

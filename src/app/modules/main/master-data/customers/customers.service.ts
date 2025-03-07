@@ -13,14 +13,7 @@ export class CustomersService {
   private showMessageService = inject(ShowMessageService);
   private location = inject(Location);
 
-  customerHeaders = [
-    'name',
-    'email',
-    'customerCode',
-    'commission',
-    'description',
-    'actions',
-  ];
+  customerHeaders = ['name', 'email', 'code', 'commission', 'actions'];
 
   getList() {
     return this.apiService.getDataFromServer(`customer/list`);
@@ -36,13 +29,31 @@ export class CustomersService {
     };
   }
 
-  apiModelToComponentModel(form: FormGroup, data: any) {
+  apiModelToComponentModelPathch(form: FormGroup, data: any) {
     form.patchValue({
       name: data.name,
       email: data.email,
       customerCode: data.code,
       commission: data.commession,
       description: data.description,
+    });
+  }
+
+  apiModelToComponentModelList(
+    data: {
+      name: string;
+      email: string;
+      code: string;
+      commession: string;
+    }[]
+  ) {
+    return data.map((item) => {
+      return {
+        name: item.name,
+        email: item.email,
+        code: item.code,
+        commission: item.commession,
+      };
     });
   }
 

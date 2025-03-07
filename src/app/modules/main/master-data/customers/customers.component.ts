@@ -99,7 +99,7 @@ export default class CustomersComponent {
       this.customersService
         .getCustomerById(this.customerId)
         .subscribe((data) => {
-          this.customersService.apiModelToComponentModel(this.form, data);
+          this.customersService.apiModelToComponentModelPathch(this.form, data);
         });
     }
   }

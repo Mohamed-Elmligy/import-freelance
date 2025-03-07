@@ -72,7 +72,12 @@ export default class CustomerListComponent {
     this.customerService.getList().subscribe((data: any) => {
       this.tableColumns = this.customerService.customerHeaders;
       this.displayedColumns = this.customerService.customerHeaders;
-      this.dataSource = new MatTableDataSource<any>(data.results);
+      let ModifideData: any = this.customerService.apiModelToComponentModelList(
+        data.results
+      );
+      console.log(ModifideData);
+
+      this.dataSource = new MatTableDataSource<any>(ModifideData);
       this.resultsLength = data.count;
     });
   }

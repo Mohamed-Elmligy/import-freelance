@@ -37,7 +37,7 @@
   <div class="grid grid-cols-3">
     <p-floatlabel class="col-span-4 my-2" variant="on">
       <p-select
-        [options]="cities"
+        [options]="listOfCustomers()"
         optionLabel="name"
         [filter]="true"
         filterBy="name"
@@ -46,26 +46,16 @@
       >
         <ng-template #selectedItem let-selectedOption>
           <div class="flex items-center gap-2">
-            <img
-              src="https://primefaces.org/cdn/primeng/images/demo/flag/flag_placeholder.png"
-              [class]="'flag flag-' + selectedCountry"
-              style="width: 18px"
-            />
             <div>{{ selectedOption.name }}</div>
           </div>
         </ng-template>
-        <ng-template let-country #item>
+        <ng-template let-customer #item>
           <div class="flex items-center gap-2">
-            <img
-              src="https://primefaces.org/cdn/primeng/images/demo/flag/flag_placeholder.png"
-              [class]="'flag flag-' + country.code.toLowerCase()"
-              style="width: 18px"
-            />
-            <div>{{ country.name }}</div>
+            <div>{{ customer.name }}</div>
           </div>
         </ng-template>
       </p-select>
-      <label for="country">{{ "name" | translate }}</label>
+      <label for="customer">{{ "name" | translate }}</label>
     </p-floatlabel>
   </div>
   <div class="grid grid-cols-3 gap-6 my-2">

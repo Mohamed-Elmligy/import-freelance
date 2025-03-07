@@ -13,10 +13,9 @@ export class ExpenseService {
 
   ExpenseHeaders = [
     'customer',
-    'container_number',
+    'containerNumber',
     'amount',
-    'expense_date',
-    'description',
+    'expenseDate',
     'actions',
   ];
 
@@ -40,7 +39,26 @@ export class ExpenseService {
       containerNumber: data.container_number,
       amount: data.amount,
       expenseDate: data.expense_date,
-      description: data.description,
+    });
+  }
+
+  apiModelToComponentModelList(
+    data: {
+      customer: string;
+      container_number: string;
+      amount: string;
+      expense_date: string;
+      description: string;
+    }[]
+  ) {
+    return data.map((item) => {
+      return {
+        customer: item.customer,
+        containerNumber: item.container_number,
+        amount: item.amount,
+        expenseDate: item.expense_date,
+        description: item.description,
+      };
     });
   }
 

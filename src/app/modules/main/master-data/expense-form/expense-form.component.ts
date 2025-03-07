@@ -1,4 +1,4 @@
-import { Component, inject } from '@angular/core';
+import { Component, inject, signal } from '@angular/core';
 import {
   FormBuilder,
   FormGroup,
@@ -19,6 +19,7 @@ import { TextareaModule } from 'primeng/textarea';
 import { ButtonModule } from 'primeng/button';
 import { cities, City } from '../payment-form/payment-form.component';
 import { SelectModule } from 'primeng/select';
+import { LookupsService } from '../../../shared/services/lookups.service';
 
 @Component({
   selector: 'app-expense-form',
@@ -39,12 +40,15 @@ import { SelectModule } from 'primeng/select';
   templateUrl: './expense-form.component.html',
 })
 export default class ExpenseFormComponent {
-  cities!: City[];
   mainPaths = main_routes_paths;
+
+  cities!: City[];
   items: MenuItem[] | undefined;
   selectedCountry: string | undefined;
+  listOfCustomers = signal([]);
 
   private formBuilder = inject(FormBuilder);
+  private lookupService = inject(LookupsService);
 
   protected form = this.formBuilder.group({
     name: [null, [Validators.required]],
@@ -63,6 +67,9 @@ export default class ExpenseFormComponent {
   }
 
   ngOnInit() {
+    this.lookupService.getListOfLookups('customers').subscribe((data: any) => {
+      this.listOfCustomers.set(data);
+    });
     this.items = [
       {
         icon: 'pi pi-dollar',

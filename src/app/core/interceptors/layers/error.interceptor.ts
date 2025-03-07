@@ -42,13 +42,13 @@ export const errorInterceptor: HttpInterceptorFn = (request, next) => {
         let refreshToken = securityService.retrieveRefreshToken();
         if (refreshToken) {
           securityService.getNewAccessToken().subscribe((res: any) => {
-            let oldJWT = securityService.allJwtData();
-            console.log(oldJWT);
-
-            // browserStorageService.set('local', securityService.localKey, {
-            //   ...oldJWT,
-            //   oldJWT.access: res.access,
-            // });
+            let newJwt = securityService.allJwtData;
+            newJwt.access = res.access;
+            browserStorageService.set(
+              'local',
+              securityService.localKey,
+              newJwt
+            );
             request = request.clone({
               setHeaders: {
                 Authorization: `Bearer ${res.access}`,
