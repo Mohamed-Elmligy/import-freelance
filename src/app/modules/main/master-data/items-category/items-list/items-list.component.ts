@@ -40,6 +40,7 @@ import { ItemsCategoryService } from '../items-category.service';
     PanelModule,
     DatePickerModule,
     TooltipModule,
+    Toolbar,
   ],
   templateUrl: './items-list.component.html',
   styles: ``,

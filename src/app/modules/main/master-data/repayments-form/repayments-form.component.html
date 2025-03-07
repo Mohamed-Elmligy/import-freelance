@@ -32,63 +32,49 @@
     </div>
   </div>
 </div>
-
+@if ((transactionId && isUpdate)|| (!transactionId && !isUpdate)) {
 <form class="max-w-3xl mx-auto" [formGroup]="form" (ngSubmit)="submit(form)">
-  <div class="grid grid-cols-2 gap-5">
-    <!-- <p-floatlabel class="md:col-span-1 sm:col-span-2 my-2" variant="on">
-      <p-multiselect
+  <div class="grid grid-cols-3 gap-5">
+    <p-floatlabel class="md:col-span-1 sm:col-span-3 my-2" variant="on">
+      <p-select
         id="name"
-        [options]="cities"
+        [options]="listOfCustomers()"
         optionLabel="name"
-        filter
-        [maxSelectedLabels]="3"
+        [filter]="true"
+        [showClear]="true"
         styleClass="w-full"
-        formControlName="name"
-        display="chip"
+        formControlName="customer"
       />
       <label for="name">{{ "name" | translate }}</label>
-    </p-floatlabel> -->
-
-    <!-- <p-floatlabel class="md:col-span-1 sm:col-span-2 my-2" variant="on">
-      <p-multiselect
-        id="invoiceNumber"
-        [options]="cities"
-        optionLabel="invoiceNumber"
-        filter
-        [maxSelectedLabels]="3"
-        styleClass="w-full"
-        formControlName="invoiceNumber"
-        display="chip"
-      />
-      <label for="name">{{ "invoiceNumber" | translate }}</label>
-    </p-floatlabel> -->
-<!-- 
-    <p-floatlabel class="md:col-span-1 sm:col-span-2 my-2" variant="on">
-      <p-multiselect
-        id="supplierName"
-        [options]="cities"
-        optionLabel="supplierName"
-        filter
-        [maxSelectedLabels]="3"
-        styleClass="w-full"
-        formControlName="supplierName"
-        display="chip"
-      />
-      <label for="name">{{ "supplierName" | translate }}</label>
-    </p-floatlabel> -->
-
-    <p-floatlabel variant="on" class="md:col-span-1 sm:col-span-2 my-2">
-      <input
-        pInputText
-        id="batch"
-        autocomplete="off"
-        formControlName="batch"
-        class="w-full"
-      />
-      <label for="batch">{{ "batch" | translate }}</label>
     </p-floatlabel>
 
-    <p-floatlabel variant="on" class="md:col-span-1 sm:col-span-2 my-2">
+    <p-floatlabel class="md:col-span-1 sm:col-span-3 my-2" variant="on">
+      <p-select
+        id="invoiceNumber"
+        [options]="listOfInvoices()"
+        optionLabel="invoice_number"
+        [filter]="true"
+        [showClear]="true"
+        styleClass="w-full"
+        formControlName="invoiceNumber"
+      />
+      <label for="name">{{ "invoiceNumber" | translate }}</label>
+    </p-floatlabel>
+
+    <p-floatlabel class="md:col-span-1 sm:col-span-3 my-2" variant="on">
+      <p-select
+        id="supplierName"
+        [options]="listOfSuppliers()"
+        optionLabel="name"
+        [filter]="true"
+        [showClear]="true"
+        styleClass="w-full"
+        formControlName="supplierNumber"
+      />
+      <label for="name">{{ "supplierName" | translate }}</label>
+    </p-floatlabel>
+
+    <p-floatlabel variant="on" class="md:col-span-3 sm:col-span-3 my-2">
       <input
         pInputText
         id="remaining"
@@ -99,7 +85,7 @@
       <label for="remaining">{{ "remainingAmount" | translate }}</label>
     </p-floatlabel>
 
-    <p-floatlabel variant="on" class="md:col-span-1 sm:col-span-2 my-2">
+    <p-floatlabel variant="on" class="md:col-span-3 sm:col-span-3 my-2">
       <p-datepicker
         inputId="date"
         showIcon
@@ -110,7 +96,7 @@
       <label for="date">{{ "transactionDate" | translate }}</label>
     </p-floatlabel>
 
-    <p-floatlabel variant="on" class="col-span-2">
+    <p-floatlabel variant="on" class="col-span-3">
       <textarea
         pTextarea
         id="Statement"
@@ -140,3 +126,37 @@
     />
   </div>
 </form>
+} @if (transactionId && !isUpdate) {
+<div class="grid grid-cols-4 gap-5">
+  <div class="col-span-2 flex flex-row align-baseline justify-start">
+    <h2 class="me-2 font-bold text-xl">{{ "name" | translate }}:</h2>
+    <p class="text-base text-md mt-1">
+      {{ transactionData.customer }}
+    </p>
+  </div>
+  <div class="col-span-2 flex flex-row align-baseline justify-start">
+    <h2 class="me-2 font-bold text-xl">{{ "supplier" | translate }}:</h2>
+    <p class="text-base text-md mt-1">
+      {{ transactionData.supplier }}
+    </p>
+  </div>
+  <div class="col-span-2 flex flex-row align-baseline justify-start">
+    <h2 class="me-2 font-bold text-xl">{{ "transactionDate" | translate }}:</h2>
+    <p class="text-base text-md mt-1">
+      {{ transactionData.pay_date | date : "dd/MM/yyyy" }}
+    </p>
+  </div>
+  <div class="col-span-2 flex flex-row align-baseline justify-start">
+    <h2 class="me-2 font-bold text-xl">{{ "amount" | translate }}:</h2>
+    <p class="text-base text-md mt-1">
+      {{ transactionData.amount }}
+    </p>
+  </div>
+  <div class="col-span-2 flex flex-row align-baseline justify-start">
+    <h2 class="me-2 font-bold text-xl">{{ "description" | translate }}:</h2>
+    <p class="text-base text-md mt-1">
+      {{ transactionData.discription }}
+    </p>
+  </div>
+</div>
+}
