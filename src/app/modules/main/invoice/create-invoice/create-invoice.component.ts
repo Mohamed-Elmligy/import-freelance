@@ -128,7 +128,7 @@ export default class CreateInvoiceComponent {
     this.route = [
       {
         icon: 'pi pi-receipt',
-        route: this.mainPaths.data,
+        route: this.mainPaths.invoicesList,
         queryParams: { type: 'invoices' },
       },
       { label: 'invoices', route: this.mainPaths.invoices },

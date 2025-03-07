@@ -65,7 +65,7 @@ export default class ShippingDataFormComponent {
     this.items = [
       {
         icon: 'pi pi-cart-arrow-down',
-        route: this.mainPaths.data,
+        route: this.mainPaths.shippingDataList,
         queryParams: { type: 'shippingData' },
       },
       { label: 'shippingData', route: this.mainPaths.shippingData },

@@ -59,7 +59,7 @@ export default class SuppliersComponent {
     this.items = [
       {
         icon: 'pi  pi-truck',
-        route: this.mainPaths.data,
+        route: this.mainPaths.suppliersList,
         queryParams: { type: 'suppliers' },
       },
       { label: 'suppliers', route: this.mainPaths.suppliers },

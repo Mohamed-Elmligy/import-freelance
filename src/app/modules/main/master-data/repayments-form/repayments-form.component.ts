@@ -66,7 +66,7 @@ export default class RepaymentsFormComponent {
     this.items = [
       {
         icon: 'pi pi-receipt',
-        route: this.mainPaths.data,
+        route: this.mainPaths.transactionsList,
         queryParams: { type: 'transactions' },
       },
       { label: 'transactions', route: this.mainPaths.transactions },

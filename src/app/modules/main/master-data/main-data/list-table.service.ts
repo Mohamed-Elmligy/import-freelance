@@ -7,8 +7,4 @@ import { ApiService } from '../../../../core/services/api.service';
 export class ListTableService {
   apiService = inject(ApiService);
   constructor() {}
-
-  getList(type: string) {
-    return this.apiService.getDataFromServer(`${type}/list`);
-  }
 }

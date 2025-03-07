@@ -9,14 +9,19 @@ import { ApiService } from './api.service';
 })
 export class SecurityService {
   readonly localKey = 'jwtToken';
-  private accessTokenInterval: any;
-
   router = inject(Router);
   API = inject(ApiService);
   browserStorageService = inject(BrowserStorageService);
 
+  get allJwtData() {
+    return this.retrieveJwtData();
+  }
   get jwtToken() {
-    return this.retrieveToken('access');
+    return this.retrieveAccess();
+  }
+
+  getRefreshToken() {
+    return this.retrieveRefreshToken();
   }
 
   get userType() {
@@ -27,63 +32,35 @@ export class SecurityService {
     return this.retrieveFullName();
   }
 
-  private newAccessTokenJob() {
-    this.accessTokenInterval = setInterval(() => {
-      this.newAccessToken();
-    }, 1200000); // ~20 mins
-  }
-
-  private newAccessToken() {
-    const refreshToken = this.retrieveToken('refresh');
-    this.API.sendDataToServer(API_AUTH.REFRESH_TOKEN, {
-      refresh: refreshToken,
-    }).subscribe(
-      (response: any) => {
-        this.browserStorageService.updateAccessToken(this.localKey, response);
-      },
-      () => {
-        this.logout();
-      }
-    );
-  }
-
-  blackListToken() {
-    if (this.browserStorageService.get('local', this.localKey) != null) {
-      this.API.sendDataToServer(API_AUTH.BLACKLIST_TOKEN, {}).subscribe(() => {
-        this.browserStorageService.remove('local', this.localKey);
-      });
-    }
-  }
-
   // #region actions
 
   logout() {
     this.browserStorageService.clear('local');
-    this.stopTokenInterval();
     this.router.navigate(['/auth/login']);
-    this.blackListToken();
-  }
-
-  getAccessToken() {
-    this.stopTokenInterval();
-    this.newAccessToken();
-    this.newAccessTokenJob();
-  }
-
-  stopTokenInterval() {
-    clearInterval(this.accessTokenInterval);
   }
 
   // #endregion
 
   // #region retrieve local storage actions
 
-  retrieveToken(type: string) {
+  retrieveJwtData() {
+    const jwtData = this.browserStorageService.get('local', this.localKey);
+    return jwtData;
+  }
+  retrieveAccess() {
     const access = this.browserStorageService.get(
       'local',
       this.localKey
     ).access;
     return access;
+  }
+
+  retrieveRefreshToken() {
+    const refresh = this.browserStorageService.get(
+      'local',
+      this.localKey
+    ).refresh;
+    return refresh;
   }
 
   retrieveUserType() {
@@ -108,6 +85,12 @@ export class SecurityService {
       this.localKey
     ).company;
     return company;
+  }
+
+  getNewAccessToken() {
+    return this.API.sendDataToServer(API_AUTH.REFRESH_TOKEN, {
+      refresh: this.getRefreshToken(),
+    });
   }
 
   // #endregion

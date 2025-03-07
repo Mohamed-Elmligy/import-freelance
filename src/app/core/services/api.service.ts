@@ -48,10 +48,9 @@ export class ApiService {
 
   deleteDataOnServer(
     base_url: string,
-    id?: string,
     list?: { [x: string]: number[] } | number[]
   ) {
-    return this.HTTP.delete(base_url + id, { body: list });
+    return this.HTTP.delete(base_url, { body: list });
   }
 
   // #region Handling Files

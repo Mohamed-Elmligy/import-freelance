@@ -9,8 +9,57 @@ const main_routes: Routes = [
     canActivate: [noCompanyUserGuard],
   },
   {
-    path: 'data',
-    loadComponent: () => import('./master-data/main-data/main-data.component'),
+    path: 'customers-list',
+    loadComponent: () =>
+      import('./master-data/customers/customer-list/customer-list.component'),
+    canActivate: [noCompanyUserGuard],
+  },
+  {
+    path: 'suppliers-list',
+    loadComponent: () =>
+      import('./master-data/suppliers/suppliers-list/suppliers-list.component'),
+    canActivate: [noCompanyUserGuard],
+  },
+  {
+    path: 'itemsCategory-list',
+    loadComponent: () =>
+      import('./master-data/items-category/items-list/items-list.component'),
+    canActivate: [noCompanyUserGuard],
+  },
+  {
+    path: 'payments-list',
+    loadComponent: () =>
+      import(
+        './master-data/payment-form/payments-list/payments-list.component'
+      ),
+    canActivate: [noCompanyUserGuard],
+  },
+  {
+    path: 'expenses-list',
+    loadComponent: () =>
+      import('./master-data/expense-form/expense-list/expense-list.component'),
+    canActivate: [noCompanyUserGuard],
+  },
+  {
+    path: 'transactions-list',
+    loadComponent: () =>
+      import(
+        './master-data/repayments-form/repayments-list/repayments-list.component'
+      ),
+    canActivate: [noCompanyUserGuard],
+  },
+  {
+    path: 'shippingData-list',
+    loadComponent: () =>
+      import(
+        './master-data/shipping-data-form/shipping-data-list/shipping-data-list.component'
+      ),
+    canActivate: [noCompanyUserGuard],
+  },
+  {
+    path: 'invoices-list',
+    loadComponent: () =>
+      import('./invoice/invoices-list/invoices-list.component'),
     canActivate: [noCompanyUserGuard],
   },
   {
@@ -74,7 +123,6 @@ export default main_routes;
 
 export const main_routes_paths = {
   home: '/main/home',
-  data: '/main/data',
   payments: '/main/payments',
   customers: '/main/customers',
   suppliers: '/main/suppliers',
@@ -85,4 +133,12 @@ export const main_routes_paths = {
   invoices: '/main/invoices',
   settings: '/main/settings',
   downloadReports: '/main/downloadReports',
+  paymentsList: '/main/payments-list',
+  customersList: '/main/customers-list',
+  suppliersList: '/main/suppliers-list',
+  itemsCategoryList: '/main/itemsCategory-list',
+  expensesList: '/main/expenses-list',
+  transactionsList: '/main/transactions-list',
+  shippingDataList: '/main/shippingData-list',
+  invoicesList: '/main/invoices-list',
 } as const;

@@ -21,20 +21,12 @@ import { PanelModule } from 'primeng/panel';
 import { DatePickerModule } from 'primeng/datepicker';
 
 import {
-  CUSTOMERS,
-  expenses,
-  invoices,
-  itemsCategory,
   officeBalance,
-  payments,
   shipmantReport,
-  shippingData,
-  suppliers,
   totalBalance,
   totalExpenses,
   totalPaids,
   totalPayments,
-  transactions,
 } from './table.data';
 import { MenuItem } from 'primeng/api';
 import { ListTableService } from './list-table.service';
@@ -71,8 +63,8 @@ export default class MainDataComponent {
   tableColumns: string[] = [];
   listType = signal<string>('');
   isReport = signal<boolean>(false);
+  resultsLength = 0;
   @ViewChild(MatPaginator) paginator!: MatPaginator;
-
   private _liveAnnouncer = inject(LiveAnnouncer);
   private activateRoute = inject(ActivatedRoute);
   languageService = inject(LanguagesService);
@@ -82,99 +74,9 @@ export default class MainDataComponent {
   ngOnInit() {
     this.activateRoute.queryParams.subscribe((param: any) => {
       this.listType.set(param.type);
+      this.tableListType(param);
       if (param.report == 'true') this.isReport.set(true);
       else this.isReport.set(false);
-      switch (param.type) {
-        case 'customers':
-          this.listService.getList('customer').subscribe((data: any) => {
-            this.tableColumns = Object.keys(data[0]);
-            this.displayedColumns = Object.keys(data[0]);
-            this.dataSource = new MatTableDataSource<any>(data);
-          });
-          // this.displayedColumns = Object.keys(CUSTOMERS[0]);
-          // this.dataSource = new MatTableDataSource<any>(CUSTOMERS);
-          // this.tableColumns = Object.keys(CUSTOMERS[0]);
-          break;
-        case 'suppliers':
-          this.listService.getList('supplier').subscribe((data: any) => {
-            this.tableColumns = Object.keys(data[0]);
-            this.displayedColumns = Object.keys(data[0]);
-            this.dataSource = new MatTableDataSource<any>(data);
-          });
-          break;
-        case 'itemsCategory':
-          this.listService.getList('item').subscribe((data: any) => {
-            this.tableColumns = Object.keys(data[0]);
-            this.displayedColumns = Object.keys(data[0]);
-            this.dataSource = new MatTableDataSource<any>(data);
-          });
-          break;
-        case 'payments':
-          this.listService.getList('payments').subscribe((data: any) => {
-            this.tableColumns = Object.keys(data[0]);
-            this.displayedColumns = Object.keys(data[0]);
-            this.dataSource = new MatTableDataSource<any>(data);
-          });
-          break;
-        case 'expenses':
-          this.listService.getList('expenses').subscribe((data: any) => {
-            this.tableColumns = Object.keys(data[0]);
-            this.displayedColumns = Object.keys(data[0]);
-            this.dataSource = new MatTableDataSource<any>(data);
-          });
-          break;
-        case 'transactions':
-          this.listService.getList('transaction').subscribe((data: any) => {
-            this.tableColumns = Object.keys(data[0]);
-            this.displayedColumns = Object.keys(data[0]);
-            this.dataSource = new MatTableDataSource<any>(data);
-          });
-          break;
-        case 'shippingData':
-          this.listService.getList('shippingData').subscribe((data: any) => {
-            this.tableColumns = Object.keys(data[0]);
-            this.displayedColumns = Object.keys(data[0]);
-            this.dataSource = new MatTableDataSource<any>(data);
-          });
-          break;
-        case 'shipmantReport':
-          this.tableColumns = Object.keys(shipmantReport[0]);
-          this.displayedColumns = Object.keys(shipmantReport[0]);
-          this.dataSource = new MatTableDataSource<any>(shipmantReport);
-          break;
-        case 'totalPayments':
-          this.tableColumns = Object.keys(totalPayments[0]);
-          this.displayedColumns = Object.keys(totalPayments[0]);
-          this.dataSource = new MatTableDataSource<any>(totalPayments);
-          break;
-        case 'totalBalance':
-          this.tableColumns = Object.keys(totalBalance[0]);
-          this.displayedColumns = Object.keys(totalBalance[0]);
-          this.dataSource = new MatTableDataSource<any>(totalBalance);
-          break;
-        case 'totalExpenses':
-          this.tableColumns = Object.keys(totalExpenses[0]);
-          this.displayedColumns = Object.keys(totalExpenses[0]);
-          this.dataSource = new MatTableDataSource<any>(totalExpenses);
-          break;
-        case 'totalPaids':
-          this.tableColumns = Object.keys(totalPaids[0]);
-          this.displayedColumns = Object.keys(totalPaids[0]);
-          this.dataSource = new MatTableDataSource<any>(totalPaids);
-          break;
-        case 'officeBalance':
-          this.tableColumns = Object.keys(officeBalance[0]);
-          this.displayedColumns = Object.keys(officeBalance[0]);
-          this.dataSource = new MatTableDataSource<any>(officeBalance);
-          break;
-        case 'invoices':
-          this.listService.getList('invoice').subscribe((data: any) => {
-            this.tableColumns = Object.keys(data[0]);
-            this.displayedColumns = Object.keys(data[0]);
-            this.dataSource = new MatTableDataSource<any>(data);
-          });
-          break;
-      }
     });
   }
 
@@ -191,10 +93,9 @@ export default class MainDataComponent {
     }
   }
 
-  downloadFile() {
-    if (this.listType()) {
-    }
-  }
+  editForm(type: any) {}
+  deleteForm(type: any) {}
+  viewForm(type: any) {}
 
   createForm() {
     this.router.navigate([`/main/${this.listType()}`]);
@@ -202,5 +103,97 @@ export default class MainDataComponent {
 
   ngAfterViewInit() {
     this.dataSource.paginator = this.paginator;
+  }
+
+  tableListType(param: { type: string }) {
+    switch (param.type) {
+      case 'customers':
+        this.listService.getList('customer').subscribe((data: any) => {
+          this.tableColumns = this.listService.customerHeaders;
+          this.displayedColumns = this.listService.customerHeaders;
+          this.dataSource = new MatTableDataSource<any>(data.results);
+          this.resultsLength = data.count;
+        });
+        break;
+      case 'suppliers':
+        this.listService.getList('supplier').subscribe((data: any) => {
+          this.tableColumns = Object.keys(data.results[0]);
+          this.displayedColumns = Object.keys(data.results[0]);
+          this.dataSource = new MatTableDataSource<any>(data.results);
+        });
+        break;
+      case 'itemsCategory':
+        this.listService.getList('item').subscribe((data: any) => {
+          this.tableColumns = Object.keys(data.results[0]);
+          this.displayedColumns = Object.keys(data.results[0]);
+          this.dataSource = new MatTableDataSource<any>(data.results);
+        });
+        break;
+      case 'payments':
+        this.listService.getList('payments').subscribe((data: any) => {
+          this.tableColumns = Object.keys(data.results[0]);
+          this.displayedColumns = Object.keys(data.results[0]);
+          this.dataSource = new MatTableDataSource<any>(data.results);
+        });
+        break;
+      case 'expenses':
+        this.listService.getList('expenses').subscribe((data: any) => {
+          this.tableColumns = Object.keys(data.results[0]);
+          this.displayedColumns = Object.keys(data.results[0]);
+          this.dataSource = new MatTableDataSource<any>(data.results);
+        });
+        break;
+      case 'transactions':
+        this.listService.getList('transaction').subscribe((data: any) => {
+          this.tableColumns = Object.keys(data.results[0]);
+          this.displayedColumns = Object.keys(data.results[0]);
+          this.dataSource = new MatTableDataSource<any>(data.results);
+        });
+        break;
+      case 'shippingData':
+        this.listService.getList('shippingData').subscribe((data: any) => {
+          this.tableColumns = Object.keys(data.results[0]);
+          this.displayedColumns = Object.keys(data.results[0]);
+          this.dataSource = new MatTableDataSource<any>(data.results);
+        });
+        break;
+      case 'shipmantReport':
+        this.tableColumns = Object.keys(shipmantReport[0]);
+        this.displayedColumns = Object.keys(shipmantReport[0]);
+        this.dataSource = new MatTableDataSource<any>(shipmantReport);
+        break;
+      case 'totalPayments':
+        this.tableColumns = Object.keys(totalPayments[0]);
+        this.displayedColumns = Object.keys(totalPayments[0]);
+        this.dataSource = new MatTableDataSource<any>(totalPayments);
+        break;
+      case 'totalBalance':
+        this.tableColumns = Object.keys(totalBalance[0]);
+        this.displayedColumns = Object.keys(totalBalance[0]);
+        this.dataSource = new MatTableDataSource<any>(totalBalance);
+        break;
+      case 'totalExpenses':
+        this.tableColumns = Object.keys(totalExpenses[0]);
+        this.displayedColumns = Object.keys(totalExpenses[0]);
+        this.dataSource = new MatTableDataSource<any>(totalExpenses);
+        break;
+      case 'totalPaids':
+        this.tableColumns = Object.keys(totalPaids[0]);
+        this.displayedColumns = Object.keys(totalPaids[0]);
+        this.dataSource = new MatTableDataSource<any>(totalPaids);
+        break;
+      case 'officeBalance':
+        this.tableColumns = Object.keys(officeBalance[0]);
+        this.displayedColumns = Object.keys(officeBalance[0]);
+        this.dataSource = new MatTableDataSource<any>(officeBalance);
+        break;
+      case 'invoices':
+        this.listService.getList('invoice').subscribe((data: any) => {
+          this.tableColumns = Object.keys(data[0]);
+          this.displayedColumns = Object.keys(data[0]);
+          this.dataSource = new MatTableDataSource<any>(data);
+        });
+        break;
+    }
   }
 }

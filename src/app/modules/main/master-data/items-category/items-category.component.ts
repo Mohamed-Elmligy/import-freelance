@@ -137,7 +137,7 @@ export default class ItemsCategoryComponent {
     this.items = [
       {
         icon: 'pi  pi-objects-column',
-        route: this.mainPaths.data,
+        route: this.mainPaths.itemsCategoryList,
         queryParams: { type: 'itemsCategory' },
       },
       { label: 'itemsCategory', route: this.mainPaths.itemsCategory },

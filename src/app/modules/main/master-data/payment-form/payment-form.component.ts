@@ -65,7 +65,7 @@ export default class PaymentFormComponent {
     this.items = [
       {
         icon: 'pi pi-wallet',
-        route: this.mainPaths.data,
+        route: this.mainPaths.paymentsList,
         queryParams: { type: 'payments' },
       },
       { label: 'payments', route: this.mainPaths.payments },

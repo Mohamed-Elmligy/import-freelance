@@ -66,7 +66,7 @@ export default class ExpenseFormComponent {
     this.items = [
       {
         icon: 'pi pi-dollar',
-        route: this.mainPaths.data,
+        route: this.mainPaths.expensesList,
         queryParams: { type: 'expenses' },
       },
       { label: 'expenses', route: this.mainPaths.expenses },

@@ -1,0 +1,120 @@
+<div class="surface-section px-4 py-5 md:px-6 lg:px-8">
+  <div class="flex align-baseline flex-col lg:justify-between lg:flex-row">
+    <div>
+      <div class="font-medium text-3xl text-900">
+        {{ "customers" | translate }}
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="mat-elevation-z8">
+  <p-toolbar class="my-4 w-full">
+    <ng-template #center>
+      <div class="flex flex-row align-baseline justify-around">
+        <div class="grid md:grid-cols-4 sm:grid-cols-1">
+          <p-floatlabel variant="on" class="col-span-1">
+            <input pInputText id="user_name" class="" />
+            <label for="user_name">{{ "name" | translate }}</label>
+          </p-floatlabel>
+
+          <p-float-label variant="on" class="col-span-1">
+            <p-datepicker
+              [iconDisplay]="'input'"
+              [showIcon]="true"
+              inputId="icondisplay"
+              selectionMode="range"
+              [readonlyInput]="true"
+              [showButtonBar]="true"
+              styleClass="w-full"
+            />
+            <label for="on_label">{{ "date" | translate }}</label>
+          </p-float-label>
+        </div>
+      </div>
+    </ng-template>
+    <ng-template #end>
+      <button
+        pButton
+        pRipple
+        [label]="'search' | translate"
+        class="!bg-primary !border-primary me-2"
+      ></button>
+      <button
+        pButton
+        pRipple
+        [label]="'add' | translate"
+        icon="pi pi-plus"
+        class="!bg-secondary !border-secondary"
+        [routerLink]="main_routes.customers"
+      ></button>
+    </ng-template>
+  </p-toolbar>
+
+  <table
+    mat-table
+    [dataSource]="dataSource"
+    matSort
+    (matSortChange)="announceSortChange($event)"
+  >
+    @for (col of tableColumns; track $index) { @if (col != 'actions') {
+    <ng-container [matColumnDef]="col">
+      <th
+        mat-header-cell
+        *matHeaderCellDef
+        mat-sort-header
+        [sortActionDescription]="'Sort by number' + col"
+      >
+        {{ col | translate }}
+      </th>
+      <td mat-cell *matCellDef="let element">{{ element[col] }}</td>
+    </ng-container>
+    } @if(col == 'actions'){
+    <ng-container [matColumnDef]="col">
+      <th mat-header-cell *matHeaderCellDef style="width: 200px">
+        {{ "actions" | translate }}
+      </th>
+      <td mat-cell *matCellDef="let element">
+        <p-button
+          icon="pi pi-eye"
+          [rounded]="true"
+          [text]="true"
+          pTooltip="View"
+          tooltipPosition="top"
+          (click)="viewCustomer(element.id)"
+          severity="success"
+        ></p-button>
+        <p-button
+          icon="pi pi-pencil"
+          [rounded]="true"
+          [text]="true"
+          severity="info"
+          pTooltip="Edit"
+          tooltipPosition="top"
+          (click)="editCustomer(element.id)"
+        ></p-button>
+        <p-button
+          icon="pi pi-trash"
+          [rounded]="true"
+          [text]="true"
+          pTooltip="Delete"
+          tooltipPosition="top"
+          (click)="deleteCustomer(element.id)"
+          severity="danger"
+        ></p-button>
+      </td>
+    </ng-container>
+    } }
+
+    <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+    <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
+  </table>
+
+  <mat-paginator
+    [pageSizeOptions]="[10, 20, 50]"
+    showFirstLastButtons
+    aria-label="Select page of"
+    [length]="resultsLength"
+  >
+  </mat-paginator>
+</div>
