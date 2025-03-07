@@ -33,39 +33,21 @@
   </div>
 </div>
 
+@if ((paymentId && isUpdate)|| (!paymentId && !isUpdate)) {
 <form class="max-w-3xl mx-auto" [formGroup]="form" (ngSubmit)="submit(form)">
   <div class="grid grid-cols-4 gap-5">
     <p-floatlabel class="col-span-4 my-2" variant="on">
       <p-select
-        [options]="cities"
+        [options]="listOfCustomers()"
         optionLabel="name"
         [filter]="true"
         filterBy="name"
         [showClear]="true"
         class="w-full"
+        formControlName="name"
       >
-        <ng-template #selectedItem let-selectedOption>
-          <div class="flex items-center gap-2">
-            <img
-              src="https://primefaces.org/cdn/primeng/images/demo/flag/flag_placeholder.png"
-              [class]="'flag flag-' + selectedCountry"
-              style="width: 18px"
-            />
-            <div>{{ selectedOption.name }}</div>
-          </div>
-        </ng-template>
-        <ng-template let-country #item>
-          <div class="flex items-center gap-2">
-            <img
-              src="https://primefaces.org/cdn/primeng/images/demo/flag/flag_placeholder.png"
-              [class]="'flag flag-' + country.code.toLowerCase()"
-              style="width: 18px"
-            />
-            <div>{{ country.name }}</div>
-          </div>
-        </ng-template>
       </p-select>
-      <label for="country">{{ "name" | translate }}</label>
+      <label for="customer">{{ "name" | translate }}</label>
     </p-floatlabel>
     <p-floatlabel variant="on" class="md:col-span-2 col-span-4 my-2">
       <p-datepicker
@@ -119,3 +101,32 @@
     />
   </div>
 </form>
+} @if (paymentId && !isUpdate) {
+<div class="grid grid-cols-4 gap-5">
+  <div class="col-span-2 flex flex-row align-baseline justify-start">
+    <h2 class="me-2 font-bold text-xl">{{ "name" | translate }}:</h2>
+    <p class="text-base text-md mt-1">
+      {{ paymentData.customer }}
+    </p>
+  </div>
+  <div class="col-span-2 flex flex-row align-baseline justify-start">
+    <h2 class="me-2 font-bold text-xl">{{ "amount" | translate }}:</h2>
+    <p class="text-base text-md mt-1">
+      {{ paymentData.amount }}
+    </p>
+  </div>
+  <div class="col-span-2 flex flex-row align-baseline justify-start">
+    <h2 class="me-2 font-bold text-xl">{{ "expenseDate" | translate }}:</h2>
+    <p class="text-base text-md mt-1">
+      {{ paymentData.payment_date | date : "dd/MM/yyyy" }}
+    </p>
+  </div>
+  <div class="col-span-2 flex flex-row align-baseline justify-start">
+    <h2 class="me-2 font-bold text-xl">{{ "description" | translate }}:</h2>
+    <p class="text-base text-md mt-1">
+      {{ paymentData.description }}
+    </p>
+  </div>
+</div>
+
+}

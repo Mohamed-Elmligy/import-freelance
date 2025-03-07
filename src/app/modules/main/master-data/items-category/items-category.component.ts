@@ -7,7 +7,7 @@ import {
   Validators,
   FormGroup,
 } from '@angular/forms';
-import { RouterModule } from '@angular/router';
+import { ActivatedRoute, RouterModule } from '@angular/router';
 import { TranslateModule } from '@ngx-translate/core';
 import { MenuItem } from 'primeng/api';
 import { BreadcrumbModule } from 'primeng/breadcrumb';
@@ -23,6 +23,9 @@ import { BadgeModule } from 'primeng/badge';
 import { HttpClientModule } from '@angular/common/http';
 import { ProgressBar } from 'primeng/progressbar';
 import { ToastModule } from 'primeng/toast';
+import { LookupsService } from '../../../shared/services/lookups.service';
+import { ExpenseService } from '../expense-form/expense.service';
+import { ItemsCategoryService } from './items-category.service';
 @Component({
   selector: 'app-items-category',
   imports: [
@@ -37,115 +40,73 @@ import { ToastModule } from 'primeng/toast';
     FormsModule,
     ReactiveFormsModule,
     TextareaModule,
-    FileUpload,
     ToastModule,
-
-    FileUpload,
     ButtonModule,
     BadgeModule,
-    ProgressBar,
     ToastModule,
-    HttpClientModule,
   ],
   templateUrl: './items-category.component.html',
   styles: ``,
   providers: [MessageService],
 })
 export default class ItemsCategoryComponent {
-  items: MenuItem[] | undefined;
   mainPaths = main_routes_paths;
+
+  items: MenuItem[] | undefined;
+
+  private activatedRoute = inject(ActivatedRoute);
   private formBuilder = inject(FormBuilder);
-  private messageService = inject(MessageService);
+  private itemService = inject(ItemsCategoryService);
+
+  isUpdate = this.activatedRoute.snapshot.queryParams['edit'] == 'true';
+  itemId = this.activatedRoute.snapshot.queryParams['itemId'];
+
+  itemData: {
+    name: string;
+    description: string;
+  } = {
+    name: '',
+    description: '',
+  };
 
   protected form = this.formBuilder.group({
     name: [null, [Validators.required]],
-    code: [null, [Validators.required]],
-    file: [null, [Validators.required]],
+    description: [null, [Validators.required]],
   });
 
-  files = [];
-
-  totalSize: number = 0;
-
-  totalSizePercent: number = 0;
-
-  constructor(private config: PrimeNG) {}
-
-  choose(event: any, callback: any) {
-    callback();
-  }
-
-  onRemoveTemplatingFile(
-    event: any,
-    file: any,
-    removeFileCallback: any,
-    index: any
-  ) {
-    removeFileCallback(event, index);
-    this.totalSize -= parseInt(this.formatSize(file.size));
-    this.totalSizePercent = this.totalSize / 10;
-  }
-
-  onClearTemplatingUpload(clear: any) {
-    clear();
-    this.totalSize = 0;
-    this.totalSizePercent = 0;
-  }
-
-  onTemplatedUpload() {
-    this.messageService.add({
-      severity: 'info',
-      summary: 'Success',
-      detail: 'File Uploaded',
-      life: 3000,
-    });
-  }
-
-  onSelectedFiles(event: any) {
-    this.files = event.currentFiles;
-    this.files.forEach((file: any) => {
-      this.totalSize += parseInt(this.formatSize(file.size));
-    });
-    this.totalSizePercent = this.totalSize / 10;
-  }
-
-  uploadEvent(callback: any) {
-    callback();
-  }
-
-  formatSize(bytes: any) {
-    const k = 1024;
-    const dm = 3;
-    const sizes: any = this.config.translation.fileSizeTypes;
-    if (bytes === 0) {
-      return `0 ${sizes[0]}`;
-    }
-
-    const i = Math.floor(Math.log(bytes) / Math.log(k));
-    const formattedSize = parseFloat((bytes / Math.pow(k, i)).toFixed(dm));
-
-    return `${formattedSize} ${sizes[i]}`;
-  }
   submit(form: FormGroup) {
-    console.log(form.value);
+    if (form.valid) {
+      if (!this.isUpdate) this.itemService.createItem(form);
+      else this.itemService.updateItem(form, this.itemId);
+    }
   }
 
   reset(form: FormGroup) {
     form.reset();
   }
+
   ngOnInit() {
     this.items = [
       {
-        icon: 'pi  pi-objects-column',
+        icon: 'pi pi-dollar',
         route: this.mainPaths.itemsCategoryList,
-        queryParams: { type: 'itemsCategory' },
       },
-      { label: 'itemsCategory', route: this.mainPaths.itemsCategory },
+      { label: 'item', route: this.mainPaths.itemsCategory },
     ];
+    if (this.itemId && !this.isUpdate) this.getItemById();
+    if (this.itemId && this.isUpdate) this.updateItem();
   }
-}
 
-interface UploadEvent {
-  originalEvent: Event;
-  files: File[];
+  getItemById() {
+    this.itemService.getItemById(this.itemId).subscribe((data: any) => {
+      this.itemData = data;
+    });
+  }
+  updateItem() {
+    if (this.isUpdate) {
+      this.itemService.getItemById(this.itemId).subscribe((data) => {
+        this.itemService.apiModelToComponentModel(this.form, data);
+      });
+    }
+  }
 }

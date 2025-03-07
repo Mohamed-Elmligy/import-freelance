@@ -1,8 +1,9 @@
-import { inject, Injectable } from '@angular/core';
+import { inject, Injectable, signal } from '@angular/core';
 import { FormGroup } from '@angular/forms';
 import { ApiService } from '../../../../core/services/api.service';
 import { ShowMessageService } from '../../../../core/services/show-message.service';
 import { EXPENSE_APIS } from './expense.apis';
+import { formatDate } from '@angular/common';
 
 @Injectable({
   providedIn: 'root',
@@ -10,9 +11,11 @@ import { EXPENSE_APIS } from './expense.apis';
 export class ExpenseService {
   private apiService = inject(ApiService);
   private showMessageService = inject(ShowMessageService);
+  listOfCustomers = signal([]);
+  expenseDeleted = signal(false);
 
   ExpenseHeaders = [
-    'customer',
+    'name',
     'containerNumber',
     'amount',
     'expenseDate',
@@ -25,20 +28,28 @@ export class ExpenseService {
 
   componentModelToApiModel(form: FormGroup) {
     return {
-      customer: form.get('name')?.value,
+      customer: form.get('name')?.value.id,
       container_number: form.get('containerNumber')?.value,
       amount: form.get('amount')?.value,
-      expense_date: form.get('expenseDate')?.value,
+      expense_date: formatDate(
+        form.get('expenseDate')?.value,
+        'YYYY-MM-dd',
+        'en-US'
+      ),
       description: form.get('description')?.value,
     };
   }
 
   apiModelToComponentModel(form: FormGroup, data: any) {
+    const selectedCustomer = this.listOfCustomers().find(
+      (item: any) => item.id === data.customer
+    );
     form.patchValue({
-      name: data.customer,
+      name: selectedCustomer,
       containerNumber: data.container_number,
       amount: data.amount,
       expenseDate: data.expense_date,
+      description: data.description,
     });
   }
 
@@ -49,15 +60,17 @@ export class ExpenseService {
       amount: string;
       expense_date: string;
       description: string;
+      id: string;
     }[]
   ) {
     return data.map((item) => {
       return {
-        customer: item.customer,
+        name: item.customer,
         containerNumber: item.container_number,
         amount: item.amount,
         expenseDate: item.expense_date,
         description: item.description,
+        id: item.id,
       };
     });
   }
@@ -116,6 +129,7 @@ export class ExpenseService {
             'Expense Deleted',
             'Expense has been deleted successfully'
           );
+          this.expenseDeleted.set(true);
         },
         error: (err) => {
           this.showMessageService.showMessage('error', 'Error', err.error);

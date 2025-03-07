@@ -11,15 +11,15 @@ import { InputTextModule } from 'primeng/inputtext';
 import { DatePicker } from 'primeng/datepicker';
 import { MenuItem } from 'primeng/api';
 import { BreadcrumbModule } from 'primeng/breadcrumb';
-import { RouterModule } from '@angular/router';
+import { ActivatedRoute, RouterModule } from '@angular/router';
 import { CommonModule } from '@angular/common';
 import { main_routes_paths } from '../../main.routes';
 import { TranslateModule } from '@ngx-translate/core';
 import { TextareaModule } from 'primeng/textarea';
 import { ButtonModule } from 'primeng/button';
-import { cities, City } from '../payment-form/payment-form.component';
 import { SelectModule } from 'primeng/select';
 import { LookupsService } from '../../../shared/services/lookups.service';
+import { ExpenseService } from './expense.service';
 
 @Component({
   selector: 'app-expense-form',
@@ -42,13 +42,30 @@ import { LookupsService } from '../../../shared/services/lookups.service';
 export default class ExpenseFormComponent {
   mainPaths = main_routes_paths;
 
-  cities!: City[];
   items: MenuItem[] | undefined;
-  selectedCountry: string | undefined;
   listOfCustomers = signal([]);
 
   private formBuilder = inject(FormBuilder);
+  private activatedRoute = inject(ActivatedRoute);
   private lookupService = inject(LookupsService);
+  private expensesService = inject(ExpenseService);
+
+  isUpdate = this.activatedRoute.snapshot.queryParams['edit'] == 'true';
+  expenseId = this.activatedRoute.snapshot.queryParams['expenseId'];
+
+  expenseData: {
+    amount: number;
+    container_number: number;
+    customer: string;
+    expense_date: Date;
+    description: string;
+  } = {
+    amount: 0,
+    container_number: 0,
+    customer: '',
+    expense_date: new Date(),
+    description: '',
+  };
 
   protected form = this.formBuilder.group({
     name: [null, [Validators.required]],
@@ -59,7 +76,10 @@ export default class ExpenseFormComponent {
   });
 
   submit(form: FormGroup) {
-    console.log(form.value);
+    if (form.valid) {
+      if (!this.isUpdate) this.expensesService.createExpense(form);
+      else this.expensesService.updateExpense(form, this.expenseId);
+    }
   }
 
   reset(form: FormGroup) {
@@ -69,6 +89,7 @@ export default class ExpenseFormComponent {
   ngOnInit() {
     this.lookupService.getListOfLookups('customers').subscribe((data: any) => {
       this.listOfCustomers.set(data);
+      this.expensesService.listOfCustomers.set(data);
     });
     this.items = [
       {
@@ -78,6 +99,22 @@ export default class ExpenseFormComponent {
       },
       { label: 'expenses', route: this.mainPaths.expenses },
     ];
-    this.cities = cities;
+    if (this.expenseId && !this.isUpdate) this.getExpenseById();
+    if (this.expenseId && this.isUpdate) this.updateExpense();
+  }
+
+  getExpenseById() {
+    this.expensesService
+      .getExpenseById(this.expenseId)
+      .subscribe((data: any) => {
+        this.expenseData = data;
+      });
+  }
+  updateExpense() {
+    if (this.isUpdate) {
+      this.expensesService.getExpenseById(this.expenseId).subscribe((data) => {
+        this.expensesService.apiModelToComponentModel(this.form, data);
+      });
+    }
   }
 }

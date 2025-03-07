@@ -74,6 +74,7 @@ export default class CustomersComponent {
   reset(form: FormGroup) {
     form.reset();
   }
+  
   ngOnInit() {
     this.items = [
       {

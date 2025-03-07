@@ -33,6 +33,7 @@
   </div>
 </div>
 
+@if ((expenseId && isUpdate)|| (!expenseId && !isUpdate)) {
 <form class="max-w-3xl mx-auto" [formGroup]="form" (ngSubmit)="submit(form)">
   <div class="grid grid-cols-3">
     <p-floatlabel class="col-span-4 my-2" variant="on">
@@ -43,17 +44,8 @@
         filterBy="name"
         [showClear]="true"
         class="w-full"
+        formControlName="name"
       >
-        <ng-template #selectedItem let-selectedOption>
-          <div class="flex items-center gap-2">
-            <div>{{ selectedOption.name }}</div>
-          </div>
-        </ng-template>
-        <ng-template let-customer #item>
-          <div class="flex items-center gap-2">
-            <div>{{ customer.name }}</div>
-          </div>
-        </ng-template>
       </p-select>
       <label for="customer">{{ "name" | translate }}</label>
     </p-floatlabel>
@@ -120,3 +112,38 @@
     />
   </div>
 </form>
+} @if (expenseId && !isUpdate) {
+<div class="grid grid-cols-4 gap-5">
+  <div class="col-span-2 flex flex-row align-baseline justify-start">
+    <h2 class="me-2 font-bold text-xl">{{ "name" | translate }}:</h2>
+    <p class="text-base text-md mt-1">
+      {{ expenseData.customer }}
+    </p>
+  </div>
+  <div class="col-span-2 flex flex-row align-baseline justify-start">
+    <h2 class="me-2 font-bold text-xl">{{ "amount" | translate }}:</h2>
+    <p class="text-base text-md mt-1">
+      {{ expenseData.amount }}
+    </p>
+  </div>
+  <div class="col-span-2 flex flex-row align-baseline justify-start">
+    <h2 class="me-2 font-bold text-xl">{{ "containerNumber" | translate }}:</h2>
+    <p class="text-base text-md mt-1">
+      {{ expenseData.container_number }}
+    </p>
+  </div>
+
+  <div class="col-span-2 flex flex-row align-baseline justify-start">
+    <h2 class="me-2 font-bold text-xl">{{ "expenseDate" | translate }}:</h2>
+    <p class="text-base text-md mt-1">
+      {{ expenseData.expense_date | date : "dd/MM/yyyy" }}
+    </p>
+  </div>
+  <div class="col-span-2 flex flex-row align-baseline justify-start">
+    <h2 class="me-2 font-bold text-xl">{{ "description" | translate }}:</h2>
+    <p class="text-base text-md mt-1">
+      {{ expenseData.description }}
+    </p>
+  </div>
+</div>
+}

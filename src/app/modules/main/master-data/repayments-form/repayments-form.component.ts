@@ -16,7 +16,6 @@ import { CommonModule } from '@angular/common';
 import { main_routes_paths } from '../../main.routes';
 import { ButtonModule } from 'primeng/button';
 import { TranslateModule } from '@ngx-translate/core';
-import { cities, City } from '../payment-form/payment-form.component';
 import { MultiSelectModule } from 'primeng/multiselect';
 import { TextareaModule } from 'primeng/textarea';
 @Component({
@@ -38,7 +37,6 @@ import { TextareaModule } from 'primeng/textarea';
   templateUrl: './repayments-form.component.html',
 })
 export default class RepaymentsFormComponent {
-  cities!: City[];
   mainPaths = main_routes_paths;
   items: MenuItem[] | undefined;
 
@@ -71,6 +69,5 @@ export default class RepaymentsFormComponent {
       },
       { label: 'transactions', route: this.mainPaths.transactions },
     ];
-    this.cities = cities;
   }
 }

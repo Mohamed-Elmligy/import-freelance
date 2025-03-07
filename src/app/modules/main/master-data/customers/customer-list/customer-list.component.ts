@@ -1,6 +1,6 @@
 import { LiveAnnouncer } from '@angular/cdk/a11y';
 import { CommonModule } from '@angular/common';
-import { Component, inject, signal, ViewChild } from '@angular/core';
+import { Component, effect, inject, signal, ViewChild } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
@@ -9,18 +9,14 @@ import { MatSortModule, Sort } from '@angular/material/sort';
 import { MatTableModule, MatTableDataSource } from '@angular/material/table';
 import { RouterModule, ActivatedRoute, Router } from '@angular/router';
 import { TranslateModule } from '@ngx-translate/core';
-import { MenuItem } from 'primeng/api';
 import { ButtonModule } from 'primeng/button';
 import { DatePickerModule } from 'primeng/datepicker';
 import { FloatLabelModule } from 'primeng/floatlabel';
-import { IconField } from 'primeng/iconfield';
-import { InputIcon } from 'primeng/inputicon';
 import { InputTextModule } from 'primeng/inputtext';
 import { PanelModule } from 'primeng/panel';
 import { ToolbarModule, Toolbar } from 'primeng/toolbar';
 import { SecurityService } from '../../../../../core/services/security.service';
 import { LanguagesService } from '../../../../shared/services/languages.service';
-import { ListTableService } from '../../main-data/list-table.service';
 import { main_routes_paths } from '../../../main.routes';
 import { TooltipModule } from 'primeng/tooltip';
 import { CustomersService } from '../customers.service';
@@ -64,8 +60,12 @@ export default class CustomerListComponent {
   tableColumns: string[] = [];
   resultsLength = 0;
 
-  ngOnInit() {
-    this.getCustomersList();
+  constructor() {
+    effect(() => {
+      this.customerService.customerDeleted();
+      this.getCustomersList();
+      this.customerService.customerDeleted.set(false);
+    });
   }
 
   getCustomersList() {
@@ -75,8 +75,6 @@ export default class CustomerListComponent {
       let ModifideData: any = this.customerService.apiModelToComponentModelList(
         data.results
       );
-      console.log(ModifideData);
-
       this.dataSource = new MatTableDataSource<any>(ModifideData);
       this.resultsLength = data.count;
     });
@@ -100,6 +98,7 @@ export default class CustomerListComponent {
       queryParams: { customerId: customerId, edit: true },
     });
   }
+
   deleteCustomer(id: string) {
     this.customerService.deleteCustomer(id);
   }

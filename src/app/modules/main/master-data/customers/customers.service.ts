@@ -1,4 +1,4 @@
-import { inject, Injectable } from '@angular/core';
+import { inject, Injectable, signal } from '@angular/core';
 import { FormGroup } from '@angular/forms';
 import { ApiService } from '../../../../core/services/api.service';
 import { CUSTOMER_APIS } from './customer.apis';
@@ -12,6 +12,7 @@ export class CustomersService {
   private apiService = inject(ApiService);
   private showMessageService = inject(ShowMessageService);
   private location = inject(Location);
+  customerDeleted = signal(false);
 
   customerHeaders = ['name', 'email', 'code', 'commission', 'actions'];
 
@@ -45,6 +46,7 @@ export class CustomersService {
       email: string;
       code: string;
       commession: string;
+      id: string;
     }[]
   ) {
     return data.map((item) => {
@@ -53,6 +55,7 @@ export class CustomersService {
         email: item.email,
         code: item.code,
         commission: item.commession,
+        id: item.id,
       };
     });
   }
@@ -114,7 +117,7 @@ export class CustomersService {
             'Customer Deleted',
             'Customer has been deleted successfully'
           );
-          this.getList();
+          this.customerDeleted.set(true);
         },
         error: (err) => {
           this.showMessageService.showMessage('error', 'Error', err.error);

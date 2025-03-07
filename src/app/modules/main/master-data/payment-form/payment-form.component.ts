@@ -1,4 +1,4 @@
-import { Component, inject } from '@angular/core';
+import { Component, inject, signal } from '@angular/core';
 import {
   FormBuilder,
   FormGroup,
@@ -11,13 +11,15 @@ import { InputTextModule } from 'primeng/inputtext';
 import { DatePicker } from 'primeng/datepicker';
 import { MenuItem } from 'primeng/api';
 import { BreadcrumbModule } from 'primeng/breadcrumb';
-import { RouterModule } from '@angular/router';
+import { ActivatedRoute, RouterModule } from '@angular/router';
 import { CommonModule } from '@angular/common';
 import { main_routes_paths } from '../../main.routes';
 import { ButtonModule } from 'primeng/button';
 import { TextareaModule } from 'primeng/textarea';
 import { TranslateModule } from '@ngx-translate/core';
 import { SelectModule } from 'primeng/select';
+import { LookupsService } from '../../../shared/services/lookups.service';
+import { PaymentService } from './payment.service';
 
 @Component({
   selector: 'app-payment-form',
@@ -39,12 +41,18 @@ import { SelectModule } from 'primeng/select';
   templateUrl: './payment-form.component.html',
 })
 export default class PaymentFormComponent {
-  cities!: City[];
   mainPaths = main_routes_paths;
   items: MenuItem[] | undefined;
   selectedCountry: string | undefined;
+  listOfCustomers = signal([]);
 
   private formBuilder = inject(FormBuilder);
+  private activatedRoute = inject(ActivatedRoute);
+  private lookupService = inject(LookupsService);
+  private paymentService = inject(PaymentService);
+
+  isUpdate = this.activatedRoute.snapshot.queryParams['edit'] == 'true';
+  paymentId = this.activatedRoute.snapshot.queryParams['paymentId'];
 
   protected form = this.formBuilder.group({
     name: [null, [Validators.required]],
@@ -53,8 +61,25 @@ export default class PaymentFormComponent {
     description: [null, [Validators.required]],
   });
 
+  paymentData: {
+    customer: string;
+    amount: string;
+    payment_date: Date;
+    description: string;
+    name: string;
+  } = {
+    amount: '',
+    customer: '',
+    payment_date: new Date(),
+    description: '',
+    name: '',
+  };
+
   submit(form: FormGroup) {
-    console.log(form.value);
+    if (form.valid) {
+      if (!this.isUpdate) this.paymentService.createPayment(form);
+      else this.paymentService.updatePayment(form, this.paymentId);
+    }
   }
 
   reset(form: FormGroup) {
@@ -62,6 +87,10 @@ export default class PaymentFormComponent {
   }
 
   ngOnInit() {
+    this.lookupService.getListOfLookups('customers').subscribe((data: any) => {
+      this.listOfCustomers.set(data);
+      this.paymentService.listOfCustomers.set(data);
+    });
     this.items = [
       {
         icon: 'pi pi-wallet',
@@ -71,18 +100,22 @@ export default class PaymentFormComponent {
       { label: 'payments', route: this.mainPaths.payments },
     ];
 
-    this.cities = cities;
+    if (this.paymentId && !this.isUpdate) this.getPaymentById();
+    if (this.paymentId && this.isUpdate) this.updatePayment();
   }
-}
 
-export const cities = [
-  { name: 'New York', code: 'NY' },
-  { name: 'Rome', code: 'RM' },
-  { name: 'London', code: 'LDN' },
-  { name: 'Istanbul', code: 'IST' },
-  { name: 'Paris', code: 'PRS' },
-];
-export interface City {
-  name: string;
-  code: string;
+  getPaymentById() {
+    this.paymentService
+      .getPaymentById(this.paymentId)
+      .subscribe((data: any) => {
+        this.paymentData = data;
+      });
+  }
+  updatePayment() {
+    if (this.isUpdate) {
+      this.paymentService.getPaymentById(this.paymentId).subscribe((data) => {
+        this.paymentService.apiModelToComponentModel(this.form, data);
+      });
+    }
+  }
 }

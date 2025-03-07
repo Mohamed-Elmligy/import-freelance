@@ -1,6 +1,6 @@
 import { LiveAnnouncer } from '@angular/cdk/a11y';
 import { CommonModule } from '@angular/common';
-import { Component, inject, ViewChild } from '@angular/core';
+import { Component, effect, inject, ViewChild } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
@@ -60,11 +60,15 @@ export default class ExpenseListComponent {
   tableColumns: string[] = [];
   resultsLength = 0;
 
-  ngOnInit() {
-    this.getCustomersList();
+  constructor() {
+    effect(() => {
+      this.ExpenseService.expenseDeleted();
+      this.getExpenseList();
+      this.ExpenseService.expenseDeleted.set(false);
+    });
   }
 
-  getCustomersList() {
+  getExpenseList() {
     this.ExpenseService.getList().subscribe((data: any) => {
       this.tableColumns = this.ExpenseService.ExpenseHeaders;
       this.displayedColumns = this.ExpenseService.ExpenseHeaders;
