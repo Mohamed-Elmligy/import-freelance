@@ -45,15 +45,23 @@ export class RepaymentService {
   }
 
   apiModelToComponentModel(form: FormGroup, data: any) {
+    console.log(data);
+
     const selectedCustomer = this.listOfCustomers().find(
-      (item: any) => item.id === data.customer
+      (item: any) => item.name === data.customer
+    );
+    const selectedSupplier = this.listOfSuppliers().find(
+      (item: any) => item.name === data.supplier
+    );
+    const selectedInvoice = this.listOfInvoices().find(
+      (item: any) => item.invoice_number === data.invoice
     );
     form.patchValue({
       customer: selectedCustomer,
-      invoiceNumber: data.invoice,
-      supplierNumber: data.supplier,
+      invoiceNumber: selectedInvoice,
+      supplierNumber: selectedSupplier,
       remainingAmount: data.amount,
-      transactionDate: data.pay_date,
+      transactionDate: new Date(data.pay_date),
       discription: data.discription,
     });
   }
