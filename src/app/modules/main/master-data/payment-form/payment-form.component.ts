@@ -111,6 +111,7 @@ export default class PaymentFormComponent {
         this.paymentData = data;
       });
   }
+  
   updatePayment() {
     if (this.isUpdate) {
       this.paymentService.getPaymentById(this.paymentId).subscribe((data) => {

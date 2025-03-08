@@ -33,17 +33,18 @@
   </div>
 </div>
 
+@if ((supplierId && isUpdate)|| (!supplierId && !isUpdate)) {
 <form class="max-w-3xl mx-auto" [formGroup]="form" (ngSubmit)="submit(form)">
   <div class="grid grid-cols-2 gap-5">
     <p-floatlabel variant="on" class="md:col-span-1 col-span-2 my-2">
       <input
         pInputText
-        id="name"
+        id="supplierName"
         autocomplete="off"
-        formControlName="name"
+        formControlName="supplierName"
         class="w-full"
       />
-      <label for="name">{{ "name" | translate }}</label>
+      <label for="supplierName">{{ "supplierName" | translate }}</label>
     </p-floatlabel>
     <p-floatlabel variant="on" class="md:col-span-1 col-span-2 my-2">
       <input
@@ -106,3 +107,49 @@
     />
   </div>
 </form>
+} @if (supplierId && !isUpdate) {
+<div class="bg-white p-6 rounded-lg shadow-md">
+  <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-2 gap-6">
+    <div>
+      <h2 class="font-bold text-gray-700 text-lg mb-1">
+        {{ "name" | translate }}:
+      </h2>
+      <p class="text-base text-gray-600">
+        {{ suppliertData.name }}
+      </p>
+    </div>
+    <div>
+      <h2 class="font-bold text-gray-700 text-lg mb-1">
+        {{ "email" | translate }}:
+      </h2>
+      <p class="text-base text-gray-600">
+        {{ suppliertData.email }}
+      </p>
+    </div>
+    <div>
+      <h2 class="font-bold text-gray-700 text-lg mb-1">
+        {{ "code" | translate }}:
+      </h2>
+      <p class="text-base text-gray-600">
+        {{ suppliertData.code }}
+      </p>
+    </div>
+    <div>
+      <h2 class="font-bold text-gray-700 text-lg mb-1">
+        {{ "storeNumber" | translate }}:
+      </h2>
+      <p class="text-base text-gray-600">
+        {{ suppliertData.store_number }}
+      </p>
+    </div>
+    <div class="md:col-span-2">
+      <h2 class="font-bold text-gray-700 text-lg mb-1">
+        {{ "description" | translate }}:
+      </h2>
+      <p class="text-base text-gray-600">
+        {{ suppliertData.description }}
+      </p>
+    </div>
+  </div>
+</div>
+}
