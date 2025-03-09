@@ -42,7 +42,7 @@ export class ExpenseService {
 
   apiModelToComponentModel(form: FormGroup, data: any) {
     const selectedCustomer = this.listOfCustomers().find(
-      (item: any) => item.name === data.customer
+      (item: any) => item.id === data.customer
     );
     form.patchValue({
       name: selectedCustomer,
@@ -95,6 +95,12 @@ export class ExpenseService {
 
   getExpenseById(id: string) {
     return this.apiService.getDataFromServer(EXPENSE_APIS.GET_EXPENSE(+id));
+  }
+
+  getExpenseByIdForUpdate(id: string) {
+    return this.apiService.getDataFromServer(
+      EXPENSE_APIS.GET_EXPENSE_FOR_UPDATE(+id)
+    );
   }
 
   updateExpense(data: FormGroup, id: string) {

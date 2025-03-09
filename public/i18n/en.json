@@ -107,5 +107,7 @@
   "to_date": "To Date",
   "is_active": "Is Active",
   "inactive": "Inactive",
-  "active": "Active"
+  "active": "Active",
+  "containerNumber": "Container Number",
+  "containerSequance": "Container Sequence"
 }

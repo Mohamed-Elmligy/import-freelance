@@ -67,7 +67,10 @@ export default class ShippingDataFormComponent {
 
   protected form = this.formBuilder.group({
     name: [null, [Validators.required]],
-    containerSequence: [null, [Validators.required]],
+    containerSequence: [
+      null,
+      [Validators.required, Validators.pattern('^[0-9]*$')],
+    ],
     containerNumber: [null, [Validators.required]],
     ShippingDate: [null, [Validators.required]],
     port: [null, [Validators.required]],
@@ -114,7 +117,7 @@ export default class ShippingDataFormComponent {
   updateExpense() {
     if (this.isUpdate) {
       this.shippingDataService
-        .getShippingById(this.shippingId)
+        .getShippingByIdForUpdate(this.shippingId)
         .subscribe((data) => {
           this.shippingDataService.apiModelToComponentModel(this.form, data);
         });

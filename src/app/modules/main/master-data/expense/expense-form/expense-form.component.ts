@@ -112,9 +112,11 @@ export default class ExpenseFormComponent {
   }
   updateExpense() {
     if (this.isUpdate) {
-      this.expensesService.getExpenseById(this.expenseId).subscribe((data) => {
-        this.expensesService.apiModelToComponentModel(this.form, data);
-      });
+      this.expensesService
+        .getExpenseByIdForUpdate(this.expenseId)
+        .subscribe((data) => {
+          this.expensesService.apiModelToComponentModel(this.form, data);
+        });
     }
   }
 }

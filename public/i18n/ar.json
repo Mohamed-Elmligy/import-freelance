@@ -107,5 +107,7 @@
   "to_date": "الى تاريخ",
   "is_active": "نشط",
   "inactive": "غير نشط",
-  "active": "نشط"
+  "active": "نشط",
+  "containerNumber": "رقم الحاوية",
+  "containerSequance": "مسلسل الحاوية"
 }

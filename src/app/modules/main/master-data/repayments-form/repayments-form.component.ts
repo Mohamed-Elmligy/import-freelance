@@ -128,7 +128,7 @@ export default class RepaymentsFormComponent {
   updateTransaction() {
     if (this.isUpdate) {
       this.transactionService
-        .getTransactionById(this.transactionId)
+        .getTransactionByIdForUpdate(this.transactionId)
         .subscribe((data) => {
           this.transactionService.apiModelToComponentModel(this.form, data);
         });

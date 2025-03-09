@@ -44,7 +44,7 @@ export class ShippingDataService {
 
   apiModelToComponentModel(form: FormGroup, data: any) {
     const selectedCustomer = this.listOfCustomers().find(
-      (item: any) => item.name === data.customer
+      (item: any) => item.id === data.customer
     );
     form.patchValue({
       name: selectedCustomer,
@@ -100,6 +100,12 @@ export class ShippingDataService {
   getShippingById(id: string) {
     return this.apiService.getDataFromServer(
       SHIPPING_DATA_APIS.GET_SHIPPING_DATA(+id)
+    );
+  }
+
+  getShippingByIdForUpdate(id: string) {
+    return this.apiService.getDataFromServer(
+      SHIPPING_DATA_APIS.GET_SHIPPING_DATA_FOR_UPDATE(+id)
     );
   }
 

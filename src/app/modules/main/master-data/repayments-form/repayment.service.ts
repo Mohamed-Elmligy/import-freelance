@@ -46,13 +46,13 @@ export class RepaymentService {
 
   apiModelToComponentModel(form: FormGroup, data: any) {
     const selectedCustomer = this.listOfCustomers().find(
-      (item: any) => item.name === data.customer
+      (item: any) => item.id === data.customer
     );
     const selectedSupplier = this.listOfSuppliers().find(
-      (item: any) => item.name === data.supplier
+      (item: any) => item.id === data.supplier
     );
     const selectedInvoice = this.listOfInvoices().find(
-      (item: any) => item.invoice_number === data.invoice
+      (item: any) => item.id === data.invoice
     );
     form.patchValue({
       customer: selectedCustomer,
@@ -107,6 +107,12 @@ export class RepaymentService {
   getTransactionById(id: string) {
     return this.apiService.getDataFromServer(
       TRANSACTION_APIS.GET_TRNSACTION(+id)
+    );
+  }
+
+  getTransactionByIdForUpdate(id: string) {
+    return this.apiService.getDataFromServer(
+      TRANSACTION_APIS.GET_TRNSACTION_FOR_UPDATE(+id)
     );
   }
 
