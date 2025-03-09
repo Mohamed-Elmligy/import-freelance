@@ -37,7 +37,7 @@ const main_routes: Routes = [
   {
     path: 'expenses-list',
     loadComponent: () =>
-      import('./master-data/expense-form/expense-list/expense-list.component'),
+      import('./master-data/expense/expense-list/expense-list.component'),
     canActivate: [noCompanyUserGuard],
   },
   {
@@ -64,7 +64,8 @@ const main_routes: Routes = [
   },
   {
     path: 'customers',
-    loadComponent: () => import('./master-data/customers/customers.component'),
+    loadComponent: () =>
+      import('./master-data/customers/customer-form/customers.component'),
     canActivate: [noCompanyUserGuard],
   },
   {
@@ -87,7 +88,7 @@ const main_routes: Routes = [
   {
     path: 'expenses',
     loadComponent: () =>
-      import('./master-data/expense-form/expense-form.component'),
+      import('./master-data/expense/expense-form/expense-form.component'),
     canActivate: [noCompanyUserGuard],
   },
   {

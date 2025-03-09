@@ -17,14 +17,8 @@ import { InputTextModule } from 'primeng/inputtext';
 import { main_routes_paths } from '../../main.routes';
 import { TextareaModule } from 'primeng/textarea';
 import { MessageService } from 'primeng/api';
-import { PrimeNG } from 'primeng/config';
-import { FileUpload } from 'primeng/fileupload';
 import { BadgeModule } from 'primeng/badge';
-import { HttpClientModule } from '@angular/common/http';
-import { ProgressBar } from 'primeng/progressbar';
 import { ToastModule } from 'primeng/toast';
-import { LookupsService } from '../../../shared/services/lookups.service';
-import { ExpenseService } from '../expense-form/expense.service';
 import { ItemsCategoryService } from './items-category.service';
 @Component({
   selector: 'app-items-category',

@@ -13,13 +13,13 @@ import { MenuItem } from 'primeng/api';
 import { BreadcrumbModule } from 'primeng/breadcrumb';
 import { ActivatedRoute, RouterModule } from '@angular/router';
 import { CommonModule } from '@angular/common';
-import { main_routes_paths } from '../../main.routes';
+import { main_routes_paths } from '../../../main.routes';
 import { TranslateModule } from '@ngx-translate/core';
 import { TextareaModule } from 'primeng/textarea';
 import { ButtonModule } from 'primeng/button';
 import { SelectModule } from 'primeng/select';
-import { LookupsService } from '../../../shared/services/lookups.service';
-import { ExpenseService } from './expense.service';
+import { LookupsService } from '../../../../shared/services/lookups.service';
+import { ExpenseService } from '../expense.service';
 
 @Component({
   selector: 'app-expense-form',

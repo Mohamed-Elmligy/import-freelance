@@ -14,9 +14,9 @@ import { BreadcrumbModule } from 'primeng/breadcrumb';
 import { ButtonModule } from 'primeng/button';
 import { FloatLabelModule } from 'primeng/floatlabel';
 import { InputTextModule } from 'primeng/inputtext';
-import { main_routes_paths } from '../../main.routes';
+import { main_routes_paths } from '../../../main.routes';
 import { TextareaModule } from 'primeng/textarea';
-import { CustomersService } from './customers.service';
+import { CustomersService } from '../customers.service';
 
 @Component({
   selector: 'app-customers',

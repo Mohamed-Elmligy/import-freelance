@@ -33,31 +33,32 @@
   </div>
 </div>
 
+@if ((shippingId && isUpdate)|| (!shippingId && !isUpdate)) {
 <form class="max-w-3xl mx-auto" [formGroup]="form" (ngSubmit)="submit(form)">
   <div class="grid grid-cols-4 gap-5">
-    <!-- <p-floatlabel class="col-span-4 my-2" variant="on">
-      <p-multiselect
-        id="name"
-        [options]="cities"
+    <p-floatlabel class="md:col-span-2 sm:col-span-4 my-2">
+      <p-select
+        [options]="listOfCustomers()"
         optionLabel="name"
-        filter
-        [maxSelectedLabels]="3"
-        styleClass="w-full"
+        [filter]="true"
+        filterBy="name"
+        [showClear]="true"
+        class="w-full"
         formControlName="name"
-        display="chip"
-      />
-      <label for="name">{{ "name" | translate }}</label>
-    </p-floatlabel> -->
+      >
+      </p-select>
+      <label for="customer">{{ "name" | translate }}</label>
+    </p-floatlabel>
 
     <p-floatlabel variant="on" class="md:col-span-2 sm:col-span-4 my-2">
       <input
         pInputText
         id="Container"
         autocomplete="off"
-        formControlName="contatierSequance"
+        formControlName="containerSequence"
         class="w-full"
       />
-      <label for="Container">{{ "contatierSequance" | translate }}</label>
+      <label for="Container">{{ "containerSequence" | translate }}</label>
     </p-floatlabel>
     <p-floatlabel variant="on" class="md:col-span-2 sm:col-span-4 my-2">
       <input
@@ -119,3 +120,38 @@
     />
   </div>
 </form>
+}@if (shippingId && !isUpdate) {
+<div class="grid grid-cols-4 gap-5">
+  <div class="col-span-2 flex flex-row align-baseline justify-start">
+    <h2 class="me-2 font-bold text-xl">{{ "name" | translate }}:</h2>
+    <p class="text-base text-md mt-1">
+      {{ shippingData.customer }}
+    </p>
+  </div>
+  <div class="col-span-2 flex flex-row align-baseline justify-start">
+    <h2 class="me-2 font-bold text-xl">{{ "amount" | translate }}:</h2>
+    <p class="text-base text-md mt-1">
+      {{ shippingData.container_number }}
+    </p>
+  </div>
+  <div class="col-span-2 flex flex-row align-baseline justify-start">
+    <h2 class="me-2 font-bold text-xl">{{ "containerNumber" | translate }}:</h2>
+    <p class="text-base text-md mt-1">
+      {{ shippingData.container_sequence }}
+    </p>
+  </div>
+
+  <div class="col-span-2 flex flex-row align-baseline justify-start">
+    <h2 class="me-2 font-bold text-xl">{{ "expenseDate" | translate }}:</h2>
+    <p class="text-base text-md mt-1">
+      {{ shippingData.shipping_date | date : "dd/MM/yyyy" }}
+    </p>
+  </div>
+  <div class="col-span-2 flex flex-row align-baseline justify-start">
+    <h2 class="me-2 font-bold text-xl">{{ "description" | translate }}:</h2>
+    <p class="text-base text-md mt-1">
+      {{ shippingData.port_name }}
+    </p>
+  </div>
+</div>
+}
