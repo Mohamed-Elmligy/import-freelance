@@ -77,9 +77,13 @@ export default class RepaymentsFormComponent {
   });
 
   submit(form: FormGroup) {
+    console.log(form.controls);
     if (form.valid) {
-      if (!this.isUpdate) this.transactionService.createTransaction(form);
-      else this.transactionService.updateTransaction(form, this.transactionId);
+      if (!this.isUpdate) {
+        this.transactionService.createTransaction(form);
+      } else {
+        this.transactionService.updateTransaction(form, this.transactionId);
+      }
     }
   }
 
@@ -120,6 +124,7 @@ export default class RepaymentsFormComponent {
         this.transactionData = data;
       });
   }
+
   updateTransaction() {
     if (this.isUpdate) {
       this.transactionService

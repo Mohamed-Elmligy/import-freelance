@@ -35,7 +35,7 @@ export class PaymentService {
 
   apiModelToComponentModel(form: FormGroup, data: any) {
     const selectedCustomer = this.listOfCustomers().find(
-      (item: any) => item.id === data.customer
+      (item: any) => item.name === data.customer
     );
     form.patchValue({
       name: selectedCustomer,

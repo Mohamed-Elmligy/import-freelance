@@ -42,13 +42,13 @@ export class ExpenseService {
 
   apiModelToComponentModel(form: FormGroup, data: any) {
     const selectedCustomer = this.listOfCustomers().find(
-      (item: any) => item.id === data.customer
+      (item: any) => item.name === data.customer
     );
     form.patchValue({
       name: selectedCustomer,
       containerNumber: data.container_number,
       amount: data.amount,
-      expenseDate: data.expense_date,
+      expenseDate: new Date(data.expense_date),
       description: data.description,
     });
   }

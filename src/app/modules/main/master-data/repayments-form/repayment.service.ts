@@ -34,7 +34,7 @@ export class RepaymentService {
       supplier: form.get('supplierNumber')?.value.id,
       invoice: form.get('invoiceNumber')?.value.id,
       customer: form.get('customer')?.value.id,
-      discription: form.get('discription')?.value,
+      discription: form.get('description')?.value,
       amount: form.get('remainingAmount')?.value,
       pay_date: formatDate(
         form.get('transactionDate')?.value,
@@ -45,8 +45,6 @@ export class RepaymentService {
   }
 
   apiModelToComponentModel(form: FormGroup, data: any) {
-    console.log(data);
-
     const selectedCustomer = this.listOfCustomers().find(
       (item: any) => item.name === data.customer
     );
@@ -62,7 +60,7 @@ export class RepaymentService {
       supplierNumber: selectedSupplier,
       remainingAmount: data.amount,
       transactionDate: new Date(data.pay_date),
-      discription: data.discription,
+      description: data.discription,
     });
   }
 
