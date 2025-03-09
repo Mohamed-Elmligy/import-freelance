@@ -2,9 +2,10 @@
   <div class="flex align-baseline flex-col lg:justify-between lg:flex-row">
     <div>
       <div class="font-medium text-3xl text-900">
-        {{ "payments" | translate }}
+        {{ "suppliers" | translate }}
       </div>
     </div>
+    
   </div>
 </div>
 
@@ -15,7 +16,7 @@
         <div class="grid md:grid-cols-4 sm:grid-cols-1">
           <p-floatlabel variant="on" class="col-span-1">
             <input pInputText id="user_name" class="" />
-            <label for="user_name">{{ "name" | translate }}</label>
+            <label for="user_name">{{ "supplierName" | translate }}</label>
           </p-floatlabel>
 
           <p-float-label variant="on" class="col-span-1">
@@ -115,6 +116,6 @@
     showFirstLastButtons
     aria-label="Select page of"
     [length]="resultsLength"
-  >
-  </mat-paginator>
+  ></mat-paginator>
 </div>
+
