@@ -1,9 +1,7 @@
 <div class="surface-section px-4 py-5 md:px-6 lg:px-8">
-  <div class="flex align-baseline flex-col lg:justify-between lg:flex-row">
-    <div>
-      <div class="font-medium text-3xl text-900">
-        {{ "customers" | translate }}
-      </div>
+  <div class="flex flex-col lg:flex-row lg:justify-between align-baseline">
+    <div class="font-medium text-3xl text-900">
+      {{ "invoices" | translate }}
     </div>
   </div>
 </div>
@@ -11,13 +9,12 @@
 <div class="mat-elevation-z8">
   <p-toolbar class="my-4 w-full">
     <ng-template #center>
-      <div class="flex flex-row align-baseline justify-around">
-        <div class="grid md:grid-cols-4 sm:grid-cols-1">
+      <div class="flex flex-col md:flex-row align-baseline justify-around">
+        <div class="grid md:grid-cols-4 sm:grid-cols-1 gap-4">
           <p-floatlabel variant="on" class="col-span-1">
-            <input pInputText id="user_name" class="" />
+            <input pInputText id="user_name" class="w-full" />
             <label for="user_name">{{ "name" | translate }}</label>
           </p-floatlabel>
-
           <p-float-label variant="on" class="col-span-1">
             <p-datepicker
               [iconDisplay]="'input'"
@@ -34,81 +31,82 @@
       </div>
     </ng-template>
     <ng-template #end>
-      <button
-        pButton
-        pRipple
-        [label]="'search' | translate"
-        class="!bg-primary !border-primary me-2"
-      ></button>
-      <button
-        pButton
-        pRipple
-        [label]="'add' | translate"
-        icon="pi pi-plus"
-        class="!bg-secondary !border-secondary"
-        [routerLink]="main_routes.customers"
-      ></button>
+      <div class="flex sm:flex-row flex-col gap-2">
+        <button
+          pButton
+          pRipple
+          [label]="'search' | translate"
+          class="!bg-primary !border-primary mb-2 sm:mb-0"
+        ></button>
+        <button
+          pButton
+          pRipple
+          [label]="'add' | translate"
+          icon="pi pi-plus"
+          class="!bg-secondary !border-secondary"
+          [routerLink]="main_routes.customers"
+        ></button>
+      </div>
     </ng-template>
   </p-toolbar>
 
-  <table
-    mat-table
-    [dataSource]="dataSource"
-    matSort
-    (matSortChange)="announceSortChange($event)"
-  >
-    @for (col of tableColumns; track $index) { @if (col != 'actions') {
-    <ng-container [matColumnDef]="col">
-      <th
-        mat-header-cell
-        *matHeaderCellDef
-        mat-sort-header
-        [sortActionDescription]="'Sort by number' + col"
-      >
-        {{ col | translate }}
-      </th>
-      <td mat-cell *matCellDef="let element">{{ element[col] }}</td>
-    </ng-container>
-    } @if(col == 'actions'){
-    <ng-container [matColumnDef]="col">
-      <th mat-header-cell *matHeaderCellDef>
-        {{ "actions" | translate }}
-      </th>
-      <td mat-cell *matCellDef="let element">
-        <p-button
-          icon="pi pi-eye"
-          [rounded]="true"
-          [text]="true"
-          pTooltip="View"
-          tooltipPosition="top"
-          (click)="viewInvoice(element.id)"
-          severity="success"
-        ></p-button>
-        <p-button
-          icon="pi pi-pencil"
-          [rounded]="true"
-          [text]="true"
-          severity="info"
-          pTooltip="Edit"
-          tooltipPosition="top"
-          (click)="editInvoice(element.id)"
-        ></p-button>
-        <p-button
-          icon="pi pi-trash"
-          [rounded]="true"
-          [text]="true"
-          pTooltip="Delete"
-          tooltipPosition="top"
-          (click)="deleteInvoice(element.id)"
-          severity="danger"
-        ></p-button>
-      </td>
-    </ng-container>
-    } }
+  <div class="overflow-x-auto">
+    <table
+      mat-table
+      [dataSource]="dataSource"
+      matSort
+      (matSortChange)="announceSortChange($event)"
+      class="w-full"
+    >
+      <ng-container *ngFor="let col of tableColumns" [matColumnDef]="col">
+        <ng-container *ngIf="col !== 'actions'">
+          <th mat-header-cell *matHeaderCellDef mat-sort-header>
+            {{ col | translate }}
+          </th>
+          <td mat-cell *matCellDef="let element">{{ element[col] }}</td>
+        </ng-container>
+        <ng-container *ngIf="col === 'actions'">
+          <th mat-header-cell *matHeaderCellDef>
+            {{ "actions" | translate }}
+          </th>
+          <td mat-cell *matCellDef="let element">
+            <div class="flex flex-row gap-2">
+              <p-button
+                icon="pi pi-eye"
+                [rounded]="true"
+                [text]="true"
+                pTooltip="View"
+                tooltipPosition="top"
+                (click)="viewInvoice(element.id)"
+                severity="success"
+              ></p-button>
+              <p-button
+                icon="pi pi-pencil"
+                [rounded]="true"
+                [text]="true"
+                severity="info"
+                pTooltip="Edit"
+                tooltipPosition="top"
+                (click)="editInvoice(element.id)"
+              ></p-button>
+              <p-button
+                icon="pi pi-trash"
+                [rounded]="true"
+                [text]="true"
+                pTooltip="Delete"
+                tooltipPosition="top"
+                (click)="deleteInvoice(element.id)"
+                severity="danger"
+              ></p-button>
+            </div>
+          </td>
+        </ng-container>
+      </ng-container>
 
-    <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
-    <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
-  </table>
+      <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+      <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
+    </table>
+  </div>
 
   <mat-paginator
     [pageSizeOptions]="[10, 20, 50]"
@@ -118,3 +116,4 @@
   >
   </mat-paginator>
 </div>
+
