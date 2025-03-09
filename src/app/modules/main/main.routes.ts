@@ -57,6 +57,14 @@ const main_routes: Routes = [
     canActivate: [noCompanyUserGuard],
   },
   {
+    path: 'year-list',
+    loadComponent: () =>
+      import(
+        './master-data/fiscal-year/fiscal-year-list/fiscal-year-list.component'
+      ),
+    canActivate: [noCompanyUserGuard],
+  },
+  {
     path: 'invoices-list',
     loadComponent: () =>
       import('./invoice/invoices-list/invoices-list.component'),
@@ -70,13 +78,14 @@ const main_routes: Routes = [
   },
   {
     path: 'suppliers',
-    loadComponent: () => import('./master-data/suppliers/suppliers.component'),
+    loadComponent: () =>
+      import('./master-data/suppliers/suppliers-form/suppliers.component'),
     canActivate: [noCompanyUserGuard],
   },
   {
     path: 'itemsCategory',
     loadComponent: () =>
-      import('./master-data/items-category/items-category.component'),
+      import('./master-data/items-category/item-form/items-category.component'),
     canActivate: [noCompanyUserGuard],
   },
   {
@@ -100,6 +109,14 @@ const main_routes: Routes = [
     path: 'shippingData',
     loadComponent: () =>
       import('./master-data/shipping-data-form/shipping-data-form.component'),
+    canActivate: [noCompanyUserGuard],
+  },
+  {
+    path: 'year',
+    loadComponent: () =>
+      import(
+        './master-data/fiscal-year/fiscal-year-form/fiscal-year-form.component'
+      ),
     canActivate: [noCompanyUserGuard],
   },
   {
@@ -131,6 +148,7 @@ export const main_routes_paths = {
   expenses: '/main/expenses',
   transactions: '/main/transactions',
   shippingData: '/main/shippingData',
+  year: '/main/year',
   invoices: '/main/invoices',
   settings: '/main/settings',
   downloadReports: '/main/downloadReports',
@@ -142,4 +160,5 @@ export const main_routes_paths = {
   transactionsList: '/main/transactions-list',
   shippingDataList: '/main/shippingData-list',
   invoicesList: '/main/invoices-list',
+  yearList: '/main/year-list',
 } as const;

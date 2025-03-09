@@ -14,10 +14,9 @@ import { BreadcrumbModule } from 'primeng/breadcrumb';
 import { ButtonModule } from 'primeng/button';
 import { FloatLabelModule } from 'primeng/floatlabel';
 import { InputTextModule } from 'primeng/inputtext';
-import { main_routes_paths } from '../../main.routes';
 import { TextareaModule } from 'primeng/textarea';
-import { SuppliersService } from './suppliers.service';
-import { LookupsService } from '../../../shared/services/lookups.service';
+import { main_routes_paths } from '../../../main.routes';
+import { SuppliersService } from '../suppliers.service';
 
 @Component({
   selector: 'app-suppliers',

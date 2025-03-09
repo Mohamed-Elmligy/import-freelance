@@ -14,12 +14,12 @@ import { BreadcrumbModule } from 'primeng/breadcrumb';
 import { ButtonModule } from 'primeng/button';
 import { FloatLabelModule } from 'primeng/floatlabel';
 import { InputTextModule } from 'primeng/inputtext';
-import { main_routes_paths } from '../../main.routes';
+import { main_routes_paths } from '../../../main.routes';
 import { TextareaModule } from 'primeng/textarea';
 import { MessageService } from 'primeng/api';
 import { BadgeModule } from 'primeng/badge';
 import { ToastModule } from 'primeng/toast';
-import { ItemsCategoryService } from './items-category.service';
+import { ItemsCategoryService } from '../items-category.service';
 @Component({
   selector: 'app-items-category',
   imports: [

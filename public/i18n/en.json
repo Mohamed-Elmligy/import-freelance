@@ -100,5 +100,12 @@
   "commission": "Commission",
   "storeNumber": "Store Number",
   "firstName": "First Name",
-  "lastName": "Last Name"
+  "lastName": "Last Name",
+  "year": "Financial Year",
+  "country": "Country",
+  "from_date": "From Date",
+  "to_date": "To Date",
+  "is_active": "Is Active",
+  "inactive": "Inactive",
+  "active": "Active"
 }

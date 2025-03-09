@@ -1,0 +1,149 @@
+<div class="surface-section px-4 py-5 md:px-6 lg:px-8">
+  <div class="flex align-baseline flex-col lg:justify-between lg:flex-row">
+    <div>
+      <div class="font-medium text-3xl text-900">
+        {{ "year" | translate }}
+      </div>
+    </div>
+    <div class="mt-3 lg:mt-0">
+      <div class="card flex justify-center">
+        <p-breadcrumb class="max-w-full" [model]="items">
+          <ng-template #item let-item>
+            <ng-container *ngIf="item.route; else elseBlock">
+              <a
+                [routerLink]="item.route"
+                class="p-breadcrumb-item-link"
+                [queryParams]="item.queryParams"
+              >
+                <span
+                  [ngClass]="[item.icon ? item.icon : '', 'text-color']"
+                ></span>
+                <span class="text-dark">{{ item.label | translate }}</span>
+              </a>
+            </ng-container>
+            <ng-template #elseBlock>
+              <a [href]="item.url">
+                <span class="text-color">{{ item.label | translate }}</span>
+              </a>
+            </ng-template>
+          </ng-template>
+        </p-breadcrumb>
+      </div>
+    </div>
+  </div>
+</div>
+
+@if ((yearId && isUpdate)|| (!yearId && !isUpdate)) {
+<form class="max-w-3xl mx-auto" [formGroup]="form" (ngSubmit)="submit(form)">
+  <div class="grid grid-cols-4 gap-6 my-2">
+    <p-floatlabel variant="on" class="md:col-span-2 col-span-4 my-2">
+      <input
+        pInputText
+        id="name"
+        autocomplete="off"
+        class="w-full m-0 md:mx-2"
+        formControlName="name"
+      />
+      <label for="name">{{ "year" | translate }}</label>
+    </p-floatlabel>
+    <p-floatlabel variant="on" class="md:col-span-2 col-span-4 my-2">
+      <input
+        pInputText
+        id="country"
+        autocomplete="off"
+        class="w-full"
+        formControlName="country"
+      />
+      <label for="payment">{{ "country" | translate }}</label>
+    </p-floatlabel>
+    <p-floatlabel variant="on" class="md:col-span-2 col-span-4 my-2">
+      <p-datepicker
+        inputId="from_date"
+        showIcon
+        iconDisplay="input"
+        styleClass="w-full"
+        formControlName="from_date"
+      />
+      <label for="from_date">{{ "from_date" | translate }}</label>
+    </p-floatlabel>
+    <p-floatlabel variant="on" class="md:col-span-2 col-span-4 my-2">
+      <p-datepicker
+        inputId="to_date"
+        showIcon
+        iconDisplay="input"
+        styleClass="w-full"
+        formControlName="to_date"
+      />
+      <label for="to_date">{{ "to_date" | translate }}</label>
+    </p-floatlabel>
+    <label>{{ "is_active" | translate }}</label>
+    <p-toggleswitch
+      formControlName="is_active"
+      class="md:col-span-1 col-span-3"
+    >
+      <ng-template #handle let-checked="checked">
+        <i
+          [ngClass]="['!text-xs', 'pi', checked ? 'pi-check' : 'pi-times']"
+        ></i>
+      </ng-template>
+    </p-toggleswitch>
+  </div>
+
+  <div class="grid grid-cols-2">
+    <p-button
+      class="md:col-span-1 sm:col-span-2 my-2 !text-xs"
+      [label]="'save' | translate"
+      [raised]="true"
+      type="submit"
+    />
+    <p-button
+      class="md:col-span-1 sm:col-span-2 my-2 !text-xs"
+      [label]="'clear' | translate"
+      [raised]="true"
+      severity="contrast"
+      type="button"
+      (onClick)="reset(form)"
+    />
+  </div>
+</form>
+} @if (yearId && !isUpdate) {
+<div class="grid grid-cols-4 gap-5">
+  <div class="col-span-2 flex flex-row align-baseline justify-start">
+    <h2 class="me-2 font-bold text-xl">{{ "name" | translate }}:</h2>
+    <p class="text-base text-md mt-1">
+      {{ yearData.name }}
+    </p>
+  </div>
+  <div class="col-span-2 flex flex-row align-baseline justify-start">
+    <h2 class="me-2 font-bold text-xl">{{ "country" | translate }}:</h2>
+    <p class="text-base text-md mt-1">
+      {{ yearData.country }}
+    </p>
+  </div>
+  <div class="col-span-2 flex flex-row align-baseline justify-start">
+    <h2 class="me-2 font-bold text-xl">{{ "from_date" | translate }}:</h2>
+    <p class="text-base text-md mt-1">
+      {{ yearData.from_date | date : "dd/MM/yyyy" }}
+    </p>
+  </div>
+
+  <div class="col-span-2 flex flex-row align-baseline justify-start">
+    <h2 class="me-2 font-bold text-xl">{{ "to_date" | translate }}:</h2>
+    <p class="text-base text-md mt-1">
+      {{ yearData.to_date | date : "dd/MM/yyyy" }}
+    </p>
+  </div>
+  <div class="col-span-2 flex flex-row align-baseline justify-start">
+    <h2 class="me-2 font-bold text-xl">{{ "is_active" | translate }}:</h2>
+    <p class="text-base text-md mt-1">
+      <p-tag
+        [icon]="yearData.is_active == true ? 'pi pi-check' : 'pi pi-times'"
+        [severity]="yearData.is_active == true ? 'success' : 'danger'"
+        [value]="
+          (yearData.is_active == true ? 'active' : 'inactive') | translate
+        "
+      />
+    </p>
+  </div>
+</div>
+}

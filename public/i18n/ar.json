@@ -100,5 +100,12 @@
   "commission": "عمولة",
   "storeNumber": "رقم المحل",
   "firstName": "الاسم الاول",
-  "lastName": "الاسم الاخير"
+  "lastName": "الاسم الاخير",
+  "year": "السنة المالية",
+  "country": "الدولة",
+  "from_date": "من تاريخ",
+  "to_date": "الى تاريخ",
+  "is_active": "نشط",
+  "inactive": "غير نشط",
+  "active": "نشط"
 }

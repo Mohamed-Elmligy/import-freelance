@@ -80,6 +80,11 @@ export default class SidebarComponent {
             icon: 'pi pi-cart-arrow-down',
             routerLink: this.mainRoutes.shippingDataList,
           },
+          {
+            label: 'year',
+            icon: 'pi pi-calendar-clock',
+            routerLink: this.mainRoutes.yearList,
+          },
         ],
       },
       {
