@@ -1,5 +1,5 @@
 import { CommonModule, Location } from '@angular/common';
-import { Component, inject } from '@angular/core';
+import { Component, inject, OnInit } from '@angular/core';
 import {
   FormBuilder,
   FormGroup,
@@ -36,7 +36,7 @@ import { CustomersService } from './customers.service';
   templateUrl: './customers.component.html',
   styles: ``,
 })
-export default class CustomersComponent {
+export default class CustomersComponent implements OnInit {
   items: MenuItem[] | undefined;
   mainPaths = main_routes_paths;
 
@@ -44,19 +44,19 @@ export default class CustomersComponent {
   private formBuilder = inject(FormBuilder);
   private customersService = inject(CustomersService);
 
-  customerData: {
-    id: number;
-    name: string;
-    email: string;
-    code: number;
-    commession: string;
-    description: string;
-  } = { id: 0, name: '', email: '', code: 0, commession: '', description: '' };
+  customerData = {
+    id: 0,
+    name: '',
+    email: '',
+    code: 0,
+    commession: '',
+    description: '',
+  };
 
-  isUpdate = this.activatedRoute.snapshot.queryParams['edit'] == 'true';
-  customerId = this.activatedRoute.snapshot.queryParams['customerId'];
+  isUpdate = false;
+  customerId: number | null = null;
 
-  protected form = this.formBuilder.group({
+  form: FormGroup = this.formBuilder.group({
     name: [null, [Validators.required]],
     email: [null, [Validators.required]],
     customerCode: [null, [Validators.required]],
@@ -64,44 +64,51 @@ export default class CustomersComponent {
     description: [null, [Validators.required]],
   });
 
-  submit(form: FormGroup) {
-    if (form.valid) {
-      if (!this.isUpdate) this.customersService.createCustomer(form);
-      else this.customersService.updateCustomer(form, this.customerId);
-    }
-  }
-
-  reset(form: FormGroup) {
-    form.reset();
-  }
-  
   ngOnInit() {
     this.items = [
       {
-        icon: 'pi  pi-users',
+        icon: 'pi pi-users',
         route: this.mainPaths.customersList,
         queryParams: { type: 'customers' },
       },
       { label: 'customers', route: this.mainPaths.customers },
     ];
-    if (this.customerId && !this.isUpdate) this.getCustomerById();
-    if (this.customerId && this.isUpdate) this.updateCustomer();
+
+    this.activatedRoute.queryParams.subscribe((params) => {
+      this.isUpdate = params['edit'] === 'true';
+      this.customerId = params['customerId'] ? +params['customerId'] : null;
+
+      if (this.customerId) {
+        this.loadCustomerData();
+      }
+    });
   }
 
-  getCustomerById() {
+  loadCustomerData() {
     this.customersService
-      .getCustomerById(this.customerId)
+      .getCustomerById(this.customerId?.toString()!)
       .subscribe((data: any) => {
         this.customerData = data;
+        if (this.isUpdate) {
+          this.customersService.apiModelToComponentModelPathch(this.form, data);
+        }
       });
   }
-  updateCustomer() {
-    if (this.isUpdate) {
-      this.customersService
-        .getCustomerById(this.customerId)
-        .subscribe((data) => {
-          this.customersService.apiModelToComponentModelPathch(this.form, data);
-        });
+
+  submit(form: FormGroup) {
+    if (form.valid) {
+      if (this.isUpdate) {
+        this.customersService.updateCustomer(
+          form,
+          this.customerId?.toString()!
+        );
+      } else {
+        this.customersService.createCustomer(form);
+      }
     }
+  }
+
+  reset(form: FormGroup) {
+    form.reset();
   }
 }

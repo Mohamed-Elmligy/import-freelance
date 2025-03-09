@@ -22,14 +22,12 @@ export const errorInterceptor: HttpInterceptorFn = (request, next) => {
 
       // 1- Global errors handling
       if (globalErrors.has(error.status)) {
-        return throwError(() => {
-          messages.showMessage(
-            'error',
-            'Error',
-            translateService.instant(globalErrors.get(error.status)!)
-          );
-          return error;
-        });
+        messages.showMessage(
+          'error',
+          'Error',
+          translateService.instant(globalErrors.get(error.status)!)
+        );
+        return throwError(() => error);
       }
 
       // 2- Bad Requests to be handled locally [ex. Validation errors]
@@ -39,36 +37,51 @@ export const errorInterceptor: HttpInterceptorFn = (request, next) => {
 
       // 3- Unauthenticated requests
       if (error.status === 403) {
-        let refreshToken = securityService.retrieveRefreshToken();
+        const refreshToken = securityService.retrieveRefreshToken();
         if (refreshToken) {
-          securityService.getNewAccessToken().subscribe((res: any) => {
-            let newJwt = securityService.allJwtData;
-            newJwt.access = res.access;
-            browserStorageService.set(
-              'local',
-              securityService.localKey,
-              newJwt
-            );
-            request = request.clone({
-              setHeaders: {
-                Authorization: `Bearer ${res.access}`,
-              },
-            });
-          });
-          return next(request);
-        }
-      }
-
-      // 4- unauthorized requests
-      if (error.status === 403) {
-        return throwError(() => {
+          return securityService.getNewAccessToken().pipe(
+            switchMap((res: any) => {
+              const newJwt = securityService.allJwtData;
+              newJwt.access = res.access;
+              browserStorageService.set(
+                'local',
+                securityService.localKey,
+                newJwt
+              );
+              request = request.clone({
+                setHeaders: {
+                  Authorization: `Bearer ${res.access}`,
+                },
+              });
+              return next(request);
+            }),
+            catchError(() => {
+              messages.showMessage(
+                'error',
+                'Error',
+                translateService.instant('USER_NOT_AUTHORIZED')
+              );
+              return throwError(() => error);
+            })
+          );
+        } else {
           messages.showMessage(
             'error',
             'Error',
             translateService.instant('USER_NOT_AUTHORIZED')
           );
-          return error;
-        });
+          return throwError(() => error);
+        }
+      }
+
+      // 4- unauthorized requests
+      if (error.status === 401) {
+        messages.showMessage(
+          'error',
+          'Error',
+          translateService.instant('USER_NOT_AUTHORIZED')
+        );
+        return throwError(() => error);
       }
 
       return EMPTY;
@@ -81,7 +94,6 @@ const globalErrors = new Map<number, string>([
   [503, 'SERVICE_NOT_AVAILABLE'],
   [502, 'BAD_GATEWAY'],
   [500, 'INTERNAL_SERVER_ERROR'],
-
   [413, 'PAYLOAD_TOO_LARGE'],
   [408, 'REQUEST_TIMEOUT'],
   [405, 'REQUEST_METHOD_NOT_ALLOWED'],
