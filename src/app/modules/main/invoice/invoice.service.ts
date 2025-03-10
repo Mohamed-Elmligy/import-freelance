@@ -3,7 +3,7 @@ import { FormGroup } from '@angular/forms';
 import { ApiService } from '../../../core/services/api.service';
 import { ShowMessageService } from '../../../core/services/show-message.service';
 import { INVOICE_APIS } from './invoice.apis';
-import { Location } from '@angular/common';
+import { formatDate, Location } from '@angular/common';
 
 @Injectable({
   providedIn: 'root',
@@ -13,6 +13,9 @@ export class InvoiceService {
   private showMessageService = inject(ShowMessageService);
   private location = inject(Location);
   invoiceDeleted = signal(false);
+
+  listOfCustomers = signal([]);
+  listOfSuppliers = signal([]);
 
   invoiceHeaders = [
     'invoiceNumber',
@@ -27,9 +30,111 @@ export class InvoiceService {
     return this.apiService.getDataFromServer(`invoice/list`);
   }
 
-  componentModelToApiModel(form: FormGroup) {}
+  componentModelToApiModel(form: FormGroup) {
+    return {
+      item_category: form.value.item_category,
+      customer: form.value.customer.id,
+      supplier: form.value.supplier.id,
+      invoice_number: form.value.invoice_number,
+      invoice_date: formatDate(form.value.invoice_date, 'yyyy-MM-dd', 'en'),
+      total_amount: form.value.total_amount,
+      discount_amount: form.value.discount_amount,
+      first_payment_amount: form.value.first_payment_amount,
+      first_payment_date: formatDate(
+        form.value.first_payment_date,
+        'yyyy-MM-dd',
+        'en'
+      ),
+      second_payment_amount: form.value.second_payment_amount,
+      second_payment_date: formatDate(
+        form.value.second_payment_date,
+        'yyyy-MM-dd',
+        'en'
+      ),
+      third_payment_amount: form.value.third_payment_amount,
+      third_payment_date: formatDate(
+        form.value.third_payment_date,
+        'yyyy-MM-dd',
+        'en'
+      ),
+      fourth_payment_amount: form.value.fourth_payment_amount,
+      fourth_payment_date: formatDate(
+        form.value.fourth_payment_date,
+        'yyyy-MM-dd',
+        'en'
+      ),
+      invoice_lines: form.value.invoice_lines.map((item: any) => {
+        return {
+          container_sequence: item.container_sequence,
+          item_code: item.item_code,
+          item_description: item.item_description,
+          box_count: item.box_count,
+          item_in_box: item.item_in_box,
+          total_cbm: item.total_cbm,
+          item_price: item.item_price,
+          total_price: item.total_price,
+          store_cbm: item.store_cbm,
+          height: item.height,
+          width: item.width,
+          length: item.length,
+          weight: item.weight,
+        };
+      }),
+    };
+  }
 
-  apiModelToComponentModelPathch(form: FormGroup, data: any) {}
+  apiModelToComponentModelPathch(form: FormGroup, data: any) {
+    const selectedCustomer = this.listOfCustomers().find(
+      (item: any) => item.id === data.customer
+    );
+    const selectedSupplier = this.listOfSuppliers().find(
+      (item: any) => item.id === data.supplier
+    );
+
+    form.patchValue({
+      item_category: data.item_category,
+      customer: selectedCustomer,
+      supplier: selectedSupplier,
+      invoice_number: data.invoice_number,
+      invoice_date: new Date(data.invoice_date),
+      total_amount: data.total_amount,
+      total_boxes: data.total_boxes,
+      total_weight: data.total_weight,
+      total_cbm: data.total_cbm,
+      discount_amount: data.discount_amount,
+      first_payment_amount: data.first_payment_amount,
+      first_payment_date: data.first_payment_date
+        ? new Date(data.first_payment_date)
+        : null,
+      second_payment_amount: data.second_payment_amount,
+      second_payment_date: data.second_payment_date
+        ? new Date(data.second_payment_date)
+        : null,
+      third_payment_amount: data.third_payment_amount,
+      third_payment_date: data.third_payment_date
+        ? new Date(data.third_payment_date)
+        : null,
+      fourth_payment_amount: data.fourth_payment_amount,
+      fourth_payment_date: data.fourth_payment_date
+        ? new Date(data.fourth_payment_date)
+        : null,
+      invoice_lines: data.invoice_lines.map((item: any) => {
+        return {
+          container_sequence: item.container_sequence,
+          item_code: item.item_code,
+          item_description: item.item_description,
+          box_count: item.box_count,
+          item_in_box: item.item_in_box,
+          item_price: item.item_price,
+          total_price: item.total_price,
+          store_cbm: item.store_cbm,
+          height: item.height,
+          width: item.width,
+          length: item.length,
+        };
+      }),
+    });
+  }
 
   apiModelToComponentModelList(
     data: {
@@ -54,9 +159,9 @@ export class InvoiceService {
   }
 
   createInvoice(data: FormGroup) {
-    // let modifiedModel = this.componentModelToApiModel(data);
+    let modifiedModel = this.componentModelToApiModel(data);
     this.apiService
-      .sendDataToServer(INVOICE_APIS.CREATE_INVOICE, {})
+      .sendDataToServer(INVOICE_APIS.CREATE_INVOICE, modifiedModel)
       .subscribe({
         next: () => {
           this.showMessageService.showMessage(
@@ -76,8 +181,14 @@ export class InvoiceService {
     return this.apiService.getDataFromServer(INVOICE_APIS.GET_INVOICE(+id));
   }
 
+  getInvoiceByIdForUpdate(id: string) {
+    return this.apiService.getDataFromServer(
+      INVOICE_APIS.GET_INVOICE_FOR_UPDATE(+id)
+    );
+  }
+
   updateInvoice(data: FormGroup, id: string) {
-    // let modifiedModel = this.componentModelToApiModel(data);
+    let modifiedModel = this.componentModelToApiModel(data);
     this.apiService
       .updateDataOnServer('put', INVOICE_APIS.UPDATE_INVOICE(+id), {})
       .subscribe({

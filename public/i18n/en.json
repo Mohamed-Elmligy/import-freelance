@@ -109,5 +109,12 @@
   "inactive": "Inactive",
   "active": "Active",
   "containerNumber": "Container Number",
-  "containerSequance": "Container Sequence"
+  "containerSequance": "Container Sequence",
+  "item_code": "Item Code",
+  "width": "Width",
+  "height": "Height",
+  "length": "Length",
+  "weight": "Weight",
+  "fourth_payment_amount": "Fourth Payment Amount",
+  "fourth_payment_date": "Fourth Payment Date"
 }

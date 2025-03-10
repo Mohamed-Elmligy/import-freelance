@@ -109,5 +109,12 @@
   "inactive": "غير نشط",
   "active": "نشط",
   "containerNumber": "رقم الحاوية",
-  "containerSequance": "مسلسل الحاوية"
+  "containerSequance": "مسلسل الحاوية",
+  "item_code": "كود الصنف",
+  "width": "العرض",
+  "height": "الارتفاع",
+  "length": "الطول",
+  "weight": "الوزن",
+  "fourth_payment_amount": "الدفعة الرابعة",
+  "fourth_payment_date": "تاريخ الدفعة الرابعة"
 }

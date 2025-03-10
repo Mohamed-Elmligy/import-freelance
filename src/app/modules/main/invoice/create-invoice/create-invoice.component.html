@@ -32,30 +32,37 @@
     </div>
   </div>
 </div>
-
-<form class="max-w-full mx-auto" [formGroup]="form" (ngSubmit)="submit(form)">
+@if ((invoiceId && isUpdate)|| (!invoiceId && !isUpdate)) {
+<form
+  class="max-w-full mx-auto bg-white p-6 rounded-lg shadow-md"
+  [formGroup]="form"
+  (ngSubmit)="submit(form)"
+>
   <div class="grid grid-cols-2 gap-5">
-    <p-floatlabel variant="on" class="md:col-span-1 col-span-3 my-2">
-      <input
-        pInputText
+    <p-floatlabel class="md:col-span-1 sm:col-span-3 my-2" variant="on">
+      <p-select
         id="name"
-        autocomplete="off"
-        formControlName="name"
-        class="w-full"
-        pSize="small"
+        [options]="listOfCustomers()"
+        optionLabel="name"
+        [filter]="true"
+        [showClear]="true"
+        styleClass="w-full"
+        formControlName="customer"
       />
       <label for="name">{{ "name" | translate }}</label>
     </p-floatlabel>
-    <p-floatlabel variant="on" class="md:col-span-1 col-span-3 my-2">
-      <input
-        pInputText
-        id="supplierName"
-        autocomplete="off"
-        formControlName="supplierName"
-        class="w-full"
-        pSize="small"
+
+    <p-floatlabel class="md:col-span-1 sm:col-span-3 my-2" variant="on">
+      <p-select
+        id="supplier"
+        [options]="listOfSuppliers()"
+        optionLabel="name"
+        [filter]="true"
+        [showClear]="true"
+        styleClass="w-full"
+        formControlName="supplier"
       />
-      <label for="supplierName">{{ "supplierName" | translate }}</label>
+      <label for="supplier">{{ "supplierName" | translate }}</label>
     </p-floatlabel>
   </div>
   <div class="grid grid-cols-3 gap-5">
@@ -74,62 +81,62 @@
         pInputText
         id="discount_invoice"
         autocomplete="off"
-        formControlName="discount_invoice"
+        formControlName="discount_amount"
         class="w-full"
       />
       <label for="discount_invoice">{{ "discount_invoice" | translate }}</label>
     </p-floatlabel>
     <p-floatlabel variant="on" class="md:col-span-1 col-span-3 my-2">
-      <input
-        pInputText
-        id="net_invoice"
-        autocomplete="off"
+      <p-datepicker
+        inputId="invoiceDate"
+        showIcon
+        iconDisplay="input"
+        styleClass="w-full"
         formControlName="invoice_date"
-        class="w-full"
       />
-      <label for="net_invoice">{{ "تاريخ الفاتورة" | translate }}</label>
+      <label for="invoiceDate">{{ "invoiceDate" | translate }}</label>
     </p-floatlabel>
   </div>
   <div class="grid grid-cols-5 gap-5">
-    <div class="md:col-span-1 col-span-3 my-2 bg-gray m-auto rounded-md">
+    <div class="md:col-span-1 col-span-3 my-2 bg-gray-100 p-4 rounded-md">
       <label class="text-md font-bold" for="total_invoice">{{
         "total_invoice" | translate
       }}</label>
-      <p>550000,30</p>
+      <p>{{ form.get("total_amount")?.value }}</p>
     </div>
-    <div class="md:col-span-1 col-span-3 my-2 bg-gray m-auto rounded-md">
-      <label class="text-md font-bold" for="net_invoice">{{
-        "net_invoice" | translate
+    <div class="md:col-span-1 col-span-3 my-2 bg-gray-100 p-4 rounded-md">
+      <label class="text-md font-bold" for="discount_amount">{{
+        "discount_amount" | translate
       }}</label>
-      <p>550000,30</p>
+      <p>{{ form.get("discount_amount")?.value }}</p>
     </div>
-    <div class="md:col-span-1 col-span-3 my-2 bg-gray m-auto rounded-md">
+    <div class="md:col-span-1 col-span-3 my-2 bg-gray-100 p-4 rounded-md">
       <label class="text-md font-bold" for="boxQnt">{{
         "boxQnt" | translate
       }}</label>
-      <p>550000,30</p>
+      <p>{{ form.get("total_boxes")?.value }}</p>
     </div>
-    <div class="md:col-span-1 col-span-3 my-2 bg-gray m-auto rounded-md">
+    <div class="md:col-span-1 col-span-3 my-2 bg-gray-100 p-4 rounded-md">
       <label class="text-md font-bold" for="totalCBM">{{
         "totalCBM" | translate
       }}</label>
-      <p>550000,30</p>
+      <p>{{ form.get("total_cbm")?.value }}</p>
     </div>
-    <div class="md:col-span-1 col-span-3 my-2 bg-gray m-auto rounded-md">
+    <div class="md:col-span-1 col-span-3 my-2 bg-gray-100 p-4 rounded-md">
       <label class="text-md font-bold" for="totalWeight">{{
         "totalWeight" | translate
       }}</label>
-      <p>550000,30</p>
+      <p>{{ form.get("total_weight")?.value }}</p>
     </div>
   </div>
 
-  <div class="grid md:grid-cols-6 grid-cols-1 gap-5">
+  <div class="grid md:grid-cols-8 grid-cols-1 gap-5">
     <p-floatlabel variant="on" class="md:col-span-1 col-span-3 my-2">
       <input
         pInputText
         id="firstBatchNumber"
         autocomplete="off"
-        formControlName="firstBatchNumber"
+        formControlName="first_payment_amount"
         class="w-full"
       />
       <label for="firstBatchNumber">{{ "firstBatchNumber" | translate }}</label>
@@ -140,7 +147,7 @@
         showIcon
         iconDisplay="input"
         styleClass="w-full"
-        formControlName="firstBatchDate"
+        formControlName="first_payment_date"
       />
       <label for="date">{{ "firstBatchDate" | translate }}</label>
     </p-floatlabel>
@@ -150,7 +157,7 @@
         pInputText
         id="secondBatchNumber"
         autocomplete="off"
-        formControlName="secondBatchNumber"
+        formControlName="second_payment_amount"
         class="w-full"
       />
       <label for="secondBatchNumber">{{
@@ -163,7 +170,7 @@
         showIcon
         iconDisplay="input"
         styleClass="w-full"
-        formControlName="secondBatchDate"
+        formControlName="second_payment_date"
       />
       <label for="date">{{ "secondBatchDate" | translate }}</label>
     </p-floatlabel>
@@ -173,7 +180,7 @@
         pInputText
         id="thirdBatchNumber"
         autocomplete="off"
-        formControlName="thirdBatchNumber"
+        formControlName="third_payment_amount"
         class="w-full"
       />
       <label for="thirdBatchNumber">{{ "thirdBatchNumber" | translate }}</label>
@@ -184,9 +191,31 @@
         showIcon
         iconDisplay="input"
         styleClass="w-full"
-        formControlName="thirdBatchDate"
+        formControlName="third_payment_date"
       />
       <label for="date">{{ "thirdBatchDate" | translate }}</label>
+    </p-floatlabel>
+    <p-floatlabel variant="on" class="md:col-span-1 col-span-3 my-2">
+      <input
+        pInputText
+        id="thirdBatchNumber"
+        autocomplete="off"
+        formControlName="fourth_payment_amount"
+        class="w-full"
+      />
+      <label for="thirdBatchNumber">{{
+        "fourth_payment_amount" | translate
+      }}</label>
+    </p-floatlabel>
+    <p-floatlabel variant="on" class="md:col-span-1 col-span-3 my-2">
+      <p-datepicker
+        inputId="thirdBatchDate"
+        showIcon
+        iconDisplay="input"
+        styleClass="w-full"
+        formControlName="fourth_payment_date"
+      />
+      <label for="date">{{ "fourth_payment_date" | translate }}</label>
     </p-floatlabel>
   </div>
 
@@ -194,200 +223,159 @@
     <div class="overflow-x-auto">
       <div class="min-w-full inline-block align-middle">
         <div class="flex flex-row align-baseline justify-between">
-          <h1 class="text-2xl">{{ "invoices" | translate }}</h1>
+          <p-button
+            icon="pi pi-plus-circle"
+            severity="info"
+            pTooltip="Add new Item"
+            tooltipPosition="top"
+            class="m-2"
+            (onClick)="addItem()"
+          ></p-button>
         </div>
-        <div class="overflow-x-scroll border rounded-lg border-gray-300">
-          <div formArrayName="items">
-            <table class="min-w-full rounded-xl">
+        <div class="overflow-x-auto border rounded-lg border-gray-300 mt-4">
+          <div formArrayName="invoice_lines">
+            <table
+              class="min-w-full divide-y divide-gray-200 rounded-xl shadow-sm"
+            >
               <thead>
-                <tr class="bg-gray">
-                  <th
-                    scope="col"
-                    class="text-left text-sm leading-6 font-semibold text-gray-900 capitalize"
-                  >
-                    {{ "number" | translate }}<span class="text-danger">*</span>
+                <tr
+                  class="bg-primary text-white uppercase tracking-wider text-left text-xs leading-4 font-medium"
+                >
+                  <th scope="col" class="px-6 py-3 text-center">
+                    {{ "number" | translate }}
                   </th>
-                  <th
-                    scope="col"
-                    class="text-left text-sm leading-6 font-semibold text-gray-900 capitalize"
-                  >
-                    {{ "container" | translate
-                    }}<span class="text-danger">*</span>
+                  <th scope="col" class="px-6 py-3 text-center">
+                    {{ "container" | translate }}
                   </th>
-                  <th
-                    scope="col"
-                    class="text-left text-sm leading-6 font-semibold text-gray-900 capitalize"
-                  >
+                  <th scope="col" class="px-6 py-3 text-center">
                     {{ "item" | translate }}
                   </th>
-                  <th
-                    scope="col"
-                    class="text-left text-sm leading-6 font-semibold text-gray-900 capitalize"
-                  >
+                  <th scope="col" class="px-6 py-3 text-center">
                     {{ "desorption" | translate }}
                   </th>
-                  <th
-                    scope="col"
-                    class="text-left text-sm leading-6 font-semibold text-gray-900 capitalize"
-                  >
+                  <th scope="col" class="px-6 py-3 text-center">
                     {{ "boxQnt" | translate }}
                   </th>
-                  <th
-                    scope="col"
-                    class="text-left text-sm leading-6 font-semibold text-gray-900 capitalize"
-                  >
+                  <th scope="col" class="px-6 py-3 text-center">
                     {{ "qunNumber" | translate }}
                   </th>
-                  <th
-                    scope="col"
-                    class="text-left text-sm leading-6 font-semibold text-gray-900 capitalize"
-                  >
+                  <th scope="col" class="px-6 py-3 text-center">
                     {{ "price" | translate }}
                   </th>
-                  <th
-                    scope="col"
-                    class="text-left text-sm leading-6 font-semibold text-gray-900 capitalize"
-                  >
+                  <th scope="col" class="px-6 py-3 text-center">
                     {{ "total_price" | translate }}
                   </th>
-                  <th
-                    scope="col"
-                    class="text-left text-sm leading-6 font-semibold text-gray-900 capitalize"
-                  >
+                  <th scope="col" class="px-6 py-3 text-center">
                     {{ "CBM_store" | translate }}
                   </th>
-                  <th
-                    scope="col"
-                    class="text-left text-sm leading-6 font-semibold text-gray-900 capitalize"
-                  >
+                  <th scope="col" class="px-6 py-3 text-center">
                     {{ "CBM_height" | translate }}
                   </th>
-                  <th
-                    scope="col"
-                    class="text-left text-sm leading-6 font-semibold text-gray-900 capitalize"
-                  >
+                  <th scope="col" class="px-6 py-3 text-center">
                     {{ "CBM_width" | translate }}
                   </th>
-                  <th
-                    scope="col"
-                    class="text-left text-sm leading-6 font-semibold text-gray-900 capitalize"
-                  >
+                  <th scope="col" class="px-6 py-3 text-center">
                     {{ "CBM_length" | translate }}
                   </th>
-                  <th
-                    scope="col"
-                    class="text-left text-sm leading-6 font-semibold text-gray-900 capitalize"
-                  >
+                  <th scope="col" class="px-6 py-3 text-center">
                     {{ "total_CBM" | translate }}
                   </th>
-                  <th
-                    scope="col"
-                    class="text-left text-sm leading-6 font-semibold text-gray-900 capitalize"
-                  >
+                  <th scope="col" class="px-6 py-3 text-center">
                     {{ "weight" | translate }}
                   </th>
-                  <th
-                    scope="col"
-                    class="text-left text-sm leading-6 font-semibold text-gray-900 capitalize"
-                  >
+                  <th scope="col" class="px-6 py-3 text-center">
                     {{ "total_weight" | translate }}
                   </th>
-                  <th
-                    scope="col"
-                    class="text-left text-sm leading-6 font-semibold text-gray-900 capitalize"
-                  >
+                  <th scope="col" class="px-6 py-3 text-center">
                     {{ "ACTIONS" | translate }}
                   </th>
                 </tr>
               </thead>
-              <tbody class="divide-y divide-gray-300">
-                @for (itemLine of itemsFormArray.controls; track $index) {
+              <tbody class="bg-white divide-y divide-gray-200">
+                @for (itemLine of invoice_linesFormArray.controls; track $index)
+                {
                 <ng-container>
-                  <tr [formGroupName]="$index" class="table_row">
-                    <td>
-                      <p class="text-center">
-                        {{ $index + 1 }}
-                      </p>
+                  <tr [formGroupName]="$index" class="hover:bg-gray-50">
+                    <td
+                      class="px-6 py-4 whitespace-nowrap text-sm text-gray-500"
+                    >
+                      {{ $index + 1 }}
                     </td>
                     <td
-                      class="whitespace-nowrap text-sm leading-6 font-medium text-wight"
+                      class="px-6 py-4 whitespace-nowrap text-sm leading-5 font-medium text-gray-900"
                     >
                       <input
                         pInputText
                         id="container"
                         autocomplete="off"
-                        formControlName="container"
+                        formControlName="container_sequence"
                         class="w-full"
                         pSize="small"
                       />
                     </td>
-
                     <td
-                      class="whitespace-nowrap text-sm leading-6 font-medium text-wight"
+                      class="px-6 py-4 whitespace-nowrap text-sm leading-5 font-medium text-gray-900"
                     >
                       <input
                         pInputText
                         id="item"
                         autocomplete="off"
-                        formControlName="item"
+                        formControlName="item_code"
                         pSize="small"
                         style="width: 200px !important"
                       />
                     </td>
-
                     <td
-                      class="whitespace-nowrap text-sm leading-6 font-medium text-wight"
+                      class="px-6 py-4 whitespace-nowrap text-sm leading-5 font-medium text-gray-900"
                     >
                       <input
                         pInputText
                         id="desorption"
                         autocomplete="off"
-                        formControlName="desorption"
+                        formControlName="item_description"
                         style="width: 300px !important"
                         pSize="small"
                       />
                     </td>
-
                     <td
-                      class="whitespace-nowrap text-sm leading-6 font-medium text-wight"
+                      class="px-6 py-4 whitespace-nowrap text-sm leading-5 font-medium text-gray-900"
                     >
                       <input
                         pInputText
                         id="boxQnt"
                         autocomplete="off"
-                        formControlName="boxQnt"
+                        formControlName="box_count"
                         style="width: 75px !important"
                         pSize="small"
                       />
                     </td>
-
                     <td
-                      class="whitespace-nowrap text-sm leading-6 font-medium text-wight"
+                      class="px-6 py-4 whitespace-nowrap text-sm leading-5 font-medium text-gray-900"
                     >
                       <input
                         pInputText
                         id="qunNumber"
                         autocomplete="off"
-                        formControlName="qunNumber"
+                        formControlName="item_in_box"
                         style="width: 75px !important"
                         pSize="small"
                       />
                     </td>
-
                     <td
-                      class="whitespace-nowrap text-sm leading-6 font-medium text-wight"
+                      class="px-6 py-4 whitespace-nowrap text-sm leading-5 font-medium text-gray-900"
                     >
                       <input
                         pInputText
                         id="price"
                         autocomplete="off"
-                        formControlName="price"
+                        formControlName="item_price"
                         style="width: 75px !important"
                         pSize="small"
                       />
                     </td>
-
-                    <td>
+                    <td
+                      class="px-6 py-4 whitespace-nowrap text-sm leading-5 font-medium text-gray-900"
+                    >
                       <input
                         pInputText
                         id="total_price"
@@ -397,57 +385,56 @@
                         pSize="small"
                       />
                     </td>
-
                     <td
-                      class="whitespace-nowrap text-sm leading-6 font-medium text-wight"
+                      class="px-6 py-4 whitespace-nowrap text-sm leading-5 font-medium text-gray-900"
                     >
                       <input
                         pInputText
                         id="CBM_store"
                         autocomplete="off"
-                        formControlName="CBM_store"
+                        formControlName="store_cbm"
                         style="width: 75px !important"
                         pSize="small"
                       />
                     </td>
-
                     <td
-                      class="whitespace-nowrap text-sm leading-6 font-medium text-wight"
+                      class="px-6 py-4 whitespace-nowrap text-sm leading-5 font-medium text-gray-900"
                     >
                       <input
                         pInputText
                         id="CBM_height"
                         autocomplete="off"
-                        formControlName="CBM_height"
+                        formControlName="height"
                         style="width: 75px !important"
                         pSize="small"
                       />
                     </td>
-
                     <td
-                      class="whitespace-nowrap text-sm leading-6 font-medium text-wight"
+                      class="px-6 py-4 whitespace-nowrap text-sm leading-5 font-medium text-gray-900"
                     >
                       <input
                         pInputText
                         id="CBM_width"
                         autocomplete="off"
-                        formControlName="CBM_width"
+                        formControlName="width"
                         style="width: 75px !important"
-                        pSize="small"
                       />
                     </td>
-
-                    <td>
+                    <td
+                      class="px-6 py-4 whitespace-nowrap text-sm leading-5 font-medium text-gray-900"
+                    >
                       <input
                         pInputText
                         id="CBM_length"
                         autocomplete="off"
-                        formControlName="CBM_length"
+                        formControlName="length"
                         style="width: 75px !important"
                         pSize="small"
                       />
                     </td>
-                    <td>
+                    <td
+                      class="px-6 py-4 whitespace-nowrap text-sm leading-5 font-medium text-gray-900"
+                    >
                       <input
                         pInputText
                         id="total_CBM"
@@ -457,8 +444,9 @@
                         pSize="small"
                       />
                     </td>
-
-                    <td>
+                    <td
+                      class="px-6 py-4 whitespace-nowrap text-sm leading-5 font-medium text-gray-900"
+                    >
                       <input
                         pInputText
                         id="weight"
@@ -468,8 +456,9 @@
                         pSize="small"
                       />
                     </td>
-
-                    <td>
+                    <td
+                      class="px-6 py-4 whitespace-nowrap text-sm leading-5 font-medium text-gray-900"
+                    >
                       <input
                         pInputText
                         id="total_weight"
@@ -479,9 +468,8 @@
                         pSize="small"
                       />
                     </td>
-
                     <td
-                      class="whitespace-nowrap text-sm leading-6 font-medium text-wight"
+                      class="px-6 py-4 whitespace-nowrap text-sm leading-5 font-medium text-gray-900"
                     >
                       <p-button
                         icon="pi pi-trash"
@@ -503,16 +491,6 @@
       </div>
     </div>
   </div>
-  <p-button
-    icon="pi pi-plus-circle"
-    severity="info"
-    pTooltip="Add new Item"
-    tooltipPosition="top"
-    [label]="'add' | translate"
-    class="m-2"
-    (onClick)="addItem()"
-  ></p-button>
-
   <div class="m-2">
     <p-button
       class="!text-xs"
@@ -530,3 +508,92 @@
     />
   </div>
 </form>
+}@if(invoiceId && !isUpdate){
+
+<div class="surface-section px-4 py-5 md:px-6 lg:px-8">
+  <p-card header="{{ 'invoiceDetails' | translate }}" styleClass="mb-4">
+    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+      <div>
+        <div class="font-bold text-gray-700">
+          {{ "invoiceNumber" | translate }}:
+        </div>
+        <div>{{ invoiceData.invoice_number }}</div>
+      </div>
+      <div>
+        <div class="font-bold text-gray-700">{{ "date" | translate }}:</div>
+        <div>{{ invoiceData.invoice_date }}</div>
+      </div>
+      <div>
+        <div class="font-bold text-gray-700">{{ "customer" | translate }}:</div>
+        <div>{{ invoiceData.customer }}</div>
+      </div>
+      <div>
+        <div class="font-bold text-gray-700">{{ "supplier" | translate }}:</div>
+        <div>{{ invoiceData.supplier }}</div>
+      </div>
+      <div>
+        <div class="font-bold text-gray-700">
+          {{ "discount_invoice" | translate }}:
+        </div>
+        <div>{{ invoiceData.discount_amount }}</div>
+      </div>
+      <div>
+        <div class="font-bold text-gray-700">
+          {{ "net_invoice" | translate }}:
+        </div>
+        <div>{{ invoiceData.net_amount }}</div>
+      </div>
+    </div>
+    <div class="flex justify-content-end">
+      <button
+        onclick="window.print()"
+        class="bg-blue-500 text-white px-4 py-2 rounded"
+      >
+        Print
+      </button>
+    </div>
+  </p-card>
+
+  <p-card header="{{ 'invoiceLines' | translate }}">
+    <p-table
+      [value]="invoiceData.invoice_lines"
+      responsiveLayout="scroll"
+      showGridlines
+      stripedRows
+    >
+      <ng-template pTemplate="header">
+        <tr>
+          <th>{{ "number" | translate }}</th>
+          <th>{{ "container" | translate }}</th>
+          <th>{{ "item" | translate }}</th>
+          <th>{{ "desorption" | translate }}</th>
+          <th>{{ "boxQnt" | translate }}</th>
+          <th>{{ "qunNumber" | translate }}</th>
+          <th>{{ "price" | translate }}</th>
+          <th>{{ "CBM_store" | translate }}</th>
+          <th>{{ "CBM_height" | translate }}</th>
+          <th>{{ "CBM_width" | translate }}</th>
+          <th>{{ "CBM_length" | translate }}</th>
+          <th>{{ "weight" | translate }}</th>
+        </tr>
+      </ng-template>
+      <ng-template pTemplate="body" let-item let-rowIndex="rowIndex">
+        <tr>
+          <td>{{ rowIndex + 1 }}</td>
+          <td>{{ item.container_sequence }}</td>
+          <td>{{ item.item_code }}</td>
+          <td>{{ item.item_description }}</td>
+          <td>{{ item.box_count }}</td>
+          <td>{{ item.item_in_box }}</td>
+          <td>{{ item.item_price }}</td>
+          <td>{{ item.store_cbm }}</td>
+          <td>{{ item.height }}</td>
+          <td>{{ item.width }}</td>
+          <td>{{ item.length }}</td>
+          <td>{{ item.weight }}</td>
+        </tr>
+      </ng-template>
+    </p-table>
+  </p-card>
+</div>
+}
