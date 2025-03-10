@@ -11,16 +11,14 @@ import { providePrimeNG } from 'primeng/config';
 import Lara from '@primeng/themes/lara';
 
 import { TranslateModule, TranslateLoader } from '@ngx-translate/core';
-import { TranslateHttpLoader } from '@ngx-translate/http-loader';
 import {
   HttpBackend,
-  HttpClient,
   provideHttpClient,
   withInterceptors,
 } from '@angular/common/http';
 import { interceptors } from './core/interceptors';
 import { MultiTranslateHttpLoader } from 'ngx-translate-multi-http-loader';
-import { MessageService } from 'primeng/api';
+import { ConfirmationService, MessageService } from 'primeng/api';
 
 export const MultiTranslateLoader = (
   http: HttpBackend
@@ -52,5 +50,6 @@ export const appConfig: ApplicationConfig = {
     ]),
     provideHttpClient(withInterceptors(interceptors)),
     MessageService,
+    ConfirmationService,
   ],
 };

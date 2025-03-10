@@ -63,6 +63,7 @@ export default class CreateInvoiceComponent {
 
   listOfCustomers = signal([]);
   listOfSuppliers = signal([]);
+  listOfItems = signal([]);
 
   private formBuilder = inject(FormBuilder);
   private messageService = inject(MessageService);
@@ -96,6 +97,7 @@ export default class CreateInvoiceComponent {
   protected form = this.formBuilder.group({
     customer: [null],
     supplier: [null],
+    item_category: [null],
     total_amount: [null],
     discount_amount: [null],
     net_invoice: [null],
@@ -113,7 +115,6 @@ export default class CreateInvoiceComponent {
     third_payment_date: [null],
     fourth_payment_amount: [null],
     fourth_payment_date: [null],
-
     invoice_lines: this.formBuilder.array([], []),
   });
 
@@ -177,10 +178,18 @@ export default class CreateInvoiceComponent {
       this.listOfCustomers.set(data);
       this.invoiceService.listOfCustomers.set(data);
     });
+
     this.lookupService.getListOfLookups('suppliers').subscribe((data: any) => {
       this.listOfSuppliers.set(data);
       this.invoiceService.listOfSuppliers.set(data);
     });
+
+    this.lookupService
+      .getListOfLookups('items-categories')
+      .subscribe((data: any) => {
+        this.listOfItems.set(data);
+        this.invoiceService.listOfItems.set(data);
+      });
 
     this.route = [
       {

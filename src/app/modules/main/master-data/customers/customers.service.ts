@@ -4,6 +4,7 @@ import { ApiService } from '../../../../core/services/api.service';
 import { CUSTOMER_APIS } from './customer.apis';
 import { ShowMessageService } from '../../../../core/services/show-message.service';
 import { Location } from '@angular/common';
+import { ConfirmSaveDeleteService } from '../../../../core/services/confirm-save-delete.service';
 
 @Injectable({
   providedIn: 'root',
@@ -11,6 +12,7 @@ import { Location } from '@angular/common';
 export class CustomersService {
   private apiService = inject(ApiService);
   private showMessageService = inject(ShowMessageService);
+  private confirmService = inject(ConfirmSaveDeleteService);
   private location = inject(Location);
   customerDeleted = signal(false);
 
@@ -61,6 +63,14 @@ export class CustomersService {
   }
 
   createCustomer(data: FormGroup) {
+    this.confirmService.confirmSave(
+      'Are you sure you want to create this customer?',
+      () => {
+        this.createCustomerApi(data);
+      }
+    );
+  }
+  createCustomerApi(data: FormGroup) {
     let modifiedModel = this.componentModelToApiModel(data);
     this.apiService
       .sendDataToServer(CUSTOMER_APIS.CREATE_CUSTOMER, modifiedModel)
@@ -84,6 +94,14 @@ export class CustomersService {
   }
 
   updateCustomer(data: FormGroup, id: string) {
+    this.confirmService.confirmSave(
+      'Are you sure you want to update this customer?',
+      () => {
+        this.updateCustomerApi(data, id);
+      }
+    );
+  }
+  updateCustomerApi(data: FormGroup, id: string) {
     let modifiedModel = this.componentModelToApiModel(data);
     this.apiService
       .updateDataOnServer(
@@ -108,6 +126,15 @@ export class CustomersService {
   }
 
   deleteCustomer(id: string) {
+    this.confirmService.confirmDelete(
+      'Are you sure you want to delete this invoice?',
+      () => {
+        this.deleteCustomerApi(id);
+      }
+    );
+  }
+
+  deleteCustomerApi(id: string) {
     this.apiService
       .deleteDataOnServer(CUSTOMER_APIS.DELETE_CUSTOMER(+id))
       .subscribe({

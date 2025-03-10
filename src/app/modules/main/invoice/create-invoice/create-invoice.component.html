@@ -38,7 +38,7 @@
   [formGroup]="form"
   (ngSubmit)="submit(form)"
 >
-  <div class="grid grid-cols-2 gap-5">
+  <div class="grid grid-cols-3 gap-5">
     <p-floatlabel class="md:col-span-1 sm:col-span-3 my-2" variant="on">
       <p-select
         id="name"
@@ -63,6 +63,18 @@
         formControlName="supplier"
       />
       <label for="supplier">{{ "supplierName" | translate }}</label>
+    </p-floatlabel>
+    <p-floatlabel class="md:col-span-1 sm:col-span-3 my-2" variant="on">
+      <p-select
+        id="item_category"
+        [options]="listOfItems()"
+        optionLabel="name"
+        [filter]="true"
+        [showClear]="true"
+        styleClass="w-full"
+        formControlName="item_category"
+      />
+      <label for="item_category">{{ "item_category" | translate }}</label>
     </p-floatlabel>
   </div>
   <div class="grid grid-cols-3 gap-5">
@@ -130,7 +142,7 @@
     </div>
   </div>
 
-  <div class="grid md:grid-cols-8 grid-cols-1 gap-5">
+  <div class="grid md:grid-cols-4 grid-cols-1 gap-5">
     <p-floatlabel variant="on" class="md:col-span-1 col-span-3 my-2">
       <input
         pInputText
@@ -509,7 +521,6 @@
   </div>
 </form>
 }@if(invoiceId && !isUpdate){
-
 <div class="surface-section px-4 py-5 md:px-6 lg:px-8">
   <p-card header="{{ 'invoiceDetails' | translate }}" styleClass="mb-4">
     <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
@@ -544,14 +555,14 @@
         <div>{{ invoiceData.net_amount }}</div>
       </div>
     </div>
-    <div class="flex justify-content-end">
+    <!-- <div class="flex justify-content-end">
       <button
         onclick="window.print()"
-        class="bg-blue-500 text-white px-4 py-2 rounded"
+        class="bg-primary text-white px-4 py-2 rounded"
       >
         Print
       </button>
-    </div>
+    </div> -->
   </p-card>
 
   <p-card header="{{ 'invoiceLines' | translate }}">

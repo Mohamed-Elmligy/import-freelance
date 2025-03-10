@@ -4,6 +4,7 @@ import { ApiService } from '../../../core/services/api.service';
 import { ShowMessageService } from '../../../core/services/show-message.service';
 import { INVOICE_APIS } from './invoice.apis';
 import { formatDate, Location } from '@angular/common';
+import { ConfirmSaveDeleteService } from '../../../core/services/confirm-save-delete.service';
 
 @Injectable({
   providedIn: 'root',
@@ -12,10 +13,12 @@ export class InvoiceService {
   private apiService = inject(ApiService);
   private showMessageService = inject(ShowMessageService);
   private location = inject(Location);
+  private confirmService = inject(ConfirmSaveDeleteService);
   invoiceDeleted = signal(false);
 
   listOfCustomers = signal([]);
   listOfSuppliers = signal([]);
+  listOfItems = signal([]);
 
   invoiceHeaders = [
     'invoiceNumber',
@@ -32,7 +35,7 @@ export class InvoiceService {
 
   componentModelToApiModel(form: FormGroup) {
     return {
-      item_category: form.value.item_category,
+      item_category: form.value.item_category.id,
       customer: form.value.customer.id,
       supplier: form.value.supplier.id,
       invoice_number: form.value.invoice_number,
@@ -90,9 +93,12 @@ export class InvoiceService {
     const selectedSupplier = this.listOfSuppliers().find(
       (item: any) => item.id === data.supplier
     );
+    const selectedItem = this.listOfItems().find(
+      (item: any) => item.id === data.item_category
+    );
 
     form.patchValue({
-      item_category: data.item_category,
+      item_category: selectedItem,
       customer: selectedCustomer,
       supplier: selectedSupplier,
       invoice_number: data.invoice_number,
@@ -190,7 +196,11 @@ export class InvoiceService {
   updateInvoice(data: FormGroup, id: string) {
     let modifiedModel = this.componentModelToApiModel(data);
     this.apiService
-      .updateDataOnServer('put', INVOICE_APIS.UPDATE_INVOICE(+id), {})
+      .updateDataOnServer(
+        'put',
+        INVOICE_APIS.UPDATE_INVOICE(+id),
+        modifiedModel
+      )
       .subscribe({
         next: () => {
           this.showMessageService.showMessage(
@@ -208,6 +218,15 @@ export class InvoiceService {
   }
 
   deleteInvoice(id: string) {
+    this.confirmService.confirmDelete(
+      'Are you sure you want to delete this invoice?',
+      () => {
+        this.deleteInvoiceApi(id);
+      }
+    );
+  }
+
+  deleteInvoiceApi(id: string) {
     this.apiService
       .deleteDataOnServer(INVOICE_APIS.DELETE_INVOICE(+id))
       .subscribe({
