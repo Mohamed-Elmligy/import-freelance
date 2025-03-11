@@ -74,7 +74,7 @@
         styleClass="w-full"
         formControlName="item_category"
       />
-      <label for="item_category">{{ "item_category" | translate }}</label>
+      <label for="item_category">{{ "itemsCategory" | translate }}</label>
     </p-floatlabel>
   </div>
   <div class="grid grid-cols-3 gap-5">
@@ -116,12 +116,12 @@
       }}</label>
       <p>{{ form.get("total_amount")?.value }}</p>
     </div>
-    <div class="md:col-span-1 col-span-3 my-2 bg-gray-100 p-4 rounded-md">
+    <!-- <div class="md:col-span-1 col-span-3 my-2 bg-gray-100 p-4 rounded-md">
       <label class="text-md font-bold" for="discount_amount">{{
         "discount_amount" | translate
       }}</label>
       <p>{{ form.get("discount_amount")?.value }}</p>
-    </div>
+    </div> -->
     <div class="md:col-span-1 col-span-3 my-2 bg-gray-100 p-4 rounded-md">
       <label class="text-md font-bold" for="boxQnt">{{
         "boxQnt" | translate
@@ -142,7 +142,7 @@
     </div>
   </div>
 
-  <div class="grid md:grid-cols-4 grid-cols-1 gap-5">
+  <div class="grid md:grid-cols-6 grid-cols-1 gap-5">
     <p-floatlabel variant="on" class="md:col-span-1 col-span-3 my-2">
       <input
         pInputText
@@ -153,7 +153,7 @@
       />
       <label for="firstBatchNumber">{{ "firstBatchNumber" | translate }}</label>
     </p-floatlabel>
-    <p-floatlabel variant="on" class="md:col-span-1 col-span-3 my-2">
+    <p-floatlabel variant="on" class="md:col-span-1 col-span-2 my-2">
       <p-datepicker
         inputId="firstBatchDate"
         showIcon
@@ -164,7 +164,7 @@
       <label for="date">{{ "firstBatchDate" | translate }}</label>
     </p-floatlabel>
 
-    <p-floatlabel variant="on" class="md:col-span-1 col-span-3 my-2">
+    <p-floatlabel variant="on" class="md:col-span-1 col-span-2 my-2">
       <input
         pInputText
         id="secondBatchNumber"
@@ -176,7 +176,7 @@
         "secondBatchNumber" | translate
       }}</label>
     </p-floatlabel>
-    <p-floatlabel variant="on" class="md:col-span-1 col-span-3 my-2">
+    <p-floatlabel variant="on" class="md:col-span-1 col-span-2 my-2">
       <p-datepicker
         inputId="secondBatchDate"
         showIcon
@@ -187,7 +187,7 @@
       <label for="date">{{ "secondBatchDate" | translate }}</label>
     </p-floatlabel>
 
-    <p-floatlabel variant="on" class="md:col-span-1 col-span-3 my-2">
+    <p-floatlabel variant="on" class="md:col-span-1 col-span-2 my-2">
       <input
         pInputText
         id="thirdBatchNumber"
@@ -197,7 +197,7 @@
       />
       <label for="thirdBatchNumber">{{ "thirdBatchNumber" | translate }}</label>
     </p-floatlabel>
-    <p-floatlabel variant="on" class="md:col-span-1 col-span-3 my-2">
+    <p-floatlabel variant="on" class="md:col-span-1 col-span-2 my-2">
       <p-datepicker
         inputId="thirdBatchDate"
         showIcon
@@ -207,7 +207,7 @@
       />
       <label for="date">{{ "thirdBatchDate" | translate }}</label>
     </p-floatlabel>
-    <p-floatlabel variant="on" class="md:col-span-1 col-span-3 my-2">
+    <!-- <p-floatlabel variant="on" class="md:col-span-1 col-span-3 my-2">
       <input
         pInputText
         id="thirdBatchNumber"
@@ -226,9 +226,9 @@
         iconDisplay="input"
         styleClass="w-full"
         formControlName="fourth_payment_date"
-      />
-      <label for="date">{{ "fourth_payment_date" | translate }}</label>
-    </p-floatlabel>
+      /> -->
+    <!-- <label for="date">{{ "fourth_payment_date" | translate }}</label>
+    </p-floatlabel> -->
   </div>
 
   <div class="flex flex-col">
@@ -253,52 +253,52 @@
                 <tr
                   class="bg-primary text-white uppercase tracking-wider text-left text-xs leading-4 font-medium"
                 >
-                  <th scope="col" class="px-6 py-3 text-center">
+                  <th scope="col" class="px-4 py-3 text-center">
                     {{ "number" | translate }}
                   </th>
-                  <th scope="col" class="px-6 py-3 text-center">
+                  <th scope="col" class="px-4 py-3 text-center">
                     {{ "container" | translate }}
                   </th>
-                  <th scope="col" class="px-6 py-3 text-center">
+                  <th scope="col" class="px-4 py-3 text-center">
                     {{ "item" | translate }}
                   </th>
-                  <th scope="col" class="px-6 py-3 text-center">
-                    {{ "desorption" | translate }}
+                  <th scope="col" class="px-4 py-3 text-center">
+                    {{ "description" | translate }}
                   </th>
-                  <th scope="col" class="px-6 py-3 text-center">
+                  <th scope="col" class="px-4 py-3 text-center">
                     {{ "boxQnt" | translate }}
                   </th>
-                  <th scope="col" class="px-6 py-3 text-center">
+                  <th scope="col" class="px-4 py-3 text-center">
                     {{ "qunNumber" | translate }}
                   </th>
-                  <th scope="col" class="px-6 py-3 text-center">
+                  <th scope="col" class="px-4 py-3 text-center">
                     {{ "price" | translate }}
                   </th>
-                  <th scope="col" class="px-6 py-3 text-center">
+                  <!-- <th scope="col" class="px-4 py-3 text-center">
                     {{ "total_price" | translate }}
-                  </th>
-                  <th scope="col" class="px-6 py-3 text-center">
+                  </th> -->
+                  <th scope="col" class="px-4 py-3 text-center">
                     {{ "CBM_store" | translate }}
                   </th>
-                  <th scope="col" class="px-6 py-3 text-center">
+                  <th scope="col" class="px-4 py-3 text-center">
                     {{ "CBM_height" | translate }}
                   </th>
-                  <th scope="col" class="px-6 py-3 text-center">
+                  <th scope="col" class="px-4 py-3 text-center">
                     {{ "CBM_width" | translate }}
                   </th>
-                  <th scope="col" class="px-6 py-3 text-center">
+                  <th scope="col" class="px-4 py-3 text-center">
                     {{ "CBM_length" | translate }}
                   </th>
-                  <th scope="col" class="px-6 py-3 text-center">
+                  <!-- <th scope="col" class="px-4 py-3 text-center">
                     {{ "total_CBM" | translate }}
-                  </th>
-                  <th scope="col" class="px-6 py-3 text-center">
+                  </th> -->
+                  <th scope="col" class="px-4 py-3 text-center">
                     {{ "weight" | translate }}
                   </th>
-                  <th scope="col" class="px-6 py-3 text-center">
+                  <th scope="col" class="px-4 py-3 text-center">
                     {{ "total_weight" | translate }}
                   </th>
-                  <th scope="col" class="px-6 py-3 text-center">
+                  <th scope="col" class="px-4 py-3 text-center">
                     {{ "ACTIONS" | translate }}
                   </th>
                 </tr>
@@ -314,7 +314,7 @@
                       {{ $index + 1 }}
                     </td>
                     <td
-                      class="px-6 py-4 whitespace-nowrap text-sm leading-5 font-medium text-gray-900"
+                      class="px-2 py-4 whitespace-nowrap text-sm leading-5 font-medium text-gray-900"
                     >
                       <input
                         pInputText
@@ -326,7 +326,7 @@
                       />
                     </td>
                     <td
-                      class="px-6 py-4 whitespace-nowrap text-sm leading-5 font-medium text-gray-900"
+                      class="px-2 py-4 whitespace-nowrap text-sm leading-5 font-medium text-gray-900"
                     >
                       <input
                         pInputText
@@ -338,7 +338,7 @@
                       />
                     </td>
                     <td
-                      class="px-6 py-4 whitespace-nowrap text-sm leading-5 font-medium text-gray-900"
+                      class="px-2 py-4 whitespace-nowrap text-sm leading-5 font-medium text-gray-900"
                     >
                       <input
                         pInputText
@@ -350,7 +350,7 @@
                       />
                     </td>
                     <td
-                      class="px-6 py-4 whitespace-nowrap text-sm leading-5 font-medium text-gray-900"
+                      class="px-2 py-4 whitespace-nowrap text-sm leading-5 font-medium text-gray-900"
                     >
                       <input
                         pInputText
@@ -362,7 +362,7 @@
                       />
                     </td>
                     <td
-                      class="px-6 py-4 whitespace-nowrap text-sm leading-5 font-medium text-gray-900"
+                      class="px-2 py-4 whitespace-nowrap text-sm leading-5 font-medium text-gray-900"
                     >
                       <input
                         pInputText
@@ -374,7 +374,7 @@
                       />
                     </td>
                     <td
-                      class="px-6 py-4 whitespace-nowrap text-sm leading-5 font-medium text-gray-900"
+                      class="px-2 py-4 whitespace-nowrap text-sm leading-5 font-medium text-gray-900"
                     >
                       <input
                         pInputText
@@ -385,8 +385,8 @@
                         pSize="small"
                       />
                     </td>
-                    <td
-                      class="px-6 py-4 whitespace-nowrap text-sm leading-5 font-medium text-gray-900"
+                    <!-- <td
+                      class="px-2 py-4 whitespace-nowrap text-sm leading-5 font-medium text-gray-900"
                     >
                       <input
                         pInputText
@@ -396,9 +396,9 @@
                         style="width: 75px !important"
                         pSize="small"
                       />
-                    </td>
+                    </td> -->
                     <td
-                      class="px-6 py-4 whitespace-nowrap text-sm leading-5 font-medium text-gray-900"
+                      class="px-2 py-4 whitespace-nowrap text-sm leading-5 font-medium text-gray-900"
                     >
                       <input
                         pInputText
@@ -410,7 +410,7 @@
                       />
                     </td>
                     <td
-                      class="px-6 py-4 whitespace-nowrap text-sm leading-5 font-medium text-gray-900"
+                      class="px-2 py-4 whitespace-nowrap text-sm leading-5 font-medium text-gray-900"
                     >
                       <input
                         pInputText
@@ -422,7 +422,7 @@
                       />
                     </td>
                     <td
-                      class="px-6 py-4 whitespace-nowrap text-sm leading-5 font-medium text-gray-900"
+                      class="px-2 py-4 whitespace-nowrap text-sm leading-5 font-medium text-gray-900"
                     >
                       <input
                         pInputText
@@ -433,7 +433,7 @@
                       />
                     </td>
                     <td
-                      class="px-6 py-4 whitespace-nowrap text-sm leading-5 font-medium text-gray-900"
+                      class="px-2 py-4 whitespace-nowrap text-sm leading-5 font-medium text-gray-900"
                     >
                       <input
                         pInputText
@@ -444,8 +444,8 @@
                         pSize="small"
                       />
                     </td>
-                    <td
-                      class="px-6 py-4 whitespace-nowrap text-sm leading-5 font-medium text-gray-900"
+                    <!-- <td
+                      class="px-2 py-4 whitespace-nowrap text-sm leading-5 font-medium text-gray-900"
                     >
                       <input
                         pInputText
@@ -455,9 +455,9 @@
                         style="width: 75px !important"
                         pSize="small"
                       />
-                    </td>
+                    </td> -->
                     <td
-                      class="px-6 py-4 whitespace-nowrap text-sm leading-5 font-medium text-gray-900"
+                      class="px-2 py-4 whitespace-nowrap text-sm leading-5 font-medium text-gray-900"
                     >
                       <input
                         pInputText
@@ -469,7 +469,7 @@
                       />
                     </td>
                     <td
-                      class="px-6 py-4 whitespace-nowrap text-sm leading-5 font-medium text-gray-900"
+                      class="px-2 py-4 whitespace-nowrap text-sm leading-5 font-medium text-gray-900"
                     >
                       <input
                         pInputText
@@ -481,7 +481,7 @@
                       />
                     </td>
                     <td
-                      class="px-6 py-4 whitespace-nowrap text-sm leading-5 font-medium text-gray-900"
+                      class="px-2 py-4 whitespace-nowrap text-sm leading-5 font-medium text-gray-900"
                     >
                       <p-button
                         icon="pi pi-trash"
@@ -491,6 +491,15 @@
                         rounded
                         text
                         (onClick)="deleteFormLine($index)"
+                      ></p-button>
+
+                      <p-button
+                        icon="pi pi-plus-circle"
+                        severity="info"
+                        pTooltip="Add new Item"
+                        tooltipPosition="top"
+                        class="m-2"
+                        (onClick)="addItem()"
                       ></p-button>
                     </td>
                   </tr>
@@ -523,7 +532,7 @@
 }@if(invoiceId && !isUpdate){
 <div class="surface-section px-4 py-5 md:px-6 lg:px-8">
   <p-card header="{{ 'invoiceDetails' | translate }}" styleClass="mb-4">
-    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
       <div>
         <div class="font-bold text-gray-700">
           {{ "invoiceNumber" | translate }}:
@@ -535,16 +544,26 @@
         <div>{{ invoiceData.invoice_date }}</div>
       </div>
       <div>
-        <div class="font-bold text-gray-700">{{ "customer" | translate }}:</div>
+        <div class="font-bold text-gray-700">
+          {{ "customer_name" | translate }}:
+        </div>
         <div>{{ invoiceData.customer }}</div>
       </div>
       <div>
-        <div class="font-bold text-gray-700">{{ "supplier" | translate }}:</div>
+        <div class="font-bold text-gray-700">
+          {{ "supplierName" | translate }}:
+        </div>
         <div>{{ invoiceData.supplier }}</div>
       </div>
       <div>
         <div class="font-bold text-gray-700">
-          {{ "discount_invoice" | translate }}:
+          {{ "total_invoice" | translate }}:
+        </div>
+        <div>{{ invoiceData.total_amount }}</div>
+      </div>
+      <div>
+        <div class="font-bold text-gray-700">
+          {{ "total_discount" | translate }}:
         </div>
         <div>{{ invoiceData.discount_amount }}</div>
       </div>
@@ -555,14 +574,68 @@
         <div>{{ invoiceData.net_amount }}</div>
       </div>
     </div>
-    <!-- <div class="flex justify-content-end">
-      <button
-        onclick="window.print()"
-        class="bg-primary text-white px-4 py-2 rounded"
-      >
-        Print
-      </button>
-    </div> -->
+    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
+      <div>
+        <div class="font-bold text-gray-700">
+          {{ "firstBatchNumber" | translate }}:
+        </div>
+        <div>{{ invoiceData.first_payment_amount }}</div>
+      </div>
+      <div>
+        <div class="font-bold text-gray-700">
+          {{ "firstBatchDate" | translate }}:
+        </div>
+        <div>{{ invoiceData.first_payment_date }}</div>
+      </div>
+      <div>
+        <div class="font-bold text-gray-700">
+          {{ "secondBatchNumber" | translate }}:
+        </div>
+        <div>{{ invoiceData.second_payment_amount }}</div>
+      </div>
+      <div>
+        <div class="font-bold text-gray-700">
+          {{ "secondBatchDate" | translate }}:
+        </div>
+        <div>{{ invoiceData.second_payment_date }}</div>
+      </div>
+      <div>
+        <div class="font-bold text-gray-700">
+          {{ "thirdBatchNumber" | translate }}:
+        </div>
+        <div>{{ invoiceData.third_payment_amount }}</div>
+      </div>
+      <div>
+        <div class="font-bold text-gray-700">
+          {{ "thirdBatchDate" | translate }}:
+        </div>
+        <div>{{ invoiceData.third_payment_date }}</div>
+      </div>
+      <div>
+        <div class="font-bold text-gray-700">
+          {{ "boxTotal" | translate }}:
+        </div>
+        <div>{{ invoiceData.total_boxes }}</div>
+      </div>
+      <div>
+        <div class="font-bold text-gray-700">
+          {{ "totalCBM" | translate }}:
+        </div>
+        <div>{{ invoiceData.total_cbm }}</div>
+      </div>
+      <div>
+        <div class="font-bold text-gray-700">
+          {{ "totalWeight" | translate }}:
+        </div>
+        <div>{{ invoiceData.total_weight }}</div>
+      </div>
+      <div>
+        <div class="font-bold text-gray-700">
+          {{ "itemsCategory" | translate }}:
+        </div>
+        <div>{{ invoiceData.item_category }}</div>
+      </div>
+    </div>
   </p-card>
 
   <p-card header="{{ 'invoiceLines' | translate }}">
@@ -577,15 +650,18 @@
           <th>{{ "number" | translate }}</th>
           <th>{{ "container" | translate }}</th>
           <th>{{ "item" | translate }}</th>
-          <th>{{ "desorption" | translate }}</th>
+          <th>{{ "description" | translate }}</th>
           <th>{{ "boxQnt" | translate }}</th>
           <th>{{ "qunNumber" | translate }}</th>
           <th>{{ "price" | translate }}</th>
+          <th>{{ "total_price" | translate }}</th>
           <th>{{ "CBM_store" | translate }}</th>
           <th>{{ "CBM_height" | translate }}</th>
           <th>{{ "CBM_width" | translate }}</th>
           <th>{{ "CBM_length" | translate }}</th>
+          <th>{{ "total_CBM" | translate }}</th>
           <th>{{ "weight" | translate }}</th>
+          <th>{{ "total_weight" | translate }}</th>
         </tr>
       </ng-template>
       <ng-template pTemplate="body" let-item let-rowIndex="rowIndex">
@@ -597,11 +673,14 @@
           <td>{{ item.box_count }}</td>
           <td>{{ item.item_in_box }}</td>
           <td>{{ item.item_price }}</td>
+          <td>{{ item.total_price }}</td>
           <td>{{ item.store_cbm }}</td>
           <td>{{ item.height }}</td>
           <td>{{ item.width }}</td>
           <td>{{ item.length }}</td>
+          <td>{{ item.total_cbm }}</td>
           <td>{{ item.weight }}</td>
+          <td>{{ item.total_weight }}</td>
         </tr>
       </ng-template>
     </p-table>

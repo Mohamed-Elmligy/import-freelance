@@ -177,6 +177,9 @@ export default class CreateInvoiceComponent {
     this.lookupService.getListOfLookups('customers').subscribe((data: any) => {
       this.listOfCustomers.set(data);
       this.invoiceService.listOfCustomers.set(data);
+      for (let i = 0; i < 3; i++) {
+        this.addItem();
+      }
     });
 
     this.lookupService.getListOfLookups('suppliers').subscribe((data: any) => {
@@ -253,7 +256,7 @@ export interface InvoiceLine {
 
 export interface InvoiceUpdateData {
   company: number;
-  item_category: number;
+  item_category: string;
   customer: number;
   supplier: number;
   invoice_number: string;
@@ -261,5 +264,16 @@ export interface InvoiceUpdateData {
   total_amount: string;
   discount_amount: string;
   net_amount: string;
+  first_payment_amount: string;
+  first_payment_date: string;
+  second_payment_amount: string;
+  second_payment_date: string;
+  third_payment_amount: string;
+  third_payment_date: string;
+  fourth_payment_amount: string;
+  fourth_payment_date: string;
+  total_boxes: string;
+  total_cbm: string;
+  total_weight: string;
   invoice_lines: InvoiceLine[];
 }

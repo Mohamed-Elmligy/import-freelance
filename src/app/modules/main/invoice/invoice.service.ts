@@ -26,6 +26,7 @@ export class InvoiceService {
     'supplierName',
     'invoiceDate',
     'totalAmount',
+    'netAmount',
     'actions',
   ];
 
@@ -60,12 +61,12 @@ export class InvoiceService {
         'yyyy-MM-dd',
         'en'
       ),
-      fourth_payment_amount: form.value.fourth_payment_amount,
-      fourth_payment_date: formatDate(
-        form.value.fourth_payment_date,
-        'yyyy-MM-dd',
-        'en'
-      ),
+      // fourth_payment_amount: form.value.fourth_payment_amount,
+      // fourth_payment_date: formatDate(
+      //   form.value.fourth_payment_date,
+      //   'yyyy-MM-dd',
+      //   'en'
+      // ),
       invoice_lines: form.value.invoice_lines.map((item: any) => {
         return {
           container_sequence: item.container_sequence,
@@ -120,10 +121,10 @@ export class InvoiceService {
       third_payment_date: data.third_payment_date
         ? new Date(data.third_payment_date)
         : null,
-      fourth_payment_amount: data.fourth_payment_amount,
-      fourth_payment_date: data.fourth_payment_date
-        ? new Date(data.fourth_payment_date)
-        : null,
+      // fourth_payment_amount: data.fourth_payment_amount,
+      // fourth_payment_date: data.fourth_payment_date
+      //   ? new Date(data.fourth_payment_date)
+      //   : null,
       invoice_lines: data.invoice_lines.map((item: any) => {
         return {
           container_sequence: item.container_sequence,
@@ -149,6 +150,7 @@ export class InvoiceService {
       supplier: string;
       invoice_date: string;
       total_amount: string;
+      net_amount: string;
       id: string;
     }[]
   ) {
@@ -159,6 +161,7 @@ export class InvoiceService {
         supplierName: item.supplier,
         invoiceDate: item.invoice_date,
         totalAmount: item.total_amount,
+        netAmount: item.net_amount,
         id: item.id,
       };
     });

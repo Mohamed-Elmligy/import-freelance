@@ -71,11 +71,9 @@ export default class InvoicesListComponent {
   getInvoicesList() {
     this.invoiceService.getList().subscribe((data: any) => {
       this.tableColumns = this.invoiceService.invoiceHeaders;
-      this.displayedColumns = this.invoiceService.invoiceHeaders;
-      let ModifideData: any = this.invoiceService.apiModelToComponentModelList(
-        data.results
-      );
-      this.dataSource = new MatTableDataSource<any>(ModifideData);
+      this.displayedColumns = [...this.invoiceService.invoiceHeaders];
+      const modifiedData = this.invoiceService.apiModelToComponentModelList(data.results);
+      this.dataSource = new MatTableDataSource<any>(modifiedData);
       this.resultsLength = data.count;
     });
   }
