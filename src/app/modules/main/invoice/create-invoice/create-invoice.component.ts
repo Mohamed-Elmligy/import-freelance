@@ -162,8 +162,6 @@ export default class CreateInvoiceComponent {
   }
 
   submit(form: FormGroup) {
-    console.log(form.controls);
-
     if (form.valid) {
       if (!this.isUpdate) this.invoiceService.createInvoice(form);
       else this.invoiceService.updateInvoice(form, this.invoiceId);
@@ -177,9 +175,9 @@ export default class CreateInvoiceComponent {
     this.lookupService.getListOfLookups('customers').subscribe((data: any) => {
       this.listOfCustomers.set(data);
       this.invoiceService.listOfCustomers.set(data);
-      for (let i = 0; i < 3; i++) {
-        this.addItem();
-      }
+      // for (let i = 0; i < 3; i++) {
+      //   this.addItem();
+      // }
     });
 
     this.lookupService.getListOfLookups('suppliers').subscribe((data: any) => {

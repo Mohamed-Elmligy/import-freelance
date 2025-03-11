@@ -530,110 +530,113 @@
   </div>
 </form>
 }@if(invoiceId && !isUpdate){
-<div class="surface-section px-4 py-5 md:px-6 lg:px-8">
-  <p-card header="{{ 'invoiceDetails' | translate }}" styleClass="mb-4">
+<div class="surface-section px-4 md:px-6 lg:px-8">
+  <p-card
+    header="{{ 'invoiceDetails' | translate }}"
+    styleClass="mb-4 text-center md:text-start "
+  >
     <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
       <div>
-        <div class="font-bold text-gray-700">
+        <div class="font-bold text-gray-700 text-lg">
           {{ "invoiceNumber" | translate }}:
         </div>
         <div>{{ invoiceData.invoice_number }}</div>
       </div>
       <div>
-        <div class="font-bold text-gray-700">{{ "date" | translate }}:</div>
+        <div class="font-bold text-gray-700 text-lg">
+          {{ "date" | translate }}:</div>
         <div>{{ invoiceData.invoice_date }}</div>
       </div>
       <div>
-        <div class="font-bold text-gray-700">
+        <div class="font-bold text-gray-700 text-lg">
           {{ "customer_name" | translate }}:
         </div>
         <div>{{ invoiceData.customer }}</div>
       </div>
       <div>
-        <div class="font-bold text-gray-700">
+        <div class="font-bold text-gray-700 text-lg">
           {{ "supplierName" | translate }}:
         </div>
         <div>{{ invoiceData.supplier }}</div>
       </div>
       <div>
-        <div class="font-bold text-gray-700">
+        <div class="font-bold text-gray-700 text-lg">{{ "boxTotal" | translate }}:</div>
+        <div>{{ invoiceData.total_boxes }}</div>
+      </div>
+      <div>
+        <div class="font-bold text-gray-700 text-lg">{{ "totalCBM" | translate }}:</div>
+        <div>{{ invoiceData.total_cbm }}</div>
+      </div>
+      <div>
+        <div class="font-bold text-gray-700 text-lg">
+          {{ "totalWeight" | translate }}:
+        </div>
+        <div>{{ invoiceData.total_weight }}</div>
+      </div>
+
+      <div>
+        <div class="font-bold text-gray-700 text-lg">
+          {{ "itemsCategory" | translate }}:
+        </div>
+        <div>{{ invoiceData.item_category }}</div>
+      </div>
+    </div>
+    <div class="grid pt-4 grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
+      <div>
+        <div class="font-bold text-gray-700 text-lg">
           {{ "total_invoice" | translate }}:
         </div>
         <div>{{ invoiceData.total_amount }}</div>
       </div>
       <div>
-        <div class="font-bold text-gray-700">
+        <div class="font-bold text-gray-700 text-lg">
           {{ "total_discount" | translate }}:
         </div>
         <div>{{ invoiceData.discount_amount }}</div>
       </div>
       <div>
-        <div class="font-bold text-gray-700">
+        <div class="font-bold text-gray-700 text-lg">
           {{ "net_invoice" | translate }}:
         </div>
         <div>{{ invoiceData.net_amount }}</div>
       </div>
     </div>
-    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
+    <div class="grid pt-4 grid-cols-1 md:grid-cols-2 lg:grid-cols-6 gap-4">
       <div>
-        <div class="font-bold text-gray-700">
+        <div class="font-bold text-gray-700 text-lg">
           {{ "firstBatchNumber" | translate }}:
         </div>
         <div>{{ invoiceData.first_payment_amount }}</div>
       </div>
       <div>
-        <div class="font-bold text-gray-700">
+        <div class="font-bold text-gray-700 text-lg">
           {{ "firstBatchDate" | translate }}:
         </div>
         <div>{{ invoiceData.first_payment_date }}</div>
       </div>
       <div>
-        <div class="font-bold text-gray-700">
+        <div class="font-bold text-gray-700 text-lg">
           {{ "secondBatchNumber" | translate }}:
         </div>
         <div>{{ invoiceData.second_payment_amount }}</div>
       </div>
       <div>
-        <div class="font-bold text-gray-700">
+        <div class="font-bold text-gray-700 text-lg">
           {{ "secondBatchDate" | translate }}:
         </div>
         <div>{{ invoiceData.second_payment_date }}</div>
       </div>
       <div>
-        <div class="font-bold text-gray-700">
+        <div class="font-bold text-gray-700 text-lg">
           {{ "thirdBatchNumber" | translate }}:
         </div>
         <div>{{ invoiceData.third_payment_amount }}</div>
       </div>
       <div>
-        <div class="font-bold text-gray-700">
+        <div class="font-bold text-gray-700 text-lg">
           {{ "thirdBatchDate" | translate }}:
         </div>
         <div>{{ invoiceData.third_payment_date }}</div>
-      </div>
-      <div>
-        <div class="font-bold text-gray-700">
-          {{ "boxTotal" | translate }}:
-        </div>
-        <div>{{ invoiceData.total_boxes }}</div>
-      </div>
-      <div>
-        <div class="font-bold text-gray-700">
-          {{ "totalCBM" | translate }}:
-        </div>
-        <div>{{ invoiceData.total_cbm }}</div>
-      </div>
-      <div>
-        <div class="font-bold text-gray-700">
-          {{ "totalWeight" | translate }}:
-        </div>
-        <div>{{ invoiceData.total_weight }}</div>
-      </div>
-      <div>
-        <div class="font-bold text-gray-700">
-          {{ "itemsCategory" | translate }}:
-        </div>
-        <div>{{ invoiceData.item_category }}</div>
       </div>
     </div>
   </p-card>
@@ -654,12 +657,12 @@
           <th>{{ "boxQnt" | translate }}</th>
           <th>{{ "qunNumber" | translate }}</th>
           <th>{{ "price" | translate }}</th>
-          <th>{{ "total_price" | translate }}</th>
+          <th>{{ "totalPrice" | translate }}</th>
           <th>{{ "CBM_store" | translate }}</th>
           <th>{{ "CBM_height" | translate }}</th>
           <th>{{ "CBM_width" | translate }}</th>
           <th>{{ "CBM_length" | translate }}</th>
-          <th>{{ "total_CBM" | translate }}</th>
+          <th>{{ "totalCBM" | translate }}</th>
           <th>{{ "weight" | translate }}</th>
           <th>{{ "total_weight" | translate }}</th>
         </tr>

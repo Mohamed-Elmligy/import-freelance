@@ -69,6 +69,7 @@ export class InvoiceService {
       // ),
       invoice_lines: form.value.invoice_lines.map((item: any) => {
         return {
+          id: item.id,
           container_sequence: item.container_sequence,
           item_code: item.item_code,
           item_description: item.item_description,
@@ -127,6 +128,7 @@ export class InvoiceService {
       //   : null,
       invoice_lines: data.invoice_lines.map((item: any) => {
         return {
+          id: item.id,
           container_sequence: item.container_sequence,
           item_code: item.item_code,
           item_description: item.item_description,
