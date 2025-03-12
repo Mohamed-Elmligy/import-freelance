@@ -31,7 +31,16 @@ export const errorInterceptor: HttpInterceptorFn = (request, next) => {
       }
 
       // 2- Bad Requests to be handled locally [ex. Validation errors]
-      if (error.status === 400) {
+      if (error.status === 400 && error.error?.error) {
+        const errors = Array.isArray(error.error.error)
+          ? error.error.error
+          : [error.error.error];
+
+        messages.showMessage(
+          'error',
+          'Error',
+          errors.map((error: string) => translateService.instant(error)).join('<br>')
+        );
         return throwError(() => error);
       }
 

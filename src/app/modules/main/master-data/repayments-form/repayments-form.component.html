@@ -37,6 +37,18 @@
   <div class="grid grid-cols-3 gap-5">
     <p-floatlabel class="md:col-span-1 sm:col-span-3 my-2" variant="on">
       <p-select
+        id="invoiceNumber"
+        [options]="listOfInvoices()"
+        optionLabel="invoice_number"
+        [filter]="true"
+        [showClear]="true"
+        styleClass="w-full"
+        formControlName="invoiceNumber"
+      />
+      <label for="name">{{ "invoiceNumber" | translate }}</label>
+    </p-floatlabel>
+    <p-floatlabel class="md:col-span-1 sm:col-span-3 my-2" variant="on">
+      <p-select
         id="name"
         [options]="listOfCustomers()"
         optionLabel="name"
@@ -48,18 +60,7 @@
       <label for="name">{{ "name" | translate }}</label>
     </p-floatlabel>
 
-    <p-floatlabel class="md:col-span-1 sm:col-span-3 my-2" variant="on">
-      <p-select
-        id="invoiceNumber"
-        [options]="listOfInvoices()"
-        optionLabel="invoice_number"
-        [filter]="true"
-        [showClear]="true"
-        styleClass="w-full"
-        formControlName="invoiceNumber"
-      />
-      <label for="name">{{ "invoiceNumber" | translate }}</label>
-    </p-floatlabel>
+    
 
     <p-floatlabel class="md:col-span-1 sm:col-span-3 my-2" variant="on">
       <p-select
