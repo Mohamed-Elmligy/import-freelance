@@ -10,6 +10,9 @@
       <p-tab value="2"
         ><i class="pi pi-heart mx-1"></i> {{ "personalize" | translate }}</p-tab
       >
+      <p-tab value="3"
+        ><i class="pi pi-users mx-1"></i> {{ "userList" | translate }}</p-tab
+      >
     </p-tablist>
     <p-tabpanels>
       <p-tabpanel value="0">
@@ -22,6 +25,9 @@
       </p-tabpanel>
       <p-tabpanel value="2">
         <p class="m-0"><app-personalize /></p>
+      </p-tabpanel>
+      <p-tabpanel value="3">
+        <p class="m-0"><app-users-list /></p>
       </p-tabpanel>
     </p-tabpanels>
   </p-tabs>

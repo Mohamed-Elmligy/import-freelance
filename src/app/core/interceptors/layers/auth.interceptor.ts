@@ -5,7 +5,13 @@ import { SecurityService } from '../../services/security.service';
 import { environment } from '../../../../environments/environment';
 
 const baseUrl = environment.baseUrl;
-const unAuthenticatedApis: string[] = [API_AUTH.LOGIN, API_AUTH.REGISTER];
+const unAuthenticatedApis: string[] = [
+  API_AUTH.LOGIN,
+  API_AUTH.REGISTER,
+  API_AUTH.CONFIRM_EMAIL,
+  API_AUTH.VERIFY_OTP,
+  API_AUTH.CONFIRM_EMAIL,
+];
 const unAuthenticatedApisUrls = unAuthenticatedApis.map(
   (api) => `${baseUrl}${api}`
 );

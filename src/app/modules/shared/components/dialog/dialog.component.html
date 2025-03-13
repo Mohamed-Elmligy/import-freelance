@@ -1,0 +1,18 @@
+<p-button (click)="dialogService.showDialog()" label="Show" />
+<p-dialog
+  [(visible)]="dialogService.visible"
+  [modal]="true"
+  [style]="{ width: '25rem' }"
+>
+  <ng-template #header>
+    <div class="inline-flex items-center justify-center gap-2">
+      {{ header }}
+    </div>
+  </ng-template>
+  <ng-template #content>
+    {{ content }}
+  </ng-template>
+  <ng-template #footer>
+    {{ footer }}
+  </ng-template>
+</p-dialog>

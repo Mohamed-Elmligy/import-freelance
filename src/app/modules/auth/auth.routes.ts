@@ -11,6 +11,10 @@ const auth_routes: Routes = [
     loadComponent: () => import('./register/register.component'),
   },
   {
+    path: 'confirm-email',
+    loadComponent: () => import('./confirm-email/confirm-email.component'),
+  },
+  {
     path: 'verify-otp',
     loadComponent: () => import('./verify-otp/verify-otp.component'),
   },
@@ -27,4 +31,5 @@ export const auth_routes_paths = {
   REGISTER: '/auth/register',
   VERIFY_USER: '/auth/verify-otp',
   FORGET_PASSWORD: '/auth/forget-password',
+  CONFIRM_EMAIL: '/auth/confirm-email',
 } as const;

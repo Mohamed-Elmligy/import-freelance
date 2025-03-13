@@ -19,11 +19,11 @@ import {
 import { interceptors } from './core/interceptors';
 import { MultiTranslateHttpLoader } from 'ngx-translate-multi-http-loader';
 import { ConfirmationService, MessageService } from 'primeng/api';
+import { DialogService } from 'primeng/dynamicdialog';
 
 export const MultiTranslateLoader = (
   http: HttpBackend
 ): MultiTranslateHttpLoader => new MultiTranslateHttpLoader(http, ['i18n/']);
-
 export const appConfig: ApplicationConfig = {
   providers: [
     provideZoneChangeDetection({ eventCoalescing: true }),
@@ -38,18 +38,20 @@ export const appConfig: ApplicationConfig = {
         },
       },
     }),
-    provideAnimationsAsync(),
-    importProvidersFrom([
+    importProvidersFrom(
       TranslateModule.forRoot({
         loader: {
           provide: TranslateLoader,
           useFactory: MultiTranslateLoader,
           deps: [HttpBackend],
         },
-      }),
-    ]),
+      })
+    ),
     provideHttpClient(withInterceptors(interceptors)),
     MessageService,
     ConfirmationService,
+    DialogService,
   ],
 };
+
+console.log('Application configured successfully.');

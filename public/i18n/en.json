@@ -116,5 +116,6 @@
   "length": "Length",
   "weight": "Weight",
   "fourth_payment_amount": "Fourth Payment Amount",
-  "fourth_payment_date": "Fourth Payment Date"
+  "fourth_payment_date": "Fourth Payment Date",
+  "verify": "Verify"
 }

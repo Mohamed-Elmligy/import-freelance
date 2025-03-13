@@ -127,5 +127,6 @@
   "fourth_payment_amount": "الدفعة الرابعة",
   "fourth_payment_date": "تاريخ الدفعة الرابعة",
   "invoiceLines": "بيــان الفاتورة",
-  "number": "#"
+  "number": "#",
+  "verify": "تاكيد"
 }
