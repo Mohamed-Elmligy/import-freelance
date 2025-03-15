@@ -21,8 +21,6 @@ import { LanguagesService } from '../../../../shared/services/languages.service'
 import { main_routes_paths } from '../../../main.routes';
 import { ApiService } from '../../../../../core/services/api.service';
 import { PROFILE_APIS } from '../../profile.apis';
-import { DialogService, DynamicDialogRef } from 'primeng/dynamicdialog';
-import { UserDataComponent } from '../user-data/user-data.component';
 
 @Component({
   selector: 'app-users-list',
@@ -53,10 +51,7 @@ export class UsersListComponent implements OnInit {
   private router = inject(Router);
   securityService = inject(SecurityService);
   languageService = inject(LanguagesService);
-  private dialogService = inject(DialogService);
   private _liveAnnouncer = inject(LiveAnnouncer);
-
-  ref: DynamicDialogRef | undefined;
 
   @ViewChild(MatPaginator) paginator!: MatPaginator;
   dataSource!: MatTableDataSource<any>;
@@ -103,9 +98,15 @@ export class UsersListComponent implements OnInit {
     }
   }
 
-  editUser(customerId: any) {
-    this.router.navigate([`/${main_routes_paths.customers}`], {
-      queryParams: { customerId: customerId, edit: true },
+  createUser() {
+    this.router.navigate([`/${main_routes_paths.userForm}`], {
+      queryParams: { edit: false },
+    });
+  }
+
+  editUser(userId: any) {
+    this.router.navigate([`/${main_routes_paths.userForm}`], {
+      queryParams: { userId: userId, edit: true },
     });
   }
 
@@ -116,25 +117,10 @@ export class UsersListComponent implements OnInit {
         this.getUsersList();
       });
   }
-  viewUser(customerId: string) {
-    console.log('Opening dialog for customerId:', customerId);
 
-    // Check if the dialog is already open
-    if (this.ref) {
-      console.log('Closing existing dialog');
-      this.ref.close();
-    }
-
-    this.ref = this.dialogService.open(UserDataComponent, {
-      data: { customerId: customerId },
-      header: 'User Data',
-      width: '70%',
-      contentStyle: { 'max-height': '500px', overflow: 'auto' },
-    });
-
-    this.ref.onClose.subscribe(() => {
-      console.log('Dialog closed');
-      this.ref = undefined;
+  viewUser(userId: string) {
+    this.router.navigate([`/${main_routes_paths.userData}`], {
+      queryParams: { userId: userId },
     });
   }
 }

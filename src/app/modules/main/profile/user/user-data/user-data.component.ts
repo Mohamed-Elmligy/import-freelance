@@ -4,8 +4,6 @@ import { Component } from '@angular/core';
   selector: 'app-user-data',
   imports: [],
   templateUrl: './user-data.component.html',
-  styles: ``
+  styles: ``,
 })
-export class UserDataComponent {
-
-}
+export default class UserDataComponent {}

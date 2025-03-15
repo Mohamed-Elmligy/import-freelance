@@ -1,10 +1,14 @@
 import { LiveAnnouncer } from '@angular/cdk/a11y';
 import { CommonModule } from '@angular/common';
-import { Component, effect, inject, ViewChild } from '@angular/core';
+import { Component, effect, inject, ViewChild, OnInit } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
-import { MatPaginatorModule, MatPaginator } from '@angular/material/paginator';
+import {
+  MatPaginatorModule,
+  MatPaginator,
+  PageEvent,
+} from '@angular/material/paginator';
 import { MatSortModule, Sort } from '@angular/material/sort';
 import { MatTableModule, MatTableDataSource } from '@angular/material/table';
 import { RouterModule, Router } from '@angular/router';
@@ -20,6 +24,7 @@ import { SecurityService } from '../../../../../core/services/security.service';
 import { LanguagesService } from '../../../../shared/services/languages.service';
 import { main_routes_paths } from '../../../main.routes';
 import { ItemsCategoryService } from '../items-category.service';
+import { HttpClient } from '@angular/common/http';
 
 @Component({
   selector: 'app-items-list',
@@ -51,6 +56,7 @@ export default class ItemsListComponent {
   ItemsCategoryService = inject(ItemsCategoryService);
   securityService = inject(SecurityService);
   private router = inject(Router);
+  private http = inject(HttpClient);
 
   @ViewChild(MatPaginator) paginator!: MatPaginator;
   dataSource!: MatTableDataSource<any>;
@@ -66,10 +72,6 @@ export default class ItemsListComponent {
       this.getItemsList();
       this.ItemsCategoryService.itemDeleted.set(false);
     });
-  }
-
-  ngOnInit() {
-    this.getItemsList();
   }
 
   getItemsList() {
@@ -90,11 +92,18 @@ export default class ItemsListComponent {
   }
 
   announceSortChange(sortState: Sort) {
-    if (sortState.direction) {
-      this._liveAnnouncer.announce(`Sorted ${sortState.direction}ending`);
-    } else {
-      this._liveAnnouncer.announce('Sorting cleared');
-    }
+    this.loadData({ sort: sortState.active, order: sortState.direction });
+  }
+
+  onPageChange(event: PageEvent) {
+    this.loadData({ page: event.pageIndex + 1, pageSize: event.pageSize });
+  }
+
+  loadData(params: any) {
+    this.http.get('/api/items', { params }).subscribe((data: any) => {
+      this.dataSource = data.items;
+      this.resultsLength = data.total;
+    });
   }
 
   edieItem(itemId: any) {
