@@ -71,6 +71,16 @@ const main_routes: Routes = [
     canActivate: [noCompanyUserGuard],
   },
   {
+    path: 'user-data',
+    loadComponent: () => import('./profile/user/user-data/user-data.component'),
+    canActivate: [noCompanyUserGuard],
+  },
+  {
+    path: 'user-form',
+    loadComponent: () => import('./profile/user/user-form/user-form.component'),
+    canActivate: [noCompanyUserGuard],
+  },
+  {
     path: 'customers',
     loadComponent: () =>
       import('./master-data/customers/customer-form/customers.component'),
@@ -151,6 +161,8 @@ export const main_routes_paths = {
   year: '/main/year',
   invoices: '/main/invoices',
   settings: '/main/settings',
+  userForm: '/main/user-form',
+  userData: '/main/user-data',
   downloadReports: '/main/downloadReports',
   paymentsList: '/main/payments-list',
   customersList: '/main/customers-list',

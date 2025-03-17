@@ -115,6 +115,7 @@
     showFirstLastButtons
     aria-label="Select page of"
     [length]="resultsLength"
+    (page)="onPageChange($event)"
   >
   </mat-paginator>
 </div>

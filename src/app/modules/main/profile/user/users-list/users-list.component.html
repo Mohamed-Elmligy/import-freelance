@@ -46,7 +46,7 @@
         [label]="'add' | translate"
         icon="pi pi-plus"
         class="!bg-secondary !border-secondary"
-        [routerLink]="main_routes.customers"
+        (click)="createUser()"
       ></button>
     </ng-template>
   </p-toolbar>
