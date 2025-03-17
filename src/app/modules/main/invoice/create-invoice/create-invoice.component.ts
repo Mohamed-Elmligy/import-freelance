@@ -134,6 +134,7 @@ export default class CreateInvoiceComponent {
       total_CBM: [null],
       weight: [null],
       total_weight: [null],
+      id: [null],
     });
   }
 

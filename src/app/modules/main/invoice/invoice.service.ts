@@ -44,29 +44,17 @@ export class InvoiceService {
       total_amount: form.value.total_amount,
       discount_amount: form.value.discount_amount,
       first_payment_amount: form.value.first_payment_amount,
-      first_payment_date: formatDate(
-        form.value.first_payment_date,
-        'yyyy-MM-dd',
-        'en'
-      ),
+      first_payment_date: form.value.first_payment_date
+        ? formatDate(form.value.first_payment_date, 'yyyy-MM-dd', 'en')
+        : null,
       second_payment_amount: form.value.second_payment_amount,
-      second_payment_date: formatDate(
-        form.value.second_payment_date,
-        'yyyy-MM-dd',
-        'en'
-      ),
+      second_payment_date: form.value.second_payment_date
+        ? formatDate(form.value.second_payment_date, 'yyyy-MM-dd', 'en')
+        : null,
       third_payment_amount: form.value.third_payment_amount,
-      third_payment_date: formatDate(
-        form.value.third_payment_date,
-        'yyyy-MM-dd',
-        'en'
-      ),
-      // fourth_payment_amount: form.value.fourth_payment_amount,
-      // fourth_payment_date: formatDate(
-      //   form.value.fourth_payment_date,
-      //   'yyyy-MM-dd',
-      //   'en'
-      // ),
+      third_payment_date: form.value.third_payment_date
+        ? formatDate(form.value.third_payment_date, 'yyyy-MM-dd', 'en')
+        : null,
       invoice_lines: form.value.invoice_lines.map((item: any) => {
         return {
           id: item.id,
@@ -122,10 +110,6 @@ export class InvoiceService {
       third_payment_date: data.third_payment_date
         ? new Date(data.third_payment_date)
         : null,
-      // fourth_payment_amount: data.fourth_payment_amount,
-      // fourth_payment_date: data.fourth_payment_date
-      //   ? new Date(data.fourth_payment_date)
-      //   : null,
       invoice_lines: data.invoice_lines.map((item: any) => {
         return {
           id: item.id,
@@ -200,6 +184,8 @@ export class InvoiceService {
 
   updateInvoice(data: FormGroup, id: string) {
     let modifiedModel = this.componentModelToApiModel(data);
+    console.log(modifiedModel);
+
     this.apiService
       .updateDataOnServer(
         'put',
