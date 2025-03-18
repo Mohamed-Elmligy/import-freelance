@@ -128,5 +128,12 @@
   "fourth_payment_date": "تاريخ الدفعة الرابعة",
   "invoiceLines": "بيــان الفاتورة",
   "number": "#",
-  "verify": "تاكيد"
+  "verify": "تاكيد",
+  "userList": "قائمة المستخدمين",
+  "first_name": "الاسم الاول",
+  "last_name": "الاسم الاخير",
+  "user_name": "اسم المستخدم",
+  "user_type": "نوع المستخدم",
+  "reset_password": "اعادة تعيين كلمة المرور",
+  "changeUserPassword": "تغيير كلمة المرور للمستخدم"
 }

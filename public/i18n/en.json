@@ -117,5 +117,12 @@
   "weight": "Weight",
   "fourth_payment_amount": "Fourth Payment Amount",
   "fourth_payment_date": "Fourth Payment Date",
-  "verify": "Verify"
+  "verify": "Verify",
+  "UserList": "User List",
+  "first_name": "First Name",
+  "last_name": "Last Name",
+  "user_name": "User Name",
+  "user_type": "User Type",
+  "reset_password": "Reset Password",
+  "changeUserPassword": "Change User Password"
 }

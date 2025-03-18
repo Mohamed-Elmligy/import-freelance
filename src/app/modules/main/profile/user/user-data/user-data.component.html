@@ -1,1 +1,27 @@
-<p>user-data works!</p>
+<div class="grid grid-cols-4 gap-5">
+  <div class="col-span-2 flex flex-row align-baseline justify-start">
+    <h2 class="me-2 font-bold text-xl">{{ "name" | translate }}:</h2>
+    <p class="text-base text-md mt-1">
+      {{ userData.first_name }}
+    </p>
+  </div>
+  <div class="col-span-2 flex flex-row align-baseline justify-start">
+    <h2 class="me-2 font-bold text-xl">{{ "last_name" | translate }}:</h2>
+    <p class="text-base text-md mt-1">
+      {{ userData.last_name }}
+    </p>
+  </div>
+  <div class="col-span-2 flex flex-row align-baseline justify-start">
+    <h2 class="me-2 font-bold text-xl">{{ "email" | translate }}:</h2>
+    <p class="text-base text-md mt-1">
+      {{ userData.email }}
+    </p>
+  </div>
+
+  <div class="col-span-2 flex flex-row align-baseline justify-start">
+    <h2 class="me-2 font-bold text-xl">{{ "user_type" | translate }}:</h2>
+    <p class="text-base text-md mt-1">
+      {{ userData.user_type }}
+    </p>
+  </div>
+</div>

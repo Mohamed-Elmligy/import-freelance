@@ -1,7 +1,12 @@
 import { LiveAnnouncer } from '@angular/cdk/a11y';
 import { CommonModule } from '@angular/common';
 import { Component, effect, inject, OnInit, ViewChild } from '@angular/core';
-import { FormsModule } from '@angular/forms';
+import {
+  FormBuilder,
+  FormsModule,
+  ReactiveFormsModule,
+  Validators,
+} from '@angular/forms';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { MatPaginatorModule, MatPaginator } from '@angular/material/paginator';
@@ -21,6 +26,10 @@ import { LanguagesService } from '../../../../shared/services/languages.service'
 import { main_routes_paths } from '../../../main.routes';
 import { ApiService } from '../../../../../core/services/api.service';
 import { PROFILE_APIS } from '../../profile.apis';
+import { Dialog } from 'primeng/dialog';
+import { PasswordModule } from 'primeng/password';
+import { ShowMessageService } from '../../../../../core/services/show-message.service';
+import { TabService } from '../../../../../services/tab.service';
 
 @Component({
   selector: 'app-users-list',
@@ -42,6 +51,9 @@ import { PROFILE_APIS } from '../../profile.apis';
     PanelModule,
     DatePickerModule,
     TooltipModule,
+    Dialog,
+    ReactiveFormsModule,
+    PasswordModule,
   ],
   templateUrl: './users-list.component.html',
   styles: ``,
@@ -52,6 +64,10 @@ export class UsersListComponent implements OnInit {
   securityService = inject(SecurityService);
   languageService = inject(LanguagesService);
   private _liveAnnouncer = inject(LiveAnnouncer);
+  private formBuilder = inject(FormBuilder);
+  private showMessageService = inject(ShowMessageService);
+  visible: boolean = false;
+  userId: string = '';
 
   @ViewChild(MatPaginator) paginator!: MatPaginator;
   dataSource!: MatTableDataSource<any>;
@@ -62,6 +78,11 @@ export class UsersListComponent implements OnInit {
   resultsLength = 0;
 
   usersList: any[] = [];
+
+  form = this.formBuilder.group({
+    new_password: ['', [Validators.required]],
+    confirm_password: ['', [Validators.required]],
+  });
 
   ngOnInit(): void {
     this.usersList = [
@@ -112,7 +133,7 @@ export class UsersListComponent implements OnInit {
 
   deleteUser(id: string) {
     this.apiService
-      .deleteDataOnServer(PROFILE_APIS.GET_USER_DETAILS(id))
+      .deleteDataOnServer(PROFILE_APIS.USER_DELETE(id))
       .subscribe(() => {
         this.getUsersList();
       });
@@ -122,5 +143,27 @@ export class UsersListComponent implements OnInit {
     this.router.navigate([`/${main_routes_paths.userData}`], {
       queryParams: { userId: userId },
     });
+  }
+
+  showDialog(userId: string) {
+    this.visible = true;
+    this.userId = userId;
+  }
+
+  onSubmit() {
+    this.apiService
+      .updateDataOnServer(
+        'patch',
+        PROFILE_APIS.USER_RESET_PASSWORD(this.userId),
+        this.form.value
+      )
+      .subscribe(() => {
+        this.visible = false;
+        this.showMessageService.showMessage(
+          'success',
+          'Password Reset',
+          'Password has been reset successfully'
+        );
+      });
   }
 }

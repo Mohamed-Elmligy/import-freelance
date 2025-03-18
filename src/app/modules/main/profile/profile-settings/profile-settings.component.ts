@@ -13,6 +13,7 @@ import { TranslateModule } from '@ngx-translate/core';
 import { ToastModule } from 'primeng/toast';
 import { FileUpload, UploadEvent } from 'primeng/fileupload';
 import { MessageService } from 'primeng/api';
+import { TabService } from '../../../../services/tab.service';
 @Component({
   selector: 'app-profile-settings',
   imports: [
@@ -31,6 +32,8 @@ import { MessageService } from 'primeng/api';
 export default class ProfileSettingsComponent {
   private messageService = inject(MessageService);
   private formBuilder = inject(FormBuilder);
+  private tabService = inject(TabService);
+
   uploadedFiles: any[] = [];
 
   protected form = this.formBuilder.group({

@@ -10,6 +10,7 @@ import { TranslateModule } from '@ngx-translate/core';
 import { ButtonModule } from 'primeng/button';
 import { InputTextModule } from 'primeng/inputtext';
 import { PasswordModule } from 'primeng/password';
+import { TabService } from '../../../../services/tab.service';
 
 @Component({
   selector: 'app-reset-password',
@@ -25,6 +26,8 @@ import { PasswordModule } from 'primeng/password';
 })
 export default class ResetPasswordComponent {
   private formBuilder = inject(FormBuilder);
+  private tabService = inject(TabService);
+
   protected form = this.formBuilder.group({
     current_password: [null, [Validators.required, Validators.minLength(8)]],
     new_password: [null, [Validators.required, Validators.minLength(8)]],
@@ -33,6 +36,7 @@ export default class ResetPasswordComponent {
       [Validators.required, Validators.minLength(8)],
     ],
   });
+
   submit(form: FormGroup) {
     console.log(form.value);
   }

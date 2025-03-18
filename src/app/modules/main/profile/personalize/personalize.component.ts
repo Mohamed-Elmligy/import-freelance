@@ -11,6 +11,7 @@ import { Toast } from 'primeng/toast';
 import { MessageService } from 'primeng/api';
 import { BrowserStorageService } from '../../../../core/services/browser-storage.service';
 import { ShowMessageService } from '../../../../core/services/show-message.service';
+import { TabService } from '../../../../services/tab.service';
 
 @Component({
   selector: 'app-personalize',

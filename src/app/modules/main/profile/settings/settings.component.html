@@ -1,5 +1,5 @@
 <div class="card">
-  <p-tabs value="0" scrollable>
+  <p-tabs [(value)]="activeTab" (valueChange)="onTabChange($event)" scrollable>
     <p-tablist>
       <p-tab value="0">
         <i class="pi pi-user-edit me-1"></i> {{ "profileSettings" | translate }}
