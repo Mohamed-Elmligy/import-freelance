@@ -14,17 +14,10 @@ import { ApiService } from '../../../core/services/api.service';
 import { API_AUTH } from '../auth.api';
 import { ShowMessageService } from '../../../core/services/show-message.service';
 import { BrowserStorageService } from '../../../core/services/browser-storage.service';
-import { LanguagesService } from '../../shared/services/languages.service';
 
 @Component({
   selector: 'app-verify-otp',
-  imports: [
-    ReactiveFormsModule,
-    RouterLink,
-    InputOtpModule,
-    ButtonModule,
-    TranslateModule,
-  ],
+  imports: [ReactiveFormsModule, InputOtpModule, ButtonModule, TranslateModule],
   templateUrl: './verify-otp.component.html',
 })
 export default class VerifyOtpComponent {
@@ -48,8 +41,13 @@ export default class VerifyOtpComponent {
         otp: form.value.otp,
       })
       .subscribe((res: any) => {
+        this.storage.set('local', 'access', res.access);
         this.router.navigate([this.ROUTES.FORGET_PASSWORD]);
-        this.showMessageService.showMessage('success', 'Success', res.message);
+        this.showMessageService.showMessage(
+          'success',
+          'Success',
+          'OTP verified'
+        );
       });
   }
 }

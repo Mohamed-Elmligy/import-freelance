@@ -11,6 +11,8 @@ const unAuthenticatedApis: string[] = [
   API_AUTH.CONFIRM_EMAIL,
   API_AUTH.VERIFY_OTP,
   API_AUTH.CONFIRM_EMAIL,
+  API_AUTH.FORGET_PASSWORD_REQUEST,
+  API_AUTH.FORGET_PASSWORD_CHANGE,
 ];
 const unAuthenticatedApisUrls = unAuthenticatedApis.map(
   (api) => `${baseUrl}${api}`
@@ -18,6 +20,8 @@ const unAuthenticatedApisUrls = unAuthenticatedApis.map(
 
 export const authInterceptor: HttpInterceptorFn = (request, next) => {
   if (!unAuthenticatedApisUrls.includes(request.url)) {
+    console.log(request.url);
+
     const authenticatedRequest = request.clone({
       headers: request.headers.set(
         'Authorization',
