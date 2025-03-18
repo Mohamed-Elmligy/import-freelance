@@ -135,5 +135,7 @@
   "user_name": "اسم المستخدم",
   "user_type": "نوع المستخدم",
   "reset_password": "اعادة تعيين كلمة المرور",
-  "changeUserPassword": "تغيير كلمة المرور للمستخدم"
+  "changeUserPassword": "تغيير كلمة المرور للمستخدم",
+  "userData": "بيانات المستخدم",
+  "cancel": "الغاء"
 }

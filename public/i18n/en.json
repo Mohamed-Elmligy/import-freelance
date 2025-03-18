@@ -124,5 +124,7 @@
   "user_name": "User Name",
   "user_type": "User Type",
   "reset_password": "Reset Password",
-  "changeUserPassword": "Change User Password"
+  "changeUserPassword": "Change User Password",
+  "userData": "User Data",
+  "cancel": "Cancel"
 }

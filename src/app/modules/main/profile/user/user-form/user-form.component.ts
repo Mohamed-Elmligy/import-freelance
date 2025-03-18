@@ -16,6 +16,9 @@ import { PROFILE_APIS } from '../../profile.apis';
 import { ShowMessageService } from '../../../../../core/services/show-message.service';
 import { TranslateModule } from '@ngx-translate/core';
 import { SelectModule } from 'primeng/select';
+import { PasswordModule } from 'primeng/password';
+import { MenuItem } from 'primeng/api';
+import { main_routes_paths } from '../../../main.routes';
 
 @Component({
   selector: 'app-user-form',
@@ -31,6 +34,7 @@ import { SelectModule } from 'primeng/select';
     ReactiveFormsModule,
     TranslateModule,
     SelectModule,
+    PasswordModule,
   ],
   templateUrl: './user-form.component.html',
   styles: ``,
@@ -42,7 +46,8 @@ export default class UserFormComponent implements OnInit {
   private showMessageService = inject(ShowMessageService);
   user_id = this.activeRoute.snapshot.queryParams['userId'];
   isUpdate = this.activeRoute.snapshot.queryParams['edit'];
-
+  items: MenuItem[] | undefined;
+  mainPaths = main_routes_paths;
   userTypes = [
     { label: 'Admin', value: 'admin' },
     { label: 'User', value: 'user' },
@@ -54,9 +59,19 @@ export default class UserFormComponent implements OnInit {
     email: [null, [Validators.required]],
     username: [null, [Validators.required]],
     user_type: [null, [Validators.required]],
+    fiscal_year: [null, [Validators.required]],
+    password: [null],
   });
 
   ngOnInit(): void {
+    this.items = [
+      {
+        icon: 'pi pi-users',
+        route: this.mainPaths.settings,
+        queryParams: { type: 'settings' },
+      },
+      { label: 'settings', route: this.mainPaths.settings },
+    ];
     if (this.isUpdate == 'true') {
       this.apiService
         .getDataFromServer(PROFILE_APIS.USER_DETAILS(this.user_id))
@@ -67,9 +82,7 @@ export default class UserFormComponent implements OnInit {
   }
 
   submitForm(): void {
-    if (this.isUpdate) {
-      console.log(this.user_id);
-
+    if (this.isUpdate == 'true') {
       this.apiService
         .updateDataOnServer(
           'put',

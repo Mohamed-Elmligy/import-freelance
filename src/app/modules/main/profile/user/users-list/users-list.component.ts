@@ -30,6 +30,7 @@ import { Dialog } from 'primeng/dialog';
 import { PasswordModule } from 'primeng/password';
 import { ShowMessageService } from '../../../../../core/services/show-message.service';
 import { TabService } from '../../../../../services/tab.service';
+import { ConfirmSaveDeleteService } from '../../../../../core/services/confirm-save-delete.service';
 
 @Component({
   selector: 'app-users-list',
@@ -59,13 +60,12 @@ import { TabService } from '../../../../../services/tab.service';
   styles: ``,
 })
 export class UsersListComponent implements OnInit {
-  apiService = inject(ApiService);
+  private apiService = inject(ApiService);
   private router = inject(Router);
-  securityService = inject(SecurityService);
-  languageService = inject(LanguagesService);
   private _liveAnnouncer = inject(LiveAnnouncer);
   private formBuilder = inject(FormBuilder);
   private showMessageService = inject(ShowMessageService);
+  private confirmService = inject(ConfirmSaveDeleteService);
   visible: boolean = false;
   userId: string = '';
 
@@ -132,11 +132,28 @@ export class UsersListComponent implements OnInit {
   }
 
   deleteUser(id: string) {
-    this.apiService
-      .deleteDataOnServer(PROFILE_APIS.USER_DELETE(id))
-      .subscribe(() => {
+    this.confirmService.confirmDelete(
+      'Are you sure you want to delete this user?',
+      () => {
+        this.deleteUserApi(id);
+      }
+    );
+  }
+
+  deleteUserApi(id: string) {
+    this.apiService.deleteDataOnServer(PROFILE_APIS.USER_DELETE(id)).subscribe({
+      next: () => {
+        this.showMessageService.showMessage(
+          'success',
+          'User Deleted',
+          'User has been deleted successfully'
+        );
         this.getUsersList();
-      });
+      },
+      error: (err) => {
+        this.showMessageService.showMessage('error', 'Error', err.error);
+      },
+    });
   }
 
   viewUser(userId: string) {
