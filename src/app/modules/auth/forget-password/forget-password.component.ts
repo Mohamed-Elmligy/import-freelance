@@ -5,7 +5,7 @@ import {
   Validators,
   FormGroup,
 } from '@angular/forms';
-import { Router, RouterLink } from '@angular/router';
+import { Router } from '@angular/router';
 import { ButtonModule } from 'primeng/button';
 import { InputTextModule } from 'primeng/inputtext';
 import { PasswordModule } from 'primeng/password';
@@ -14,9 +14,7 @@ import { TranslateModule } from '@ngx-translate/core';
 import { MessageModule } from 'primeng/message';
 import { BrowserStorageService } from '../../../core/services/browser-storage.service';
 import { ShowMessageService } from '../../../core/services/show-message.service';
-import { ApiService } from '../../../core/services/api.service';
 import { HttpClient } from '@angular/common/http';
-import { environment } from '../../../../environments/environment';
 
 @Component({
   selector: 'app-forget-password',
@@ -25,10 +23,9 @@ import { environment } from '../../../../environments/environment';
     PasswordModule,
     ButtonModule,
     ReactiveFormsModule,
-    RouterLink,
     TranslateModule,
-    MessageModule,
-  ],
+    MessageModule
+],
   templateUrl: './forget-password.component.html',
 })
 export default class ForgetPasswordComponent {
