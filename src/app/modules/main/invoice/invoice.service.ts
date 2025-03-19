@@ -56,8 +56,7 @@ export class InvoiceService {
         ? formatDate(form.value.third_payment_date, 'yyyy-MM-dd', 'en')
         : null,
       invoice_lines: form.value.invoice_lines.map((item: any) => {
-        return {
-          id: item.id,
+        const invoiceLine: any = {
           container_sequence: item.container_sequence,
           item_code: item.item_code,
           item_description: item.item_description,
@@ -72,6 +71,10 @@ export class InvoiceService {
           length: item.length,
           weight: item.weight,
         };
+        if (item.id) {
+          invoiceLine.id = item.id;
+        }
+        return invoiceLine;
       }),
     };
   }
@@ -184,8 +187,6 @@ export class InvoiceService {
 
   updateInvoice(data: FormGroup, id: string) {
     let modifiedModel = this.componentModelToApiModel(data);
-    console.log(modifiedModel);
-
     this.apiService
       .updateDataOnServer(
         'put',

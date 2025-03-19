@@ -31,9 +31,9 @@ export class RepaymentService {
 
   componentModelToApiModel(form: FormGroup) {
     return {
-      supplier: form.get('supplierNumber')?.value.id,
+      // supplier: form.get('supplierNumber')?.value.id,
       invoice: form.get('invoiceNumber')?.value.id,
-      customer: form.get('customer')?.value.id,
+      // customer: form.get('customer')?.value.id,
       discription: form.get('description')?.value,
       amount: form.get('remainingAmount')?.value,
       pay_date: formatDate(
@@ -41,8 +41,14 @@ export class RepaymentService {
         'YYYY-MM-dd',
         'en-US'
       ),
+      invoice_payment_number: form.get('invoice_payment_number')?.value,
     };
   }
+
+  // first;
+  // second;
+  // third;
+  // fourth;
 
   apiModelToComponentModel(form: FormGroup, data: any) {
     const selectedCustomer = this.listOfCustomers().find(
