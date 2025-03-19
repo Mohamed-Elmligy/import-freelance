@@ -14,9 +14,7 @@ import { TranslateModule } from '@ngx-translate/core';
 import { MessageModule } from 'primeng/message';
 import { BrowserStorageService } from '../../../core/services/browser-storage.service';
 import { ShowMessageService } from '../../../core/services/show-message.service';
-import { ApiService } from '../../../core/services/api.service';
 import { HttpClient } from '@angular/common/http';
-import { environment } from '../../../../environments/environment';
 
 @Component({
   selector: 'app-forget-password',
@@ -25,7 +23,6 @@ import { environment } from '../../../../environments/environment';
     PasswordModule,
     ButtonModule,
     ReactiveFormsModule,
-    RouterLink,
     TranslateModule,
     MessageModule,
   ],
