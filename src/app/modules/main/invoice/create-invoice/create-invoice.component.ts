@@ -28,6 +28,7 @@ import { map } from 'rxjs';
 import { SelectModule } from 'primeng/select';
 import { CardModule } from 'primeng/card';
 import { TableModule } from 'primeng/table';
+import { ConfirmSaveDeleteService } from '../../../../core/services/confirm-save-delete.service';
 
 @Component({
   selector: 'app-create-invoice',
@@ -67,7 +68,7 @@ export default class CreateInvoiceComponent {
 
   private formBuilder = inject(FormBuilder);
   private messageService = inject(MessageService);
-
+  private confirmService = inject(ConfirmSaveDeleteService);
   private activatedRoute = inject(ActivatedRoute);
   private lookupService = inject(LookupsService);
   private invoiceService = inject(InvoiceService);
@@ -146,10 +147,35 @@ export default class CreateInvoiceComponent {
     this.invoice_linesFormArray.push(this.generateItemLine());
   }
 
-  deleteFormLine(index: number) {
+  deleteFormLineInCreate(index: number) {
     if (this.invoice_linesFormArray.length > 1)
       this.invoice_linesFormArray.removeAt(index);
     else this.showTopLeft('ONE_PROD_MIN');
+  }
+
+  deleteFormLineInUpdate(index: number) {
+    if (this.invoice_linesFormArray.length > 1) {
+      const lineId = this.invoice_linesFormArray.at(index).get('id')?.value;
+      if (lineId) {
+        this.invoiceService.deleteInvoiceLine(lineId).subscribe(() => {
+          this.invoice_linesFormArray.removeAt(index);
+        });
+      } else {
+        this.invoice_linesFormArray.removeAt(index);
+      }
+    } else this.showTopLeft('ONE PROD MIN');
+  }
+
+  deleteFormLine(index: number) {
+    this.confirmService.confirmDelete(
+      'Are You Sure You want to Delete this Line?',
+      () => this.deleteFormLineHandler(index)
+    );
+  }
+
+  deleteFormLineHandler(index: number) {
+    if (this.isUpdate) this.deleteFormLineInUpdate(index);
+    else this.deleteFormLineInCreate(index);
   }
 
   showTopLeft(message: string) {

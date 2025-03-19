@@ -218,6 +218,12 @@ export class InvoiceService {
     );
   }
 
+  deleteInvoiceLine(id: string) {
+    return this.apiService.deleteDataOnServer(
+      INVOICE_APIS.DELETE_INVOICE_LINE(+id)
+    );
+  }
+
   deleteInvoiceApi(id: string) {
     this.apiService
       .deleteDataOnServer(INVOICE_APIS.DELETE_INVOICE(+id))
