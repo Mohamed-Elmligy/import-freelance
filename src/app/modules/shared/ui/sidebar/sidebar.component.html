@@ -1,4 +1,4 @@
-<p-menu [model]="items" class="flex justify-center w-full !rounded-3xl m-2">
+<p-menu [model]="menuItems" class="flex justify-center w-full !rounded-3xl m-2">
   <ng-template #start class="!rounded-3xl !p-0">
     <img
       ngSrc="../../../../../assets/logoSmall.jpeg"
@@ -32,7 +32,7 @@
       }
     </a>
   </ng-template>
-  <ng-template #end>
+  <!-- <ng-template #end>
     <button
       pRipple
       class="relative overflow-hidden w-full border-0 bg-transparent flex items-start p-2 pl-4 hover:bg-surface-100 dark:hover:bg-surface-800 rounded-none cursor-pointer transition-colors duration-200"
@@ -49,5 +49,5 @@
         </span>
       </span>
     </button>
-  </ng-template>
+  </ng-template> -->
 </p-menu>

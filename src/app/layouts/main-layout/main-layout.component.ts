@@ -1,5 +1,5 @@
 import { Component, inject, ViewChild } from '@angular/core';
-import SidebarComponent from '../../modules/shared/ui/sidebar/sidebar.component';
+import {SidebarComponent} from '../../modules/shared/ui/sidebar/sidebar.component';
 import { RouterOutlet } from '@angular/router';
 
 import { DrawerModule } from 'primeng/drawer';

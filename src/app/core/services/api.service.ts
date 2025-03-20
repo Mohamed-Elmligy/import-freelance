@@ -21,7 +21,7 @@ export class ApiService {
     filter?: any
   ) {
     // this.removeInvalidValues(filter);
-    return this.HTTP.get(base_url, {
+    return this.HTTP.get<any>(base_url, {
       params: { ...pagination, ...filter },
     });
   }
