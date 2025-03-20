@@ -21,6 +21,7 @@ import { main_routes_paths } from '../../../main.routes';
 import { FiscalYearService } from '../fiscal-year.service';
 import { ToggleSwitchModule } from 'primeng/toggleswitch';
 import { Tag } from 'primeng/tag';
+import { PageHeaderComponent } from '../../../../shared/components/page-header/page-header.component';
 
 @Component({
   selector: 'app-fiscal-year-form',
@@ -38,6 +39,7 @@ import { Tag } from 'primeng/tag';
     ReactiveFormsModule,
     ToggleSwitchModule,
     Tag,
+    PageHeaderComponent,
   ],
   templateUrl: './fiscal-year-form.component.html',
   styles: ``,
@@ -45,7 +47,7 @@ import { Tag } from 'primeng/tag';
 export default class FiscalYearFormComponent {
   mainPaths = main_routes_paths;
 
-  items: MenuItem[] | undefined;
+  route: MenuItem[] = [];
   listOfCustomers = signal([]);
 
   private formBuilder = inject(FormBuilder);
@@ -89,7 +91,7 @@ export default class FiscalYearFormComponent {
   }
 
   ngOnInit() {
-    this.items = [
+    this.route = [
       {
         icon: 'pi pi-calendar-clock',
         route: this.mainPaths.yearList,

@@ -20,6 +20,7 @@ import { MessageService } from 'primeng/api';
 import { BadgeModule } from 'primeng/badge';
 import { ToastModule } from 'primeng/toast';
 import { ItemsCategoryService } from '../items-category.service';
+import { PageHeaderComponent } from '../../../../shared/components/page-header/page-header.component';
 @Component({
   selector: 'app-items-category',
   imports: [
@@ -38,6 +39,7 @@ import { ItemsCategoryService } from '../items-category.service';
     ButtonModule,
     BadgeModule,
     ToastModule,
+    PageHeaderComponent,
   ],
   templateUrl: './items-category.component.html',
   styles: ``,
@@ -46,7 +48,7 @@ import { ItemsCategoryService } from '../items-category.service';
 export default class ItemsCategoryComponent {
   mainPaths = main_routes_paths;
 
-  items: MenuItem[] | undefined;
+  route: MenuItem[] = [];
 
   private activatedRoute = inject(ActivatedRoute);
   private formBuilder = inject(FormBuilder);
@@ -80,7 +82,7 @@ export default class ItemsCategoryComponent {
   }
 
   ngOnInit() {
-    this.items = [
+    this.route = [
       {
         icon: 'pi pi-dollar',
         route: this.mainPaths.itemsCategoryList,

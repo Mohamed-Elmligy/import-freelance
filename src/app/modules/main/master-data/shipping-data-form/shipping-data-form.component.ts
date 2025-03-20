@@ -20,6 +20,7 @@ import { TextareaModule } from 'primeng/textarea';
 import { SelectModule } from 'primeng/select';
 import { LookupsService } from '../../../shared/services/lookups.service';
 import { ShippingDataService } from './shipping-data.service';
+import { PageHeaderComponent } from '../../../shared/components/page-header/page-header.component';
 @Component({
   selector: 'app-shipping-data-form',
   imports: [
@@ -35,12 +36,13 @@ import { ShippingDataService } from './shipping-data.service';
     ReactiveFormsModule,
     SelectModule,
     TextareaModule,
+    PageHeaderComponent,
   ],
   templateUrl: './shipping-data-form.component.html',
 })
 export default class ShippingDataFormComponent {
   mainPaths = main_routes_paths;
-  items: MenuItem[] | undefined;
+  route: MenuItem[] = [];
   listOfCustomers = signal([]);
 
   private formBuilder = inject(FormBuilder);
@@ -94,7 +96,7 @@ export default class ShippingDataFormComponent {
       this.shippingDataService.listOfCustomers.set(data);
     });
 
-    this.items = [
+    this.route = [
       {
         icon: 'pi pi-cart-arrow-down',
         route: this.mainPaths.shippingDataList,

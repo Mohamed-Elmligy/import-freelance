@@ -17,6 +17,7 @@ import { InputTextModule } from 'primeng/inputtext';
 import { main_routes_paths } from '../../../main.routes';
 import { TextareaModule } from 'primeng/textarea';
 import { CustomersService } from '../customers.service';
+import { PageHeaderComponent } from '../../../../shared/components/page-header/page-header.component';
 
 @Component({
   selector: 'app-customers',
@@ -32,12 +33,13 @@ import { CustomersService } from '../customers.service';
     FormsModule,
     ReactiveFormsModule,
     TextareaModule,
+    PageHeaderComponent,
   ],
   templateUrl: './customers.component.html',
   styles: ``,
 })
 export default class CustomersComponent implements OnInit {
-  items: MenuItem[] | undefined;
+  route: MenuItem[] = [];
   mainPaths = main_routes_paths;
 
   private activatedRoute = inject(ActivatedRoute);
@@ -65,7 +67,7 @@ export default class CustomersComponent implements OnInit {
   });
 
   ngOnInit() {
-    this.items = [
+    this.route = [
       {
         icon: 'pi pi-users',
         route: this.mainPaths.customersList,

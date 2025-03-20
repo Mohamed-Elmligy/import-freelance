@@ -17,6 +17,7 @@ import { InputTextModule } from 'primeng/inputtext';
 import { TextareaModule } from 'primeng/textarea';
 import { main_routes_paths } from '../../../main.routes';
 import { SuppliersService } from '../suppliers.service';
+import { PageHeaderComponent } from '../../../../shared/components/page-header/page-header.component';
 
 @Component({
   selector: 'app-suppliers',
@@ -32,12 +33,13 @@ import { SuppliersService } from '../suppliers.service';
     FormsModule,
     ReactiveFormsModule,
     TextareaModule,
+    PageHeaderComponent,
   ],
   templateUrl: './suppliers.component.html',
   styles: ``,
 })
 export default class SuppliersComponent {
-  items: MenuItem[] | undefined;
+  route: MenuItem[] = [];
   mainPaths = main_routes_paths;
 
   private formBuilder = inject(FormBuilder);
@@ -80,7 +82,7 @@ export default class SuppliersComponent {
     form.reset();
   }
   ngOnInit() {
-    this.items = [
+    this.route = [
       {
         icon: 'pi  pi-truck',
         route: this.mainPaths.suppliersList,

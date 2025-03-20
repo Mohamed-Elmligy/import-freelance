@@ -37,13 +37,18 @@ export default class SidebarComponent {
         separator: true,
       },
       {
-        label: 'masterData',
+        label: 'home',
         items: [
           {
             label: 'home',
             icon: 'pi pi-home',
             routerLink: this.mainRoutes.home,
           },
+        ],
+      },
+      {
+        label: 'masterData',
+        items: [
           {
             label: 'customers',
             icon: 'pi pi-users',

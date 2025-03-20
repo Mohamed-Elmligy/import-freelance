@@ -20,6 +20,7 @@ import { TextareaModule } from 'primeng/textarea';
 import { RepaymentService } from './repayment.service';
 import { LookupsService } from '../../../shared/services/lookups.service';
 import { SelectModule } from 'primeng/select';
+import { PageHeaderComponent } from '../../../shared/components/page-header/page-header.component';
 @Component({
   selector: 'app-repayments-form',
   imports: [
@@ -35,12 +36,13 @@ import { SelectModule } from 'primeng/select';
     ReactiveFormsModule,
     TextareaModule,
     SelectModule,
+    PageHeaderComponent,
   ],
   templateUrl: './repayments-form.component.html',
 })
 export default class RepaymentsFormComponent {
   mainPaths = main_routes_paths;
-  items: MenuItem[] | undefined;
+  route: MenuItem[] = [];
   listOfCustomers = signal([]);
   listOfInvoices = signal([]);
   listOfSuppliers = signal([]);
@@ -104,7 +106,7 @@ export default class RepaymentsFormComponent {
       this.listOfInvoices.set(data);
       this.transactionService.listOfInvoices.set(data);
     });
-    this.items = [
+    this.route = [
       {
         icon: 'pi pi-receipt',
         route: this.mainPaths.transactionsList,

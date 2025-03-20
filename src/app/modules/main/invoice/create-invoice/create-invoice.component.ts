@@ -60,7 +60,6 @@ import { PageHeaderComponent } from '../../../shared/components/page-header/page
   templateUrl: './create-invoice.component.html',
 })
 export default class CreateInvoiceComponent {
-  items: MenuItem[] = [];
   route: MenuItem[] = [];
   mainPaths = main_routes_paths;
 

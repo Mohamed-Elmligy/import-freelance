@@ -20,6 +20,7 @@ import { TranslateModule } from '@ngx-translate/core';
 import { SelectModule } from 'primeng/select';
 import { LookupsService } from '../../../shared/services/lookups.service';
 import { PaymentService } from './payment.service';
+import { PageHeaderComponent } from '../../../shared/components/page-header/page-header.component';
 
 @Component({
   selector: 'app-payment-form',
@@ -37,12 +38,13 @@ import { PaymentService } from './payment.service';
     FormsModule,
     ReactiveFormsModule,
     SelectModule,
+    PageHeaderComponent,
   ],
   templateUrl: './payment-form.component.html',
 })
 export default class PaymentFormComponent {
   mainPaths = main_routes_paths;
-  items: MenuItem[] | undefined;
+  route: MenuItem[] = [];
   selectedCountry: string | undefined;
   listOfCustomers = signal([]);
 
@@ -91,7 +93,7 @@ export default class PaymentFormComponent {
       this.listOfCustomers.set(data);
       this.paymentService.listOfCustomers.set(data);
     });
-    this.items = [
+    this.route = [
       {
         icon: 'pi pi-wallet',
         route: this.mainPaths.paymentsList,

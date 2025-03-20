@@ -20,6 +20,7 @@ import { ButtonModule } from 'primeng/button';
 import { SelectModule } from 'primeng/select';
 import { LookupsService } from '../../../../shared/services/lookups.service';
 import { ExpenseService } from '../expense.service';
+import { PageHeaderComponent } from '../../../../shared/components/page-header/page-header.component';
 
 @Component({
   selector: 'app-expense-form',
@@ -36,13 +37,14 @@ import { ExpenseService } from '../expense.service';
     ButtonModule,
     ReactiveFormsModule,
     SelectModule,
+    PageHeaderComponent,
   ],
   templateUrl: './expense-form.component.html',
 })
 export default class ExpenseFormComponent {
   mainPaths = main_routes_paths;
 
-  items: MenuItem[] | undefined;
+  route: MenuItem[] =[];
   listOfCustomers = signal([]);
 
   private formBuilder = inject(FormBuilder);
@@ -91,7 +93,7 @@ export default class ExpenseFormComponent {
       this.listOfCustomers.set(data);
       this.expensesService.listOfCustomers.set(data);
     });
-    this.items = [
+    this.route = [
       {
         icon: 'pi pi-dollar',
         route: this.mainPaths.expensesList,
