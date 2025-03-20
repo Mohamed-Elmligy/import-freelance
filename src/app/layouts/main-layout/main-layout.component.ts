@@ -19,6 +19,20 @@ import { CommonModule } from '@angular/common';
     AvatarModule,
     CommonModule,
   ],
+  styles: `
+  
+   /* width */
+  ::-webkit-scrollbar {
+    width: 10px;
+  }
+  
+  /* Track */
+  ::-webkit-scrollbar-track {
+    background: #fff;
+    border-radius: 3px;
+  }
+  
+  `,
   templateUrl: './main-layout.component.html',
 })
 export default class MainLayoutComponent {

@@ -127,14 +127,11 @@ export default class CreateInvoiceComponent {
       box_count: [null],
       item_in_box: [null],
       item_price: [null],
-      total_price: [],
       store_cbm: [null],
       height: [null],
       width: [null],
       length: [null],
-      total_CBM: [null],
       weight: [null],
-      total_weight: [null],
       id: [null],
     });
   }
@@ -202,9 +199,11 @@ export default class CreateInvoiceComponent {
     this.lookupService.getListOfLookups('customers').subscribe((data: any) => {
       this.listOfCustomers.set(data);
       this.invoiceService.listOfCustomers.set(data);
-      // for (let i = 0; i < 3; i++) {
-      //   this.addItem();
-      // }
+      if (!this.isUpdate) {
+        for (let i = 0; i < 10; i++) {
+          this.addItem();
+        }
+      }
     });
 
     this.lookupService.getListOfLookups('suppliers').subscribe((data: any) => {

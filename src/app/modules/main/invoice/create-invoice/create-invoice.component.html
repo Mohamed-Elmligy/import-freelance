@@ -117,12 +117,6 @@
       }}</label>
       <p>{{ form.get("total_amount")?.value }}</p>
     </div>
-    <!-- <div class="md:col-span-1 col-span-3 my-2 bg-gray-100 p-4 rounded-md">
-      <label class="text-md font-bold" for="discount_amount">{{
-        "discount_amount" | translate
-      }}</label>
-      <p>{{ form.get("discount_amount")?.value }}</p>
-    </div> -->
     <div class="md:col-span-1 col-span-3 my-2 bg-gray-100 p-4 rounded-md">
       <label class="text-md font-bold" for="boxQnt">{{
         "boxQnt" | translate
@@ -275,9 +269,6 @@
                   <th scope="col" class="px-4 py-3 text-center">
                     {{ "price" | translate }}
                   </th>
-                  <!-- <th scope="col" class="px-4 py-3 text-center">
-                    {{ "total_price" | translate }}
-                  </th> -->
                   <th scope="col" class="px-4 py-3 text-center">
                     {{ "CBM_store" | translate }}
                   </th>
@@ -290,14 +281,8 @@
                   <th scope="col" class="px-4 py-3 text-center">
                     {{ "CBM_length" | translate }}
                   </th>
-                  <!-- <th scope="col" class="px-4 py-3 text-center">
-                    {{ "total_CBM" | translate }}
-                  </th> -->
                   <th scope="col" class="px-4 py-3 text-center">
                     {{ "weight" | translate }}
-                  </th>
-                  <th scope="col" class="px-4 py-3 text-center">
-                    {{ "total_weight" | translate }}
                   </th>
                   <th scope="col" class="px-4 py-3 text-center">
                     {{ "ACTIONS" | translate }}
@@ -386,18 +371,6 @@
                         pSize="small"
                       />
                     </td>
-                    <!-- <td
-                      class="px-2 py-4 whitespace-nowrap text-sm leading-5 font-medium text-gray-900"
-                    >
-                      <input
-                        pInputText
-                        id="total_price"
-                        autocomplete="off"
-                        formControlName="total_price"
-                        style="width: 75px !important"
-                        pSize="small"
-                      />
-                    </td> -->
                     <td
                       class="px-2 py-4 whitespace-nowrap text-sm leading-5 font-medium text-gray-900"
                     >
@@ -445,18 +418,6 @@
                         pSize="small"
                       />
                     </td>
-                    <!-- <td
-                      class="px-2 py-4 whitespace-nowrap text-sm leading-5 font-medium text-gray-900"
-                    >
-                      <input
-                        pInputText
-                        id="total_CBM"
-                        autocomplete="off"
-                        formControlName="total_CBM"
-                        style="width: 75px !important"
-                        pSize="small"
-                      />
-                    </td> -->
                     <td
                       class="px-2 py-4 whitespace-nowrap text-sm leading-5 font-medium text-gray-900"
                     >
@@ -465,18 +426,6 @@
                         id="weight"
                         autocomplete="off"
                         formControlName="weight"
-                        style="width: 75px !important"
-                        pSize="small"
-                      />
-                    </td>
-                    <td
-                      class="px-2 py-4 whitespace-nowrap text-sm leading-5 font-medium text-gray-900"
-                    >
-                      <input
-                        pInputText
-                        id="total_weight"
-                        autocomplete="off"
-                        formControlName="total_weight"
                         style="width: 75px !important"
                         pSize="small"
                       />
@@ -531,89 +480,125 @@
   </div>
 </form>
 }@if(invoiceId && !isUpdate){
-  <div class="surface-section px-4 md:px-6 lg:px-8">
-    <p-card header="{{ 'invoiceDetails' | translate }}" styleClass="mb-4 text-center md:text-start">
-      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
-        <div class="invoice-field">{{ 'invoiceNumber' | translate }}: {{ invoiceData.invoice_number }}</div>
-        <div class="invoice-field">{{ 'date' | translate }}: {{ invoiceData.invoice_date }}</div>
-        <div class="invoice-field">{{ 'customer_name' | translate }}: {{ invoiceData.customer }}</div>
-        <div class="invoice-field">{{ 'supplierName' | translate }}: {{ invoiceData.supplier }}</div>
-        <div class="invoice-field">{{ 'boxTotal' | translate }}: {{ invoiceData.total_boxes }}</div>
-        <div class="invoice-field">{{ 'totalCBM' | translate }}: {{ invoiceData.total_cbm }}</div>
-        <div class="invoice-field">{{ 'totalWeight' | translate }}: {{ invoiceData.total_weight }}</div>
-        <div class="invoice-field">{{ 'itemsCategory' | translate }}: {{ invoiceData.item_category }}</div>
+<div class="surface-section px-4 md:px-6 lg:px-8">
+  <p-card
+    header="{{ 'invoiceDetails' | translate }}"
+    styleClass="mb-4 text-center md:text-start"
+  >
+    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
+      <div class="invoice-field">
+        {{ "invoiceNumber" | translate }}: {{ invoiceData.invoice_number }}
       </div>
-  
-      <div class="grid pt-4 grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
-        <div class="invoice-field">{{ 'total_invoice' | translate }}: {{ invoiceData.total_amount }}</div>
-        <div class="invoice-field">{{ 'total_discount' | translate }}: {{ invoiceData.discount_amount }}</div>
-        <div class="invoice-field">{{ 'net_invoice' | translate }}: {{ invoiceData.net_amount }}</div>
+      <div class="invoice-field">
+        {{ "date" | translate }}: {{ invoiceData.invoice_date }}
       </div>
-  
-      <div class="grid pt-4 grid-cols-1 md:grid-cols-2 lg:grid-cols-6 gap-4">
-        <div class="invoice-payment">
-          <span>{{ 'firstBatchNumber' | translate }}:</span> {{ invoiceData.first_payment_amount }}
-        </div>
-        <div class="invoice-payment">
-          <span>{{ 'firstBatchDate' | translate }}:</span> {{ invoiceData.first_payment_date }}
-        </div>
-        <div class="invoice-payment">
-          <span>{{ 'secondBatchNumber' | translate }}:</span> {{ invoiceData.second_payment_amount }}
-        </div>
-        <div class="invoice-payment">
-          <span>{{ 'secondBatchDate' | translate }}:</span> {{ invoiceData.second_payment_date }}
-        </div>
-        <div class="invoice-payment">
-          <span>{{ 'thirdBatchNumber' | translate }}:</span> {{ invoiceData.third_payment_amount }}
-        </div>
-        <div class="invoice-payment">
-          <span>{{ 'thirdBatchDate' | translate }}:</span> {{ invoiceData.third_payment_date }}
-        </div>
+      <div class="invoice-field">
+        {{ "customer_name" | translate }}: {{ invoiceData.customer }}
       </div>
-    </p-card>
-  
-    <p-card header="{{ 'invoiceLines' | translate }}">
-      <p-table [value]="invoiceData.invoice_lines" responsiveLayout="scroll" showGridlines stripedRows>
-        <ng-template pTemplate="header">
-          <tr>
-            <th>{{ 'number' | translate }}</th>
-            <th>{{ 'container' | translate }}</th>
-            <th>{{ 'item' | translate }}</th>
-            <th>{{ 'description' | translate }}</th>
-            <th>{{ 'boxQnt' | translate }}</th>
-            <th>{{ 'qunNumber' | translate }}</th>
-            <th>{{ 'price' | translate }}</th>
-            <th>{{ 'totalPrice' | translate }}</th>
-            <th>{{ 'CBM_store' | translate }}</th>
-            <th>{{ 'CBM_height' | translate }}</th>
-            <th>{{ 'CBM_width' | translate }}</th>
-            <th>{{ 'CBM_length' | translate }}</th>
-            <th>{{ 'totalCBM' | translate }}</th>
-            <th>{{ 'weight' | translate }}</th>
-            <th>{{ 'total_weight' | translate }}</th>
-          </tr>
-        </ng-template>
-        
-        <ng-template pTemplate="body" let-item let-rowIndex="rowIndex">
-          <tr>
-            <td>{{ rowIndex + 1 }}</td>
-            <td>{{ item.container_sequence }}</td>
-            <td>{{ item.item_code }}</td>
-            <td>{{ item.item_description }}</td>
-            <td>{{ item.box_count }}</td>
-            <td>{{ item.item_in_box }}</td>
-            <td>{{ item.item_price }}</td>
-            <td>{{ item.total_price }}</td>
-            <td>{{ item.store_cbm }}</td>
-            <td>{{ item.height }}</td>
-            <td>{{ item.width }}</td>
-            <td>{{ item.length }}</td>
-            <td>{{ item.total_cbm }}</td>
-            <td>{{ item.weight }}</td>
-            <td>{{ item.total_weight }}</td>
-          </tr>
-        </ng-template>
-      </p-table>
-    </p-card>
-  </div>
+      <div class="invoice-field">
+        {{ "supplierName" | translate }}: {{ invoiceData.supplier }}
+      </div>
+      <div class="invoice-field">
+        {{ "boxTotal" | translate }}: {{ invoiceData.total_boxes }}
+      </div>
+      <div class="invoice-field">
+        {{ "totalCBM" | translate }}: {{ invoiceData.total_cbm }}
+      </div>
+      <div class="invoice-field">
+        {{ "totalWeight" | translate }}: {{ invoiceData.total_weight }}
+      </div>
+      <div class="invoice-field">
+        {{ "itemsCategory" | translate }}: {{ invoiceData.item_category }}
+      </div>
+    </div>
+
+    <div class="grid pt-4 grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
+      <div class="invoice-field">
+        {{ "total_invoice" | translate }}: {{ invoiceData.total_amount }}
+      </div>
+      <div class="invoice-field">
+        {{ "total_discount" | translate }}: {{ invoiceData.discount_amount }}
+      </div>
+      <div class="invoice-field">
+        {{ "net_invoice" | translate }}: {{ invoiceData.net_amount }}
+      </div>
+    </div>
+
+    <div class="grid pt-4 grid-cols-1 md:grid-cols-2 lg:grid-cols-6 gap-4">
+      <div class="invoice-payment">
+        <span>{{ "firstBatchNumber" | translate }}:</span>
+        {{ invoiceData.first_payment_amount }}
+      </div>
+      <div class="invoice-payment">
+        <span>{{ "firstBatchDate" | translate }}:</span>
+        {{ invoiceData.first_payment_date }}
+      </div>
+      <div class="invoice-payment">
+        <span>{{ "secondBatchNumber" | translate }}:</span>
+        {{ invoiceData.second_payment_amount }}
+      </div>
+      <div class="invoice-payment">
+        <span>{{ "secondBatchDate" | translate }}:</span>
+        {{ invoiceData.second_payment_date }}
+      </div>
+      <div class="invoice-payment">
+        <span>{{ "thirdBatchNumber" | translate }}:</span>
+        {{ invoiceData.third_payment_amount }}
+      </div>
+      <div class="invoice-payment">
+        <span>{{ "thirdBatchDate" | translate }}:</span>
+        {{ invoiceData.third_payment_date }}
+      </div>
+    </div>
+  </p-card>
+
+  <p-card header="{{ 'invoiceLines' | translate }}">
+    <p-table
+      [value]="invoiceData.invoice_lines"
+      responsiveLayout="scroll"
+      showGridlines
+      stripedRows
+    >
+      <ng-template pTemplate="header">
+        <tr>
+          <th>{{ "number" | translate }}</th>
+          <th>{{ "container" | translate }}</th>
+          <th>{{ "item" | translate }}</th>
+          <th>{{ "description" | translate }}</th>
+          <th>{{ "boxQnt" | translate }}</th>
+          <th>{{ "qunNumber" | translate }}</th>
+          <th>{{ "price" | translate }}</th>
+          <th>{{ "totalPrice" | translate }}</th>
+          <th>{{ "CBM_store" | translate }}</th>
+          <th>{{ "CBM_height" | translate }}</th>
+          <th>{{ "CBM_width" | translate }}</th>
+          <th>{{ "CBM_length" | translate }}</th>
+          <th>{{ "totalCBM" | translate }}</th>
+          <th>{{ "weight" | translate }}</th>
+          <th>{{ "total_weight" | translate }}</th>
+        </tr>
+      </ng-template>
+
+      <ng-template pTemplate="body" let-item let-rowIndex="rowIndex">
+        <tr>
+          <td>{{ rowIndex + 1 }}</td>
+          <td>{{ item.container_sequence }}</td>
+          <td>{{ item.item_code }}</td>
+          <td>{{ item.item_description }}</td>
+          <td>{{ item.box_count }}</td>
+          <td>{{ item.item_in_box }}</td>
+          <td>{{ item.item_price }}</td>
+          <td>{{ item.total_price }}</td>
+          <td>{{ item.store_cbm }}</td>
+          <td>{{ item.height }}</td>
+          <td>{{ item.width }}</td>
+          <td>{{ item.length }}</td>
+          <td>{{ item.total_cbm }}</td>
+          <td>{{ item.weight }}</td>
+          <td>{{ item.total_weight }}</td>
+        </tr>
+      </ng-template>
+    </p-table>
+  </p-card>
+</div>
 }
