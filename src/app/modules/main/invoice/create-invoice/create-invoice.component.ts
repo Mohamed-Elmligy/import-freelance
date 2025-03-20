@@ -29,6 +29,7 @@ import { SelectModule } from 'primeng/select';
 import { CardModule } from 'primeng/card';
 import { TableModule } from 'primeng/table';
 import { ConfirmSaveDeleteService } from '../../../../core/services/confirm-save-delete.service';
+import { PageHeaderComponent } from '../../../shared/components/page-header/page-header.component';
 
 @Component({
   selector: 'app-create-invoice',
@@ -53,13 +54,14 @@ import { ConfirmSaveDeleteService } from '../../../../core/services/confirm-save
     SelectModule,
     CardModule,
     TableModule,
+    PageHeaderComponent,
   ],
   providers: [MessageService],
   templateUrl: './create-invoice.component.html',
 })
 export default class CreateInvoiceComponent {
   items: MenuItem[] = [];
-  route: MenuItem[] | undefined;
+  route: MenuItem[] = [];
   mainPaths = main_routes_paths;
 
   listOfCustomers = signal([]);
@@ -195,28 +197,8 @@ export default class CreateInvoiceComponent {
   reset(form: FormGroup) {
     form.reset();
   }
-  ngOnInit() {
-    this.lookupService.getListOfLookups('customers').subscribe((data: any) => {
-      this.listOfCustomers.set(data);
-      this.invoiceService.listOfCustomers.set(data);
-      if (!this.isUpdate) {
-        for (let i = 0; i < 10; i++) {
-          this.addItem();
-        }
-      }
-    });
-
-    this.lookupService.getListOfLookups('suppliers').subscribe((data: any) => {
-      this.listOfSuppliers.set(data);
-      this.invoiceService.listOfSuppliers.set(data);
-    });
-
-    this.lookupService
-      .getListOfLookups('items-categories')
-      .subscribe((data: any) => {
-        this.listOfItems.set(data);
-        this.invoiceService.listOfItems.set(data);
-      });
+  ngOnInit(): void {
+    this.initializeLookups();
 
     this.route = [
       {
@@ -227,8 +209,34 @@ export default class CreateInvoiceComponent {
       { label: 'invoices', route: this.mainPaths.invoices },
     ];
 
-    if (this.invoiceId && !this.isUpdate) this.getInvoiceById();
-    if (this.invoiceId && this.isUpdate) this.getForUpdateInvoice();
+    if (this.invoiceId) {
+      this.isUpdate ? this.getForUpdateInvoice() : this.getInvoiceById();
+    }
+  }
+
+  private initializeLookups(): void {
+    this.lookupService.getListOfLookups('customers').subscribe((data: any) => {
+      this.listOfCustomers.set(data);
+      this.invoiceService.listOfCustomers.set(data);
+      if (!this.isUpdate) {
+        for (let i = 0; i < 3; i++) {
+          this.addItem();
+        }
+      }
+    });
+
+    this.lookupService.getListOfLookups('suppliers').subscribe((data: any) => {
+      this.listOfSuppliers.set(data);
+
+      this.invoiceService.listOfSuppliers.set(data);
+    });
+
+    this.lookupService
+      .getListOfLookups('items-categories')
+      .subscribe((data: any) => {
+        this.listOfItems.set(data);
+        this.invoiceService.listOfItems.set(data);
+      });
   }
 
   getInvoiceById() {

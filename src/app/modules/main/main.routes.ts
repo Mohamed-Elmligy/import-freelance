@@ -114,6 +114,7 @@ const main_routes: Routes = [
     path: 'transactions',
     loadComponent: () =>
       import('./master-data/repayments-form/repayments-form.component'),
+    canActivate: [noCompanyUserGuard],
   },
   {
     path: 'shippingData',
