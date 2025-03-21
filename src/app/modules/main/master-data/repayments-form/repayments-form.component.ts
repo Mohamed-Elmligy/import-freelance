@@ -43,13 +43,10 @@ import { PageHeaderComponent } from '../../../shared/components/page-header/page
 export default class RepaymentsFormComponent {
   mainPaths = main_routes_paths;
   route: MenuItem[] = [];
-  listOfCustomers = signal([]);
   listOfInvoices = signal([]);
-  listOfSuppliers = signal([]);
 
   private formBuilder = inject(FormBuilder);
   private activatedRoute = inject(ActivatedRoute);
-  private lookupService = inject(LookupsService);
   private transactionService = inject(RepaymentService);
 
   isUpdate = this.activatedRoute.snapshot.queryParams['edit'] == 'true';
@@ -94,18 +91,6 @@ export default class RepaymentsFormComponent {
   }
 
   ngOnInit() {
-    this.lookupService.getListOfLookups('customers').subscribe((data: any) => {
-      this.listOfCustomers.set(data);
-      this.transactionService.listOfCustomers.set(data);
-    });
-    this.lookupService.getListOfLookups('suppliers').subscribe((data: any) => {
-      this.listOfSuppliers.set(data);
-      this.transactionService.listOfSuppliers.set(data);
-    });
-    this.lookupService.getListOfLookups('invoices').subscribe((data: any) => {
-      this.listOfInvoices.set(data);
-      this.transactionService.listOfInvoices.set(data);
-    });
     this.route = [
       {
         icon: 'pi pi-receipt',
@@ -117,6 +102,10 @@ export default class RepaymentsFormComponent {
 
     if (this.transactionId && !this.isUpdate) this.getTransactionById();
     if (this.transactionId && this.isUpdate) this.updateTransaction();
+  }
+
+  getInvoiceDataLookup() {
+    this.api;
   }
 
   getTransactionById() {
