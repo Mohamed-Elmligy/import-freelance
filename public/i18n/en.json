@@ -126,5 +126,11 @@
   "reset_password": "Reset Password",
   "changeUserPassword": "Change User Password",
   "userData": "User Data",
-  "cancel": "Cancel"
+  "cancel": "Cancel",
+  "available_payments": "Available Payments",
+  "paymentNumber": "Payment Number",
+  "invoice_payment_number": "Invoice Payment Number",
+  "back": "Back",
+  "allInvoices": "All Invoices",
+  "dashboard": "Dashboard"
 }

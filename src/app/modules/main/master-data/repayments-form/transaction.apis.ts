@@ -7,7 +7,6 @@ export const TRANSACTION_APIS = {
 };
 
 export const TRANSACTION_LOOKUP_APIS = {
-  GET_INVOICE_DATA_LOOKUP: (id: string) => `/api/lookup/invoice-details/${id}`,
-  GET_INVOICE_PAYMENT_LOOKUP: (id: string) =>
-    `/api/lookup/invoice-payments/${id}`,
+  GET_INVOICE_DATA_LOOKUP: (id: string) => `lookup/invoice-details/${id}`,
+  GET_INVOICE_PAYMENT_LOOKUP: (id: string) => `lookup/invoice-payments/${id}`,
 };

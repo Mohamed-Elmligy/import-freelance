@@ -137,5 +137,11 @@
   "reset_password": "اعادة تعيين كلمة المرور",
   "changeUserPassword": "تغيير كلمة المرور للمستخدم",
   "userData": "بيانات المستخدم",
-  "cancel": "الغاء"
+  "cancel": "الغاء",
+  "available_payments": "الدفعات المتاحة",
+  "paymentNumber": "رقم الدفعة",
+  "invoice_payment_number": "رقم الدفعة",
+  "back": "رجوع",
+  "allInvoices": "كل الفواتير",
+  "dashboard": "لوحة التحكم"
 }

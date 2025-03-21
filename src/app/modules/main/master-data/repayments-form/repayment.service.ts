@@ -3,7 +3,7 @@ import { inject, Injectable, signal } from '@angular/core';
 import { FormGroup } from '@angular/forms';
 import { ApiService } from '../../../../core/services/api.service';
 import { ShowMessageService } from '../../../../core/services/show-message.service';
-import { TRANSACTION_APIS } from './transaction.apis';
+import { TRANSACTION_APIS, TRANSACTION_LOOKUP_APIS } from './transaction.apis';
 
 @Injectable({
   providedIn: 'root',
@@ -20,6 +20,7 @@ export class RepaymentService {
     'name',
     'supplier',
     'amount',
+    'invoice_payment_number',
     'invoiceNumber',
     'transactionDate',
     'actions',
@@ -31,9 +32,7 @@ export class RepaymentService {
 
   componentModelToApiModel(form: FormGroup) {
     return {
-      // supplier: form.get('supplierNumber')?.value.id,
       invoice: form.get('invoiceNumber')?.value.id,
-      // customer: form.get('customer')?.value.id,
       discription: form.get('description')?.value,
       amount: form.get('remainingAmount')?.value,
       pay_date: formatDate(
@@ -45,26 +44,49 @@ export class RepaymentService {
     };
   }
 
-  // first;
-  // second;
-  // third;
-  // fourth;
+  getInvoiceData(id: string) {
+    return this.apiService.getDataFromServer(
+      TRANSACTION_LOOKUP_APIS.GET_INVOICE_DATA_LOOKUP(id)
+    );
+  }
+
+  getPaymentData(id: string) {
+    return this.apiService.getDataFromServer(
+      TRANSACTION_LOOKUP_APIS.GET_INVOICE_PAYMENT_LOOKUP(id)
+    );
+  }
+
+  paymentBatchies() {
+    return [
+      {
+        id: 'first',
+        name: 'First',
+      },
+      {
+        id: 'second',
+        name: 'Second',
+      },
+      {
+        id: 'third',
+        name: 'Third',
+      },
+      {
+        id: 'fourth',
+        name: 'Fourth',
+      },
+    ];
+  }
 
   apiModelToComponentModel(form: FormGroup, data: any) {
-    const selectedCustomer = this.listOfCustomers().find(
-      (item: any) => item.id === data.customer
-    );
-    const selectedSupplier = this.listOfSuppliers().find(
-      (item: any) => item.id === data.supplier
-    );
     const selectedInvoice = this.listOfInvoices().find(
       (item: any) => item.id === data.invoice
     );
+    console.log(selectedInvoice);
+
     form.patchValue({
-      customer: selectedCustomer,
       invoiceNumber: selectedInvoice,
-      supplierNumber: selectedSupplier,
       remainingAmount: data.amount,
+      invoice_payment_number: data.invoice_payment_number,
       transactionDate: new Date(data.pay_date),
       description: data.discription,
     });
@@ -72,20 +94,22 @@ export class RepaymentService {
 
   apiModelToComponentModelList(
     data: {
-      customer: string;
       invoice: string;
       supplier: string;
       amount: string;
+      invoice_payment_number: string;
       pay_date: string;
       id: string;
+      customer: string;
     }[]
   ) {
     return data.map((item) => {
       return {
-        name: item.customer,
         invoiceNumber: item.invoice,
-        supplier: item.supplier,
         amount: item.amount,
+        supplier: item.supplier,
+        name: item.customer,
+        invoice_payment_number: item.invoice_payment_number,
         transactionDate: item.pay_date,
         id: item.id,
       };
@@ -138,9 +162,6 @@ export class RepaymentService {
             'Transaction has been updated successfully'
           );
         },
-        error: (err) => {
-          this.showMessageService.showMessage('error', 'Error', err.error);
-        },
       });
   }
 
@@ -155,9 +176,6 @@ export class RepaymentService {
             'Transaction has been deleted successfully'
           );
           this.transactionDeleted.set(true);
-        },
-        error: (err) => {
-          this.showMessageService.showMessage('error', 'Error', err.error);
         },
       });
   }

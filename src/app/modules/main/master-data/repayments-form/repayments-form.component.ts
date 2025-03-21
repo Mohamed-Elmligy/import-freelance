@@ -21,6 +21,7 @@ import { RepaymentService } from './repayment.service';
 import { LookupsService } from '../../../shared/services/lookups.service';
 import { SelectModule } from 'primeng/select';
 import { PageHeaderComponent } from '../../../shared/components/page-header/page-header.component';
+import { TableModule } from 'primeng/table';
 @Component({
   selector: 'app-repayments-form',
   imports: [
@@ -37,6 +38,7 @@ import { PageHeaderComponent } from '../../../shared/components/page-header/page
     TextareaModule,
     SelectModule,
     PageHeaderComponent,
+    TableModule,
   ],
   templateUrl: './repayments-form.component.html',
 })
@@ -44,10 +46,39 @@ export default class RepaymentsFormComponent {
   mainPaths = main_routes_paths;
   route: MenuItem[] = [];
   listOfInvoices = signal([]);
+  invoiceData = signal<InvoiceData>({
+    id: '',
+    invoice_number: '',
+    customer: '',
+    supplier: '',
+    invoice_date: '',
+    total_amount: '',
+    net_amount: '',
+  });
+  paymentData = signal<{
+    invoice_number: string;
+    available_payments: [
+      {
+        payment_number: string;
+        amount: number;
+        date: string;
+      }
+    ];
+  }>({
+    invoice_number: '',
+    available_payments: [
+      {
+        payment_number: '',
+        amount: 0,
+        date: '',
+      },
+    ],
+  });
 
   private formBuilder = inject(FormBuilder);
   private activatedRoute = inject(ActivatedRoute);
-  private transactionService = inject(RepaymentService);
+  public transactionService = inject(RepaymentService);
+  private lookupsService = inject(LookupsService);
 
   isUpdate = this.activatedRoute.snapshot.queryParams['edit'] == 'true';
   transactionId = this.activatedRoute.snapshot.queryParams['transactionId'];
@@ -58,20 +89,21 @@ export default class RepaymentsFormComponent {
     discription: string;
     pay_date: Date;
     supplier: string;
+    invoice_payment_number: string;
   } = {
     amount: 0,
     customer: '',
     discription: '',
+    invoice_payment_number: '',
     pay_date: new Date(),
     supplier: '',
   };
 
   protected form = this.formBuilder.group({
-    customer: [null, [Validators.required]],
     invoiceNumber: [null, [Validators.required]],
-    supplierNumber: [null, [Validators.required]],
     remainingAmount: [null, [Validators.required]],
     transactionDate: [null, [Validators.required]],
+    invoice_payment_number: [null, [Validators.required]],
     description: [null, [Validators.required]],
   });
 
@@ -88,9 +120,26 @@ export default class RepaymentsFormComponent {
 
   reset(form: FormGroup) {
     form.reset();
+    this.paymentData.set({
+      invoice_number: '',
+      available_payments: [{ payment_number: '', amount: 0, date: '' }],
+    });
+    this.invoiceData.set({
+      id: '',
+      invoice_number: '',
+      customer: '',
+      supplier: '',
+      invoice_date: '',
+      total_amount: '',
+      net_amount: '',
+    });
   }
 
   ngOnInit() {
+    this.lookupsService.getListOfLookups('invoices').subscribe((data) => {
+      this.listOfInvoices.set(data);
+      this.transactionService.listOfInvoices.set(data);
+    });
     this.route = [
       {
         icon: 'pi pi-receipt',
@@ -104,8 +153,16 @@ export default class RepaymentsFormComponent {
     if (this.transactionId && this.isUpdate) this.updateTransaction();
   }
 
-  getInvoiceDataLookup() {
-    this.api;
+  getInvoiceData(id: string) {
+    this.transactionService.getInvoiceData(id).subscribe((data: any) => {
+      this.invoiceData.set(data);
+    });
+  }
+
+  getPaymentData(id: string) {
+    this.transactionService.getPaymentData(id).subscribe((data: any) => {
+      this.paymentData.set(data);
+    });
   }
 
   getTransactionById() {
@@ -125,4 +182,14 @@ export default class RepaymentsFormComponent {
         });
     }
   }
+}
+
+interface InvoiceData {
+  id: string;
+  invoice_number: string;
+  customer: string;
+  supplier: string;
+  invoice_date: string;
+  total_amount: string;
+  net_amount: string;
 }
