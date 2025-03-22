@@ -89,7 +89,7 @@ export default class ProfileSettingsComponent {
       }
       if (this.uploadedCoverImage) {
         formData.append(
-          'coverImage',
+          'cover',
           this.uploadedCoverImage,
           this.uploadedCoverImage.name
         );
