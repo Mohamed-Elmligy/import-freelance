@@ -18,8 +18,12 @@ export class CustomersService {
 
   customerHeaders = ['name', 'email', 'code', 'commission', 'actions'];
 
-  getList() {
-    return this.apiService.getDataFromServer(`customer/list`);
+  getList(page?: any, size?: any, filter?: any) {
+    return this.apiService.getDataFromServer(
+      `customer/list`,
+      { page, size },
+      filter
+    );
   }
 
   componentModelToApiModel(form: FormGroup) {

@@ -1,16 +1,18 @@
 import { HttpErrorResponse, HttpInterceptorFn } from '@angular/common/http';
 import { inject } from '@angular/core';
-import { catchError, EMPTY, switchMap, throwError } from 'rxjs';
+import { catchError, EMPTY, switchMap, throwError, of } from 'rxjs';
 import { TranslateService } from '@ngx-translate/core';
 import { ShowMessageService } from '../../services/show-message.service';
 import { SecurityService } from '../../services/security.service';
 import { BrowserStorageService } from '../../services/browser-storage.service';
+import { Router } from '@angular/router';
 
 export const errorInterceptor: HttpInterceptorFn = (request, next) => {
   const translateService = inject(TranslateService);
   const messages = inject(ShowMessageService);
   const securityService = inject(SecurityService);
   const browserStorageService = inject(BrowserStorageService);
+  const router = inject(Router);
 
   return next(request).pipe(
     catchError((error: HttpErrorResponse) => {
@@ -56,7 +58,9 @@ export const errorInterceptor: HttpInterceptorFn = (request, next) => {
           messages.showMessage(
             'error',
             'Error',
-            errorMessages.map((error: string) => translateService.instant(error)).join('<br>')
+            errorMessages
+              .map((error: string) => translateService.instant(error))
+              .join('<br>')
           );
         } else {
           messages.showMessage('error', 'Error', 'An unknown error occurred.');
@@ -72,11 +76,13 @@ export const errorInterceptor: HttpInterceptorFn = (request, next) => {
           return securityService.getNewAccessToken().pipe(
             switchMap((res: any) => {
               const newJwt = securityService.allJwtData;
-              newJwt.access = res.access;
+              newJwt.update((value: any) => {
+                return { ...value, access: res.access };
+              });
               browserStorageService.set(
                 'local',
                 securityService.localKey,
-                newJwt
+                newJwt()
               );
               request = request.clone({
                 setHeaders: {
@@ -85,16 +91,24 @@ export const errorInterceptor: HttpInterceptorFn = (request, next) => {
               });
               return next(request);
             }),
-            catchError(() => {
+            catchError((refreshError: HttpErrorResponse) => {
+              // Token refresh failed. Redirect to login.
+              securityService.removeToken();
+              browserStorageService.remove('local', securityService.localKey);
+              router.navigate(['/login']);
               messages.showMessage(
                 'error',
                 'Error',
                 translateService.instant('USER_NOT_AUTHORIZED')
               );
-              return throwError(() => error);
+              return throwError(() => refreshError);
             })
           );
         } else {
+          // No refresh token available. Redirect to login.
+          securityService.removeToken();
+          browserStorageService.remove('local', securityService.localKey);
+          router.navigate(['/login']);
           messages.showMessage(
             'error',
             'Error',

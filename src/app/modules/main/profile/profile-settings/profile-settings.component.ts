@@ -13,7 +13,10 @@ import { TranslateModule } from '@ngx-translate/core';
 import { ToastModule } from 'primeng/toast';
 import { FileUploadModule } from 'primeng/fileupload';
 import { MessageService } from 'primeng/api';
-import { TabService } from '../../../../services/tab.service';
+import { ApiService } from '../../../../core/services/api.service';
+import { PROFILE_APIS } from '../profile.apis';
+import { Router } from '@angular/router';
+import { SecurityService } from '../../../../core/services/security.service';
 
 @Component({
   selector: 'app-profile-settings',
@@ -34,10 +37,14 @@ import { TabService } from '../../../../services/tab.service';
 export default class ProfileSettingsComponent {
   private messageService = inject(MessageService);
   private formBuilder = inject(FormBuilder);
-  private tabService = inject(TabService);
+  private apiService = inject(ApiService);
+  private router = inject(Router);
+  private securityService = inject(SecurityService);
 
   uploadedLogo: any = null; // Stores the uploaded logo file
   uploadedCoverImage: any = null; // Stores the uploaded cover image file
+  profileImage: string | ArrayBuffer | null = null;
+  coverImage: string | ArrayBuffer | null = null;
 
   // Initialize the form with validation
   protected form = this.formBuilder.group({
@@ -47,65 +54,69 @@ export default class ProfileSettingsComponent {
     coverImage: [null, [Validators.required]],
   });
 
-  // Handle logo file selection
-  onLogoSelect(event: any) {
-    this.uploadedLogo = event.files[0];
-    this.form.patchValue({ logo: this.uploadedLogo });
-    this.messageService.add({
-      severity: 'info',
-      summary: 'Logo Selected',
-      detail: this.uploadedLogo.name,
-    });
+  // Handle profile image change
+  onProfileImageChange(event: Event): void {
+    const input = event.target as HTMLInputElement;
+    if (input.files && input.files[0]) {
+      const reader = new FileReader();
+      reader.onload = (e) => (this.profileImage = e.target?.result ?? null);
+      let file = input.files[0];
+      reader.readAsDataURL(file);
+      this.uploadedLogo = file;
+    }
   }
 
-  // Handle logo file clear
-  onLogoClear() {
-    this.uploadedLogo = null;
-    this.form.patchValue({ logo: null });
-    this.messageService.add({
-      severity: 'warn',
-      summary: 'Logo Cleared',
-      detail: '',
-    });
-  }
-
-  // Handle cover image file selection
-  onCoverImageSelect(event: any) {
-    this.uploadedCoverImage = event.files[0];
-    this.form.patchValue({ coverImage: this.uploadedCoverImage });
-    this.messageService.add({
-      severity: 'info',
-      summary: 'Cover Image Selected',
-      detail: this.uploadedCoverImage.name,
-    });
-  }
-
-  // Handle cover image file clear
-  onCoverImageClear() {
-    this.uploadedCoverImage = null;
-    this.form.patchValue({ coverImage: null });
-    this.messageService.add({
-      severity: 'warn',
-      summary: 'Cover Image Cleared',
-      detail: '',
-    });
+  // Handle cover image change
+  onCoverImageChange(event: Event): void {
+    const input = event.target as HTMLInputElement;
+    if (input.files && input.files[0]) {
+      const reader = new FileReader();
+      reader.onload = (e) => (this.coverImage = e.target?.result ?? null);
+      let file = input.files[0];
+      reader.readAsDataURL(file);
+      this.uploadedCoverImage = file;
+    }
   }
 
   // Form submission
-  submit(form: FormGroup) {
+  onSubmit(form: FormGroup) {
     if (form.valid) {
       const formData = new FormData();
       formData.append('name', form.value.name);
       formData.append('phone', form.value.phone);
       if (this.uploadedLogo) {
-        formData.append('logo', this.uploadedLogo);
+        formData.append('logo', this.uploadedLogo, this.uploadedLogo.name);
       }
       if (this.uploadedCoverImage) {
-        formData.append('coverImage', this.uploadedCoverImage);
+        formData.append(
+          'coverImage',
+          this.uploadedCoverImage,
+          this.uploadedCoverImage.name
+        );
       }
 
       // Call your API to create the company
-      console.log('Form Data:', formData);
+      this.apiService
+        .sendDataToServer(PROFILE_APIS.CREATE_COMPANY(), formData)
+        .subscribe({
+          next: (response) => {
+            this.securityService.updateUerCompanyStatus(true);
+
+            // Redirect to home page
+            this.router.navigate(['/main/home']);
+          },
+          error: (error) => {
+            console.error('Error creating company!', error);
+          },
+          complete: () => {
+            // Show success message
+            this.messageService.add({
+              severity: 'success',
+              summary: 'Success',
+              detail: 'Company created successfully!',
+            });
+          },
+        });
 
       // Show success message
       this.messageService.add({
