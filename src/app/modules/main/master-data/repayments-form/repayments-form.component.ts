@@ -102,14 +102,13 @@ export default class RepaymentsFormComponent {
 
   protected form = this.formBuilder.group({
     invoiceNumber: [null, [Validators.required]],
-    amount: [null, [Validators.required]], // Ensure this is correctly defined
+    amount: [null, [Validators.required]],
     transactionDate: [null, [Validators.required]],
     invoice_payment_number: [null, [Validators.required]],
     description: [null, [Validators.required]],
   });
 
   submit(form: FormGroup) {
-    console.log(form.controls);
     if (form.valid) {
       if (!this.isUpdate) {
         this.transactionService.createTransaction(form);
@@ -164,6 +163,8 @@ export default class RepaymentsFormComponent {
   getPaymentData(id: string) {
     this.transactionService.getPaymentData(id).subscribe((data: any) => {
       this.paymentData.set(data);
+      this.transactionService.paymentBatchies.set(data.available_payments);
+      console.log(this.transactionService.paymentBatchies());
     });
   }
 

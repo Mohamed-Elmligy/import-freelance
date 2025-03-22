@@ -145,5 +145,12 @@
   "welcome": "مرحبا",
   "width": "العرض",
   "worry": "لا تقلق",
-  "year": "السنة المالية"
+  "year": "السنة المالية",
+  "submit": "ارسال",
+  "companyName": "اسم الشركة",
+  "phone": "رقم الهاتف",
+  "First Payment": "الدفعة الاولى",
+  "Second Payment": "الدفعة الثانية",
+  "Third Payment": "الدفعة الثالثة",
+  "Fourth Payment": "الدفعة الرابعة"
 }

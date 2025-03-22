@@ -57,10 +57,7 @@
     [paginator]="true"
     [rows]="10"
     [totalRecords]="resultsLength"
-    [lazy]="true"
     [sortMode]="'multiple'"
-    (onLazyLoad)="loadSuppliers($event)"
-    (onSort)="onSort($event)"
   >
     <ng-template pTemplate="header">
       <tr>

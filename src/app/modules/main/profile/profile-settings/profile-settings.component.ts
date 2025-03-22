@@ -1,4 +1,4 @@
-import { Component, inject } from '@angular/core';
+import { Component, inject, OnInit } from '@angular/core';
 import { FloatLabelModule } from 'primeng/floatlabel';
 import { InputTextModule } from 'primeng/inputtext';
 import {
@@ -17,6 +17,7 @@ import { ApiService } from '../../../../core/services/api.service';
 import { PROFILE_APIS } from '../profile.apis';
 import { Router } from '@angular/router';
 import { SecurityService } from '../../../../core/services/security.service';
+import { environment } from '../../../../../environments/environment';
 
 @Component({
   selector: 'app-profile-settings',
@@ -34,25 +35,51 @@ import { SecurityService } from '../../../../core/services/security.service';
   templateUrl: './profile-settings.component.html',
   providers: [MessageService],
 })
-export default class ProfileSettingsComponent {
+export default class ProfileSettingsComponent implements OnInit {
+  // Inject the required services
   private messageService = inject(MessageService);
   private formBuilder = inject(FormBuilder);
   private apiService = inject(ApiService);
   private router = inject(Router);
   private securityService = inject(SecurityService);
 
+  // Variables to store the uploaded files
   uploadedLogo: any = null; // Stores the uploaded logo file
   uploadedCoverImage: any = null; // Stores the uploaded cover image file
   profileImage: string | ArrayBuffer | null = null;
   coverImage: string | ArrayBuffer | null = null;
 
+  // Variable to store the company status
+  companyStatus: boolean = false;
+
   // Initialize the form with validation
   protected form = this.formBuilder.group({
     name: [null, [Validators.required]],
     phone: [null, [Validators.required]],
-    logo: [null, [Validators.required]],
-    coverImage: [null, [Validators.required]],
   });
+
+  ngOnInit(): void {
+    // Check if the user has already created a company
+    this.apiService.getDataFromServer(PROFILE_APIS.GET_COMPANY()).subscribe({
+      next: (response) => {
+        this.companyStatus = true;
+        this.profileImage = response.logo; // Set profile image URL from API response
+        this.coverImage = response.cover; // Set cover image URL from API response
+        this.form.patchValue(response);
+      },
+      error: (error) => {
+        this.companyStatus = false;
+      },
+    });
+  }
+
+  get retrieveCompanyLogo(): string {
+    return this.form.get('logo')?.value ?? '';
+  }
+
+  get retrieveCompanyCoverImage(): string {
+    return this.form.get('coverImage')?.value ?? '';
+  }
 
   // Handle profile image change
   onProfileImageChange(event: Event): void {
@@ -95,35 +122,51 @@ export default class ProfileSettingsComponent {
         );
       }
 
-      // Call your API to create the company
-      this.apiService
-        .sendDataToServer(PROFILE_APIS.CREATE_COMPANY(), formData)
-        .subscribe({
-          next: (response) => {
-            this.securityService.updateUerCompanyStatus(true);
+      if (this.companyStatus) {
+        // Call your API to update the company
+        this.apiService
+          .updateDataOnServer('put', PROFILE_APIS.UPDATE_COMPANY(), formData)
+          .subscribe({
+            next: (response) => {
+              // Redirect to home page
+              this.router.navigate(['/main/home']);
+            },
+            error: (error) => {},
+            complete: () => {
+              // Show success message
+              this.messageService.add({
+                severity: 'success',
+                summary: 'Success',
+                detail: 'Company updated successfully!',
+              });
+            },
+          });
+      }
 
-            // Redirect to home page
-            this.router.navigate(['/main/home']);
-          },
-          error: (error) => {
-            console.error('Error creating company!', error);
-          },
-          complete: () => {
-            // Show success message
-            this.messageService.add({
-              severity: 'success',
-              summary: 'Success',
-              detail: 'Company created successfully!',
-            });
-          },
-        });
+      if (!this.companyStatus) {
+        // Call your API to create the company
+        this.apiService
+          .sendDataToServer(PROFILE_APIS.CREATE_COMPANY(), formData)
+          .subscribe({
+            next: (response) => {
+              this.securityService.updateUerCompanyStatus(true);
 
-      // Show success message
-      this.messageService.add({
-        severity: 'success',
-        summary: 'Success',
-        detail: 'Company created successfully!',
-      });
+              // Redirect to home page
+              this.router.navigate(['/main/home']);
+            },
+            error: (error) => {
+              console.error('Error creating company!', error);
+            },
+            complete: () => {
+              // Show success message
+              this.messageService.add({
+                severity: 'success',
+                summary: 'Success',
+                detail: 'Company created successfully!',
+              });
+            },
+          });
+      }
     } else {
       // Show error message if form is invalid
       this.messageService.add({

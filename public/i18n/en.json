@@ -132,5 +132,12 @@
   "invoice_payment_number": "Invoice Payment Number",
   "back": "Back",
   "allInvoices": "All Invoices",
-  "dashboard": "Dashboard"
+  "dashboard": "Dashboard",
+  "submit": "Submit",
+  "companyName": "Company Name",
+  "phone": "Phone",
+  "First Payment": "First Payment",
+  "Second Payment": "Second Payment",
+  "Third Payment": "Third Payment",
+  "Fourth Payment": "Fourth Payment"
 }

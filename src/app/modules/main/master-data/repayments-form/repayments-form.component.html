@@ -112,7 +112,7 @@
           <p-select
             id="invoice_payment_number"
             [options]="transactionService.paymentBatchies()"
-            optionLabel="name"
+            [optionLabel]="'payment_number' | translate"
             optionValue="id"
             [filter]="true"
             [showClear]="true"

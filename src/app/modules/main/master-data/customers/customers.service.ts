@@ -66,14 +66,6 @@ export class CustomersService {
     });
   }
 
-  createCustomer(data: FormGroup) {
-    this.confirmService.confirmSave(
-      'Are you sure you want to create this customer?',
-      () => {
-        this.createCustomerApi(data);
-      }
-    );
-  }
   createCustomerApi(data: FormGroup) {
     let modifiedModel = this.componentModelToApiModel(data);
     this.apiService
