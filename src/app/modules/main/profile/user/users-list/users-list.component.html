@@ -120,14 +120,14 @@
     ></tr>
   </table>
 
-  <mat-paginator
-    [pageSizeOptions]="[10, 20, 50]"
-    showFirstLastButtons
-    aria-label="Select page of"
-    [length]="resultsLength"
-    class="mt-4"
-  >
-  </mat-paginator>
+  <p-paginator
+    [rows]="10"
+    [first]="0"
+    [totalRecords]="resultsLength"
+    [rowsPerPageOptions]="[10, 20, 30]"
+    styleClass="mt-2"
+    dir="rtl"
+  />
 </div>
 
 <!-- reset password section -->

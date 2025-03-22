@@ -1,6 +1,5 @@
 import { HttpErrorResponse, HttpInterceptorFn } from '@angular/common/http';
 import { inject } from '@angular/core';
-
 import { catchError, EMPTY, switchMap, throwError } from 'rxjs';
 import { TranslateService } from '@ngx-translate/core';
 import { ShowMessageService } from '../../services/show-message.service';
@@ -31,16 +30,38 @@ export const errorInterceptor: HttpInterceptorFn = (request, next) => {
       }
 
       // 2- Bad Requests to be handled locally [ex. Validation errors]
-      if (error.status === 400 && error.error?.error) {
-        const errors = Array.isArray(error.error.error)
-          ? error.error.error
-          : [error.error.error];
+      if (error.status === 400) {
+        let errorMessages: string[] = [];
 
-        messages.showMessage(
-          'error',
-          'Error',
-          errors.map((error: string) => translateService.instant(error)).join('<br>')
-        );
+        // Handle error response format: { email: ["user with this email already exists."] }
+        if (error.error && typeof error.error === 'object') {
+          for (const key in error.error) {
+            if (Array.isArray(error.error[key])) {
+              errorMessages.push(...error.error[key]);
+            } else if (typeof error.error[key] === 'string') {
+              errorMessages.push(error.error[key]);
+            }
+          }
+        }
+
+        // Handle error response format: { error: string | string[] }
+        else if (error.error?.error) {
+          errorMessages = Array.isArray(error.error.error)
+            ? error.error.error
+            : [error.error.error];
+        }
+
+        // Display error messages
+        if (errorMessages.length > 0) {
+          messages.showMessage(
+            'error',
+            'Error',
+            errorMessages.map((error: string) => translateService.instant(error)).join('<br>')
+          );
+        } else {
+          messages.showMessage('error', 'Error', 'An unknown error occurred.');
+        }
+
         return throwError(() => error);
       }
 
@@ -83,7 +104,7 @@ export const errorInterceptor: HttpInterceptorFn = (request, next) => {
         }
       }
 
-      // 4- unauthorized requests
+      // 4- Unauthorized requests
       if (error.status === 401) {
         messages.showMessage(
           'error',

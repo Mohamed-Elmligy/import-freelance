@@ -5,6 +5,7 @@
       [formGroup]="form"
       (ngSubmit)="submit(form)"
     >
+      <!-- Company Name -->
       <div class="grid grid-cols-4 gap-5 mb-4">
         <p-floatlabel variant="on" class="md:col-span-2 sm:col-span-4">
           <input
@@ -16,42 +17,85 @@
           />
           <label for="name">{{ "companyName" | translate }}</label>
         </p-floatlabel>
+
+        <!-- Phone -->
         <p-floatlabel variant="on" class="md:col-span-2 sm:col-span-4">
-          <input pInputText id="phone" autocomplete="off" class="w-full" />
+          <input
+            pInputText
+            id="phone"
+            autocomplete="off"
+            formControlName="phone"
+            class="w-full"
+          />
           <label for="phone">{{ "phone" | translate }}</label>
         </p-floatlabel>
-        <div class="col-span-4">
-          <p-fileupload
-            name="demo[]"
-            url="https://www.primefaces.org/cdn/api/upload.php"
-            [multiple]="false"
-            accept="image/*"
-            maxFileSize="1000000"
-            mode="advanced"
-            showUploadButton="false"
-          >
-            <ng-template #empty>
-              <div>Drag and drop files to here to upload.</div>
-            </ng-template>
-            <ng-template #content>
-              @if (uploadedFiles.length) {
-              <ul>
-                @for (file of uploadedFiles; track $index) {
-                <li>{{ file.name }} - {{ file.size }} bytes</li>
-                }
-              </ul>
-              }
-            </ng-template>
-          </p-fileupload>
-        </div>
       </div>
-      <p-button
-        [label]="'Save' | translate"
-        type="submit"
-        icon="pi pi-check"
-        iconPos="right"
-        class="!bg-primary"
-      />
+
+      <!-- Logo Upload -->
+      <div class="mb-4">
+        <label class="block mb-2 font-medium">{{ "logo" | translate }}</label>
+        <p-fileupload
+          name="logo"
+          [multiple]="false"
+          accept="image/*"
+          maxFileSize="1000000"
+          mode="advanced"
+          showUploadButton="false"
+          (onSelect)="onLogoSelect($event)"
+          (onClear)="onLogoClear()"
+        >
+          <ng-template #content>
+            @if (uploadedLogo) {
+            <div class="mt-2">
+              <img
+                [src]="uploadedLogo.objectURL"
+                alt="Logo Preview"
+                class="w-24 h-24 object-cover rounded-lg"
+              />
+            </div>
+            }
+          </ng-template>
+        </p-fileupload>
+      </div>
+
+      <!-- Cover Image Upload -->
+      <div class="mb-4">
+        <label class="block mb-2 font-medium">{{ "coverImage" | translate }}</label>
+        <p-fileupload
+          name="coverImage"
+          [multiple]="false"
+          accept="image/*"
+          maxFileSize="1000000"
+          mode="advanced"
+          showUploadButton="false"
+          (onSelect)="onCoverImageSelect($event)"
+          (onClear)="onCoverImageClear()"
+        >
+          <ng-template #content>
+            @if (uploadedCoverImage) {
+            <div class="mt-2">
+              <img
+                [src]="uploadedCoverImage.objectURL"
+                alt="Cover Image Preview"
+                class="w-full h-48 object-cover rounded-lg"
+              />
+            </div>
+            }
+          </ng-template>
+        </p-fileupload>
+      </div>
+
+      <!-- Submit Button -->
+      <div class="text-right">
+        <p-button
+          [label]="'save' | translate"
+          type="submit"
+          icon="pi pi-check"
+          iconPos="right"
+          class="!bg-primary"
+          [disabled]="form.invalid"
+        />
+      </div>
     </form>
   </div>
 </div>
