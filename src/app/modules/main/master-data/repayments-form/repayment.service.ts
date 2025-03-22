@@ -60,19 +60,15 @@ export class RepaymentService {
     return [
       {
         id: 'first',
-        name: 'First',
+        name: 'سداد الدفعة الاولى',
       },
       {
         id: 'second',
-        name: 'Second',
+        name: 'سداد الدفعة الثانية',
       },
       {
         id: 'third',
-        name: 'Third',
-      },
-      {
-        id: 'fourth',
-        name: 'Fourth',
+        name: 'سداد الدفعة الثالثة',
       },
     ];
   }

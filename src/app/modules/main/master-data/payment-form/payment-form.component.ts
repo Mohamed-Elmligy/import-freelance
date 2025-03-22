@@ -88,11 +88,12 @@ export default class PaymentFormComponent {
     form.reset();
   }
 
-  ngOnInit() {
-    this.lookupService.getListOfLookups('customers').subscribe((data: any) => {
-      this.listOfCustomers.set(data);
-      this.paymentService.listOfCustomers.set(data);
+  ngOnInit(): void {
+    this.lookupService.getListOfLookups('customers').subscribe((customers: any) => {
+      this.listOfCustomers.set(customers);
+      this.paymentService.listOfCustomers.set(customers);
     });
+
     this.route = [
       {
         icon: 'pi pi-wallet',
@@ -102,8 +103,11 @@ export default class PaymentFormComponent {
       { label: 'payments', route: this.mainPaths.payments },
     ];
 
-    if (this.paymentId && !this.isUpdate) this.getPaymentById();
-    if (this.paymentId && this.isUpdate) this.updatePayment();
+    if (this.paymentId && !this.isUpdate) {
+      this.getPaymentById();
+    } else if (this.paymentId && this.isUpdate) {
+      this.updatePayment();
+    }
   }
 
   getPaymentById() {

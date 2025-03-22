@@ -6,156 +6,192 @@
 
 @if ((transactionId && isUpdate) || (!transactionId && !isUpdate)) {
 <form
-  class="bg-white p-8 rounded-md shadow-lg max-w-7xl mx-auto space-y-8"
+  class="max-w-7xl mx-auto p-6 bg-white shadow-md rounded-lg"
   [formGroup]="form"
   (ngSubmit)="submit(form)"
 >
-  <p-floatlabel class="w-80">
-    <p-select
-      id="invoiceNumber"
-      [options]="listOfInvoices()"
-      optionLabel="invoice_number"
-      [filter]="true"
-      [showClear]="true"
-      styleClass="w-full"
-      formControlName="invoiceNumber"
-      (ngModelChange)="getInvoiceData($event.id); getPaymentData($event.id)"
-    />
-    <label for="invoiceNumber">{{ "invoiceNumber" | translate }}</label>
-  </p-floatlabel>
-
-  <div class="grid grid-cols-1 gap-8 lg:grid-cols-3 md:grid-cols-2 mt-6">
-    <div class="flex flex-row align-baseline justify-content-center">
-      <h2 class="text-gray-700 text-lg font-semibold">
-        {{ "name" | translate }}:
-      </h2>
-      <p class="text-gray-900 text-lg ms-2">
-        {{ invoiceData().customer }}
-      </p>
-    </div>
-    <div class="flex flex-row align-baseline justify-content-center">
-      <h2 class="text-gray-700 text-lg font-semibold">
-        {{ "supplier" | translate }}:
-      </h2>
-      <p class="text-gray-900 text-lg ms-2">
-        {{ invoiceData().supplier }}
-      </p>
-    </div>
-    <div class="flex flex-row align-baseline justify-content-center">
-      <h2 class="text-gray-700 text-lg font-semibold">
-        {{ "transactionDate" | translate }}:
-      </h2>
-      <p class="text-gray-900 text-lg ms-2">
-        {{ invoiceData().invoice_date | date : "dd/MM/yyyy" }}
-      </p>
-    </div>
-    <div class="flex flex-row align-baseline justify-content-center">
-      <h2 class="text-gray-700 text-lg font-semibold">
-        {{ "amount" | translate }}:
-      </h2>
-      <p class="text-gray-900 text-lg ms-2">
-        {{ invoiceData().total_amount }}
-      </p>
-    </div>
-    <div class="flex flex-row align-baseline justify-content-center">
-      <h2 class="text-gray-700 text-lg font-semibold">
-        {{ "netAmount" | translate }}:
-      </h2>
-      <p class="text-gray-900 text-lg ms-2">
-        {{ invoiceData().net_amount }}
-      </p>
-    </div>
-  </div>
-
-  <p-table
-    [value]="paymentData().available_payments"
-    styleClass="mt-6"
-    [tableStyle]="{ 'min-width': '50rem' }"
-  >
-    <ng-template pTemplate="header">
-      <tr>
-        <th class="py-4">{{ "paymentNumber" | translate }}</th>
-        <th class="py-4">{{ "paymentDate" | translate }}</th>
-        <th class="py-4">{{ "amount" | translate }}</th>
-      </tr>
-    </ng-template>
-    <ng-template pTemplate="body" let-item>
-      <tr>
-        <td class="py-4">{{ item.payment_number }}</td>
-        <td class="py-4">{{ item.date | date : "dd/MM/yyyy" }}</td>
-        <td class="py-4">{{ item.amount }}</td>
-      </tr>
-    </ng-template>
-  </p-table>
-
-  <div class="grid grid-cols-1 gap-6 md:grid-cols-3 mt-6">
-    <p-floatlabel class="w-full">
+  <fieldset class="space-y-6">
+    <!-- Invoice Number Selection -->
+    <div class="form-group w-80">
+      <label
+        for="invoiceNumber"
+        class="block text-sm font-medium text-gray-700 mb-1 required"
+      >
+        {{ "invoiceNumber" | translate }}
+      </label>
       <p-select
-        id="invoice_payment_number"
-        [options]="transactionService.paymentBatchies()"
-        optionLabel="name"
-        optionValue="id"
+        id="invoiceNumber"
+        [options]="listOfInvoices()"
+        optionLabel="invoice_number"
         [filter]="true"
         [showClear]="true"
-        styleClass="w-full"
-        formControlName="invoice_payment_number"
+        class="w-full border-gray-300 rounded-md"
+        formControlName="invoiceNumber"
+        (ngModelChange)="getInvoiceData($event.id); getPaymentData($event.id)"
       />
-      <label for="invoice_payment_number">{{
-        "invoice_payment_number" | translate
-      }}</label>
-    </p-floatlabel>
-    <p-floatlabel class="w-full">
-      <input
-        pInputText
-        id="remaining"
-        autocomplete="off"
-        class="w-full"
-        formControlName="remainingAmount"
-      />
-      <label for="remaining">{{ "remainingAmount" | translate }}</label>
-    </p-floatlabel>
+    </div>
 
-    <p-floatlabel class="w-full">
-      <p-datepicker
-        inputId="date"
-        showIcon
-        iconDisplay="input"
-        styleClass="w-full"
-        formControlName="transactionDate"
-      />
-      <label for="date">{{ "transactionDate" | translate }}</label>
-    </p-floatlabel>
-  </div>
+    <!-- Invoice Details -->
+    <div class="grid grid-cols-12 gap-6">
+      <div class="col-span-12 md:col-span-4 flex items-baseline">
+        <label class="text-sm font-semibold text-gray-700 w-32">
+          {{ "customerName" | translate }}:
+        </label>
+        <p class="text-gray-900">{{ invoiceData().customer }}</p>
+      </div>
+      <div class="col-span-12 md:col-span-4 flex items-baseline">
+        <label class="text-sm font-semibold text-gray-700 w-32">
+          {{ "supplierName" | translate }}:
+        </label>
+        <p class="text-gray-900">{{ invoiceData().supplier }}</p>
+      </div>
+      <div class="col-span-12 md:col-span-4 flex items-baseline">
+        <label class="text-sm font-semibold text-gray-700 w-32">
+          {{ "invoiceDate" | translate }}:
+        </label>
+        <p class="text-gray-900">
+          {{ invoiceData().invoice_date | date : "dd/MM/yyyy" }}
+        </p>
+      </div>
+      <div class="col-span-12 md:col-span-4 flex items-baseline">
+        <label class="text-sm font-semibold text-gray-700 w-32">
+          {{ "totalAmount" | translate }}:
+        </label>
+        <p class="text-gray-900">{{ invoiceData().total_amount }}</p>
+      </div>
+      <div class="col-span-12 md:col-span-4 flex items-baseline">
+        <label class="text-sm font-semibold text-gray-700 w-32">
+          {{ "invoiceDiscount" | translate }}:
+        </label>
+        <p class="text-gray-900">{{ invoiceData().discount_amount }}</p>
+      </div>
+      <div class="col-span-12 md:col-span-4 flex items-baseline">
+        <label class="text-sm font-semibold text-gray-700 w-32">
+          {{ "netAmount" | translate }}:
+        </label>
+        <p class="text-gray-900">{{ invoiceData().net_amount }}</p>
+      </div>
+    </div>
 
-  <div class="mt-6">
-    <p-floatlabel class="w-full">
+    <!-- Payment Table -->
+    <div class="mt-6">
+      <p-table
+        [value]="paymentData().available_payments"
+        [tableStyle]="{ 'min-width': '50rem' }"
+        class="border rounded-md"
+      >
+        <ng-template pTemplate="header">
+          <tr class="bg-gray-100">
+            <th class="py-4 px-6 text-left">
+              {{ "paymentNumber" | translate }}
+            </th>
+            <th class="py-4 px-6 text-left">{{ "paymentDate" | translate }}</th>
+            <th class="py-4 px-6 text-left">{{ "amount" | translate }}</th>
+          </tr>
+        </ng-template>
+        <ng-template pTemplate="body" let-item>
+          <tr class="border-t">
+            <td class="py-4 px-6">{{ item.payment_number }}</td>
+            <td class="py-4 px-6">{{ item.date | date : "dd/MM/yyyy" }}</td>
+            <td class="py-4 px-6">{{ item.amount }}</td>
+          </tr>
+        </ng-template>
+      </p-table>
+    </div>
+
+    <!-- Additional Fields -->
+    <div class="grid grid-cols-12 gap-6">
+      <div class="col-span-12 md:col-span-4">
+        <div class="form-group">
+          <label
+            for="invoice_payment_number"
+            class="block text-sm font-medium text-gray-700 mb-1 required"
+          >
+            {{ "invoice_payment_number" | translate }}
+          </label>
+          <p-select
+            id="invoice_payment_number"
+            [options]="transactionService.paymentBatchies()"
+            optionLabel="name"
+            optionValue="id"
+            [filter]="true"
+            [showClear]="true"
+            class="w-full border-gray-300 rounded-md"
+            formControlName="invoice_payment_number"
+          />
+        </div>
+      </div>
+      <div class="col-span-12 md:col-span-4">
+        <div class="form-group">
+          <label
+            for="amount"
+            class="block text-sm font-medium text-gray-700 mb-1"
+          >
+            {{ "amount" | translate }}
+          </label>
+          <input
+            pInputText
+            id="amount"
+            autocomplete="off"
+            class="w-full border-gray-300 rounded-md px-3 py-2"
+            formControlName="amount"
+          />
+        </div>
+      </div>
+      <div class="col-span-12 md:col-span-4">
+        <div class="form-group">
+          <label
+            for="date"
+            class="block text-sm font-medium text-gray-700 mb-1 required"
+          >
+            {{ "transactionDate" | translate }}
+          </label>
+          <p-datepicker
+            inputId="date"
+            showIcon
+            iconDisplay="input"
+            class="w-full border-gray-300 rounded-md"
+            formControlName="transactionDate"
+          />
+        </div>
+      </div>
+    </div>
+
+    <!-- Description -->
+    <div class="form-group">
+      <label
+        for="statement"
+        class="block text-sm font-medium text-gray-700 mb-1"
+      >
+        {{ "description" | translate }}
+      </label>
       <textarea
         pTextarea
-        id="Statement"
+        id="statement"
         rows="5"
         cols="30"
         style="resize: none"
-        class="w-full"
+        class="w-full border-gray-300 rounded-md px-3 py-2"
         formControlName="description"
       ></textarea>
-      <label for="Statement">{{ "description" | translate }}</label>
-    </p-floatlabel>
-  </div>
+    </div>
+  </fieldset>
 
-  <div class="flex justify-end mt-8 space-x-4">
+  <!-- Form Actions -->
+  <div class="mt-6 flex justify-end gap-4">
     <p-button
-      class="rounded-md text-white w-full font-semibold px-6 py-3"
       [label]="'save' | translate"
       [raised]="true"
       type="submit"
+      severity="primary"
+      class="px-6 py-2 text-sm font-medium rounded-md"
     />
     <p-button
-      class="rounded-md text-gray-600 w-full font-semibold px-6 py-3"
       [label]="'clear' | translate"
       [raised]="true"
-      severity="contrast"
-      type="button"
+      severity="secondary"
       (onClick)="reset(form)"
+      class="px-6 py-2 text-sm font-medium rounded-md"
     />
   </div>
 </form>
