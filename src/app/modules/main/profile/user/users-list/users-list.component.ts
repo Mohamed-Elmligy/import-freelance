@@ -1,6 +1,6 @@
 import { LiveAnnouncer } from '@angular/cdk/a11y';
 
-import { Component, effect, inject, OnInit, ViewChild } from '@angular/core';
+import { Component, effect, inject, OnInit, viewChild } from '@angular/core';
 import {
   FormBuilder,
   FormsModule,
@@ -70,7 +70,7 @@ export class UsersListComponent implements OnInit {
   visible: boolean = false;
   userId: string = '';
 
-  @ViewChild(MatPaginator) paginator!: MatPaginator;
+  readonly paginator = viewChild.required(MatPaginator);
   dataSource!: MatTableDataSource<any>;
 
   main_routes = main_routes_paths;

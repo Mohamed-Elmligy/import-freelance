@@ -1,4 +1,4 @@
-import { Component, inject, ViewChild } from '@angular/core';
+import { Component, inject, viewChild } from '@angular/core';
 import {SidebarComponent} from '../../modules/shared/ui/sidebar/sidebar.component';
 import { RouterOutlet } from '@angular/router';
 
@@ -36,12 +36,12 @@ import { CommonModule } from '@angular/common';
   templateUrl: './main-layout.component.html',
 })
 export default class MainLayoutComponent {
-  @ViewChild('drawerRef') drawerRef!: Drawer;
+  readonly drawerRef = viewChild.required<Drawer>('drawerRef');
   languageService = inject(LanguagesService);
 
   visible: boolean = false;
 
   closeCallback(e: any): void {
-    this.drawerRef.close(e);
+    this.drawerRef().close(e);
   }
 }
