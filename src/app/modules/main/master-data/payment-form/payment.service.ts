@@ -14,7 +14,7 @@ export class PaymentService {
   listOfCustomers = signal([]);
   paymentDeleted = signal(false);
 
-  PaymentHeaders = ['name', 'amount', 'paymentDate', 'actions'];
+  PaymentHeaders = ['name', 'amount', 'paymentDate', 'created_at', 'actions'];
 
   getList() {
     return this.apiService.getDataFromServer(`payments/list`);
@@ -53,6 +53,7 @@ export class PaymentService {
       amount: string;
       payment_date: string;
       description: string;
+      created_at: string;
       id: string;
     }[]
   ) {
@@ -63,6 +64,7 @@ export class PaymentService {
         amount: item.amount,
         paymentDate: item.payment_date,
         description: item.description,
+        created_at: new Date(item.created_at).toLocaleDateString('en-GB'),
         id: item.id,
       };
     });

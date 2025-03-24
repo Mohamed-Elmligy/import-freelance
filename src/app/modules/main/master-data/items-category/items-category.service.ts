@@ -13,7 +13,7 @@ export class ItemsCategoryService {
   listOfCustomers = signal([]);
   itemDeleted = signal(false);
 
-  itemsHeaders = ['item', 'actions'];
+  itemsHeaders = ['item', 'created_at', 'actions'];
 
   getList() {
     return this.apiService.getDataFromServer(`item/list`);
@@ -37,6 +37,7 @@ export class ItemsCategoryService {
     data: {
       name: string;
       description: string;
+      created_at: string;
       id: string;
     }[]
   ) {
@@ -44,6 +45,7 @@ export class ItemsCategoryService {
       return {
         item: item.name,
         description: item.description,
+        created_at: new Date(item.created_at).toLocaleDateString('en-GB'),
         id: item.id,
       };
     });

@@ -12,7 +12,7 @@ export class SuppliersService {
   private showMessageService = inject(ShowMessageService);
   suppliertDeleted = signal(false);
 
-  SupplierHeaders = ['name', 'email', 'code', 'store_number', 'actions'];
+  SupplierHeaders = ['name', 'email', 'code', 'store_number', 'created_at'];
 
   getList(page?: any, size?: any) {
     return this.apiService.getDataFromServer(`supplier/list`, { page, size });
@@ -44,6 +44,7 @@ export class SuppliersService {
       name: string;
       email: string;
       code: string;
+      created_at: string;
       store_number: string;
     }[]
   ) {
@@ -53,6 +54,7 @@ export class SuppliersService {
         name: item.name,
         email: item.email,
         code: item.code,
+        created_at: new Date(item.created_at).toLocaleDateString('en-GB'),
         store_number: item.store_number,
       };
     });

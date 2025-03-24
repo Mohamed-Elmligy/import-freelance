@@ -19,6 +19,7 @@ export class ExpenseService {
     'containerNumber',
     'amount',
     'expenseDate',
+    'created_at',
     'actions',
   ];
 
@@ -60,6 +61,7 @@ export class ExpenseService {
       amount: string;
       expense_date: string;
       description: string;
+      created_at: string;
       id: string;
     }[]
   ) {
@@ -70,6 +72,7 @@ export class ExpenseService {
         amount: item.amount,
         expenseDate: item.expense_date,
         description: item.description,
+        created_at: new Date(item.created_at).toLocaleDateString('en-GB'),
         id: item.id,
       };
     });
