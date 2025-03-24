@@ -6,7 +6,7 @@ import {
   ReactiveFormsModule,
   Validators,
 } from '@angular/forms';
-import { Router, RouterLink } from '@angular/router';
+import { Router } from '@angular/router';
 import { TranslateModule } from '@ngx-translate/core';
 import { ButtonModule } from 'primeng/button';
 import { InputTextModule } from 'primeng/inputtext';
@@ -24,7 +24,6 @@ import { auth_routes_paths } from '../auth.routes';
     InputTextModule,
     ButtonModule,
     ReactiveFormsModule,
-    // RouterLink,
     TranslateModule,
     MessageModule,
     CommonModule,

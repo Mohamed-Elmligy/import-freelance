@@ -1,23 +1,39 @@
 import { Injectable } from '@angular/core';
-import Crypto from 'crypto-js';
-
 import { environment } from '../../../environments/environment';
 
 @Injectable({
   providedIn: 'root',
 })
 export class BrowserStorageService {
+  private cryptoJs: any;
+
+  constructor() {
+    this.loadCryptoJs();
+  }
+
+  private async loadCryptoJs() {
+    this.cryptoJs = await import('crypto-js');
+  }
+
   private encrypt(value: string): string {
-    return Crypto.AES.encrypt(
+    if (!this.cryptoJs) {
+      throw new Error('crypto-js module not loaded');
+    }
+    return this.cryptoJs.AES.encrypt(
       value,
       environment.browser_storage_key
     ).toString();
   }
 
   private decrypt(value: string) {
-    return Crypto.AES.decrypt(value, environment.browser_storage_key).toString(
-      Crypto.enc.Utf8
+    if (!this.cryptoJs) {
+      throw new Error('crypto-js module not loaded');
+    }
+    const bytes = this.cryptoJs.AES.decrypt(
+      value,
+      environment.browser_storage_key
     );
+    return bytes.toString(this.cryptoJs.enc.Utf8);
   }
 
   set<T>(storage: 'local' | 'session', key: string, value: T) {
