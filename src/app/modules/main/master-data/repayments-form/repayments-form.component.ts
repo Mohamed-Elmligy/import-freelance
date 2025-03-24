@@ -53,6 +53,7 @@ export default class RepaymentsFormComponent {
     supplier: '',
     invoice_date: '',
     total_amount: '',
+    discount_amount: '',
     net_amount: '',
   });
   paymentData = signal<{
@@ -84,24 +85,24 @@ export default class RepaymentsFormComponent {
   transactionId = this.activatedRoute.snapshot.queryParams['transactionId'];
 
   transactionData: {
-    amount: number;
     customer: string;
-    discription: string;
-    pay_date: Date;
     supplier: string;
+    amount: number;
+    pay_date: Date;
     invoice_payment_number: string;
+    discription: string;
   } = {
-    amount: 0,
     customer: '',
-    discription: '',
-    invoice_payment_number: '',
-    pay_date: new Date(),
     supplier: '',
+    amount: 0,
+    pay_date: new Date(),
+    invoice_payment_number: '',
+    discription: '',
   };
 
   protected form = this.formBuilder.group({
     invoiceNumber: [null, [Validators.required]],
-    remainingAmount: [null, [Validators.required]],
+    amount: [null, [Validators.required]],
     transactionDate: [null, [Validators.required]],
     invoice_payment_number: [null, [Validators.required]],
     description: [null, [Validators.required]],
@@ -130,6 +131,7 @@ export default class RepaymentsFormComponent {
       supplier: '',
       invoice_date: '',
       total_amount: '',
+      discount_amount: '',
       net_amount: '',
     });
   }
@@ -161,6 +163,8 @@ export default class RepaymentsFormComponent {
   getPaymentData(id: string) {
     this.transactionService.getPaymentData(id).subscribe((data: any) => {
       this.paymentData.set(data);
+      this.transactionService.paymentBatchies.set(data.available_payments);
+      console.log(this.transactionService.paymentBatchies());
     });
   }
 
@@ -190,5 +194,6 @@ interface InvoiceData {
   supplier: string;
   invoice_date: string;
   total_amount: string;
+  discount_amount: string;
   net_amount: string;
 }

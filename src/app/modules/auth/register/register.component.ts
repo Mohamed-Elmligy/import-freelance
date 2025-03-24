@@ -16,6 +16,7 @@ import { MessageService } from 'primeng/api';
 import { ApiService } from '../../../core/services/api.service';
 import { Toast } from 'primeng/toast';
 import { API_AUTH } from '../auth.api';
+import { ShowMessageService } from '../../../core/services/show-message.service';
 
 @Component({
   selector: 'app-register',
@@ -36,7 +37,7 @@ export default class RegisterComponent {
   protected ROUTES = auth_routes_paths;
   private formBuilder = inject(FormBuilder);
   private apiService = inject(ApiService);
-  private messageService = inject(MessageService);
+  private messageService = inject(ShowMessageService);
   private router = inject(Router);
   protected auth_routes = auth_routes_paths;
   apis = API_AUTH;
@@ -62,24 +63,13 @@ export default class RegisterComponent {
       .sendDataToServer(this.apis.REGISTER, ModifideForm)
       .subscribe({
         next: (respone) => {
-          this.showMessage(
+          this.messageService.showMessage(
             'success',
             'Success',
             'New user created successfully!'
           );
           this.router.navigate([this.auth_routes.LOGIN]);
         },
-        error: (error) => {
-          this.showMessage('error', 'Error', error.error.detail);
-        },
       });
-  }
-
-  showMessage(type: string, summary: string, msg: string) {
-    this.messageService.add({
-      severity: type,
-      summary: summary,
-      detail: msg,
-    });
   }
 }

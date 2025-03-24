@@ -16,6 +16,7 @@ import { InputTextModule } from 'primeng/inputtext';
 import { PanelModule } from 'primeng/panel';
 import { ToolbarModule, Toolbar } from 'primeng/toolbar';
 import { TooltipModule } from 'primeng/tooltip';
+import { TableModule } from 'primeng/table';
 import { SecurityService } from '../../../../../core/services/security.service';
 import { LanguagesService } from '../../../../shared/services/languages.service';
 import { main_routes_paths } from '../../../main.routes';
@@ -41,6 +42,7 @@ import { SuppliersService } from '../suppliers.service';
     PanelModule,
     DatePickerModule,
     TooltipModule,
+    TableModule,
   ],
   templateUrl: './suppliers-list.component.html',
   styles: ``,
@@ -53,7 +55,7 @@ export default class SuppliersListComponent {
   private router = inject(Router);
 
   @ViewChild(MatPaginator) paginator!: MatPaginator;
-  dataSource!: MatTableDataSource<any>;
+  dataSource: any[] = [];
 
   main_routes = main_routes_paths;
   displayedColumns: string[] = [];
@@ -68,21 +70,45 @@ export default class SuppliersListComponent {
     });
   }
 
-  getSupplierList() {
-    this.SupplierService.getList().subscribe((data: any) => {
+  getSupplierList(page: number = 1, size: number = 10) {
+    this.SupplierService.getList(page, size).subscribe((data: any) => {
       this.tableColumns = this.SupplierService.SupplierHeaders;
       this.displayedColumns = this.SupplierService.SupplierHeaders;
-      let ModifideData = this.SupplierService.apiModelToComponentModelList(
+      this.dataSource = this.SupplierService.apiModelToComponentModelList(
         data.results
       );
-      this.dataSource = new MatTableDataSource<any>(ModifideData);
       this.resultsLength = data.count;
+    });
+  }
+
+  loadSuppliers(event: any) {
+    const page = event.first / event.rows + 1;
+    const size = event.rows;
+    this.SupplierService.getList(page, size).subscribe((data: any) => {
+      this.dataSource = this.SupplierService.apiModelToComponentModelList(
+        data.results
+      );
+      this.resultsLength = data.count;
+    });
+  }
+
+  onSort(event: any) {
+    const sortField = event.sortField;
+    const sortOrder = event.sortOrder === 1 ? 'asc' : 'desc';
+    this.dataSource.sort((a, b) => {
+      if (a[sortField] < b[sortField]) return sortOrder === 'asc' ? -1 : 1;
+      if (a[sortField] > b[sortField]) return sortOrder === 'asc' ? 1 : -1;
+      return 0;
     });
   }
 
   applyFilter(event: Event) {
     const filterValue = (event.target as HTMLInputElement).value;
-    this.dataSource.filter = filterValue.trim().toLowerCase();
+    this.dataSource = this.dataSource.filter((item) =>
+      Object.values(item).some((val) =>
+        String(val).toLowerCase().includes(filterValue.trim().toLowerCase())
+      )
+    );
   }
 
   announceSortChange(sortState: Sort) {

@@ -7,6 +7,7 @@ import {
   ReactiveFormsModule,
   Validators,
 } from '@angular/forms';
+import { PaginatorModule } from 'primeng/paginator';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { MatPaginatorModule, MatPaginator } from '@angular/material/paginator';
@@ -40,6 +41,7 @@ import { ConfirmSaveDeleteService } from '../../../../../core/services/confirm-s
     CommonModule,
     MatTableModule,
     MatPaginatorModule,
+    PaginatorModule,
     MatFormFieldModule,
     MatInputModule,
     MatSortModule,

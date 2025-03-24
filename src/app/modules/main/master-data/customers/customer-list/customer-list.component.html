@@ -39,6 +39,7 @@
         pRipple
         [label]="'search' | translate"
         class="!bg-primary !border-primary me-2"
+        (click)="applyFilters()"
       ></button>
       <button
         pButton
@@ -51,82 +52,59 @@
     </ng-template>
   </p-toolbar>
 
-  <table
-    mat-table
-    [dataSource]="dataSource"
-    matSort
-    (matSortChange)="announceSortChange($event)"
-    class="w-full"
+  <p-table
+    [value]="dataSource"
+    [paginator]="true"
+    [rows]="10"
+    [totalRecords]="resultsLength"
+    [rowsPerPageOptions]="[10, 20, 50]"
+    styleClass="p-datatable-sm"
   >
-    @for (col of tableColumns; track $index) { @if (col != 'actions') {
-    <ng-container [matColumnDef]="col">
-      <th
-        mat-header-cell
-        *matHeaderCellDef
-        mat-sort-header
-        [sortActionDescription]="'Sort by number' + col"
-        class="px-4 py-2"
-      >
-        {{ col | translate }}
-      </th>
-      <td mat-cell *matCellDef="let element" class="px-4 py-2 border-t">
-        {{ element[col] }}
-      </td>
-    </ng-container>
-    } @if(col == 'actions'){
-    <ng-container [matColumnDef]="col">
-      <th mat-header-cell *matHeaderCellDef class="px-4 py-2">
-        {{ "actions" | translate }}
-      </th>
-      <td mat-cell *matCellDef="let element" class="px-4 py-2 border-t">
-        <p-button
-          icon="pi pi-eye"
-          [rounded]="true"
-          [text]="true"
-          pTooltip="View"
-          tooltipPosition="top"
-          (click)="viewCustomer(element.id)"
-          severity="success"
-          class="mx-1"
-        ></p-button>
-        <p-button
-          icon="pi pi-pencil"
-          [rounded]="true"
-          [text]="true"
-          severity="info"
-          pTooltip="Edit"
-          tooltipPosition="top"
-          (click)="editCustomer(element.id)"
-          class="mx-1"
-        ></p-button>
-        <p-button
-          icon="pi pi-trash"
-          [rounded]="true"
-          [text]="true"
-          pTooltip="Delete"
-          tooltipPosition="top"
-          (click)="deleteCustomer(element.id)"
-          severity="danger"
-          class="mx-1"
-        ></p-button>
-      </td>
-    </ng-container>
-    } }
-
-    <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
-    <tr
-      mat-row
-      *matRowDef="let row; columns: displayedColumns"
-      class="hover:bg-gray-100"
-    ></tr>
-  </table>
-
-  <mat-paginator
-    [pageSizeOptions]="[10, 20, 50]"
-    showFirstLastButtons
-    aria-label="Select page of"
-    [length]="resultsLength"
-    class="mt-4"
-  >
-  </mat-paginator>
+    <ng-template pTemplate="header">
+      <tr>
+        <th *ngFor="let col of tableColumns" [pSortableColumn]="col">
+          {{ col | translate }}
+          <p-sortIcon [field]="col"></p-sortIcon>
+        </th>
+        <th>{{ "actions" | translate }}</th>
+      </tr>
+    </ng-template>
+    <ng-template pTemplate="body" let-element>
+      <tr>
+        <td *ngFor="let col of tableColumns">{{ element[col] }}</td>
+        <td>
+          <p-button
+            icon="pi pi-eye"
+            [rounded]="true"
+            [text]="true"
+            pTooltip="View"
+            tooltipPosition="top"
+            (click)="viewCustomer(element.id)"
+            severity="success"
+            class="mx-1"
+          ></p-button>
+          <p-button
+            icon="pi pi-pencil"
+            [rounded]="true"
+            [text]="true"
+            severity="info"
+            pTooltip="Edit"
+            tooltipPosition="top"
+            (click)="editCustomer(element.id)"
+            class="mx-1"
+          ></p-button>
+          <p-button
+            icon="pi pi-trash"
+            [rounded]="true"
+            [text]="true"
+            pTooltip="Delete"
+            tooltipPosition="top"
+            (click)="deleteCustomer(element.id)"
+            severity="danger"
+            class="mx-1"
+          ></p-button>
+        </td>
+      </tr>
+    </ng-template>
+  </p-table>
 </div>

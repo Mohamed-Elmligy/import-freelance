@@ -18,8 +18,12 @@ export class CustomersService {
 
   customerHeaders = ['name', 'email', 'code', 'commission', 'actions'];
 
-  getList() {
-    return this.apiService.getDataFromServer(`customer/list`);
+  getList(page?: any, size?: any, filter?: any) {
+    return this.apiService.getDataFromServer(
+      `customer/list`,
+      { page, size },
+      filter
+    );
   }
 
   componentModelToApiModel(form: FormGroup) {
@@ -62,14 +66,6 @@ export class CustomersService {
     });
   }
 
-  createCustomer(data: FormGroup) {
-    this.confirmService.confirmSave(
-      'Are you sure you want to create this customer?',
-      () => {
-        this.createCustomerApi(data);
-      }
-    );
-  }
   createCustomerApi(data: FormGroup) {
     let modifiedModel = this.componentModelToApiModel(data);
     this.apiService

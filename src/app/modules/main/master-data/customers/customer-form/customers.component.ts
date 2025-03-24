@@ -105,7 +105,7 @@ export default class CustomersComponent implements OnInit {
           this.customerId?.toString()!
         );
       } else {
-        this.customersService.createCustomer(form);
+        this.customersService.createCustomerApi(form);
       }
     }
   }

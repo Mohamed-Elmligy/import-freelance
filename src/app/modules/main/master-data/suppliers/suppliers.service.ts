@@ -14,8 +14,8 @@ export class SuppliersService {
 
   SupplierHeaders = ['name', 'email', 'code', 'store_number', 'actions'];
 
-  getList() {
-    return this.apiService.getDataFromServer(`supplier/list`);
+  getList(page?: any, size?: any) {
+    return this.apiService.getDataFromServer(`supplier/list`, { page, size });
   }
 
   componentModelToApiModel(form: FormGroup) {

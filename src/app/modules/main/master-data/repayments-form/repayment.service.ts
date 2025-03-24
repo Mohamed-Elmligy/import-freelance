@@ -15,7 +15,7 @@ export class RepaymentService {
   listOfSuppliers = signal([]);
   listOfInvoices = signal([]);
   transactionDeleted = signal(false);
-
+  paymentBatchies = signal([]);
   TransactionHeaders = [
     'name',
     'supplier',
@@ -34,7 +34,7 @@ export class RepaymentService {
     return {
       invoice: form.get('invoiceNumber')?.value.id,
       discription: form.get('description')?.value,
-      amount: form.get('remainingAmount')?.value,
+      amount: form.get('amount')?.value,
       pay_date: formatDate(
         form.get('transactionDate')?.value,
         'YYYY-MM-dd',
@@ -54,27 +54,6 @@ export class RepaymentService {
     return this.apiService.getDataFromServer(
       TRANSACTION_LOOKUP_APIS.GET_INVOICE_PAYMENT_LOOKUP(id)
     );
-  }
-
-  paymentBatchies() {
-    return [
-      {
-        id: 'first',
-        name: 'First',
-      },
-      {
-        id: 'second',
-        name: 'Second',
-      },
-      {
-        id: 'third',
-        name: 'Third',
-      },
-      {
-        id: 'fourth',
-        name: 'Fourth',
-      },
-    ];
   }
 
   apiModelToComponentModel(form: FormGroup, data: any) {

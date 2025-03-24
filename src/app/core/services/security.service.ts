@@ -1,4 +1,4 @@
-import { inject, Injectable } from '@angular/core';
+import { inject, Injectable, signal } from '@angular/core';
 import { Router } from '@angular/router';
 import { API_AUTH } from '../../modules/auth/auth.api';
 import { BrowserStorageService } from './browser-storage.service';
@@ -13,9 +13,8 @@ export class SecurityService {
   API = inject(ApiService);
   browserStorageService = inject(BrowserStorageService);
 
-  get allJwtData() {
-    return this.retrieveJwtData();
-  }
+  allJwtData = signal(this.retrieveJwtData());
+
   get jwtToken() {
     return this.retrieveAccess();
   }
@@ -87,11 +86,23 @@ export class SecurityService {
     return company;
   }
 
+  updateUerCompanyStatus(state: boolean) {
+    this.browserStorageService.set('local', this.localKey, {
+      ...this.retrieveJwtData(),
+      company: state,
+    });
+  }
+
   getNewAccessToken() {
     return this.API.sendDataToServer(API_AUTH.REFRESH_TOKEN, {
       refresh: this.getRefreshToken(),
     });
   }
 
-  // #endregion
+  removeToken() {
+    this.allJwtData.set({
+      access: '',
+      refresh: '',
+    });
+  }
 }
