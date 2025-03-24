@@ -62,7 +62,9 @@ export default class ProfileSettingsComponent implements OnInit {
     // Check if the user has already created a company
     this.apiService.getDataFromServer(PROFILE_APIS.GET_COMPANY()).subscribe({
       next: (response) => {
-        this.companyStatus = true;
+        if (response.phone != '' && response.name != '') {
+          this.companyStatus = true;
+        }
         this.profileImage = response.logo; // Set profile image URL from API response
         this.coverImage = response.cover; // Set cover image URL from API response
         this.form.patchValue(response);

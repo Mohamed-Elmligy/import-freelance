@@ -57,13 +57,6 @@ export default class LoginComponent implements OnInit {
         this.router.navigate([this.main_routes.home]);
         this.browserStorage.set('local', 'jwtToken', respone);
       },
-      error: (error) => {
-        this.showMessageService.showMessage(
-          'error',
-          'Error',
-          error.error.detail
-        );
-      },
     });
   }
 }
