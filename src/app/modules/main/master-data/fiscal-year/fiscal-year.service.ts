@@ -19,6 +19,7 @@ export class FiscalYearService {
     'from_date',
     'to_date',
     'is_active',
+    'created_at',
     'actions',
   ];
 
@@ -58,6 +59,7 @@ export class FiscalYearService {
       from_date: string;
       to_date: string;
       is_active: boolean;
+      created_at: string;
       id: string;
     }[]
   ) {
@@ -68,6 +70,7 @@ export class FiscalYearService {
         from_date: item.from_date,
         to_date: item.to_date,
         is_active: item.is_active,
+        created_at: new Date(item.created_at).toLocaleDateString('en-GB'),
         id: item.id,
       };
     });

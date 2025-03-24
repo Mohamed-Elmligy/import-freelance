@@ -20,6 +20,7 @@ export class ShippingDataService {
     'amount',
     'ShippingDate',
     'port',
+    'created_at',
     'actions',
   ];
 
@@ -63,6 +64,7 @@ export class ShippingDataService {
       container_sequence: number;
       shipping_date: string;
       port_name: string;
+      created_at: string;
       actions: string;
       id: number;
     }[]
@@ -74,6 +76,7 @@ export class ShippingDataService {
         amount: item.container_sequence,
         ShippingDate: item.shipping_date,
         port: item.port_name,
+        created_at: new Date(item.created_at).toLocaleDateString('en-GB'),
         id: item.id,
       };
     });

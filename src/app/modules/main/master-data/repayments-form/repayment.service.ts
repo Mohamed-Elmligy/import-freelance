@@ -23,6 +23,7 @@ export class RepaymentService {
     'invoice_payment_number',
     'invoiceNumber',
     'transactionDate',
+    'created_at',
     'actions',
   ];
 
@@ -76,6 +77,7 @@ export class RepaymentService {
       amount: string;
       invoice_payment_number: string;
       pay_date: string;
+      created_at: string;
       id: string;
       customer: string;
     }[]
@@ -88,6 +90,7 @@ export class RepaymentService {
         name: item.customer,
         invoice_payment_number: item.invoice_payment_number,
         transactionDate: item.pay_date,
+        created_at: new Date(item.created_at).toLocaleDateString('en-GB'),
         id: item.id,
       };
     });
