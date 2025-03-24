@@ -50,7 +50,7 @@ export default class ProfileSettingsComponent implements OnInit {
   coverImage: string | ArrayBuffer | null = null;
 
   // Variable to store the company status
-  companyStatus: boolean = false;
+  isUpdate: boolean = false;
 
   // Initialize the form with validation
   protected form = this.formBuilder.group({
@@ -63,14 +63,14 @@ export default class ProfileSettingsComponent implements OnInit {
     this.apiService.getDataFromServer(PROFILE_APIS.GET_COMPANY()).subscribe({
       next: (response) => {
         if (response.phone != '' && response.name != '') {
-          this.companyStatus = true;
+          this.isUpdate = true;
         }
         this.profileImage = response.logo; // Set profile image URL from API response
         this.coverImage = response.cover; // Set cover image URL from API response
         this.form.patchValue(response);
       },
       error: (error) => {
-        this.companyStatus = false;
+        this.isUpdate = false;
       },
     });
   }
@@ -124,7 +124,7 @@ export default class ProfileSettingsComponent implements OnInit {
         );
       }
 
-      if (this.companyStatus) {
+      if (this.isUpdate) {
         // Call your API to update the company
         this.apiService
           .updateDataOnServer('put', PROFILE_APIS.UPDATE_COMPANY(), formData)
@@ -145,7 +145,7 @@ export default class ProfileSettingsComponent implements OnInit {
           });
       }
 
-      if (!this.companyStatus) {
+      if (!this.isUpdate) {
         // Call your API to create the company
         this.apiService
           .sendDataToServer(PROFILE_APIS.CREATE_COMPANY(), formData)
