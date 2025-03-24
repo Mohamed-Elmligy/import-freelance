@@ -1,4 +1,4 @@
-import { Location, NgClass, NgIf } from '@angular/common';
+import { Location, NgClass } from '@angular/common';
 import { Component, inject, input } from '@angular/core';
 import { RouterLink } from '@angular/router';
 

@@ -7,11 +7,11 @@ import { ShowMessageService } from '../services/show-message.service';
 export const unauthenticationGuard: CanActivateFn = (route, state) => {
   const browserStorageService = inject(BrowserStorageService);
   const showMessageService = inject(ShowMessageService);
-
   const router = inject(Router);
-  let haveToken = browserStorageService.get('local', 'jwtToken');
 
-  if (!haveToken) {
+  const token = browserStorageService.get('local', 'jwtToken');
+
+  if (!token) {
     showMessageService.showMessage(
       'error',
       'Unauthenticated User',

@@ -1,4 +1,4 @@
-import { CommonModule } from '@angular/common';
+
 import { Component, inject, signal } from '@angular/core';
 import {
   FormsModule,
@@ -39,7 +39,6 @@ import { PageHeaderComponent } from '../../../shared/components/page-header/page
     FormsModule,
     BreadcrumbModule,
     RouterModule,
-    CommonModule,
     ButtonModule,
     TranslateModule,
     FormsModule,
@@ -54,8 +53,8 @@ import { PageHeaderComponent } from '../../../shared/components/page-header/page
     SelectModule,
     CardModule,
     TableModule,
-    PageHeaderComponent,
-  ],
+    PageHeaderComponent
+],
   providers: [MessageService],
   templateUrl: './create-invoice.component.html',
 })

@@ -1,5 +1,5 @@
 import { LiveAnnouncer } from '@angular/cdk/a11y';
-import { CommonModule } from '@angular/common';
+
 import { Component, effect, inject, signal, ViewChild } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { RouterModule, ActivatedRoute, Router } from '@angular/router';
@@ -23,7 +23,6 @@ import { CustomersService } from '../customers.service';
   imports: [
     ButtonModule,
     RouterModule,
-    CommonModule,
     TableModule,
     InputTextModule,
     FormsModule,
@@ -33,8 +32,8 @@ import { CustomersService } from '../customers.service';
     Toolbar,
     PanelModule,
     DatePickerModule,
-    TooltipModule,
-  ],
+    TooltipModule
+],
   templateUrl: './customer-list.component.html',
   styles: ``,
 })

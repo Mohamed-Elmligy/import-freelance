@@ -1,5 +1,5 @@
 import { LiveAnnouncer } from '@angular/cdk/a11y';
-import { Component, effect, inject, ViewChild } from '@angular/core';
+import { Component, effect, inject, viewChild } from '@angular/core';
 import { MatPaginator, MatPaginatorModule } from '@angular/material/paginator';
 import { MatSortModule, Sort } from '@angular/material/sort';
 import { MatTableDataSource, MatTableModule } from '@angular/material/table';
@@ -8,7 +8,7 @@ import { SecurityService } from '../../../../../core/services/security.service';
 import { LanguagesService } from '../../../../shared/services/languages.service';
 import { main_routes_paths } from '../../../main.routes';
 import { PaymentService } from '../payment.service';
-import { CommonModule } from '@angular/common';
+
 import { FormsModule } from '@angular/forms';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
@@ -26,7 +26,6 @@ import { TooltipModule } from 'primeng/tooltip';
   imports: [
     ButtonModule,
     RouterModule,
-    CommonModule,
     MatTableModule,
     MatPaginatorModule,
     MatFormFieldModule,
@@ -40,8 +39,8 @@ import { TooltipModule } from 'primeng/tooltip';
     Toolbar,
     PanelModule,
     DatePickerModule,
-    TooltipModule,
-  ],
+    TooltipModule
+],
   templateUrl: './payments-list.component.html',
   styles: ``,
 })
@@ -52,7 +51,7 @@ export default class PaymentsListComponent {
   securityService = inject(SecurityService);
   private router = inject(Router);
 
-  @ViewChild(MatPaginator) paginator!: MatPaginator;
+  readonly paginator = viewChild.required(MatPaginator);
   dataSource!: MatTableDataSource<any>;
 
   main_routes = main_routes_paths;

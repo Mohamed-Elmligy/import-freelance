@@ -5,7 +5,7 @@ import { ButtonModule } from 'primeng/button';
 import { InputTextModule } from 'primeng/inputtext';
 import { FloatLabel } from 'primeng/floatlabel';
 import { Select } from 'primeng/select';
-import { CommonModule } from '@angular/common';
+
 import { FormsModule } from '@angular/forms';
 
 @Component({
@@ -16,9 +16,8 @@ import { FormsModule } from '@angular/forms';
     InputTextModule,
     Select,
     FloatLabel,
-    CommonModule,
-    FormsModule,
-  ],
+    FormsModule
+],
   templateUrl: './download-reports.component.html',
 })
 export default class DownloadReportsComponent {

@@ -1,6 +1,6 @@
 import { LiveAnnouncer } from '@angular/cdk/a11y';
-import { CommonModule } from '@angular/common';
-import { Component, effect, inject, ViewChild } from '@angular/core';
+
+import { Component, effect, inject, viewChild } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
@@ -26,7 +26,6 @@ import { RepaymentService } from '../repayment.service';
   imports: [
     ButtonModule,
     RouterModule,
-    CommonModule,
     MatTableModule,
     MatPaginatorModule,
     MatFormFieldModule,
@@ -40,8 +39,8 @@ import { RepaymentService } from '../repayment.service';
     Toolbar,
     PanelModule,
     DatePickerModule,
-    TooltipModule,
-  ],
+    TooltipModule
+],
   templateUrl: './repayments-list.component.html',
   styles: ``,
 })
@@ -52,7 +51,7 @@ export default class RepaymentsListComponent {
   securityService = inject(SecurityService);
   private router = inject(Router);
 
-  @ViewChild(MatPaginator) paginator!: MatPaginator;
+  readonly paginator = viewChild.required(MatPaginator);
   dataSource!: MatTableDataSource<any>;
 
   main_routes = main_routes_paths;

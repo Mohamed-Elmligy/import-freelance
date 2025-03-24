@@ -1,6 +1,6 @@
 import { LiveAnnouncer } from '@angular/cdk/a11y';
-import { CommonModule } from '@angular/common';
-import { Component, effect, inject, ViewChild, OnInit } from '@angular/core';
+
+import { Component, effect, inject, OnInit, viewChild } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
@@ -31,7 +31,6 @@ import { HttpClient } from '@angular/common/http';
   imports: [
     ButtonModule,
     RouterModule,
-    CommonModule,
     MatTableModule,
     MatPaginatorModule,
     MatFormFieldModule,
@@ -45,8 +44,8 @@ import { HttpClient } from '@angular/common/http';
     PanelModule,
     DatePickerModule,
     TooltipModule,
-    Toolbar,
-  ],
+    Toolbar
+],
   templateUrl: './items-list.component.html',
   styles: ``,
 })
@@ -58,7 +57,7 @@ export default class ItemsListComponent {
   private router = inject(Router);
   private http = inject(HttpClient);
 
-  @ViewChild(MatPaginator) paginator!: MatPaginator;
+  readonly paginator = viewChild.required(MatPaginator);
   dataSource!: MatTableDataSource<any>;
 
   main_routes = main_routes_paths;

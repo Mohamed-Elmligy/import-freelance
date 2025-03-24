@@ -1,5 +1,5 @@
 import { Component, inject, OnInit } from '@angular/core';
-import { CommonModule } from '@angular/common';
+
 import { TabsModule } from 'primeng/tabs';
 import ResetPasswordComponent from '../reset-password/reset-password.component';
 import ProfileSettingsComponent from '../profile-settings/profile-settings.component';
@@ -12,13 +12,12 @@ import { TabService } from '../../../../services/tab.service';
   selector: 'app-settings',
   imports: [
     TabsModule,
-    CommonModule,
     ResetPasswordComponent,
     ProfileSettingsComponent,
     PersonalizeComponent,
     TranslateModule,
-    UsersListComponent,
-  ],
+    UsersListComponent
+],
   templateUrl: './settings.component.html',
 })
 export default class SettingsComponent implements OnInit {
