@@ -16,7 +16,7 @@ export class CustomersService {
   private location = inject(Location);
   customerDeleted = signal(false);
 
-  customerHeaders = ['name', 'email', 'code', 'commission', 'actions'];
+  customerHeaders = ['name', 'email', 'code', 'commission', 'date'];
 
   getList(page?: any, size?: any, filter?: any) {
     return this.apiService.getDataFromServer(
@@ -51,6 +51,7 @@ export class CustomersService {
       name: string;
       email: string;
       code: string;
+      created_at: string;
       commession: string;
       id: string;
     }[]
@@ -60,6 +61,7 @@ export class CustomersService {
         name: item.name,
         email: item.email,
         code: item.code,
+        date: new Date(item.created_at).toLocaleDateString('en-GB'),
         commission: item.commession,
         id: item.id,
       };
