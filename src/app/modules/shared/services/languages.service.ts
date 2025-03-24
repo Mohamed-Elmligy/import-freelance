@@ -15,15 +15,10 @@ export class LanguagesService {
     this.translate.use(this.defaultLanguage());
   }
 
-  changeLanguage(type: string) {
-    if (type == 'en') {
-      this.layoutDir.set('ltr');
-      this.defaultLanguage.set(type);
-      this.translate.use(type);
-    } else {
-      this.layoutDir.set('rtl');
-      this.defaultLanguage.set(type);
-      this.translate.use(type);
-    }
+  changeLanguage(language: string) {
+    const direction = language === 'en' ? 'ltr' : 'rtl';
+    this.layoutDir.set(direction);
+    this.defaultLanguage.set(language);
+    this.translate.use(language);
   }
 }

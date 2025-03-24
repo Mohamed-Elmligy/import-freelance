@@ -45,111 +45,108 @@ export class SidebarComponent {
         styleClass: 'menu-separator',
       },
       {
-        label: 'home',
+        label: 'HOME',
         icon: 'pi pi-home',
         styleClass: 'menu-header',
         items: [
           {
-            label: 'dashboard',
+            label: 'DASHBOARD',
             icon: 'pi pi-chart-line',
             routerLink: this.mainRoutes.home,
             styleClass: 'menu-item',
-            command: () => this.handleNavigation(),
           },
         ],
       },
       {
-        label: 'masterData',
+        label: 'MASTER_DATA',
         icon: 'pi pi-database',
         styleClass: 'menu-header',
         items: [
           {
-            label: 'customers',
+            label: 'CUSTOMERS',
             icon: 'pi pi-users',
             routerLink: this.mainRoutes.customersList,
           },
           {
-            label: 'suppliers',
+            label: 'SUPPLIERS',
             icon: 'pi pi-truck',
             routerLink: this.mainRoutes.suppliersList,
           },
           {
-            label: 'itemsCategory',
+            label: 'ITEMS_CATEGORY',
             icon: 'pi pi-th-large',
             routerLink: this.mainRoutes.itemsCategoryList,
           },
           {
-            label: 'payments',
-            icon: 'pi pi-wallet',
-            routerLink: this.mainRoutes.paymentsList,
-          },
-          {
-            label: 'expenses',
-            icon: 'pi pi-dollar',
-            routerLink: this.mainRoutes.expensesList,
-          },
-          {
-            label: 'transactions',
-            icon: 'pi pi-credit-card',
-            routerLink: this.mainRoutes.transactionsList,
-          },
-          {
-            label: 'shippingData',
+            label: 'SHIPPING_DATA',
             icon: 'pi pi-truck',
             routerLink: this.mainRoutes.shippingDataList,
           },
           {
-            label: 'year',
+            label: 'FISCAL_YEARS',
             icon: 'pi pi-calendar',
             routerLink: this.mainRoutes.yearList,
           },
-        ].map((item) => ({
-          ...item,
-          styleClass: 'menu-item',
-          command: () => this.handleNavigation(),
-        })),
+        ],
       },
       {
-        label: 'invoices',
+        label: 'TRANSACTIONS',
+        icon: 'pi pi-credit-card',
+        styleClass: 'menu-header',
+        items: [
+          {
+            label: 'TRANSACTIONS',
+            icon: 'pi pi-credit-card',
+            routerLink: this.mainRoutes.transactionsList,
+          },
+          {
+            label: 'PAYMENTS',
+            icon: 'pi pi-wallet',
+            routerLink: this.mainRoutes.paymentsList,
+          },
+          {
+            label: 'EXPENSES',
+            icon: 'pi pi-dollar',
+            routerLink: this.mainRoutes.expensesList,
+          },
+        ],
+      },
+      {
+        label: 'INVOICES',
         icon: 'pi pi-file',
         styleClass: 'menu-header',
         items: [
           {
-            label: 'allInvoices',
+            label: 'ALL_INVOICES',
             icon: 'pi pi-list',
             routerLink: this.mainRoutes.invoicesList,
-            styleClass: 'menu-item',
-            command: () => this.handleNavigation(),
           },
         ],
       },
       {
-        label: 'reports',
+        label: 'REPORTS',
         icon: 'pi pi-chart-bar',
         styleClass: 'menu-header',
         items: [
           {
-            label: 'reports',
+            label: 'DOWNLOAD_REPORTS',
             icon: 'pi pi-chart-bar',
             routerLink: this.mainRoutes.downloadReports,
-            styleClass: 'menu-item',
-            command: () => this.handleNavigation(),
           },
         ],
       },
       {
-        label: 'profile',
+        label: 'PROFILE',
         icon: 'pi pi-user',
         styleClass: 'menu-header',
         items: [
           {
-            label: 'settings',
+            label: 'SETTINGS',
             icon: 'pi pi-cog',
             routerLink: this.mainRoutes.settings,
-            styleClass: 'menu-item',
           },
           {
-            label: 'logout',
+            label: 'LOGOUT',
             icon: 'pi pi-sign-out',
             styleClass: 'menu-item logout-item',
             command: () => this.handleLogout(),
