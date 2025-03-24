@@ -9,12 +9,12 @@ export const httpInterceptor: HttpInterceptorFn = (request, next) => {
   const translateService = inject(TranslateService);
   const baseURL = environment.baseUrl;
 
-  let modifiedRequset = request.clone({
+  const modifiedRequest = request.clone({
     url: `${baseURL}${request.url}`,
     setHeaders: {
       'Accept-Language': translateService.currentLang,
     },
   });
 
-  return next(modifiedRequset);
+  return next(modifiedRequest);
 };
