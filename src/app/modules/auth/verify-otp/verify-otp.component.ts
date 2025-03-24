@@ -33,8 +33,6 @@ export default class VerifyOtpComponent {
     otp: [null, [Validators.required, Validators.minLength(4)]],
   });
   submit(form: FormGroup) {
-    if (form.invalid) console.log('Please enter a valid OTP');
-
     this.apiService
       .sendDataToServer(API_AUTH.VERIFY_OTP, {
         email: this.email,

@@ -99,15 +99,7 @@ export default class ForgetPasswordComponent {
             'Password reset successfully'
           );
           this.router.navigate([this.ROUTES.LOGIN]);
-        },
-        error: (error) => {
-          console.error('Error:', error);
-          this.showMessageService.showMessage(
-            'error',
-            'Error',
-            'Failed to reset password'
-          );
-        },
+        }
       });
   }
 }

@@ -108,7 +108,6 @@ export default class RepaymentsFormComponent {
   });
 
   submit(form: FormGroup) {
-    console.log(form.controls);
     if (form.valid) {
       if (!this.isUpdate) {
         this.transactionService.createTransaction(form);

@@ -53,7 +53,5 @@ export default class ProfileSettingsComponent {
       detail: '',
     });
   }
-  submit(form: FormGroup) {
-    console.log(form.value);
-  }
+  submit(form: FormGroup) {}
 }

@@ -20,8 +20,6 @@ const unAuthenticatedApisUrls = unAuthenticatedApis.map(
 
 export const authInterceptor: HttpInterceptorFn = (request, next) => {
   if (!unAuthenticatedApisUrls.includes(request.url)) {
-    console.log(request.url);
-
     const authenticatedRequest = request.clone({
       headers: request.headers.set(
         'Authorization',

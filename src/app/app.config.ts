@@ -53,5 +53,3 @@ export const appConfig: ApplicationConfig = {
     DialogService,
   ],
 };
-
-console.log('Application configured successfully.');

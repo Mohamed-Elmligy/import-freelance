@@ -12,15 +12,12 @@ export default class HomeComponent implements OnInit {
   public securityService = inject(SecurityService);
   private httpService = inject(ApiService);
 
-  totals :HomeTotals = {} as HomeTotals;
+  totals: HomeTotals = {} as HomeTotals;
 
   ngOnInit(): void {
     this.httpService.getDataFromServer('home').subscribe({
       next: (response: HomeTotals) => {
         this.totals = response;
-      },
-      error: (error) => {
-        console.log(error);
       },
     });
   }

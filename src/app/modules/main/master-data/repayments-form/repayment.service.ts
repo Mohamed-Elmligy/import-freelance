@@ -81,8 +81,6 @@ export class RepaymentService {
     const selectedInvoice = this.listOfInvoices().find(
       (item: any) => item.id === data.invoice
     );
-    console.log(selectedInvoice);
-
     form.patchValue({
       invoiceNumber: selectedInvoice,
       remainingAmount: data.amount,

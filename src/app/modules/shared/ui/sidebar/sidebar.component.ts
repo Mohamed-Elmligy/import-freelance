@@ -127,7 +127,15 @@ export class SidebarComponent {
         label: 'reports',
         icon: 'pi pi-chart-bar',
         styleClass: 'menu-header',
-        items: [], // Add report items as needed
+        items: [
+          {
+            label: 'reports',
+            icon: 'pi pi-chart-bar',
+            routerLink: this.mainRoutes.downloadReports,
+            styleClass: 'menu-item',
+            command: () => this.handleNavigation(),
+          },
+        ],
       },
       {
         label: 'profile',

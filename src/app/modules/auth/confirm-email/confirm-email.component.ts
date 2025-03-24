@@ -55,11 +55,6 @@ export default class ConfirmEmailComponent {
           this.router.navigate([this.auth_routes.VERIFY_USER]);
           this.storage.set('local', 'email', form.value.email);
         },
-        error: (error) => {
-          console.log(error);
-
-          this.showMessageService.showMessage('error', 'Error', error.error);
-        },
       });
   }
 }
