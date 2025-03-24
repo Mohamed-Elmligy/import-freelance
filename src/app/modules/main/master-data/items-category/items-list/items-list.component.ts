@@ -1,5 +1,5 @@
 import { LiveAnnouncer } from '@angular/cdk/a11y';
-import { CommonModule } from '@angular/common';
+
 import { Component, effect, inject, ViewChild, OnInit } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { MatFormFieldModule } from '@angular/material/form-field';
@@ -31,7 +31,6 @@ import { HttpClient } from '@angular/common/http';
   imports: [
     ButtonModule,
     RouterModule,
-    CommonModule,
     MatTableModule,
     MatPaginatorModule,
     MatFormFieldModule,
@@ -45,8 +44,8 @@ import { HttpClient } from '@angular/common/http';
     PanelModule,
     DatePickerModule,
     TooltipModule,
-    Toolbar,
-  ],
+    Toolbar
+],
   templateUrl: './items-list.component.html',
   styles: ``,
 })

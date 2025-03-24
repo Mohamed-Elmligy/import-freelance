@@ -1,5 +1,5 @@
 import { HttpClient, HttpEventType } from '@angular/common/http';
-import { Injectable } from '@angular/core';
+import { Injectable, inject } from '@angular/core';
 
 import { catchError, map } from 'rxjs/operators';
 import { throwError } from 'rxjs';
@@ -13,7 +13,12 @@ export enum ProgressStatus {
   providedIn: 'root',
 })
 export class ApiService {
-  constructor(private HTTP: HttpClient) {}
+  private HTTP = inject(HttpClient);
+
+  /** Inserted by Angular inject() migration for backwards compatibility */
+  constructor(...args: unknown[]);
+
+  constructor() {}
 
   getDataFromServer(
     base_url: string,

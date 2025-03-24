@@ -1,4 +1,4 @@
-import { CommonModule, Location } from '@angular/common';
+import { Location } from '@angular/common';
 import { Component, inject, OnInit } from '@angular/core';
 import {
   FormBuilder,
@@ -27,14 +27,13 @@ import { PageHeaderComponent } from '../../../../shared/components/page-header/p
     FormsModule,
     BreadcrumbModule,
     RouterModule,
-    CommonModule,
     ButtonModule,
     TranslateModule,
     FormsModule,
     ReactiveFormsModule,
     TextareaModule,
-    PageHeaderComponent,
-  ],
+    PageHeaderComponent
+],
   templateUrl: './customers.component.html',
   styles: ``,
 })

@@ -1,5 +1,5 @@
 import { LiveAnnouncer } from '@angular/cdk/a11y';
-import { CommonModule } from '@angular/common';
+
 import { Component, effect, inject, ViewChild } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { MatFormFieldModule } from '@angular/material/form-field';
@@ -26,7 +26,6 @@ import { InvoiceService } from '../invoice.service';
   imports: [
     ButtonModule,
     RouterModule,
-    CommonModule,
     MatTableModule,
     MatPaginatorModule,
     MatFormFieldModule,
@@ -40,8 +39,8 @@ import { InvoiceService } from '../invoice.service';
     Toolbar,
     PanelModule,
     DatePickerModule,
-    TooltipModule,
-  ],
+    TooltipModule
+],
   templateUrl: './invoices-list.component.html',
   styles: ``,
 })

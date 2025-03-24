@@ -1,5 +1,5 @@
 import { LiveAnnouncer } from '@angular/cdk/a11y';
-import { CommonModule } from '@angular/common';
+
 import { Component, effect, inject, ViewChild } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { MatFormFieldModule } from '@angular/material/form-field';
@@ -27,7 +27,6 @@ import { SuppliersService } from '../suppliers.service';
   imports: [
     ButtonModule,
     RouterModule,
-    CommonModule,
     MatTableModule,
     MatPaginatorModule,
     MatFormFieldModule,
@@ -42,8 +41,8 @@ import { SuppliersService } from '../suppliers.service';
     PanelModule,
     DatePickerModule,
     TooltipModule,
-    TableModule,
-  ],
+    TableModule
+],
   templateUrl: './suppliers-list.component.html',
   styles: ``,
 })

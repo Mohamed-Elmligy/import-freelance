@@ -8,12 +8,14 @@
         class="w-full md:w-56"
         [(ngModel)]="selectedLanguage"
         (onChange)="changeLang()"
-      >
+        >
         <ng-template #selectedItem let-selectedOption>
-          <div class="flex items-center gap-2" *ngIf="selectedOption">
-            <img [src]="selectedOption.flag" style="width: 18px" />
-            <div>{{ selectedOption.name | translate }}</div>
-          </div>
+          @if (selectedOption) {
+            <div class="flex items-center gap-2">
+              <img [src]="selectedOption.flag" style="width: 18px" />
+              <div>{{ selectedOption.name | translate }}</div>
+            </div>
+          }
         </ng-template>
         <ng-template let-country #item>
           <div class="flex items-center gap-2">
