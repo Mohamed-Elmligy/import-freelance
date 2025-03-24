@@ -5,7 +5,7 @@ import {
   Validators,
   FormGroup,
 } from '@angular/forms';
-import { Router, RouterLink } from '@angular/router';
+import { Router } from '@angular/router';
 import { InputOtpModule } from 'primeng/inputotp';
 import { ButtonModule } from 'primeng/button';
 import { auth_routes_paths } from '../auth.routes';

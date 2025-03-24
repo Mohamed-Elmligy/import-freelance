@@ -4,23 +4,30 @@ const auth_routes: Routes = [
   { path: '', redirectTo: 'login', pathMatch: 'full' },
   {
     path: 'login',
-    loadComponent: () => import('./login/login.component'),
+    loadComponent: () =>
+      import('./login/login.component').then((m) => m.default), // Login Component
   },
   {
     path: 'register',
-    loadComponent: () => import('./register/register.component'),
+    loadComponent: () =>
+      import('./register/register.component').then((m) => m.default), // Register Component
   },
   {
     path: 'confirm-email',
-    loadComponent: () => import('./confirm-email/confirm-email.component'),
+    loadComponent: () =>
+      import('./confirm-email/confirm-email.component').then((m) => m.default), // Confirm Email Component
   },
   {
     path: 'verify-otp',
-    loadComponent: () => import('./verify-otp/verify-otp.component'),
+    loadComponent: () =>
+      import('./verify-otp/verify-otp.component').then((m) => m.default), // Verify OTP Component
   },
   {
     path: 'forget-password',
-    loadComponent: () => import('./forget-password/forget-password.component'),
+    loadComponent: () =>
+      import('./forget-password/forget-password.component').then(
+        (m) => m.default
+      ), // Forget Password Component
   },
 ];
 

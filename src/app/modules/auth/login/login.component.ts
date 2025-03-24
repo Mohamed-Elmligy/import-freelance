@@ -17,7 +17,6 @@ import { CommonModule } from '@angular/common';
 import { API_AUTH } from '../auth.api';
 import { ApiService } from '../../../core/services/api.service';
 import { BrowserStorageService } from '../../../core/services/browser-storage.service';
-import { ShowMessageService } from '../../../core/services/show-message.service';
 
 @Component({
   selector: 'app-login',
@@ -38,7 +37,6 @@ export default class LoginComponent implements OnInit {
   protected main_routes = main_routes_paths;
   private formBuilder = inject(FormBuilder);
   private apiService = inject(ApiService);
-  private showMessageService = inject(ShowMessageService);
   private router = inject(Router);
   private browserStorage = inject(BrowserStorageService);
   apis = API_AUTH;
@@ -53,9 +51,9 @@ export default class LoginComponent implements OnInit {
 
   submit(form: FormGroup) {
     this.apiService.sendDataToServer(this.apis.LOGIN, form.value).subscribe({
-      next: (respone) => {
+      next: (response) => {
         this.router.navigate([this.main_routes.home]);
-        this.browserStorage.set('local', 'jwtToken', respone);
+        this.browserStorage.set('local', 'jwtToken', response);
       },
     });
   }

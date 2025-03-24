@@ -36,7 +36,6 @@ export default class ConfirmEmailComponent {
   protected main_routes = main_routes_paths;
   private formBuilder = inject(FormBuilder);
   private apiService = inject(ApiService);
-  private showMessageService = inject(ShowMessageService);
   private router = inject(Router);
   private storage = inject(BrowserStorageService);
   apis = API_AUTH;
@@ -45,14 +44,13 @@ export default class ConfirmEmailComponent {
   });
 
   submit(form: FormGroup) {
-    this.storage.set('local', 'email', form.value.email);
-    this.router.navigate([this.auth_routes.VERIFY_USER]);
+    const email = form.value.email;
+    this.storage.set('local', 'email', email);
     this.apiService
       .sendDataToServer(this.apis.CONFIRM_EMAIL, form.value)
       .subscribe({
-        next: (respone) => {
+        next: () => {
           this.router.navigate([this.auth_routes.VERIFY_USER]);
-          this.storage.set('local', 'email', form.value.email);
         },
       });
   }

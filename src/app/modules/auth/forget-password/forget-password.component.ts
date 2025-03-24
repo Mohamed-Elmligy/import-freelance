@@ -24,8 +24,8 @@ import { HttpClient } from '@angular/common/http';
     ButtonModule,
     ReactiveFormsModule,
     TranslateModule,
-    MessageModule
-],
+    MessageModule,
+  ],
   templateUrl: './forget-password.component.html',
 })
 export default class ForgetPasswordComponent {
@@ -99,7 +99,7 @@ export default class ForgetPasswordComponent {
             'Password reset successfully'
           );
           this.router.navigate([this.ROUTES.LOGIN]);
-        }
+        },
       });
   }
 }

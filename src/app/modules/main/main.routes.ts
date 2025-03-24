@@ -21,7 +21,7 @@ const main_routes: Routes = [
     canActivate: [noCompanyUserGuard],
   },
   {
-    path: 'itemsCategory-list',
+    path: 'items-category-list',
     loadComponent: () =>
       import('./master-data/items-category/items-list/items-list.component'),
     canActivate: [noCompanyUserGuard],
@@ -49,7 +49,7 @@ const main_routes: Routes = [
     canActivate: [noCompanyUserGuard],
   },
   {
-    path: 'shippingData-list',
+    path: 'shipping-data-list',
     loadComponent: () =>
       import(
         './master-data/shipping-data-form/shipping-data-list/shipping-data-list.component'
@@ -93,7 +93,7 @@ const main_routes: Routes = [
     canActivate: [noCompanyUserGuard],
   },
   {
-    path: 'itemsCategory',
+    path: 'items-category',
     loadComponent: () =>
       import('./master-data/items-category/item-form/items-category.component'),
     canActivate: [noCompanyUserGuard],
@@ -117,7 +117,7 @@ const main_routes: Routes = [
     canActivate: [noCompanyUserGuard],
   },
   {
-    path: 'shippingData',
+    path: 'shipping-data',
     loadComponent: () =>
       import('./master-data/shipping-data-form/shipping-data-form.component'),
     canActivate: [noCompanyUserGuard],
@@ -137,7 +137,7 @@ const main_routes: Routes = [
     canActivate: [noCompanyUserGuard],
   },
   {
-    path: 'downloadReports',
+    path: 'download-reports',
     loadComponent: () =>
       import('./reports/download-reports/download-reports.component'),
     canActivate: [noCompanyUserGuard],
@@ -155,23 +155,23 @@ export const main_routes_paths = {
   payments: '/main/payments',
   customers: '/main/customers',
   suppliers: '/main/suppliers',
-  itemsCategory: '/main/itemsCategory',
+  itemsCategory: '/main/items-category',
   expenses: '/main/expenses',
   transactions: '/main/transactions',
-  shippingData: '/main/shippingData',
+  shippingData: '/main/shipping-data',
   year: '/main/year',
   invoices: '/main/invoices',
   settings: '/main/settings',
   userForm: '/main/user-form',
   userData: '/main/user-data',
-  downloadReports: '/main/downloadReports',
+  downloadReports: '/main/download-reports',
   paymentsList: '/main/payments-list',
   customersList: '/main/customers-list',
   suppliersList: '/main/suppliers-list',
-  itemsCategoryList: '/main/itemsCategory-list',
+  itemsCategoryList: '/main/items-category-list',
   expensesList: '/main/expenses-list',
   transactionsList: '/main/transactions-list',
-  shippingDataList: '/main/shippingData-list',
+  shippingDataList: '/main/shipping-data-list',
   invoicesList: '/main/invoices-list',
   yearList: '/main/year-list',
 } as const;

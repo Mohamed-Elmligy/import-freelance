@@ -51,18 +51,20 @@ export default class RegisterComponent {
   });
 
   submit(form: FormGroup) {
-    const ModifideForm = {
-      username: form.value.email,
-      email: form.value.email,
-      password: form.value.password,
-      password2: form.value.confirm_password,
-      first_name: form.value.firstName,
-      last_name: form.value.lastName,
-    };
+    if (form.invalid) {
+      this.messageService.showMessage(
+        'error',
+        'Error',
+        'Please fill out the form correctly.'
+      );
+      return;
+    }
+
+    const modifiedForm = this.createModifiedForm(form.value);
     this.apiService
-      .sendDataToServer(this.apis.REGISTER, ModifideForm)
+      .sendDataToServer(this.apis.REGISTER, modifiedForm)
       .subscribe({
-        next: (respone) => {
+        next: () => {
           this.messageService.showMessage(
             'success',
             'Success',
@@ -70,6 +72,24 @@ export default class RegisterComponent {
           );
           this.router.navigate([this.auth_routes.LOGIN]);
         },
+        error: (err) => {
+          this.messageService.showMessage(
+            'error',
+            'Error',
+            'Failed to create new user. Please try again.'
+          );
+        },
       });
+  }
+
+  private createModifiedForm(formValue: any) {
+    return {
+      username: formValue.email,
+      email: formValue.email,
+      password: formValue.password,
+      password2: formValue.confirm_password,
+      first_name: formValue.firstName,
+      last_name: formValue.lastName,
+    };
   }
 }
