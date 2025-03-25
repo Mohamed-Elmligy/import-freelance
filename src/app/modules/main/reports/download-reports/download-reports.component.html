@@ -1,42 +1,62 @@
+<page-header [withBreadCrumb]="false" [title]="'REPORTS' | translate" />
+
 <section class="flex justify-center items-center py-8">
   <p-card [style]="{ width: '40rem', overflow: 'hidden' }" class="m-auto">
     <ng-template #header>
-      <p-floatlabel class="w-full md:w-56 mx-auto" variant="on">
+      <p-floatlabel class="w-full md:w-56 mx-auto my-3" variant="on">
         <p-select
           inputId="reportType"
           [options]="reportsTypes"
           optionLabel="name"
           styleClass="w-full"
           [(ngModel)]="selectedReport"
+          (onChange)="getSelectedReport($event)"
         />
         <label for="reportType">Report Type</label>
       </p-floatlabel>
     </ng-template>
-    <ng-template #title> Advanced Card </ng-template>
+    <ng-template #title> Report Paramerters </ng-template>
     <ng-template #subtitle>
       after select report type please select at least on of this parameters
     </ng-template>
     <div class="flex justify-around align-middle">
-      <p-floatlabel class="w-full md:w-56" variant="on">
+      @switch (selectedReport()?.code) { @case ('invoiceDetails') {
+      <p-floatlabel class="w-full md:w-56 mx-2" variant="on">
         <p-select
-          inputId="on_label"
-          [options]="reportsTypes"
+          inputId="customer"
+          [options]="reportService.listOfCustomers()"
           optionLabel="name"
-          [(ngModel)]="value3"
+          optionValue="id"
+          [(ngModel)]="selectedCustomer"
           styleClass="w-full"
         />
-        <label for="on_label">On Label</label>
+        <label for="customer">{{ "name" | translate }}</label>
       </p-floatlabel>
-      <p-floatlabel class="w-full md:w-56" variant="on">
+
+      <p-floatlabel class="w-full md:w-56 mx-2" variant="on">
         <p-select
-          inputId="on_label"
-          [options]="reportsTypes"
+          inputId="invoice"
+          [options]="reportService.listOfInvoices()"
+          optionLabel="invoice_number"
+          optionValue="id"
+          styleClass="w-full"
+          [(ngModel)]="selectedInvoice"
+        />
+        <label for="invoice">{{ "invoices" | translate }}</label>
+      </p-floatlabel>
+      } @case ('supplierReport') {
+      <p-floatlabel class="w-full md:w-56 mx-2" variant="on">
+        <p-select
+          inputId="supplier"
+          [options]="reportService.listOfSuppliers()"
           optionLabel="name"
           styleClass="w-full"
-          [(ngModel)]="value2"
+          optionValue="id"
+          [(ngModel)]="selectedSupplier"
         />
-        <label for="on_label">On Label</label>
+        <label for="supplier">{{ "supplier" | translate }}</label>
       </p-floatlabel>
+      } }
     </div>
     <ng-template #footer>
       <div class="flex gap-4 mt-1">
@@ -45,13 +65,17 @@
           severity="secondary"
           [outlined]="true"
           class="w-full"
+          optionValue="id"
           styleClass="w-full"
+          (onClick)="resetAll()"
         />
         <p-button
           label="download"
           class="w-full"
           icon="pi pi-arrow-circle-down"
           styleClass="w-full"
+          (onClick)="downloadReport()"
+          [disabled]="!selectedReport()"
         />
       </div>
     </ng-template>

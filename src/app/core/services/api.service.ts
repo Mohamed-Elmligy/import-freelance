@@ -56,8 +56,9 @@ export class ApiService {
   }
 
   // #region Handling Files
-  private getFileFromServer(base_url: string) {
+  private getFileFromServer(base_url: string, params?: {}) {
     return this.HTTP.get(base_url, {
+      params: { ...params },
       responseType: 'blob',
       reportProgress: true,
       observe: 'events',
@@ -104,8 +105,11 @@ export class ApiService {
     document.body.removeChild(a);
   }
 
-  downloadFile(URL: string) {
-    return this.getFileFromServer(URL).pipe(
+  downloadFile(URL: string, params?: {}) {
+    const requestParams = params
+      ? Object.fromEntries(Object.entries(params).filter(([_, v]) => v != null))
+      : {};
+    return this.getFileFromServer(URL, requestParams).pipe(
       catchError((error) => {
         return throwError(() => error);
       }),
