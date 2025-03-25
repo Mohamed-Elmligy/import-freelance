@@ -73,7 +73,7 @@ export default class FiscalYearFormComponent {
 
   protected form = this.formBuilder.group({
     name: [null, [Validators.required]],
-    country: [null, [Validators.required]],
+    country: [null, []],
     from_date: [null, [Validators.required]],
     to_date: [null, [Validators.required]],
     is_active: [false],

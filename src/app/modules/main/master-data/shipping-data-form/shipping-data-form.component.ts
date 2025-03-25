@@ -75,8 +75,8 @@ export default class ShippingDataFormComponent {
     ],
     containerNumber: [null, [Validators.required]],
     ShippingDate: [null, [Validators.required]],
-    port: [null, [Validators.required]],
-    description: [null, [Validators.required]],
+    port: [null, []],
+    description: [null, []],
   });
 
   submit(form: FormGroup) {

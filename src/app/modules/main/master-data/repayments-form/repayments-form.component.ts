@@ -105,7 +105,7 @@ export default class RepaymentsFormComponent {
     amount: [null, [Validators.required]],
     transactionDate: [null, [Validators.required]],
     invoice_payment_number: [null, [Validators.required]],
-    description: [null, [Validators.required]],
+    description: [null, []],
   });
 
   submit(form: FormGroup) {

@@ -50,10 +50,10 @@ export default class SuppliersComponent {
 
   protected form = this.formBuilder.group({
     supplierName: [null, [Validators.required]],
-    email: [null, [Validators.required]],
+    email: [null, []],
     customerCode: [null, [Validators.required]],
     storeNumber: [null, [Validators.required]],
-    description: [null, [Validators.required]],
+    description: [null, []],
   });
 
   suppliertData: {

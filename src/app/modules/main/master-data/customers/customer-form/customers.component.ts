@@ -58,10 +58,10 @@ export default class CustomersComponent implements OnInit {
 
   form: FormGroup = this.formBuilder.group({
     name: [null, [Validators.required]],
-    email: [null, [Validators.required]],
+    email: [null, []],
     customerCode: [null, [Validators.required]],
     commission: [null, [Validators.required]],
-    description: [null, [Validators.required]],
+    description: [null, []],
   });
 
   ngOnInit() {
