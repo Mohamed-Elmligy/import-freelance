@@ -66,7 +66,7 @@ export default class ItemsCategoryComponent {
 
   protected form = this.formBuilder.group({
     name: [null, [Validators.required]],
-    description: [null, [Validators.required]],
+    description: [null, []],
   });
 
   submit(form: FormGroup) {

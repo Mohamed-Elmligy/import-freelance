@@ -60,7 +60,7 @@ export default class PaymentFormComponent {
     name: [null, [Validators.required]],
     paymentDate: [null, [Validators.required]],
     amount: [null, [Validators.required]],
-    description: [null, [Validators.required]],
+    description: [null, []],
   });
 
   paymentData: {
