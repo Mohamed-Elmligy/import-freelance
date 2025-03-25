@@ -98,7 +98,7 @@ export default class CreateInvoiceComponent {
     item_category: [null],
     total_amount: [null],
     discount_amount: [null],
-    net_invoice: [null],
+    net_amount: [null],
     invoice_number: [null],
     total_boxes: [null],
     total_cbm: [null],

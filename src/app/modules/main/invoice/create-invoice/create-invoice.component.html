@@ -111,6 +111,12 @@
       }}</label>
       <p>{{ form.get("total_weight")?.value }}</p>
     </div>
+    <div class="md:col-span-1 col-span-3 my-2 bg-gray-100 p-4 rounded-md">
+      <label class="text-md font-bold" for="netAmount">{{
+        "netAmount" | translate
+      }}</label>
+      <p>{{ form.get("net_amount")?.value }}</p>
+    </div>
   </div>
 
   <div class="grid md:grid-cols-6 grid-cols-1 gap-5">
@@ -450,40 +456,40 @@
   >
     <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
       <div class="invoice-field">
-        {{ "invoiceNumber" | translate }}: {{ invoiceData.invoice_number }}
+        <b>{{ "invoiceNumber" | translate }}:</b> {{ invoiceData.invoice_number }}
       </div>
       <div class="invoice-field">
-        {{ "date" | translate }}: {{ invoiceData.invoice_date }}
+        <b>{{ "date" | translate }}:</b> {{ invoiceData.invoice_date }}
       </div>
       <div class="invoice-field">
-        {{ "customer_name" | translate }}: {{ invoiceData.customer }}
+        <b>{{ "customer_name" | translate }}:</b> {{ invoiceData.customer }}
       </div>
       <div class="invoice-field">
-        {{ "supplierName" | translate }}: {{ invoiceData.supplier }}
+        <b>{{ "supplierName" | translate }}:</b> {{ invoiceData.supplier }}
       </div>
       <div class="invoice-field">
-        {{ "boxTotal" | translate }}: {{ invoiceData.total_boxes }}
+        <b>{{ "boxTotal" | translate }}:</b> {{ invoiceData.total_boxes }}
       </div>
       <div class="invoice-field">
-        {{ "totalCBM" | translate }}: {{ invoiceData.total_cbm }}
+        <b>{{ "totalCBM" | translate }}:</b> {{ invoiceData.total_cbm }}
       </div>
       <div class="invoice-field">
-        {{ "totalWeight" | translate }}: {{ invoiceData.total_weight }}
+        <b>{{ "totalWeight" | translate }}:</b> {{ invoiceData.total_weight }}
       </div>
       <div class="invoice-field">
-        {{ "itemsCategory" | translate }}: {{ invoiceData.item_category }}
+        <b>{{ "itemsCategory" | translate }}:</b> {{ invoiceData.item_category }}
       </div>
     </div>
 
     <div class="grid pt-4 grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
       <div class="invoice-field">
-        {{ "total_invoice" | translate }}: {{ invoiceData.total_amount }}
+        <b>{{ "total_invoice" | translate }}:</b> {{ invoiceData.total_amount }}
       </div>
       <div class="invoice-field">
-        {{ "total_discount" | translate }}: {{ invoiceData.discount_amount }}
+        <b>{{ "total_discount" | translate }}:</b> {{ invoiceData.discount_amount }}
       </div>
       <div class="invoice-field">
-        {{ "net_invoice" | translate }}: {{ invoiceData.net_amount }}
+        <b>{{ "net_invoice" | translate }}:</b> {{ invoiceData.net_amount }}
       </div>
     </div>
 
@@ -493,23 +499,23 @@
         {{ invoiceData.first_payment_amount }}
       </div>
       <div class="invoice-payment">
-        <span>{{ "firstBatchDate" | translate }}:</span>
+        <span><b>{{ "firstBatchDate" | translate }}:</b></span>
         {{ invoiceData.first_payment_date }}
       </div>
       <div class="invoice-payment">
-        <span>{{ "secondBatchNumber" | translate }}:</span>
+        <span><b>{{ "secondBatchNumber" | translate }}:</b></span>
         {{ invoiceData.second_payment_amount }}
       </div>
       <div class="invoice-payment">
-        <span>{{ "secondBatchDate" | translate }}:</span>
+        <span><b>{{ "secondBatchDate" | translate }}:</b></span>
         {{ invoiceData.second_payment_date }}
       </div>
       <div class="invoice-payment">
-        <span>{{ "thirdBatchNumber" | translate }}:</span>
+        <span><b>{{ "thirdBatchNumber" | translate }}:</b></span>
         {{ invoiceData.third_payment_amount }}
       </div>
       <div class="invoice-payment">
-        <span>{{ "thirdBatchDate" | translate }}:</span>
+        <span><b>{{ "thirdBatchDate" | translate }}:</b></span>
         {{ invoiceData.third_payment_date }}
       </div>
     </div>

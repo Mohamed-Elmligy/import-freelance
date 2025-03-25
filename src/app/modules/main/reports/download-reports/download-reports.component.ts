@@ -10,6 +10,7 @@ import { PageHeaderComponent } from '../../../shared/components/page-header/page
 import { TranslateModule } from '@ngx-translate/core';
 import { reportsApis } from '../reports.apis';
 import { ShowMessageService } from '../../../../core/services/show-message.service';
+import { LanguagesService } from '../../../shared/services/languages.service';
 
 @Component({
   selector: 'app-download-reports',
@@ -26,6 +27,7 @@ import { ShowMessageService } from '../../../../core/services/show-message.servi
   templateUrl: './download-reports.component.html',
 })
 export default class DownloadReportsComponent {
+  languageService = inject(LanguagesService);
   reportService = inject(ReportsService);
   showMessageService = inject(ShowMessageService);
 
@@ -38,10 +40,30 @@ export default class DownloadReportsComponent {
 
   selectedInvoice: InvoiceList | undefined;
 
-  ngOnInit() {
+  reportsTypesTranslation = {
+    en: {
+      containerDetails: 'Container Details',
+      supplierReport: 'Supplier Report',
+    },
+    ar: {
+      containerDetails: 'شراء الحاوية',
+      supplierReport: 'تقرير المورد',
+    },
+  };
+  ngOnInit(): void {
     this.reportsTypes = [
-      { name: 'Invoice Details', code: 'invoiceDetails' },
-      { name: 'Supplier Report', code: 'supplierReport' },
+      {
+        name: this.reportsTypesTranslation[
+          this.languageService.layoutDir() === 'rtl' ? 'ar' : 'en'
+        ]['containerDetails'],
+        code: 'invoiceDetails',
+      },
+      {
+        name: this.reportsTypesTranslation[
+          this.languageService.layoutDir() === 'rtl' ? 'ar' : 'en'
+        ]['supplierReport'],
+        code: 'supplierReport',
+      },
     ];
   }
 

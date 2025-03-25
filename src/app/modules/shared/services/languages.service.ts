@@ -10,6 +10,7 @@ export class LanguagesService {
   defaultLanguage = signal<string>('ar');
 
   layoutDir = signal<any>(this.defaultLanguage() == 'en' ? 'ltr' : 'rtl');
+  currentLanguage: any;
 
   initLanguage() {
     this.translate.addLangs(['ar', 'en']);

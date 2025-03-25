@@ -1,82 +1,114 @@
-<page-header [withBreadCrumb]="false" [title]="'REPORTS' | translate" />
+<page-header
+  [withBreadCrumb]="false"
+  [title]="'REPORTS' | translate"
+  class="mb-4"
+></page-header>
 
-<section class="flex justify-center items-center py-8">
-  <p-card [style]="{ width: '40rem', overflow: 'hidden' }" class="m-auto">
+<section class="container mx-auto px-4 py-6">
+  <p-card 
+    class="max-w-4xl mx-auto shadow-lg"
+    [styleClass]="'report-card'"
+  >
+    <!-- Report Type Selection -->
     <ng-template #header>
-      <p-floatlabel class="w-full md:w-56 mx-auto my-3" variant="on">
-        <p-select
-          inputId="reportType"
-          [options]="reportsTypes"
-          optionLabel="name"
-          styleClass="w-full"
-          [(ngModel)]="selectedReport"
-          (onChange)="getSelectedReport($event)"
-        />
-        <label for="reportType">Report Type</label>
-      </p-floatlabel>
+      <div class="px-4 pt-4">
+        <p-floatlabel class="w-full max-w-xs mx-auto mb-6" variant="over">
+          <p-select
+            inputId="reportType"
+            [options]="reportsTypes"
+            optionLabel="name"
+            class="w-full"
+            [(ngModel)]="selectedReport"
+            (onChange)="getSelectedReport($event)"
+            [showClear]="true"
+          ></p-select>
+          <label for="reportType" class="font-semibold">
+            {{ "ReportType" | translate }}
+          </label>
+        </p-floatlabel>
+      </div>
     </ng-template>
-    <ng-template #title> Report Paramerters </ng-template>
-    <ng-template #subtitle>
-      after select report type please select at least on of this parameters
-    </ng-template>
-    <div class="flex justify-around align-middle">
-      @switch (selectedReport()?.code) { @case ('invoiceDetails') {
-      <p-floatlabel class="w-full md:w-56 mx-2" variant="on">
-        <p-select
-          inputId="customer"
-          [options]="reportService.listOfCustomers()"
-          optionLabel="name"
-          optionValue="id"
-          [(ngModel)]="selectedCustomer"
-          styleClass="w-full"
-        />
-        <label for="customer">{{ "name" | translate }}</label>
-      </p-floatlabel>
 
-      <p-floatlabel class="w-full md:w-56 mx-2" variant="on">
-        <p-select
-          inputId="invoice"
-          [options]="reportService.listOfInvoices()"
-          optionLabel="invoice_number"
-          optionValue="id"
-          styleClass="w-full"
-          [(ngModel)]="selectedInvoice"
-        />
-        <label for="invoice">{{ "invoices" | translate }}</label>
-      </p-floatlabel>
-      } @case ('supplierReport') {
-      <p-floatlabel class="w-full md:w-56 mx-2" variant="on">
-        <p-select
-          inputId="supplier"
-          [options]="reportService.listOfSuppliers()"
-          optionLabel="name"
-          styleClass="w-full"
-          optionValue="id"
-          [(ngModel)]="selectedSupplier"
-        />
-        <label for="supplier">{{ "supplier" | translate }}</label>
-      </p-floatlabel>
-      } }
+    <!-- Report Parameters Section -->
+    <ng-template #title>
+      <h2 class="text-xl font-bold text-gray-800 dark:text-gray-200">
+        {{ "ReportParameters" | translate }}
+      </h2>
+    </ng-template>
+    
+    <ng-template #subtitle>
+      <p class="text-gray-600 dark:text-gray-400 mb-6">
+        {{ "After selecting a report type, please select at least one of these parameters." | translate }}
+      </p>
+    </ng-template>
+
+    <!-- Dynamic Form Fields -->
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-4 px-4 pb-4">
+      @switch (selectedReport()?.code) { 
+        @case ('invoiceDetails') {
+          <p-floatlabel class="w-full" variant="over">
+            <p-select
+              inputId="customer"
+              [options]="reportService.listOfCustomers()"
+              optionLabel="name"
+              optionValue="id"
+              [(ngModel)]="selectedCustomer"
+              class="w-full"
+              [showClear]="true"
+            ></p-select>
+            <label for="customer">{{ "SelectCustomer" | translate }}</label>
+          </p-floatlabel>
+
+          <p-floatlabel class="w-full" variant="over">
+            <p-select
+              inputId="invoice"
+              [options]="reportService.listOfInvoices()"
+              optionLabel="invoice_number"
+              optionValue="id"
+              [(ngModel)]="selectedInvoice"
+              class="w-full"
+              [showClear]="true"
+            ></p-select>
+            <label for="invoice">{{ "SelectInvoice" | translate }}</label>
+          </p-floatlabel>
+        } 
+        @case ('supplierReport') {
+          <p-floatlabel class="w-full" variant="over">
+            <p-select
+              inputId="supplier"
+              [options]="reportService.listOfSuppliers()"
+              optionLabel="name"
+              optionValue="id"
+              [(ngModel)]="selectedSupplier"
+              class="w-full"
+              [placeholder]="'SelectSupplier' | translate"
+              [showClear]="true"
+            ></p-select>
+            <label for="supplier">{{ "Supplier" | translate }}</label>
+          </p-floatlabel>
+        } 
+      }
     </div>
+
+    <!-- Action Buttons -->
     <ng-template #footer>
-      <div class="flex gap-4 mt-1">
+      <div class="flex flex-col sm:flex-row justify-end gap-3 px-4 pt-4 border-t border-gray-200 dark:border-gray-700">
         <p-button
-          label="Cancel"
+          [label]="'Cancel' | translate"
           severity="secondary"
-          [outlined]="true"
-          class="w-full"
-          optionValue="id"
-          styleClass="w-full"
+          outlined="true"
+          icon="pi pi-times"
+          class="flex-1 sm:flex-none"
           (onClick)="resetAll()"
-        />
+        ></p-button>
+        
         <p-button
-          label="download"
-          class="w-full"
-          icon="pi pi-arrow-circle-down"
-          styleClass="w-full"
+          [label]="'Download' | translate"
+          icon="pi pi-download"
+          class="flex-1 sm:flex-none"
           (onClick)="downloadReport()"
           [disabled]="!selectedReport()"
-        />
+        ></p-button>
       </div>
     </ng-template>
   </p-card>
