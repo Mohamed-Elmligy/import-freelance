@@ -1,60 +1,113 @@
-# ImportProject
+# Project Name
 
-This project was generated using [Angular CLI](https://github.com/angular/angular-cli) version 19.0.7.
+## Project Overview
 
-## Development server
+Provide a brief description of your project, its purpose, and its main features.
 
-To start a local development server, run:
+## Installation
+
+To install the project dependencies, run the following command:
+
+```bash
+npm install
+```
+
+## Usage
+
+Provide instructions on how to use the project. Include examples if necessary.
+
+### Running the Project
+
+To start the project, run the following command:
 
 ```bash
 ng serve
 ```
 
-Once the server is running, open your browser and navigate to `http://localhost:4200/`. The application will automatically reload whenever you modify any of the source files.
+Then, open your browser and navigate to `http://localhost:4200`.
 
-## Code scaffolding
+### Replacing Angular Material Tables with PrimeNG Tables
 
-Angular CLI includes powerful code scaffolding tools. To generate a new component, run:
+This project uses PrimeNG tables instead of Angular Material tables. To replace Angular Material tables with PrimeNG tables, follow these steps:
 
-```bash
-ng generate component component-name
-```
+1. Install PrimeNG and its dependencies:
 
-For a complete list of available schematics (such as `components`, `directives`, or `pipes`), run:
+   ```bash
+   npm install primeng primeicons @angular/cdk
+   ```
 
-```bash
-ng generate --help
-```
+2. Update your Angular module files to import PrimeNG modules. For example, in `app.module.ts`:
 
-## Building
+   ```typescript
+   // filepath: d:\Work\FreeLance\importProject\src\app\app.module.ts
+   import { TableModule } from "primeng/table";
+   // ...existing code...
 
-To build the project run:
+   @NgModule({
+     declarations: [
+       // ...existing code...
+     ],
+     imports: [
+       // ...existing code...
+       TableModule,
+       // ...existing code...
+     ],
+     providers: [],
+     bootstrap: [AppComponent],
+   })
+   export class AppModule {}
+   ```
 
-```bash
-ng build
-```
+3. Replace Angular Material table components with PrimeNG table components in your templates. For example, in `example.component.html`:
 
-This will compile your project and store the build artifacts in the `dist/` directory. By default, the production build optimizes your application for performance and speed.
+   ```html
+   <!-- filepath: d:\Work\FreeLance\importProject\src\app\example\example.component.html -->
+   <!-- Replace Angular Material table with PrimeNG table -->
+   <p-table [value]="data">
+     <ng-template pTemplate="header">
+       <tr>
+         <th *ngFor="let col of columns">{{ col.header }}</th>
+       </tr>
+     </ng-template>
+     <ng-template pTemplate="body" let-rowData>
+       <tr>
+         <td *ngFor="let col of columns">{{ rowData[col.field] }}</td>
+       </tr>
+     </ng-template>
+   </p-table>
+   ```
 
-## Running unit tests
+4. Ensure that your TypeScript code is compatible with PrimeNG tables. For example, in `example.component.ts`:
 
-To execute unit tests with the [Karma](https://karma-runner.github.io) test runner, use the following command:
+   ```typescript
+   // filepath: d:\Work\FreeLance\importProject\src\app\example\example.component.ts
+   import { Component, OnInit } from "@angular/core";
 
-```bash
-ng test
-```
+   @Component({
+     selector: "app-example",
+     templateUrl: "./example.component.html",
+     styleUrls: ["./example.component.css"],
+   })
+   export class ExampleComponent implements OnInit {
+     data: any[];
+     columns: any[];
 
-## Running end-to-end tests
+     ngOnInit() {
+       this.columns = [
+         { field: "name", header: "Name" },
+         { field: "age", header: "Age" },
+         // ...existing code...
+       ];
 
-For end-to-end (e2e) testing, run:
+       this.data = [
+         { name: "John", age: 25 },
+         { name: "Jane", age: 30 },
+         // ...existing code...
+       ];
+     }
+   }
+   ```
 
-```bash
-ng e2e
-```
+## License
 
-Angular CLI does not come with an end-to-end testing framework by default. You can choose one that suits your needs.
-
-## Additional Resources
-
-For more information on using the Angular CLI, including detailed command references, visit the [Angular CLI Overview and Command Reference](https://angular.dev/tools/cli) page.
-# import-freelance
+Include the license information for your project.
