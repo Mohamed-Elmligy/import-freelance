@@ -22,6 +22,7 @@ import { routes } from './app.routes';
 export const MultiTranslateLoader = (
   http: HttpBackend
 ): MultiTranslateHttpLoader => new MultiTranslateHttpLoader(http, ['i18n/']);
+
 export const appConfig: ApplicationConfig = {
   providers: [
     provideZoneChangeDetection({ eventCoalescing: true }),
@@ -36,6 +37,11 @@ export const appConfig: ApplicationConfig = {
         },
       },
     }),
+    provideHttpClient(withInterceptors(interceptors)),
+    MessageService,
+    ConfirmationService,
+    DialogService,
+
     importProvidersFrom(
       TranslateModule.forRoot({
         loader: {
@@ -43,11 +49,8 @@ export const appConfig: ApplicationConfig = {
           useFactory: MultiTranslateLoader,
           deps: [HttpBackend],
         },
+        defaultLanguage: 'ar',
       })
     ),
-    provideHttpClient(withInterceptors(interceptors)),
-    MessageService,
-    ConfirmationService,
-    DialogService,
   ],
 };
