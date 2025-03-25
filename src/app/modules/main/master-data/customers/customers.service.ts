@@ -31,17 +31,17 @@ export class CustomersService {
       name: form.get('name')?.value,
       email: form.get('email')?.value,
       code: form.get('customerCode')?.value,
-      commession: form.get('commission')?.value,
+      commission: form.get('commission')?.value,
       description: form.get('description')?.value,
     };
   }
 
-  apiModelToComponentModelPathch(form: FormGroup, data: any) {
+  apiModelToComponentModelPatch(form: FormGroup, data: any) {
     form.patchValue({
       name: data.name,
       email: data.email,
       customerCode: data.code,
-      commission: data.commession,
+      commission: data.commission,
       description: data.description,
     });
   }
@@ -52,7 +52,7 @@ export class CustomersService {
       email: string;
       code: string;
       created_at: string;
-      commession: string;
+      commission: string;
       id: string;
     }[]
   ) {
@@ -62,7 +62,7 @@ export class CustomersService {
         email: item.email,
         code: item.code,
         created_at: new Date(item.created_at).toLocaleDateString('en-GB'),
-        commission: item.commession,
+        commission: item.commission,
         id: item.id,
       };
     });

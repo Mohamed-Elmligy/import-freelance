@@ -29,11 +29,10 @@ import { PageHeaderComponent } from '../../../../shared/components/page-header/p
     RouterModule,
     ButtonModule,
     TranslateModule,
-    FormsModule,
     ReactiveFormsModule,
     TextareaModule,
-    PageHeaderComponent
-],
+    PageHeaderComponent,
+  ],
   templateUrl: './customers.component.html',
   styles: ``,
 })
@@ -50,7 +49,7 @@ export default class CustomersComponent implements OnInit {
     name: '',
     email: '',
     code: 0,
-    commession: '',
+    commission: '',
     description: '',
   };
 
@@ -91,7 +90,7 @@ export default class CustomersComponent implements OnInit {
       .subscribe((data: any) => {
         this.customerData = data;
         if (this.isUpdate) {
-          this.customersService.apiModelToComponentModelPathch(this.form, data);
+          this.customersService.apiModelToComponentModelPatch(this.form, data);
         }
       });
   }

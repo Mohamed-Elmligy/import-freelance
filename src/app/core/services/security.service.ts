@@ -43,47 +43,27 @@ export class SecurityService {
   // #region retrieve local storage actions
 
   retrieveJwtData() {
-    const jwtData = this.browserStorageService.get('local', this.localKey);
-    return jwtData;
+    return this.getJwtDataFromStorage();
   }
+
   retrieveAccess() {
-    const access = this.browserStorageService.get(
-      'local',
-      this.localKey
-    ).access;
-    return access;
+    return this.getJwtDataFromStorage().access;
   }
 
   retrieveRefreshToken() {
-    const refresh = this.browserStorageService.get(
-      'local',
-      this.localKey
-    ).refresh;
-    return refresh;
+    return this.getJwtDataFromStorage().refresh;
   }
 
   retrieveUserType() {
-    const userType = this.browserStorageService.get(
-      'local',
-      this.localKey
-    ).user_type;
-    return userType;
+    return this.getJwtDataFromStorage().user_type;
   }
 
   retrieveFullName() {
-    const fullName = this.browserStorageService.get(
-      'local',
-      this.localKey
-    ).full_name;
-    return fullName;
+    return this.getJwtDataFromStorage().full_name;
   }
 
   retrieveUserCompany() {
-    const company = this.browserStorageService.get(
-      'local',
-      this.localKey
-    ).company;
-    return company;
+    return this.getJwtDataFromStorage().company;
   }
 
   updateUerCompanyStatus(state: boolean) {
@@ -104,5 +84,9 @@ export class SecurityService {
       access: '',
       refresh: '',
     });
+  }
+
+  private getJwtDataFromStorage() {
+    return this.browserStorageService.get('local', this.localKey);
   }
 }

@@ -14,7 +14,7 @@ import { DatePickerModule } from 'primeng/datepicker';
 import { FloatLabelModule } from 'primeng/floatlabel';
 import { InputTextModule } from 'primeng/inputtext';
 import { PanelModule } from 'primeng/panel';
-import { ToolbarModule, Toolbar } from 'primeng/toolbar';
+import { ToolbarModule } from 'primeng/toolbar';
 import { TooltipModule } from 'primeng/tooltip';
 import { SecurityService } from '../../../../core/services/security.service';
 import { LanguagesService } from '../../../shared/services/languages.service';
@@ -36,11 +36,10 @@ import { InvoiceService } from '../invoice.service';
     TranslateModule,
     FloatLabelModule,
     ToolbarModule,
-    Toolbar,
     PanelModule,
     DatePickerModule,
-    TooltipModule
-],
+    TooltipModule,
+  ],
   templateUrl: './invoices-list.component.html',
   styles: ``,
 })
@@ -71,7 +70,9 @@ export default class InvoicesListComponent {
     this.invoiceService.getList().subscribe((data: any) => {
       this.tableColumns = this.invoiceService.invoiceHeaders;
       this.displayedColumns = [...this.invoiceService.invoiceHeaders];
-      const modifiedData = this.invoiceService.apiModelToComponentModelList(data.results);
+      const modifiedData = this.invoiceService.apiModelToComponentModelList(
+        data.results
+      );
       this.dataSource = new MatTableDataSource<any>(modifiedData);
       this.resultsLength = data.count;
     });

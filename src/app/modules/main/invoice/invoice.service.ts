@@ -5,6 +5,7 @@ import { ShowMessageService } from '../../../core/services/show-message.service'
 import { INVOICE_APIS } from './invoice.apis';
 import { formatDate, Location } from '@angular/common';
 import { ConfirmSaveDeleteService } from '../../../core/services/confirm-save-delete.service';
+import { map, catchError } from 'rxjs/operators';
 
 @Injectable({
   providedIn: 'root',
@@ -35,6 +36,9 @@ export class InvoiceService {
   }
 
   componentModelToApiModel(form: FormGroup) {
+    const formatPaymentDate = (date: any) =>
+      date ? formatDate(date, 'yyyy-MM-dd', 'en') : null;
+
     return {
       item_category: form.value.item_category.id,
       customer: form.value.customer.id,
@@ -44,17 +48,11 @@ export class InvoiceService {
       total_amount: form.value.total_amount,
       discount_amount: form.value.discount_amount,
       first_payment_amount: form.value.first_payment_amount,
-      first_payment_date: form.value.first_payment_date
-        ? formatDate(form.value.first_payment_date, 'yyyy-MM-dd', 'en')
-        : null,
+      first_payment_date: formatPaymentDate(form.value.first_payment_date),
       second_payment_amount: form.value.second_payment_amount,
-      second_payment_date: form.value.second_payment_date
-        ? formatDate(form.value.second_payment_date, 'yyyy-MM-dd', 'en')
-        : null,
+      second_payment_date: formatPaymentDate(form.value.second_payment_date),
       third_payment_amount: form.value.third_payment_amount,
-      third_payment_date: form.value.third_payment_date
-        ? formatDate(form.value.third_payment_date, 'yyyy-MM-dd', 'en')
-        : null,
+      third_payment_date: formatPaymentDate(form.value.third_payment_date),
       invoice_lines: form.value.invoice_lines.map((item: any) => {
         const invoiceLine: any = {
           container_sequence: item.container_sequence,
@@ -77,21 +75,14 @@ export class InvoiceService {
     };
   }
 
-  apiModelToComponentModelPathch(form: FormGroup, data: any) {
-    const selectedCustomer = this.listOfCustomers().find(
-      (item: any) => item.id === data.customer
-    );
-    const selectedSupplier = this.listOfSuppliers().find(
-      (item: any) => item.id === data.supplier
-    );
-    const selectedItem = this.listOfItems().find(
-      (item: any) => item.id === data.item_category
-    );
+  apiModelToComponentModelPatch(form: FormGroup, data: any) {
+    const findItemById = (list: any[], id: any) =>
+      list.find((item: any) => item.id === id);
 
     form.patchValue({
-      item_category: selectedItem,
-      customer: selectedCustomer,
-      supplier: selectedSupplier,
+      item_category: findItemById(this.listOfItems(), data.item_category),
+      customer: findItemById(this.listOfCustomers(), data.customer),
+      supplier: findItemById(this.listOfSuppliers(), data.supplier),
       invoice_number: data.invoice_number,
       invoice_date: new Date(data.invoice_date),
       total_amount: data.total_amount,
@@ -111,22 +102,20 @@ export class InvoiceService {
       third_payment_date: data.third_payment_date
         ? new Date(data.third_payment_date)
         : null,
-      invoice_lines: data.invoice_lines.map((item: any) => {
-        return {
-          id: item.id,
-          container_sequence: item.container_sequence,
-          item_code: item.item_code,
-          item_description: item.item_description,
-          box_count: item.box_count,
-          item_in_box: item.item_in_box,
-          item_price: item.item_price,
-          total_price: item.total_price,
-          store_cbm: item.store_cbm,
-          height: item.height,
-          width: item.width,
-          length: item.length,
-        };
-      }),
+      invoice_lines: data.invoice_lines.map((item: any) => ({
+        id: item.id,
+        container_sequence: item.container_sequence,
+        item_code: item.item_code,
+        item_description: item.item_description,
+        box_count: item.box_count,
+        item_in_box: item.item_in_box,
+        item_price: item.item_price,
+        total_price: item.total_price,
+        store_cbm: item.store_cbm,
+        height: item.height,
+        width: item.width,
+        length: item.length,
+      })),
     });
   }
 
@@ -158,19 +147,21 @@ export class InvoiceService {
     let modifiedModel = this.componentModelToApiModel(data);
     this.apiService
       .sendDataToServer(INVOICE_APIS.CREATE_INVOICE, modifiedModel)
-      .subscribe({
-        next: () => {
+      .pipe(
+        map(() => {
           this.showMessageService.showMessage(
             'success',
             'Invoice Created',
             'Invoice has been created successfully'
           );
           this.location.back();
-        },
-        error: (err) => {
+        }),
+        catchError((err) => {
           this.showMessageService.showMessage('error', 'Error', err.error);
-        },
-      });
+          throw err;
+        })
+      )
+      .subscribe();
   }
 
   getInvoiceById(id: string) {
@@ -191,20 +182,21 @@ export class InvoiceService {
         INVOICE_APIS.UPDATE_INVOICE(+id),
         modifiedModel
       )
-      .subscribe({
-        next: () => {
+      .pipe(
+        map(() => {
           this.showMessageService.showMessage(
             'success',
             'Invoice Updated',
             'Invoice has been updated successfully'
           );
-
           this.location.back();
-        },
-        error: (err) => {
+        }),
+        catchError((err) => {
           this.showMessageService.showMessage('error', 'Error', err.error);
-        },
-      });
+          throw err;
+        })
+      )
+      .subscribe();
   }
 
   deleteInvoice(id: string) {
@@ -225,18 +217,20 @@ export class InvoiceService {
   deleteInvoiceApi(id: string) {
     this.apiService
       .deleteDataOnServer(INVOICE_APIS.DELETE_INVOICE(+id))
-      .subscribe({
-        next: () => {
+      .pipe(
+        map(() => {
           this.showMessageService.showMessage(
             'success',
             'Invoice Deleted',
             'Invoice has been deleted successfully'
           );
           this.invoiceDeleted.set(true);
-        },
-        error: (err) => {
+        }),
+        catchError((err) => {
           this.showMessageService.showMessage('error', 'Error', err.error);
-        },
-      });
+          throw err;
+        })
+      )
+      .subscribe();
   }
 }

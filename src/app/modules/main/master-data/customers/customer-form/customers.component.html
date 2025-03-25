@@ -1,5 +1,8 @@
-
-<page-header [withBreadCrumb]="false" [title]="'customers' | translate" [route]="route"/>
+<page-header
+  [withBreadCrumb]="false"
+  [title]="'customers' | translate"
+  [route]="route"
+/>
 
 @if ((customerId && isUpdate)|| (!customerId && !isUpdate)) {
 <form class="max-w-3xl mx-auto" [formGroup]="form" (ngSubmit)="submit(form)">
@@ -99,7 +102,7 @@
   <div class="col-span-2 flex flex-row align-baseline justify-start">
     <h2 class="me-2 font-bold text-xl">{{ "commission" | translate }}:</h2>
     <p class="text-base text-md mt-1">
-      {{ customerData.commession }}
+      {{ customerData.commission }}
     </p>
   </div>
   <div class="col-span-2 flex flex-row align-baseline justify-start">

@@ -1,4 +1,3 @@
-
 import { Component, inject, signal } from '@angular/core';
 import {
   FormsModule,
@@ -41,20 +40,18 @@ import { PageHeaderComponent } from '../../../shared/components/page-header/page
     RouterModule,
     ButtonModule,
     TranslateModule,
-    FormsModule,
     ReactiveFormsModule,
     DatePicker,
     ToastModule,
     PanelModule,
     AvatarModule,
-    ButtonModule,
     MenuModule,
     TooltipModule,
     SelectModule,
     CardModule,
     TableModule,
-    PageHeaderComponent
-],
+    PageHeaderComponent,
+  ],
   providers: [MessageService],
   templateUrl: './create-invoice.component.html',
 })
@@ -213,37 +210,53 @@ export default class CreateInvoiceComponent {
   }
 
   private initializeLookups(): void {
-    this.lookupService.getListOfLookups('customers').subscribe((data: any) => {
-      this.listOfCustomers.set(data);
-      this.invoiceService.listOfCustomers.set(data);
-      if (!this.isUpdate) {
-        for (let i = 0; i < 3; i++) {
-          this.addItem();
-        }
-      }
-    });
+    this.lookupService
+      .getListOfLookups('customers')
+      .pipe(
+        map((data: any) => {
+          this.listOfCustomers.set(data);
+          this.invoiceService.listOfCustomers.set(data);
+          if (!this.isUpdate) {
+            for (let i = 0; i < 3; i++) {
+              this.addItem();
+            }
+          }
+        })
+      )
+      .subscribe();
 
-    this.lookupService.getListOfLookups('suppliers').subscribe((data: any) => {
-      this.listOfSuppliers.set(data);
-
-      this.invoiceService.listOfSuppliers.set(data);
-    });
+    this.lookupService
+      .getListOfLookups('suppliers')
+      .pipe(
+        map((data: any) => {
+          this.listOfSuppliers.set(data);
+          this.invoiceService.listOfSuppliers.set(data);
+        })
+      )
+      .subscribe();
 
     this.lookupService
       .getListOfLookups('items-categories')
-      .subscribe((data: any) => {
-        this.listOfItems.set(data);
-        this.invoiceService.listOfItems.set(data);
-      });
+      .pipe(
+        map((data: any) => {
+          this.listOfItems.set(data);
+          this.invoiceService.listOfItems.set(data);
+        })
+      )
+      .subscribe();
   }
 
   getInvoiceById() {
     this.invoiceService
       .getInvoiceById(this.invoiceId)
-      .subscribe((data: any) => {
-        this.invoiceData = data;
-      });
+      .pipe(
+        map((data: any) => {
+          this.invoiceData = data;
+        })
+      )
+      .subscribe();
   }
+
   getForUpdateInvoice() {
     if (this.isUpdate) {
       this.invoiceService
@@ -257,7 +270,7 @@ export default class CreateInvoiceComponent {
               lineGroup.patchValue(line);
               this.invoice_linesFormArray.push(lineGroup);
             });
-            return this.invoiceService.apiModelToComponentModelPathch(
+            return this.invoiceService.apiModelToComponentModelPatch(
               this.form,
               data
             );
