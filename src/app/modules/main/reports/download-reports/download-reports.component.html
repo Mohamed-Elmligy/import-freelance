@@ -1,24 +1,28 @@
-<div class="card">
-  <p-toolbar>
-    <ng-template #start>
+<section class="flex justify-center items-center py-8">
+  <p-card [style]="{ width: '40rem', overflow: 'hidden' }" class="m-auto">
+    <ng-template #header>
+      <p-floatlabel class="w-full md:w-56 mx-auto" variant="on">
+        <p-select
+          inputId="reportType"
+          [options]="reportsTypes"
+          optionLabel="name"
+          styleClass="w-full"
+          [(ngModel)]="selectedReport"
+        />
+        <label for="reportType">Report Type</label>
+      </p-floatlabel>
+    </ng-template>
+    <ng-template #title> Advanced Card </ng-template>
+    <ng-template #subtitle>
+      after select report type please select at least on of this parameters
+    </ng-template>
+    <div class="flex justify-around align-middle">
       <p-floatlabel class="w-full md:w-56" variant="on">
         <p-select
           inputId="on_label"
           [options]="reportsTypes"
           optionLabel="name"
-          optionValue="id"
-          [ngModel]="selectedReportType"
-          styleClass="w-full"
-        />
-        <label for="on_label">On Label</label>
-      </p-floatlabel>
-    </ng-template>
-    <ng-template #center>
-      <p-floatlabel class="w-full md:w-56" variant="on">
-        <p-select
-          inputId="on_label"
-          [options]="reportsTypes"
-          optionLabel="name"
+          [(ngModel)]="value3"
           styleClass="w-full"
         />
         <label for="on_label">On Label</label>
@@ -29,16 +33,27 @@
           [options]="reportsTypes"
           optionLabel="name"
           styleClass="w-full"
+          [(ngModel)]="value2"
         />
         <label for="on_label">On Label</label>
       </p-floatlabel>
+    </div>
+    <ng-template #footer>
+      <div class="flex gap-4 mt-1">
+        <p-button
+          label="Cancel"
+          severity="secondary"
+          [outlined]="true"
+          class="w-full"
+          styleClass="w-full"
+        />
+        <p-button
+          label="download"
+          class="w-full"
+          icon="pi pi-arrow-circle-down"
+          styleClass="w-full"
+        />
+      </div>
     </ng-template>
-    <ng-template #end>
-      <p-button
-        label="download"
-        icon="pi 
-pi-arrow-circle-down"
-      />
-    </ng-template>
-  </p-toolbar>
-</div>
+  </p-card>
+</section>
