@@ -16,7 +16,7 @@ import { ConfirmDialog } from 'primeng/confirmdialog';
   `,
 })
 export class AppComponent {
-  title = 'import_project';
+  title = 'shipMaster';
   languageService = inject(LanguagesService);
   tostDir: any;
   ngOnInit() {

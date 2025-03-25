@@ -1,6 +1,6 @@
 import { LiveAnnouncer } from '@angular/cdk/a11y';
 
-import { Component, effect, inject, OnInit, viewChild } from '@angular/core';
+import { Component, inject, OnInit, viewChild } from '@angular/core';
 import {
   FormBuilder,
   FormsModule,
@@ -22,15 +22,12 @@ import { InputTextModule } from 'primeng/inputtext';
 import { PanelModule } from 'primeng/panel';
 import { ToolbarModule, Toolbar } from 'primeng/toolbar';
 import { TooltipModule } from 'primeng/tooltip';
-import { SecurityService } from '../../../../../core/services/security.service';
-import { LanguagesService } from '../../../../shared/services/languages.service';
 import { main_routes_paths } from '../../../main.routes';
 import { ApiService } from '../../../../../core/services/api.service';
 import { PROFILE_APIS } from '../../profile.apis';
 import { Dialog } from 'primeng/dialog';
 import { PasswordModule } from 'primeng/password';
 import { ShowMessageService } from '../../../../../core/services/show-message.service';
-import { TabService } from '../../../../../services/tab.service';
 import { ConfirmSaveDeleteService } from '../../../../../core/services/confirm-save-delete.service';
 
 @Component({
