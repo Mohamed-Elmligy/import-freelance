@@ -15,9 +15,6 @@ export enum ProgressStatus {
 export class ApiService {
   private HTTP = inject(HttpClient);
 
-  /** Inserted by Angular inject() migration for backwards compatibility */
-  constructor(...args: unknown[]);
-
   constructor() {}
 
   getDataFromServer(
@@ -115,17 +112,4 @@ export class ApiService {
       map((event) => this.getEventMessage(event))
     );
   }
-
-  // Utilities
-  // private readonly removeInvalidValues = (FilterModel: any) => {
-  //   let key: keyofany;
-  //   for (key in FilterModel) {
-  //     if (
-  //       FilterModel[key] === null ||
-  //       FilterModel[key] === undefined ||
-  //       FilterModel[key] === ''
-  //     )
-  //       delete FilterModel[key];
-  //   }
-  // };
 }

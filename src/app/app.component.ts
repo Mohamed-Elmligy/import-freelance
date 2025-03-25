@@ -21,8 +21,7 @@ export class AppComponent {
   tostDir: any;
   ngOnInit() {
     this.languageService.initLanguage();
-    this.languageService.layoutDir() == 'rtl'
-      ? (this.tostDir = 'top-left')
-      : (this.tostDir = 'top-right');
+    this.tostDir =
+      this.languageService.layoutDir() == 'rtl' ? 'top-left' : 'top-right';
   }
 }

@@ -6,8 +6,7 @@ import { TranslateService } from '@ngx-translate/core';
 })
 export class LanguagesService {
   private translate = inject(TranslateService);
-  // defaultLanguage = signal<string>(this.translate.getBrowserLang() || 'ar');
-  defaultLanguage = signal<string>('ar');
+  defaultLanguage = signal<string>(this.translate.getBrowserLang() || 'ar');
   layoutDir = signal<any>(this.defaultLanguage() == 'en' ? 'ltr' : 'rtl');
   initLanguage() {
     this.translate.addLangs(['ar', 'en']);

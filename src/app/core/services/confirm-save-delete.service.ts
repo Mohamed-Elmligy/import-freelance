@@ -7,41 +7,50 @@ import { ConfirmationService } from 'primeng/api';
 export class ConfirmSaveDeleteService {
   private confirmationService = inject(ConfirmationService);
 
-  confirmSave(message: string, accept: () => void) {
+  private confirmAction(
+    header: string,
+    icon: string,
+    acceptLabel: string,
+    acceptSeverity: string,
+    message: string,
+    accept: () => void
+  ) {
     this.confirmationService.confirm({
-      header: 'Confirmation',
-      closable: true,
-      closeOnEscape: true,
-      icon: 'pi pi-exclamation-triangle',
+      header: header,
+      icon: icon,
       rejectButtonProps: {
         label: 'Cancel',
         severity: 'secondary',
         outlined: true,
       },
       acceptButtonProps: {
-        label: 'Save',
+        label: acceptLabel,
+        severity: acceptSeverity,
       },
       message: message,
       accept: accept,
     });
   }
 
+  confirmSave(message: string, accept: () => void) {
+    this.confirmAction(
+      'Confirmation',
+      'pi pi-exclamation-triangle',
+      'Save',
+      'primary',
+      message,
+      accept
+    );
+  }
+
   confirmDelete(message: string, accept: () => void) {
-    this.confirmationService.confirm({
-      header: 'Danger Zone',
-      icon: 'pi pi-info-circle',
-      rejectLabel: 'Cancel',
-      rejectButtonProps: {
-        label: 'Cancel',
-        severity: 'secondary',
-        outlined: true,
-      },
-      acceptButtonProps: {
-        label: 'Delete',
-        severity: 'danger',
-      },
-      message: message,
-      accept: accept,
-    });
+    this.confirmAction(
+      'Danger Zone',
+      'pi pi-info-circle',
+      'Delete',
+      'danger',
+      message,
+      accept
+    );
   }
 }

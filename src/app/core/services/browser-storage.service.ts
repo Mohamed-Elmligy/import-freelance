@@ -21,7 +21,7 @@ export class BrowserStorageService {
     }
     return this.cryptoJs.AES.encrypt(
       value,
-      environment.browser_storage_key
+      environment.encryptionKey
     ).toString();
   }
 
@@ -29,10 +29,7 @@ export class BrowserStorageService {
     if (!this.cryptoJs) {
       throw new Error('crypto-js module not loaded');
     }
-    const bytes = this.cryptoJs.AES.decrypt(
-      value,
-      environment.browser_storage_key
-    );
+    const bytes = this.cryptoJs.AES.decrypt(value, environment.encryptionKey);
     return bytes.toString(this.cryptoJs.enc.Utf8);
   }
 
