@@ -1,4 +1,4 @@
-<page-header [withBreadCrumb]="false" [title]="'expenses' | translate" [route]="route"/>
+<page-header [withBreadCrumb]="false" [title]="'EXPENSE_FORM' | translate" [route]="route"/>
 
 @if ((expenseId && isUpdate)|| (!expenseId && !isUpdate)) {
 <form class="max-w-3xl mx-auto" [formGroup]="form" (ngSubmit)="submit(form)">

@@ -1,4 +1,4 @@
-<page-header [withBreadCrumb]="false" [title]="'year' | translate" [route]="route"/>
+<page-header [withBreadCrumb]="false" [title]="'FISCAL_YEAR_FORM' | translate" [route]="route"/>
 
 @if ((yearId && isUpdate)|| (!yearId && !isUpdate)) {
 <form class="max-w-3xl mx-auto" [formGroup]="form" (ngSubmit)="submit(form)">
@@ -11,7 +11,7 @@
         class="w-full m-0 md:mx-2"
         formControlName="name"
       />
-      <label for="name">{{ "year" | translate }}</label>
+      <label for="name">{{ "FISCAL_YEAR_NAME" | translate }}</label>
     </p-floatlabel>
     <p-floatlabel variant="on" class="md:col-span-2 col-span-4 my-2">
       <input

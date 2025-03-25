@@ -1,4 +1,4 @@
-<page-header [withBreadCrumb]="false" [title]="'suppliers' | translate" [route]="route"/>
+<page-header [withBreadCrumb]="false" [title]="'SUPPLIER_FORM' | translate" [route]="route"/>
 
 @if ((supplierId && isUpdate)|| (!supplierId && !isUpdate)) {
 <form class="max-w-3xl mx-auto" [formGroup]="form" (ngSubmit)="submit(form)">
