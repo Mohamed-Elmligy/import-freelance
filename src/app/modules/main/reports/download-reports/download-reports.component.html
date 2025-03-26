@@ -19,7 +19,7 @@
             optionLabel="name"
             class="w-full"
             [(ngModel)]="selectedReport"
-            (onChange)="getSelectedReport($event)"
+            (onChange)="onReportTypeChange($event.value)"
             [showClear]="true"
           ></p-select>
           <label for="reportType" class="font-semibold">
@@ -81,12 +81,25 @@
               optionValue="id"
               [(ngModel)]="selectedSupplier"
               class="w-full"
-              [placeholder]="'SelectSupplier' | translate"
               [showClear]="true"
             ></p-select>
-            <label for="supplier">{{ "Supplier" | translate }}</label>
+            <label for="supplier">{{ "SelectSupplier" | translate }}</label>
           </p-floatlabel>
-        } 
+        }
+        @case ('customerFinancialReport') {
+          <p-floatlabel class="w-full" variant="over">
+            <p-select
+              inputId="customer"
+              [options]="reportService.listOfCustomers()"
+              optionLabel="name"
+              optionValue="id"
+              [(ngModel)]="selectedCustomer"
+              class="w-full"
+              [showClear]="true"
+            ></p-select>
+            <label for="customer">{{ "SelectCustomer" | translate }}</label>
+          </p-floatlabel>
+        }
       }
     </div>
 

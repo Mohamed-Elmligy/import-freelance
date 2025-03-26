@@ -90,8 +90,7 @@ export class ApiService {
     fileType: 'pdf' | 'xlsx'
   ) {
     if (!progress) return;
-
-    const url = URL.createObjectURL(progress.message);
+    const url = URL.createObjectURL(progress.message as Blob);
     const a = document.createElement('a');
     a.style.display = 'none';
     a.href = url;

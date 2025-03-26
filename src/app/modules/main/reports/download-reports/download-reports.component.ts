@@ -44,10 +44,12 @@ export default class DownloadReportsComponent {
     en: {
       containerDetails: 'Container Details',
       supplierReport: 'Supplier Report',
+      customerFinancialReport: 'Customer Financial Report',
     },
     ar: {
       containerDetails: 'شراء الحاوية',
       supplierReport: 'تقرير المورد',
+      customerFinancialReport: 'تقرير مالى للعميل',
     },
   };
   ngOnInit(): void {
@@ -64,18 +66,29 @@ export default class DownloadReportsComponent {
         ]['supplierReport'],
         code: 'supplierReport',
       },
+      {
+        name: this.reportsTypesTranslation[
+          this.languageService.layoutDir() === 'rtl' ? 'ar' : 'en'
+        ]['customerFinancialReport'],
+        code: 'customerFinancialReport',
+      },
     ];
   }
 
-  getSelectedReport(event: any) {
-    this.selectedReport.set(event.value);
-    if (this.selectedReport()?.code == 'invoiceDetails') {
-      this.reportService.getListOfCustomers();
-      this.reportService.getListOfInvoices();
-    }
+  onReportTypeChange(reportType: ReportType) {
+    this.selectedReport.set(reportType);
 
-    if (this.selectedReport()?.code == 'supplierReport') {
-      this.reportService.getListOfSuppliers();
+    switch (reportType.code) {
+      case 'invoiceDetails':
+        this.reportService.getListOfCustomers();
+        this.reportService.getListOfInvoices();
+        break;
+      case 'supplierReport':
+        this.reportService.getListOfSuppliers();
+        break;
+      case 'customerFinancialReport':
+        this.reportService.getListOfCustomers();
+        break;
     }
   }
 
@@ -108,6 +121,21 @@ export default class DownloadReportsComponent {
         supplier_code: this.selectedSupplier,
       });
     }
+
+    if (this.selectedReport()?.code == 'customerFinancialReport') {
+      if (!this.selectedCustomer) {
+        this.showMessageService.showMessage(
+          'error',
+          'Unvalid Paremeters',
+          'Please select customer'
+        );
+        return;
+      }
+      this.reportService.downloadReport(reportsApis['customerFinancialReport'], {
+        customer_id: this.selectedCustomer,
+      });
+    }
+
   }
 
   resetAll() {
