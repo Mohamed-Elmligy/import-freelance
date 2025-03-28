@@ -74,7 +74,7 @@ export default class ExpenseFormComponent {
     containerNumber: [null, [Validators.required]],
     amount: [null, [Validators.required]],
     expenseDate: [null, [Validators.required]],
-    description: [null, [Validators.required]],
+    description: [null, []],
   });
 
   submit(form: FormGroup) {

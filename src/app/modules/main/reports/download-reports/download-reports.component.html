@@ -5,10 +5,7 @@
 ></page-header>
 
 <section class="container mx-auto px-4 py-6">
-  <p-card 
-    class="max-w-4xl mx-auto shadow-lg"
-    [styleClass]="'report-card'"
-  >
+  <p-card class="max-w-4xl mx-auto shadow-lg" [styleClass]="'report-card'">
     <!-- Report Type Selection -->
     <ng-template #header>
       <div class="px-4 pt-4">
@@ -35,77 +32,83 @@
         {{ "ReportParameters" | translate }}
       </h2>
     </ng-template>
-    
+
     <ng-template #subtitle>
       <p class="text-gray-600 dark:text-gray-400 mb-6">
-        {{ "After selecting a report type, please select at least one of these parameters." | translate }}
+        {{
+          "After selecting a report type, please select at least one of these parameters."
+            | translate
+        }}
       </p>
     </ng-template>
 
     <!-- Dynamic Form Fields -->
     <div class="grid grid-cols-1 md:grid-cols-2 gap-4 px-4 pb-4">
-      @switch (selectedReport()?.code) { 
-        @case ('invoiceDetails') {
-          <p-floatlabel class="w-full" variant="over">
-            <p-select
-              inputId="customer"
-              [options]="reportService.listOfCustomers()"
-              optionLabel="name"
-              optionValue="id"
-              [(ngModel)]="selectedCustomer"
-              class="w-full"
-              [showClear]="true"
-            ></p-select>
-            <label for="customer">{{ "SelectCustomer" | translate }}</label>
-          </p-floatlabel>
+      @switch (selectedReport()?.code) { @case ('invoiceDetails') {
+      <p-floatlabel class="w-full" variant="over">
+        <p-select
+          inputId="customer"
+          [options]="reportService.listOfCustomers()"
+          optionLabel="name"
+          optionValue="id"
+          [(ngModel)]="selectedCustomer"
+          class="w-full"
+          [showClear]="true"
+        ></p-select>
+        <label for="customer">{{ "SelectCustomer" | translate }}</label>
+      </p-floatlabel>
 
-          <p-floatlabel class="w-full" variant="over">
-            <p-select
-              inputId="invoice"
-              [options]="reportService.listOfInvoices()"
-              optionLabel="invoice_number"
-              optionValue="id"
-              [(ngModel)]="selectedInvoice"
-              class="w-full"
-              [showClear]="true"
-            ></p-select>
-            <label for="invoice">{{ "SelectInvoice" | translate }}</label>
-          </p-floatlabel>
-        } 
-        @case ('supplierReport') {
-          <p-floatlabel class="w-full" variant="over">
-            <p-select
-              inputId="supplier"
-              [options]="reportService.listOfSuppliers()"
-              optionLabel="name"
-              optionValue="id"
-              [(ngModel)]="selectedSupplier"
-              class="w-full"
-              [showClear]="true"
-            ></p-select>
-            <label for="supplier">{{ "SelectSupplier" | translate }}</label>
-          </p-floatlabel>
-        }
-        @case ('customerFinancialReport') {
-          <p-floatlabel class="w-full" variant="over">
-            <p-select
-              inputId="customer"
-              [options]="reportService.listOfCustomers()"
-              optionLabel="name"
-              optionValue="id"
-              [(ngModel)]="selectedCustomer"
-              class="w-full"
-              [showClear]="true"
-            ></p-select>
-            <label for="customer">{{ "SelectCustomer" | translate }}</label>
-          </p-floatlabel>
-        }
-      }
+      <p-floatlabel class="w-full" variant="over">
+        <p-select
+          inputId="invoice"
+          [options]="reportService.listOfInvoices()"
+          optionLabel="invoice_number"
+          optionValue="id"
+          [(ngModel)]="selectedInvoice"
+          class="w-full"
+          [showClear]="true"
+        ></p-select>
+        <label for="invoice">{{ "SelectInvoice" | translate }}</label>
+      </p-floatlabel>
+      } @case ('supplierReport') {
+      <p-floatlabel class="w-full" variant="over">
+        <p-select
+          inputId="supplier"
+          [options]="reportService.listOfSuppliers()"
+          optionLabel="name"
+          optionValue="id"
+          [(ngModel)]="selectedSupplier"
+          class="w-full"
+          [showClear]="true"
+        ></p-select>
+        <label for="supplier">{{ "SelectSupplier" | translate }}</label>
+      </p-floatlabel>
+      } @default {
+      <!-- Handle customer-based reports -->
+      @if ([ 
+      'customerFinancialReport', 
+      'totalPaymentsReport',
+      'totalExpensesReport' ].includes(selectedReport()?.code || '')) {
+      <p-floatlabel class="w-full" variant="over">
+        <p-select
+          inputId="customer"
+          [options]="reportService.listOfCustomers()"
+          optionLabel="name"
+          optionValue="id"
+          [(ngModel)]="selectedCustomer"
+          class="w-full"
+          [showClear]="true"
+        ></p-select>
+        <label for="customer">{{ "SelectCustomer" | translate }}</label>
+      </p-floatlabel>
+      } } }
     </div>
 
     <!-- Action Buttons -->
     <ng-template #footer>
-      <div class="flex flex-col sm:flex-row justify-end gap-3 px-4 pt-4 border-t border-gray-200 dark:border-gray-700">
+      <div
+        class="flex flex-col sm:flex-row justify-end gap-3 px-4 pt-4 border-t border-gray-200 dark:border-gray-700"
+      >
         <p-button
           [label]="'Cancel' | translate"
           severity="secondary"
@@ -114,7 +117,7 @@
           class="flex-1 sm:flex-none"
           (onClick)="resetAll()"
         ></p-button>
-        
+
         <p-button
           [label]="'Download' | translate"
           icon="pi pi-download"
