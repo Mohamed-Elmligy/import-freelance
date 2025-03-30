@@ -39,6 +39,7 @@ export default class DownloadReportsComponent {
   selectedSupplier: SupplierList | undefined;
 
   selectedInvoice: InvoiceList | undefined;
+  containerSequence: string | undefined;
 
   reportsTypesTranslation = {
     en: {
@@ -100,6 +101,7 @@ export default class DownloadReportsComponent {
     const selectedCustomer = this.selectedCustomer;
     const selectedSupplier = this.selectedSupplier;
     const selectedInvoice = this.selectedInvoice;
+    const containerSequence = this.containerSequence;
 
     if (!selectedReport) {
       return;
@@ -116,7 +118,7 @@ export default class DownloadReportsComponent {
 
     switch (selectedReport.code) {
       case 'invoiceDetails':
-        if (!selectedCustomer && !selectedInvoice) {
+        if (!selectedCustomer && !containerSequence) {
           this.showMessageService.showMessage(
             'error',
             'Unvalid Paremeters',
@@ -129,8 +131,8 @@ export default class DownloadReportsComponent {
           params.customer_id = selectedCustomer;
         }
 
-        if (selectedInvoice) {
-          params.invoice_number = selectedInvoice;
+        if (containerSequence) {
+          params.container_number = containerSequence;
         }
 
         break;

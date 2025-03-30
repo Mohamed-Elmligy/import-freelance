@@ -57,8 +57,20 @@
         ></p-select>
         <label for="customer">{{ "SelectCustomer" | translate }}</label>
       </p-floatlabel>
-
       <p-floatlabel class="w-full" variant="over">
+        <input
+          pInputText
+          id="containerSequence"
+          autocomplete="off"
+          [(ngModel)]="containerSequence"
+          class="w-full"
+        />
+        <label for="containerSequence">{{
+          "containerSequance" | translate
+        }}</label>
+      </p-floatlabel>
+
+      <!-- <p-floatlabel class="w-full" variant="over">
         <p-select
           inputId="invoice"
           [options]="reportService.listOfInvoices()"
@@ -69,7 +81,7 @@
           [showClear]="true"
         ></p-select>
         <label for="invoice">{{ "SelectInvoice" | translate }}</label>
-      </p-floatlabel>
+      </p-floatlabel> -->
       } @case ('supplierReport') {
       <p-floatlabel class="w-full" variant="over">
         <p-select
@@ -85,9 +97,7 @@
       </p-floatlabel>
       } @default {
       <!-- Handle customer-based reports -->
-      @if ([ 
-      'customerFinancialReport', 
-      'totalPaymentsReport',
+      @if ([ 'customerFinancialReport', 'totalPaymentsReport',
       'totalExpensesReport' ].includes(selectedReport()?.code || '')) {
       <p-floatlabel class="w-full" variant="over">
         <p-select

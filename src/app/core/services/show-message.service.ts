@@ -12,7 +12,7 @@ export class ShowMessageService {
       severity: type,
       summary: summary,
       detail: detail,
-      life: 3000,
+      life: 8000,
     });
   }
 }

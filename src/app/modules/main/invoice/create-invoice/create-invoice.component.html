@@ -1,4 +1,8 @@
-<page-header [withBreadCrumb]="false" [title]="'invoiceDetails' | translate" [route]="route"/>
+<page-header
+  [withBreadCrumb]="false"
+  [title]="'invoiceDetails' | translate"
+  [route]="route"
+/>
 
 @if ((invoiceId && isUpdate)|| (!invoiceId && !isUpdate)) {
 <form
@@ -43,7 +47,7 @@
         styleClass="w-full"
         formControlName="item_category"
       />
-      <label for="item_category">{{ "itemsCategory" | translate }}</label>
+      <label for="item_category">{{ "ITEMS_CATEGORY" | translate }}</label>
     </p-floatlabel>
   </div>
 
@@ -85,13 +89,6 @@
 
   <div class="grid grid-cols-5 gap-5">
     <div class="md:col-span-1 col-span-3 my-2 bg-gray-100 p-4 rounded-md">
-      <label class="text-md font-bold" for="total_invoice">{{
-        "total_invoice" | translate
-      }}</label>
-      <p>{{ form.get("total_amount")?.value }}</p>
-    </div>
-
-    <div class="md:col-span-1 col-span-3 my-2 bg-gray-100 p-4 rounded-md">
       <label class="text-md font-bold" for="boxQnt">{{
         "boxQnt" | translate
       }}</label>
@@ -111,6 +108,14 @@
       }}</label>
       <p>{{ form.get("total_weight")?.value }}</p>
     </div>
+
+    <div class="md:col-span-1 col-span-3 my-2 bg-gray-100 p-4 rounded-md">
+      <label class="text-md font-bold" for="total_invoice">{{
+        "total_invoice" | translate
+      }}</label>
+      <p>{{ form.get("total_amount")?.value }}</p>
+    </div>
+
     <div class="md:col-span-1 col-span-3 my-2 bg-gray-100 p-4 rounded-md">
       <label class="text-md font-bold" for="netAmount">{{
         "netAmount" | translate
@@ -222,7 +227,7 @@
                     {{ "item" | translate }}
                   </th>
                   <th scope="col" class="px-4 py-3 text-center">
-                    {{ "description" | translate }}
+                    {{ "ITEM_NAME" | translate }}
                   </th>
                   <th scope="col" class="px-4 py-3 text-center">
                     {{ "boxQnt" | translate }}
@@ -273,6 +278,7 @@
                         formControlName="container_sequence"
                         class="w-full"
                         pSize="small"
+                        style="width: 50px !important"
                       />
                     </td>
                     <td
@@ -284,7 +290,7 @@
                         autocomplete="off"
                         formControlName="item_code"
                         pSize="small"
-                        style="width: 200px !important"
+                        style="width: 50px !important"
                       />
                     </td>
                     <td
@@ -295,7 +301,7 @@
                         id="desorption"
                         autocomplete="off"
                         formControlName="item_description"
-                        style="width: 300px !important"
+                        style="width: 200px !important"
                         pSize="small"
                       />
                     </td>
@@ -307,7 +313,7 @@
                         id="boxQnt"
                         autocomplete="off"
                         formControlName="box_count"
-                        style="width: 75px !important"
+                        style="width: 70px !important"
                         pSize="small"
                       />
                     </td>
@@ -319,7 +325,7 @@
                         id="qunNumber"
                         autocomplete="off"
                         formControlName="item_in_box"
-                        style="width: 75px !important"
+                        style="width: 70px !important"
                         pSize="small"
                       />
                     </td>
@@ -331,7 +337,7 @@
                         id="price"
                         autocomplete="off"
                         formControlName="item_price"
-                        style="width: 75px !important"
+                        style="width: 70px !important"
                         pSize="small"
                       />
                     </td>
@@ -343,7 +349,7 @@
                         id="CBM_store"
                         autocomplete="off"
                         formControlName="store_cbm"
-                        style="width: 75px !important"
+                        style="width: 70px !important"
                         pSize="small"
                       />
                     </td>
@@ -355,7 +361,7 @@
                         id="CBM_height"
                         autocomplete="off"
                         formControlName="height"
-                        style="width: 75px !important"
+                        style="width: 70px !important"
                         pSize="small"
                       />
                     </td>
@@ -367,7 +373,7 @@
                         id="CBM_width"
                         autocomplete="off"
                         formControlName="width"
-                        style="width: 75px !important"
+                        style="width: 70px !important"
                       />
                     </td>
                     <td
@@ -378,7 +384,7 @@
                         id="CBM_length"
                         autocomplete="off"
                         formControlName="length"
-                        style="width: 75px !important"
+                        style="width: 70px !important"
                         pSize="small"
                       />
                     </td>
@@ -390,7 +396,7 @@
                         id="weight"
                         autocomplete="off"
                         formControlName="weight"
-                        style="width: 75px !important"
+                        style="width: 70px !important"
                         pSize="small"
                       />
                     </td>
@@ -456,7 +462,8 @@
   >
     <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
       <div class="invoice-field">
-        <b>{{ "invoiceNumber" | translate }}:</b> {{ invoiceData.invoice_number }}
+        <b>{{ "invoiceNumber" | translate }}:</b>
+        {{ invoiceData.invoice_number }}
       </div>
       <div class="invoice-field">
         <b>{{ "date" | translate }}:</b> {{ invoiceData.invoice_date }}
@@ -477,7 +484,8 @@
         <b>{{ "totalWeight" | translate }}:</b> {{ invoiceData.total_weight }}
       </div>
       <div class="invoice-field">
-        <b>{{ "itemsCategory" | translate }}:</b> {{ invoiceData.item_category }}
+        <b>{{ "ITEMS_CATEGORY" | translate }}:</b>
+        {{ invoiceData.item_category }}
       </div>
     </div>
 
@@ -486,7 +494,8 @@
         <b>{{ "total_invoice" | translate }}:</b> {{ invoiceData.total_amount }}
       </div>
       <div class="invoice-field">
-        <b>{{ "total_discount" | translate }}:</b> {{ invoiceData.discount_amount }}
+        <b>{{ "total_discount" | translate }}:</b>
+        {{ invoiceData.discount_amount }}
       </div>
       <div class="invoice-field">
         <b>{{ "net_invoice" | translate }}:</b> {{ invoiceData.net_amount }}
@@ -499,23 +508,33 @@
         {{ invoiceData.first_payment_amount }}
       </div>
       <div class="invoice-payment">
-        <span><b>{{ "firstBatchDate" | translate }}:</b></span>
+        <span
+          ><b>{{ "firstBatchDate" | translate }}:</b></span
+        >
         {{ invoiceData.first_payment_date }}
       </div>
       <div class="invoice-payment">
-        <span><b>{{ "secondBatchNumber" | translate }}:</b></span>
+        <span
+          ><b>{{ "secondBatchNumber" | translate }}:</b></span
+        >
         {{ invoiceData.second_payment_amount }}
       </div>
       <div class="invoice-payment">
-        <span><b>{{ "secondBatchDate" | translate }}:</b></span>
+        <span
+          ><b>{{ "secondBatchDate" | translate }}:</b></span
+        >
         {{ invoiceData.second_payment_date }}
       </div>
       <div class="invoice-payment">
-        <span><b>{{ "thirdBatchNumber" | translate }}:</b></span>
+        <span
+          ><b>{{ "thirdBatchNumber" | translate }}:</b></span
+        >
         {{ invoiceData.third_payment_amount }}
       </div>
       <div class="invoice-payment">
-        <span><b>{{ "thirdBatchDate" | translate }}:</b></span>
+        <span
+          ><b>{{ "thirdBatchDate" | translate }}:</b></span
+        >
         {{ invoiceData.third_payment_date }}
       </div>
     </div>
@@ -527,6 +546,7 @@
       responsiveLayout="scroll"
       showGridlines
       stripedRows
+      styleClass="p-datatable-sm"
     >
       <ng-template pTemplate="header">
         <tr>
