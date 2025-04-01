@@ -14,6 +14,8 @@
         autocomplete="off"
         formControlName="customerCode"
         class="w-full"
+        [readonly]="true"
+        [value]="customerData.code"
       />
       <label for="customerCode">{{ "code" | translate }}</label>
     </p-floatlabel>

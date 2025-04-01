@@ -3,4 +3,5 @@ export const CUSTOMER_APIS = {
   DELETE_CUSTOMER: (id: number) => `customer/${id}/delete`,
   UPDATE_CUSTOMER: (id: number) => `customer/${id}/update`,
   GET_CUSTOMER: (id: number) => `customer/${id}`,
+  GET_CUSTOMER_SEQUENCE: 'customer/next-sequence',
 };

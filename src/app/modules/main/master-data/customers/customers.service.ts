@@ -18,6 +18,9 @@ export class CustomersService {
 
   customerHeaders = ['name', 'email', 'code', 'commission', 'created_at'];
 
+  customerCode: string = '';
+
+
   getList(page?: any, size?: any, filter?: any) {
     return this.apiService.getDataFromServer(
       `customer/list`,
@@ -30,7 +33,6 @@ export class CustomersService {
     return {
       name: form.get('name')?.value,
       email: form.get('email')?.value,
-      code: form.get('customerCode')?.value,
       commission: form.get('commission')?.value,
       description: form.get('description')?.value,
     };
@@ -148,5 +150,9 @@ export class CustomersService {
           this.showMessageService.showMessage('error', 'Error', err.error);
         },
       });
+  }
+
+  getCustomerSequence() {
+    return this.apiService.getDataFromServer(CUSTOMER_APIS.GET_CUSTOMER_SEQUENCE);
   }
 }

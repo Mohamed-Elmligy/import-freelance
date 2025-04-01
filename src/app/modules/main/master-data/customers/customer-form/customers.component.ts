@@ -48,7 +48,7 @@ export default class CustomersComponent implements OnInit {
     id: 0,
     name: '',
     email: '',
-    code: 0,
+    code: '',
     commission: '',
     description: '',
   };
@@ -59,12 +59,15 @@ export default class CustomersComponent implements OnInit {
   form: FormGroup = this.formBuilder.group({
     name: [null, [Validators.required]],
     email: [null, []],
-    customerCode: [null, [Validators.required]],
+    // customerCode: [null, [Validators.required]],
     commission: [null, [Validators.required]],
     description: [null, []],
   });
 
   ngOnInit() {
+    this.customersService.getCustomerSequence().subscribe((data: any) => {
+      this.customerData.code = data.next_sequence;
+    })
     this.route = [
       {
         icon: 'pi pi-users',
@@ -73,6 +76,7 @@ export default class CustomersComponent implements OnInit {
       },
       { label: 'customers', route: this.mainPaths.customers },
     ];
+
 
     this.activatedRoute.queryParams.subscribe((params) => {
       this.isUpdate = params['edit'] === 'true';
