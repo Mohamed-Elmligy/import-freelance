@@ -96,22 +96,22 @@ export default class CreateInvoiceComponent {
     customer: [null],
     supplier: [null],
     item_category: [null],
-    total_amount: [0.00],
-    discount_amount: [0.00],
-    net_amount: [0.00],
+    total_amount: [0.0],
+    discount_amount: [0.0],
+    net_amount: [0.0],
     invoice_number: [null],
-    total_boxes: [0.00],
-    total_cbm: [0.00],
-    totalCBM: [0.00],
-    total_weight: [0.00],
-    invoice_date: [null],
-    first_payment_amount: [0.00],
+    total_boxes: [0.0],
+    total_cbm: [0.0],
+    totalCBM: [0.0],
+    total_weight: [0.0],
+    invoice_date: [new Date()], // Set default to current date
+    first_payment_amount: [0.0],
     first_payment_date: [null],
-    second_payment_amount: [0.00],
+    second_payment_amount: [0.0],
     second_payment_date: [null],
-    third_payment_amount: [0.00],
+    third_payment_amount: [0.0],
     third_payment_date: [null],
-    fourth_payment_amount: [0.00],
+    fourth_payment_amount: [0.0],
     fourth_payment_date: [null],
     invoice_lines: this.formBuilder.array([], []),
   });
@@ -123,12 +123,12 @@ export default class CreateInvoiceComponent {
       item_description: [null],
       box_count: [0],
       item_in_box: [0],
-      item_price: [0.00],
-      store_cbm: [0.00],
-      height: [0.00],
-      width: [0.00],
-      length: [0.00],
-      weight: [0.00],
+      item_price: [0.0],
+      store_cbm: [0.0],
+      height: [0.0],
+      width: [0.0],
+      length: [0.0],
+      weight: [0.0],
       id: [null],
     });
   }
@@ -203,6 +203,13 @@ export default class CreateInvoiceComponent {
       },
       { label: 'invoices', route: this.mainPaths.invoices },
     ];
+
+    // Set today's date for new invoices
+    if (!this.invoiceId && !this.isUpdate) {
+      this.form.patchValue({
+        invoice_date: new Date(),
+      });
+    }
 
     if (this.invoiceId) {
       this.isUpdate ? this.getForUpdateInvoice() : this.getInvoiceById();

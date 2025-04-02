@@ -24,7 +24,7 @@ export class InvoiceService {
   invoiceHeaders = [
     'invoiceNumber',
     'name',
-    'supplierName',
+    'SUPPLIER_NAME',
     'invoiceDate',
     'totalAmount',
     'netAmount',
@@ -46,6 +46,7 @@ export class InvoiceService {
       invoice_number: form.value.invoice_number,
       invoice_date: formatDate(form.value.invoice_date, 'yyyy-MM-dd', 'en'),
       total_amount: form.value.total_amount,
+      net_amount: form.value.net_amount,
       discount_amount: form.value.discount_amount,
       first_payment_amount: form.value.first_payment_amount,
       first_payment_date: formatPaymentDate(form.value.first_payment_date),
@@ -86,6 +87,7 @@ export class InvoiceService {
       invoice_number: data.invoice_number,
       invoice_date: new Date(data.invoice_date),
       total_amount: data.total_amount,
+      net_amount: data.net_amount,
       total_boxes: data.total_boxes,
       total_weight: data.total_weight,
       total_cbm: data.total_cbm,
@@ -134,7 +136,7 @@ export class InvoiceService {
       return {
         invoiceNumber: item.invoice_number,
         name: item.customer,
-        supplierName: item.supplier,
+        SUPPLIER_NAME: item.supplier,
         invoiceDate: item.invoice_date,
         totalAmount: item.total_amount,
         netAmount: item.net_amount,
