@@ -3,4 +3,5 @@ export const SUPPLIERS_APIS = {
   DELETE_SUPPLIERS: (id: number) => `supplier/${id}/delete`,
   UPDATE_SUPPLIERS: (id: number) => `supplier/${id}/update`,
   GET_SUPPLIERS: (id: number) => `supplier/${id}`,
+  GET_SUPPLIER_SEQUENCE: 'supplier/next-sequence',
 };

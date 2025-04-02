@@ -1,4 +1,3 @@
-
 import { Component, inject } from '@angular/core';
 import {
   FormBuilder,
@@ -32,8 +31,8 @@ import { PageHeaderComponent } from '../../../../shared/components/page-header/p
     FormsModule,
     ReactiveFormsModule,
     TextareaModule,
-    PageHeaderComponent
-],
+    PageHeaderComponent,
+  ],
   templateUrl: './suppliers.component.html',
   styles: ``,
 })
@@ -48,15 +47,7 @@ export default class SuppliersComponent {
   isUpdate = this.activatedRoute.snapshot.queryParams['edit'] == 'true';
   supplierId = this.activatedRoute.snapshot.queryParams['supplierId'];
 
-  protected form = this.formBuilder.group({
-    supplierName: [null, [Validators.required]],
-    email: [null, []],
-    supplierCode: [null, [Validators.required]],
-    storeNumber: [null, [Validators.required]],
-    description: [null, []],
-  });
-
-  suppliertData: {
+  supplierData: {
     name: string;
     email: string;
     code: string;
@@ -70,10 +61,22 @@ export default class SuppliersComponent {
     description: '',
   };
 
+  form: FormGroup = this.formBuilder.group({
+    supplierName: [null, [Validators.required]],
+    email: [null, []],
+    // supplierCode: [null, [Validators.required]],
+    storeNumber: [null, [Validators.required]],
+    description: [null, []],
+  });
+
   submit(form: FormGroup) {
     if (form.valid) {
-      if (!this.isUpdate) this.supplierService.createSupplier(form);
-      else this.supplierService.updateSupplier(form, this.supplierId);
+      // const formData = form.getRawValue();
+      if (this.isUpdate) {
+        this.supplierService.updateSupplier(form, this.supplierId!);
+      } else {
+        this.supplierService.createSupplier(form);
+      }
     }
   }
 
@@ -81,6 +84,9 @@ export default class SuppliersComponent {
     form.reset();
   }
   ngOnInit() {
+    this.supplierService.getSupplierSequence().subscribe((data: any) => {
+      this.supplierData.code = data.next_sequence;
+    });
     this.route = [
       {
         icon: 'pi  pi-truck',
@@ -98,7 +104,7 @@ export default class SuppliersComponent {
     this.supplierService
       .getSupplierById(this.supplierId)
       .subscribe((data: any) => {
-        this.suppliertData = data;
+        this.supplierData = data;
       });
   }
 

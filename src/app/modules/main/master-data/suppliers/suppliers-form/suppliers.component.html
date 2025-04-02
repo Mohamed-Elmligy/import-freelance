@@ -10,6 +10,8 @@
         autocomplete="off"
         formControlName="supplierCode"
         class="w-full"
+        [readonly]="true"
+        [value]="supplierData.code"
       />
       <label for="supplierCode">{{ "SUPPLIER_CODE" | translate }}</label>
     </p-floatlabel>
@@ -82,7 +84,7 @@
         {{ "name" | translate }}:
       </h2>
       <p class="text-base text-gray-600">
-        {{ suppliertData.name }}
+        {{ supplierData.name }}
       </p>
     </div>
     <div>
@@ -90,7 +92,7 @@
         {{ "email" | translate }}:
       </h2>
       <p class="text-base text-gray-600">
-        {{ suppliertData.email }}
+        {{ supplierData.email }}
       </p>
     </div>
     <div>
@@ -98,7 +100,7 @@
         {{ "code" | translate }}:
       </h2>
       <p class="text-base text-gray-600">
-        {{ suppliertData.code }}
+        {{ supplierData.code }}
       </p>
     </div>
     <div>
@@ -106,7 +108,7 @@
         {{ "storeNumber" | translate }}:
       </h2>
       <p class="text-base text-gray-600">
-        {{ suppliertData.store_number }}
+        {{ supplierData.store_number }}
       </p>
     </div>
     <div class="md:col-span-2">
@@ -114,7 +116,7 @@
         {{ "description" | translate }}:
       </h2>
       <p class="text-base text-gray-600">
-        {{ suppliertData.description }}
+        {{ supplierData.description }}
       </p>
     </div>
   </div>

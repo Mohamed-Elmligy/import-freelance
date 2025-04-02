@@ -44,7 +44,14 @@ export default class CustomersComponent implements OnInit {
   private formBuilder = inject(FormBuilder);
   private customersService = inject(CustomersService);
 
-  customerData = {
+  customerData:{
+    id: number;
+    name: string;
+    email: string;
+    code: string;
+    commission: string;
+    description: string;
+  } = {
     id: 0,
     name: '',
     email: '',
@@ -63,6 +70,19 @@ export default class CustomersComponent implements OnInit {
     commission: [null, [Validators.required]],
     description: [null, []],
   });
+
+  submit(form: FormGroup) {
+    if (form.valid) {
+      if (this.isUpdate) {
+        this.customersService.updateCustomer(
+          form,
+          this.customerId?.toString()!
+        );
+      } else {
+        this.customersService.createCustomerApi(form);
+      }
+    }
+  }
 
   ngOnInit() {
     this.customersService.getCustomerSequence().subscribe((data: any) => {
@@ -99,18 +119,7 @@ export default class CustomersComponent implements OnInit {
       });
   }
 
-  submit(form: FormGroup) {
-    if (form.valid) {
-      if (this.isUpdate) {
-        this.customersService.updateCustomer(
-          form,
-          this.customerId?.toString()!
-        );
-      } else {
-        this.customersService.createCustomerApi(form);
-      }
-    }
-  }
+  
 
   reset(form: FormGroup) {
     form.reset();

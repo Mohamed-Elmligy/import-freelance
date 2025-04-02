@@ -12,7 +12,13 @@ export class SuppliersService {
   private showMessageService = inject(ShowMessageService);
   suppliertDeleted = signal(false);
 
-  SupplierHeaders = ['SUPPLIER_NAME', 'email', 'SUPPLIER_CODE', 'store_number', 'created_at'];
+  SupplierHeaders = [
+    'SUPPLIER_NAME',
+    'email',
+    'SUPPLIER_CODE',
+    'store_number',
+    'created_at',
+  ];
 
   getList(page?: any, size?: any) {
     return this.apiService.getDataFromServer(`supplier/list`, { page, size });
@@ -20,7 +26,7 @@ export class SuppliersService {
 
   componentModelToApiModel(form: FormGroup) {
     return {
-      name: form.get('SUPPLIER_NAME')?.value,
+      name: form.get('supplierName')?.value,
       email: form.get('email')?.value,
       code: form.get('customerCode')?.value,
       store_number: form.get('storeNumber')?.value,
@@ -120,5 +126,11 @@ export class SuppliersService {
           this.showMessageService.showMessage('error', 'Error', err.error);
         },
       });
+  }
+
+  getSupplierSequence() {
+    return this.apiService.getDataFromServer(
+      SUPPLIERS_APIS.GET_SUPPLIER_SEQUENCE
+    );
   }
 }
