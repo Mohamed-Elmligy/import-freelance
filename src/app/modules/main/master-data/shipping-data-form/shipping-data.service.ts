@@ -22,11 +22,14 @@ export class ShippingDataService {
     'ShippingDate',
     'port',
     'created_at',
-    'actions',
   ];
 
-  getList() {
-    return this.apiService.getDataFromServer(`shipment/list`);
+  getList(page?: any, size?: any, filter?: any) {
+    return this.apiService.getDataFromServer(
+      `shipment/list`,
+      { page, size },
+      filter
+    );
   }
 
   componentModelToApiModel(form: FormGroup) {

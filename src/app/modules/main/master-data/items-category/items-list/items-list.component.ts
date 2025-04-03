@@ -4,13 +4,6 @@ import { Component, effect, inject, OnInit, viewChild } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
-import {
-  MatPaginatorModule,
-  MatPaginator,
-  PageEvent,
-} from '@angular/material/paginator';
-import { MatSortModule, Sort } from '@angular/material/sort';
-import { MatTableModule, MatTableDataSource } from '@angular/material/table';
 import { RouterModule, Router } from '@angular/router';
 import { TranslateModule } from '@ngx-translate/core';
 import { ButtonModule } from 'primeng/button';
@@ -25,17 +18,16 @@ import { LanguagesService } from '../../../../shared/services/languages.service'
 import { main_routes_paths } from '../../../main.routes';
 import { ItemsCategoryService } from '../items-category.service';
 import { HttpClient } from '@angular/common/http';
+import { TableModule } from 'primeng/table';
 
 @Component({
   selector: 'app-items-list',
   imports: [
     ButtonModule,
     RouterModule,
-    MatTableModule,
-    MatPaginatorModule,
+    TableModule, // Added PrimeNG TableModule
     MatFormFieldModule,
     MatInputModule,
-    MatSortModule,
     InputTextModule,
     FormsModule,
     TranslateModule,
@@ -44,8 +36,8 @@ import { HttpClient } from '@angular/common/http';
     PanelModule,
     DatePickerModule,
     TooltipModule,
-    Toolbar
-],
+    Toolbar,
+  ],
   templateUrl: './items-list.component.html',
   styles: ``,
 })
@@ -56,9 +48,7 @@ export default class ItemsListComponent {
   securityService = inject(SecurityService);
   private router = inject(Router);
   private http = inject(HttpClient);
-
-  readonly paginator = viewChild.required(MatPaginator);
-  dataSource!: MatTableDataSource<any>;
+  dataSource: any[] = []; // Changed to array for PrimeNG table
 
   main_routes = main_routes_paths;
   displayedColumns: string[] = [];
@@ -73,35 +63,33 @@ export default class ItemsListComponent {
     });
   }
 
-  getItemsList() {
-    this.ItemsCategoryService.getList().subscribe((data: any) => {
+  getItemsList(page: number = 1, size: number = 10) {
+    this.ItemsCategoryService.getList(page, size).subscribe((data: any) => {
       this.tableColumns = this.ItemsCategoryService.itemsHeaders;
       this.displayedColumns = this.ItemsCategoryService.itemsHeaders;
-      let ModifideData = this.ItemsCategoryService.apiModelToComponentModelList(
+      this.dataSource = this.ItemsCategoryService.apiModelToComponentModelList(
         data.results
       );
-      this.dataSource = new MatTableDataSource<any>(ModifideData);
       this.resultsLength = data.count;
     });
   }
 
   applyFilter(event: Event) {
     const filterValue = (event.target as HTMLInputElement).value;
-    this.dataSource.filter = filterValue.trim().toLowerCase();
+    this.dataSource = this.dataSource.filter((item) =>
+      Object.values(item).some((val) =>
+        String(val).toLowerCase().includes(filterValue.trim().toLowerCase())
+      )
+    );
   }
 
-  announceSortChange(sortState: Sort) {
-    this.loadData({ sort: sortState.active, order: sortState.direction });
-  }
-
-  onPageChange(event: PageEvent) {
-    this.loadData({ page: event.pageIndex + 1, pageSize: event.pageSize });
-  }
-
-  loadData(params: any) {
-    this.http.get('/api/items', { params }).subscribe((data: any) => {
-      this.dataSource = data.items;
-      this.resultsLength = data.total;
+  announceSortChange(sortState: any) {
+    this.dataSource.sort((a, b) => {
+      const valueA = a[sortState.active];
+      const valueB = b[sortState.active];
+      if (valueA < valueB) return sortState.direction === 'asc' ? -1 : 1;
+      if (valueA > valueB) return sortState.direction === 'asc' ? 1 : -1;
+      return 0;
     });
   }
 

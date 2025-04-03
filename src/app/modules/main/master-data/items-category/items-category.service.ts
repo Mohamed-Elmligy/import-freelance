@@ -15,10 +15,14 @@ export class ItemsCategoryService {
   listOfCustomers = signal([]);
   itemDeleted = signal(false);
 
-  itemsHeaders = ['item', 'created_at', 'actions'];
+  itemsHeaders = ['item', 'created_at'];
 
-  getList() {
-    return this.apiService.getDataFromServer(`item/list`);
+  getList(page?: any, size?: any, filter?: any) {
+    return this.apiService.getDataFromServer(
+      `item/list`,
+      { page, size },
+      filter
+    );
   }
 
   componentModelToApiModel(form: FormGroup) {
