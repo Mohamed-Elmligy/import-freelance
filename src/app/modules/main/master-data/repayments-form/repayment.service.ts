@@ -4,6 +4,7 @@ import { FormGroup } from '@angular/forms';
 import { ApiService } from '../../../../core/services/api.service';
 import { ShowMessageService } from '../../../../core/services/show-message.service';
 import { TRANSACTION_APIS, TRANSACTION_LOOKUP_APIS } from './transaction.apis';
+import { ConfirmSaveDeleteService } from '../../../../core/services/confirm-save-delete.service';
 
 @Injectable({
   providedIn: 'root',
@@ -11,6 +12,7 @@ import { TRANSACTION_APIS, TRANSACTION_LOOKUP_APIS } from './transaction.apis';
 export class RepaymentService {
   private apiService = inject(ApiService);
   private location = inject(Location);
+  private confirmService = inject(ConfirmSaveDeleteService);
   private showMessageService = inject(ShowMessageService);
   listOfCustomers = signal([]);
   listOfSuppliers = signal([]);
@@ -25,11 +27,14 @@ export class RepaymentService {
     'invoiceNumber',
     'transactionDate',
     'created_at',
-    'actions',
   ];
 
-  getList() {
-    return this.apiService.getDataFromServer(`transaction/list`);
+  getList(page?: any, size?: any, filter?: any) {
+    return this.apiService.getDataFromServer(
+      `transaction/list`,
+      { page, size },
+      filter
+    );
   }
 
   componentModelToApiModel(form: FormGroup) {
@@ -146,6 +151,15 @@ export class RepaymentService {
   }
 
   deleteTransaction(id: string) {
+    this.confirmService.confirmDelete(
+      'Are you sure you want to delete this transaction?',
+      () => {
+        this.deleteTransactioneApi(id);
+      }
+    );
+  }
+
+  deleteTransactioneApi(id: string) {
     this.apiService
       .deleteDataOnServer(TRANSACTION_APIS.DELETE_TRNSACTION(+id))
       .subscribe({

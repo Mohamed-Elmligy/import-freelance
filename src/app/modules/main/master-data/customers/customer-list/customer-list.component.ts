@@ -32,8 +32,8 @@ import { CustomersService } from '../customers.service';
     Toolbar,
     PanelModule,
     DatePickerModule,
-    TooltipModule
-],
+    TooltipModule,
+  ],
   templateUrl: './customer-list.component.html',
   styles: ``,
 })
@@ -67,12 +67,6 @@ export default class CustomerListComponent {
       this.dataSource = ModifideData;
       this.resultsLength = data.count;
     });
-  }
-
-  loadCustomers(event: any) {
-    const page = event.first / event.rows;
-    const size = event.rows;
-    this.getCustomersList(page, size);
   }
 
   applyFilters() {

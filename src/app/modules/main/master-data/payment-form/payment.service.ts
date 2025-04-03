@@ -4,6 +4,7 @@ import { FormGroup } from '@angular/forms';
 import { ApiService } from '../../../../core/services/api.service';
 import { ShowMessageService } from '../../../../core/services/show-message.service';
 import { PAYMENT_APIS } from './payment.apis';
+import { ConfirmSaveDeleteService } from '../../../../core/services/confirm-save-delete.service';
 
 @Injectable({
   providedIn: 'root',
@@ -11,14 +12,19 @@ import { PAYMENT_APIS } from './payment.apis';
 export class PaymentService {
   private apiService = inject(ApiService);
   private location = inject(Location);
+  private confirmService = inject(ConfirmSaveDeleteService);
   private showMessageService = inject(ShowMessageService);
   listOfCustomers = signal([]);
   paymentDeleted = signal(false);
 
-  PaymentHeaders = ['name', 'amount', 'paymentDate', 'created_at', 'actions'];
+  PaymentHeaders = ['name', 'amount', 'paymentDate', 'created_at'];
 
-  getList() {
-    return this.apiService.getDataFromServer(`payments/list`);
+  getList(page?: any, size?: any, filter?: any) {
+    return this.apiService.getDataFromServer(
+      `payments/list`,
+      { page, size },
+      filter
+    );
   }
 
   componentModelToApiModel(form: FormGroup) {
@@ -112,6 +118,15 @@ export class PaymentService {
   }
 
   deletePayment(id: string) {
+    this.confirmService.confirmDelete(
+      'Are you sure you want to delete this payment?',
+      () => {
+        this.deletePaymentApi(id);
+      }
+    );
+  }
+
+  deletePaymentApi(id: string) {
     this.apiService
       .deleteDataOnServer(PAYMENT_APIS.DELETE_PAYMENT(+id))
       .subscribe({

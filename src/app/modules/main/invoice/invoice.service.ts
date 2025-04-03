@@ -28,11 +28,14 @@ export class InvoiceService {
     'invoiceDate',
     'totalAmount',
     'netAmount',
-    'actions',
   ];
 
-  getList() {
-    return this.apiService.getDataFromServer(`invoice/list`);
+  getList(page?: any, size?: any, filter?: any) {
+    return this.apiService.getDataFromServer(
+      `invoice/list`,
+      { page, size },
+      filter
+    );
   }
 
   componentModelToApiModel(form: FormGroup) {
@@ -219,7 +222,7 @@ export class InvoiceService {
             'Invoice has been deleted successfully'
           );
           this.invoiceDeleted.set(true);
-        }),
+        })
       )
       .subscribe();
   }

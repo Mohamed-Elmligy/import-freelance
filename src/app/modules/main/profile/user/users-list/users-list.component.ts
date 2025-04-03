@@ -8,11 +8,6 @@ import {
   Validators,
 } from '@angular/forms';
 import { PaginatorModule } from 'primeng/paginator';
-import { MatFormFieldModule } from '@angular/material/form-field';
-import { MatInputModule } from '@angular/material/input';
-import { MatPaginatorModule, MatPaginator } from '@angular/material/paginator';
-import { MatSortModule, Sort } from '@angular/material/sort';
-import { MatTableModule, MatTableDataSource } from '@angular/material/table';
 import { RouterModule, Router } from '@angular/router';
 import { TranslateModule } from '@ngx-translate/core';
 import { ButtonModule } from 'primeng/button';
@@ -29,18 +24,15 @@ import { Dialog } from 'primeng/dialog';
 import { PasswordModule } from 'primeng/password';
 import { ShowMessageService } from '../../../../../core/services/show-message.service';
 import { ConfirmSaveDeleteService } from '../../../../../core/services/confirm-save-delete.service';
+import { TableModule } from 'primeng/table';
 
 @Component({
   selector: 'app-users-list',
   imports: [
     ButtonModule,
     RouterModule,
-    MatTableModule,
-    MatPaginatorModule,
+    TableModule,
     PaginatorModule,
-    MatFormFieldModule,
-    MatInputModule,
-    MatSortModule,
     InputTextModule,
     FormsModule,
     TranslateModule,
@@ -60,18 +52,13 @@ import { ConfirmSaveDeleteService } from '../../../../../core/services/confirm-s
 export default class UsersListComponent implements OnInit {
   private apiService = inject(ApiService);
   private router = inject(Router);
-  private _liveAnnouncer = inject(LiveAnnouncer);
   private formBuilder = inject(FormBuilder);
   private showMessageService = inject(ShowMessageService);
   private confirmService = inject(ConfirmSaveDeleteService);
   visible: boolean = false;
   userId: string = '';
 
-  readonly paginator = viewChild.required(MatPaginator);
-  dataSource!: MatTableDataSource<any>;
-
-  main_routes = main_routes_paths;
-  displayedColumns: string[] = [];
+  dataSource: any[] = [];
   tableColumns: string[] = [];
   resultsLength = 0;
 
@@ -83,38 +70,18 @@ export default class UsersListComponent implements OnInit {
   });
 
   ngOnInit(): void {
-    this.usersList = [
-      'first_name',
-      'last_name',
-      'email',
-      'user_type',
-      'actions',
-    ];
+    this.usersList = ['first_name', 'last_name', 'email', 'user_type'];
     this.getUsersList();
   }
 
-  getUsersList() {
+  getUsersList(page = 1, size = 10, filter?: any) {
     this.apiService
-      .getDataFromServer(PROFILE_APIS.GET_USERS_LIST)
+      .getDataFromServer(PROFILE_APIS.GET_USERS_LIST, { page, size }, filter)
       .subscribe((data: any) => {
         this.tableColumns = this.usersList;
-        this.displayedColumns = this.usersList;
-        this.dataSource = new MatTableDataSource<any>(data.results);
+        this.dataSource = data.results;
         this.resultsLength = data.count;
       });
-  }
-
-  applyFilter(event: Event) {
-    const filterValue = (event.target as HTMLInputElement).value;
-    this.dataSource.filter = filterValue.trim().toLowerCase();
-  }
-
-  announceSortChange(sortState: Sort) {
-    if (sortState.direction) {
-      this._liveAnnouncer.announce(`Sorted ${sortState.direction}ending`);
-    } else {
-      this._liveAnnouncer.announce('Sorting cleared');
-    }
   }
 
   createUser() {
@@ -139,16 +106,23 @@ export default class UsersListComponent implements OnInit {
   }
 
   deleteUserApi(id: string) {
-    this.apiService.deleteDataOnServer(PROFILE_APIS.USER_DELETE(id)).subscribe({
-      next: () => {
-        this.showMessageService.showMessage(
-          'success',
-          'User Deleted',
-          'User has been deleted successfully'
-        );
-        this.getUsersList();
-      },
-    });
+    this.confirmService.confirmDelete(
+      'Are you sure you want to delete this user?',
+      () => {
+        this.apiService
+          .deleteDataOnServer(PROFILE_APIS.USER_DELETE(id))
+          .subscribe({
+            next: () => {
+              this.showMessageService.showMessage(
+                'success',
+                'User Deleted',
+                'User has been deleted successfully'
+              );
+              this.getUsersList();
+            },
+          });
+      }
+    );
   }
 
   viewUser(userId: string) {

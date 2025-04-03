@@ -112,7 +112,7 @@ export class CustomersService {
 
   deleteCustomer(id: string) {
     this.confirmService.confirmDelete(
-      'Are you sure you want to delete this invoice?',
+      'Are you sure you want to delete this customer?',
       () => {
         this.deleteCustomerApi(id);
       }

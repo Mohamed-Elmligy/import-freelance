@@ -6,7 +6,6 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { MatPaginatorModule, MatPaginator } from '@angular/material/paginator';
 import { MatSortModule, Sort } from '@angular/material/sort';
-import { MatTableModule, MatTableDataSource } from '@angular/material/table';
 import { RouterModule, Router } from '@angular/router';
 import { TranslateModule } from '@ngx-translate/core';
 import { ButtonModule } from 'primeng/button';
@@ -16,6 +15,7 @@ import { InputTextModule } from 'primeng/inputtext';
 import { PanelModule } from 'primeng/panel';
 import { ToolbarModule, Toolbar } from 'primeng/toolbar';
 import { TooltipModule } from 'primeng/tooltip';
+import { TableModule } from 'primeng/table';
 import { SecurityService } from '../../../../../core/services/security.service';
 import { LanguagesService } from '../../../../shared/services/languages.service';
 import { main_routes_paths } from '../../../main.routes';
@@ -26,7 +26,7 @@ import { ExpenseService } from '../expense.service';
   imports: [
     ButtonModule,
     RouterModule,
-    MatTableModule,
+    TableModule,
     MatPaginatorModule,
     MatFormFieldModule,
     MatInputModule,
@@ -39,8 +39,8 @@ import { ExpenseService } from '../expense.service';
     Toolbar,
     PanelModule,
     DatePickerModule,
-    TooltipModule
-],
+    TooltipModule,
+  ],
   templateUrl: './expense-list.component.html',
   styles: ``,
 })
@@ -52,7 +52,7 @@ export default class ExpenseListComponent {
   private router = inject(Router);
 
   readonly paginator = viewChild.required(MatPaginator);
-  dataSource!: MatTableDataSource<any>;
+  dataSource: any[] = [];
 
   main_routes = main_routes_paths;
   displayedColumns: string[] = [];
@@ -67,29 +67,15 @@ export default class ExpenseListComponent {
     });
   }
 
-  getExpenseList() {
-    this.ExpenseService.getList().subscribe((data: any) => {
+  getExpenseList(page: number = 1, size: number = 10) {
+    this.ExpenseService.getList(page, size).subscribe((data: any) => {
       this.tableColumns = this.ExpenseService.ExpenseHeaders;
       this.displayedColumns = this.ExpenseService.ExpenseHeaders;
-      let ModifideData = this.ExpenseService.apiModelToComponentModelList(
+      this.dataSource = this.ExpenseService.apiModelToComponentModelList(
         data.results
       );
-      this.dataSource = new MatTableDataSource<any>(ModifideData);
       this.resultsLength = data.count;
     });
-  }
-
-  applyFilter(event: Event) {
-    const filterValue = (event.target as HTMLInputElement).value;
-    this.dataSource.filter = filterValue.trim().toLowerCase();
-  }
-
-  announceSortChange(sortState: Sort) {
-    if (sortState.direction) {
-      this._liveAnnouncer.announce(`Sorted ${sortState.direction}ending`);
-    } else {
-      this._liveAnnouncer.announce('Sorting cleared');
-    }
   }
 
   editExpense(expenseId: any) {

@@ -4,6 +4,7 @@ import { FormGroup } from '@angular/forms';
 import { ApiService } from '../../../../core/services/api.service';
 import { ShowMessageService } from '../../../../core/services/show-message.service';
 import { FISCAL_YEAR_APIS } from './fiscal-year.api';
+import { ConfirmSaveDeleteService } from '../../../../core/services/confirm-save-delete.service';
 
 @Injectable({
   providedIn: 'root',
@@ -11,6 +12,7 @@ import { FISCAL_YEAR_APIS } from './fiscal-year.api';
 export class FiscalYearService {
   private apiService = inject(ApiService);
   private location = inject(Location);
+  private confirmService = inject(ConfirmSaveDeleteService);
   private showMessageService = inject(ShowMessageService);
   yearDeleted = signal(false);
 
@@ -21,11 +23,14 @@ export class FiscalYearService {
     'to_date',
     'is_active',
     'created_at',
-    'actions',
   ];
 
-  getList() {
-    return this.apiService.getDataFromServer(`year/list`);
+  getList(page?: any, size?: any, filter?: any) {
+    return this.apiService.getDataFromServer(
+      `year/list`,
+      { page, size },
+      filter
+    );
   }
 
   componentModelToApiModel(form: FormGroup) {
@@ -120,6 +125,15 @@ export class FiscalYearService {
   }
 
   deleteYear(id: string) {
+    this.confirmService.confirmDelete(
+      'Are you sure you want to delete this year?',
+      () => {
+        this.deleteYearApi(id);
+      }
+    );
+  }
+
+  deleteYearApi(id: string) {
     this.apiService
       .deleteDataOnServer(FISCAL_YEAR_APIS.DELETE_FISCAL_YEAR(+id))
       .subscribe({

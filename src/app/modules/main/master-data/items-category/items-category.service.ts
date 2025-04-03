@@ -4,6 +4,7 @@ import { ApiService } from '../../../../core/services/api.service';
 import { ShowMessageService } from '../../../../core/services/show-message.service';
 import { ITEM_APIS } from './item.api';
 import { Location } from '@angular/common';
+import { ConfirmSaveDeleteService } from '../../../../core/services/confirm-save-delete.service';
 
 @Injectable({
   providedIn: 'root',
@@ -11,6 +12,7 @@ import { Location } from '@angular/common';
 export class ItemsCategoryService {
   private apiService = inject(ApiService);
   private location = inject(Location);
+  private confirmService = inject(ConfirmSaveDeleteService);
   private showMessageService = inject(ShowMessageService);
   listOfCustomers = signal([]);
   itemDeleted = signal(false);
@@ -94,6 +96,14 @@ export class ItemsCategoryService {
   }
 
   deleteItem(id: string) {
+    this.confirmService.confirmDelete(
+      'Are you sure you want to delete this item?',
+      () => {
+        this.deleteItemApi(id);
+      }
+    );
+  }
+  deleteItemApi(id: string) {
     this.apiService.deleteDataOnServer(ITEM_APIS.DELETE_ITEM(+id)).subscribe({
       next: () => {
         this.showMessageService.showMessage(

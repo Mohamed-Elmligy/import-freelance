@@ -4,6 +4,7 @@ import { ApiService } from '../../../../core/services/api.service';
 import { ShowMessageService } from '../../../../core/services/show-message.service';
 import { SUPPLIERS_APIS } from './suppliers.apis';
 import { Location } from '@angular/common';
+import { ConfirmSaveDeleteService } from '../../../../core/services/confirm-save-delete.service';
 
 @Injectable({
   providedIn: 'root',
@@ -11,6 +12,7 @@ import { Location } from '@angular/common';
 export class SuppliersService {
   private apiService = inject(ApiService);
   private location = inject(Location);
+  private confirmService = inject(ConfirmSaveDeleteService);
   private showMessageService = inject(ShowMessageService);
   suppliertDeleted = signal(false);
 
@@ -109,16 +111,25 @@ export class SuppliersService {
   }
 
   deleteSupplier(id: string) {
+    this.confirmService.confirmDelete(
+      'Are you sure you want to delete this supplier?',
+      () => {
+        this.deleteSpupplierApi(id);
+      }
+    );
+  }
+
+  deleteSpupplierApi(id: string) {
     this.apiService
       .deleteDataOnServer(SUPPLIERS_APIS.DELETE_SUPPLIERS(+id))
       .subscribe({
         next: () => {
+          this.suppliertDeleted.set(true);
           this.showMessageService.showMessage(
             'success',
             'Supplier Deleted',
             'Supplier has been deleted successfully'
           );
-          this.suppliertDeleted.set(true);
         },
       });
   }

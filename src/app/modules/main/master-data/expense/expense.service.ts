@@ -4,6 +4,7 @@ import { ApiService } from '../../../../core/services/api.service';
 import { ShowMessageService } from '../../../../core/services/show-message.service';
 import { EXPENSE_APIS } from './expense.apis';
 import { formatDate, Location } from '@angular/common';
+import { ConfirmSaveDeleteService } from '../../../../core/services/confirm-save-delete.service';
 
 @Injectable({
   providedIn: 'root',
@@ -11,6 +12,7 @@ import { formatDate, Location } from '@angular/common';
 export class ExpenseService {
   private apiService = inject(ApiService);
   private location = inject(Location);
+  private confirmService = inject(ConfirmSaveDeleteService);
   private showMessageService = inject(ShowMessageService);
   listOfCustomers = signal([]);
   expenseDeleted = signal(false);
@@ -21,11 +23,14 @@ export class ExpenseService {
     'amount',
     'expenseDate',
     'created_at',
-    'actions',
   ];
 
-  getList() {
-    return this.apiService.getDataFromServer(`expenses/list`);
+  getList(page?: any, size?: any, filter?: any) {
+    return this.apiService.getDataFromServer(
+      `expenses/list`,
+      { page, size },
+      filter
+    );
   }
 
   componentModelToApiModel(form: FormGroup) {
@@ -126,6 +131,15 @@ export class ExpenseService {
   }
 
   deleteExpense(id: string) {
+    this.confirmService.confirmDelete(
+      'Are you sure you want to delete this expense?',
+      () => {
+        this.deleteExpenseApi(id);
+      }
+    );
+  }
+
+  deleteExpenseApi(id: string) {
     this.apiService
       .deleteDataOnServer(EXPENSE_APIS.DELETE_EXPENSE(+id))
       .subscribe({

@@ -4,6 +4,7 @@ import { FormGroup } from '@angular/forms';
 import { ApiService } from '../../../../core/services/api.service';
 import { ShowMessageService } from '../../../../core/services/show-message.service';
 import { SHIPPING_DATA_APIS } from './shippingData.apis';
+import { ConfirmSaveDeleteService } from '../../../../core/services/confirm-save-delete.service';
 
 @Injectable({
   providedIn: 'root',
@@ -11,6 +12,7 @@ import { SHIPPING_DATA_APIS } from './shippingData.apis';
 export class ShippingDataService {
   private apiService = inject(ApiService);
   private location = inject(Location);
+  private confirmService = inject(ConfirmSaveDeleteService);
   private showMessageService = inject(ShowMessageService);
   listOfCustomers = signal([]);
   shippingDataDeleted = signal(false);
@@ -135,17 +137,23 @@ export class ShippingDataService {
   }
 
   deleteShipping(id: string) {
-    this.apiService
-      .deleteDataOnServer(SHIPPING_DATA_APIS.DELETE_SHIPPING_DATA(+id))
-      .subscribe({
-        next: () => {
-          this.showMessageService.showMessage(
-            'success',
-            'Shipping Deleted',
-            'Shipping has been deleted successfully'
-          );
-          this.shippingDataDeleted.set(true);
-        },
-      });
+    this.confirmService.confirmDelete(
+      'Are you sure you want to delete this shipping?',
+      () => {
+        this.deleteShippingApi(id);
+      }
+    );
+  }
+
+  deleteShippingApi(id: string) {
+    this.apiService.deleteDataOnServer(
+      SHIPPING_DATA_APIS.DELETE_SHIPPING_DATA(+id)
+    );
+    this.showMessageService.showMessage(
+      'success',
+      'Shipping Deleted',
+      'Shipping has been deleted successfully'
+    );
+    this.shippingDataDeleted.set(true);
   }
 }
