@@ -96,7 +96,7 @@ export const errorInterceptor: HttpInterceptorFn = (request, next) => {
       function handleUnauthorizedError() {
         securityService.removeToken();
         browserStorageService.removeData('local', securityService.localKey);
-        router.navigate(['/login']);
+        router.navigate([auth_routes_paths.LOGIN]);
         messages.showMessage(
           'error',
           'Error',
