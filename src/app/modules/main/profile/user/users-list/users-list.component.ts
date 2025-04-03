@@ -52,12 +52,12 @@ import { ConfirmSaveDeleteService } from '../../../../../core/services/confirm-s
     TooltipModule,
     Dialog,
     ReactiveFormsModule,
-    PasswordModule
-],
+    PasswordModule,
+  ],
   templateUrl: './users-list.component.html',
   styles: ``,
 })
-export class UsersListComponent implements OnInit {
+export default class UsersListComponent implements OnInit {
   private apiService = inject(ApiService);
   private router = inject(Router);
   private _liveAnnouncer = inject(LiveAnnouncer);

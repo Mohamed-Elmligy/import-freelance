@@ -146,6 +146,11 @@ export class SidebarComponent {
             routerLink: this.mainRoutes.settings,
           },
           {
+            label: 'userList',
+            icon: 'pi pi-users',
+            routerLink: this.mainRoutes.usersList,
+          },
+          {
             label: 'LOGOUT',
             icon: 'pi pi-sign-out',
             styleClass: 'menu-item logout-item',

@@ -146,6 +146,12 @@ const main_routes: Routes = [
     path: 'settings',
     loadComponent: () => import('./profile/settings/settings.component'),
   },
+  {
+    path: 'users-list',
+    loadComponent: () =>
+      import('./profile/user/users-list/users-list.component'),
+    canActivate: [noCompanyUserGuard],
+  },
 ];
 
 export default main_routes;
@@ -174,4 +180,5 @@ export const main_routes_paths = {
   shippingDataList: '/main/shipping-data-list',
   invoicesList: '/main/invoices-list',
   yearList: '/main/year-list',
+  usersList: '/main/users-list',
 } as const;

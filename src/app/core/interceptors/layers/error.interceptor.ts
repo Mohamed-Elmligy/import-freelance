@@ -6,6 +6,7 @@ import { ShowMessageService } from '../../services/show-message.service';
 import { SecurityService } from '../../services/security.service';
 import { BrowserStorageService } from '../../services/browser-storage.service';
 import { Router } from '@angular/router';
+import { auth_routes_paths } from '../../../modules/auth/auth.routes';
 
 export const errorInterceptor: HttpInterceptorFn = (request, next) => {
   const translateService = inject(TranslateService);
@@ -94,8 +95,11 @@ export const errorInterceptor: HttpInterceptorFn = (request, next) => {
             catchError((refreshError: HttpErrorResponse) => {
               // Token refresh failed. Redirect to login.
               securityService.removeToken();
-              browserStorageService.removeData('local', securityService.localKey);
-              router.navigate(['/login']);
+              browserStorageService.removeData(
+                'local',
+                securityService.localKey
+              );
+              router.navigate([auth_routes_paths.LOGIN]);
               messages.showMessage(
                 'error',
                 'Error',
@@ -108,7 +112,7 @@ export const errorInterceptor: HttpInterceptorFn = (request, next) => {
           // No refresh token available. Redirect to login.
           securityService.removeToken();
           browserStorageService.removeData('local', securityService.localKey);
-          router.navigate(['/login']);
+          router.navigate([auth_routes_paths.LOGIN]);
           messages.showMessage(
             'error',
             'Error',
