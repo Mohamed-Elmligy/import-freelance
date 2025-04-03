@@ -71,66 +71,55 @@ export const errorInterceptor: HttpInterceptorFn = (request, next) => {
       }
 
       // 3- Unauthenticated requests
-      if (error.status === 403) {
+      if (error.status === 401) {
         const refreshToken = securityService.retrieveRefreshToken();
-        if (refreshToken) {
-          return securityService.getNewAccessToken().pipe(
-            switchMap((res: any) => {
-              const newJwt = securityService.allJwtData;
-              newJwt.update((value: any) => {
-                return { ...value, access: res.access };
-              });
-              browserStorageService.setData(
-                'local',
-                securityService.localKey,
-                newJwt()
-              );
-              request = request.clone({
-                setHeaders: {
-                  Authorization: `Bearer ${res.access}`,
-                },
-              });
-              return next(request);
-            }),
-            catchError((refreshError: HttpErrorResponse) => {
-              // Token refresh failed. Redirect to login.
-              securityService.removeToken();
-              browserStorageService.removeData(
-                'local',
-                securityService.localKey
-              );
-              router.navigate([auth_routes_paths.LOGIN]);
-              messages.showMessage(
-                'error',
-                'Error',
-                translateService.instant('USER_NOT_AUTHORIZED')
-              );
-              return throwError(() => refreshError);
-            })
-          );
-        } else {
-          // No refresh token available. Redirect to login.
-          securityService.removeToken();
-          browserStorageService.removeData('local', securityService.localKey);
-          router.navigate([auth_routes_paths.LOGIN]);
-          messages.showMessage(
-            'error',
-            'Error',
-            translateService.instant('USER_NOT_AUTHORIZED')
-          );
+        if (!refreshToken) {
+          handleUnauthorizedError();
           return throwError(() => error);
         }
+
+        return securityService.getNewAccessToken().pipe(
+          switchMap((res: any) => {
+            updateJwtData(res.access);
+            request = request.clone({
+              setHeaders: { Authorization: `Bearer ${res.access}` },
+            });
+            return next(request);
+          }),
+          catchError(() => {
+            handleUnauthorizedError();
+            return throwError(() => error);
+          })
+        );
       }
 
-      // 4- Unauthorized requests
-      if (error.status === 401) {
+      function handleUnauthorizedError() {
+        securityService.removeToken();
+        browserStorageService.removeData('local', securityService.localKey);
+        router.navigate(['/login']);
         messages.showMessage(
           'error',
           'Error',
           translateService.instant('USER_NOT_AUTHORIZED')
         );
-        return throwError(() => error);
       }
+
+      function updateJwtData(accessToken: string): void {
+        const jwtData = securityService.allJwtData;
+        const newJwtData = { ...jwtData, access: accessToken };
+        securityService.allJwtData.update(() => newJwtData);
+        browserStorageService.setData('local', securityService.localKey, newJwtData);
+      }
+
+      // 4- Unauthorized requests
+      // if (error.status === 401) {
+      //   messages.showMessage(
+      //     'error',
+      //     'Error',
+      //     translateService.instant('USER_NOT_AUTHORIZED')
+      //   );
+      //   return throwError(() => error);
+      // }
 
       return EMPTY;
     })
