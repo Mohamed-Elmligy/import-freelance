@@ -16,6 +16,7 @@ import { SecurityService } from '../../../../../core/services/security.service';
 import { LanguagesService } from '../../../../shared/services/languages.service';
 import { main_routes_paths } from '../../../main.routes';
 import { CustomersService } from '../customers.service';
+import { Skeleton } from 'primeng/skeleton';
 
 @Component({
   selector: 'app-customer-list',
@@ -33,6 +34,7 @@ import { CustomersService } from '../customers.service';
     PanelModule,
     DatePickerModule,
     TooltipModule,
+    Skeleton,
   ],
   templateUrl: './customer-list.component.html',
   styles: ``,
@@ -48,6 +50,7 @@ export default class CustomerListComponent {
   displayedColumns: string[] = [];
   tableColumns: string[] = [];
   resultsLength = 0;
+  fetchingInProgress = signal(false);
 
   constructor() {
     effect(() => {
@@ -58,6 +61,7 @@ export default class CustomerListComponent {
   }
 
   getCustomersList(page: number = 1, size: number = 10) {
+    this.fetchingInProgress.set(true);
     this.customerService.getList(page, size).subscribe((data: any) => {
       this.tableColumns = this.customerService.customerHeaders;
       this.displayedColumns = this.customerService.customerHeaders;
@@ -66,6 +70,7 @@ export default class CustomerListComponent {
       );
       this.dataSource = ModifideData;
       this.resultsLength = data.count;
+      this.fetchingInProgress.set(false);
     });
   }
 
