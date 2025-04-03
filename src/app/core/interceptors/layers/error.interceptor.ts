@@ -22,7 +22,6 @@ export const errorInterceptor: HttpInterceptorFn = (request, next) => {
         return throwError(() => error);
       }
 
-      // 1- Global errors handling
       if (globalErrors.has(error.status)) {
         messages.showMessage(
           'error',
@@ -32,52 +31,32 @@ export const errorInterceptor: HttpInterceptorFn = (request, next) => {
         return throwError(() => error);
       }
 
-      // 2- Bad Requests to be handled locally [ex. Validation errors]
       if (error.status === 400) {
-        let errorMessages: string[] = [];
-
-        // Handle error response format: { email: ["user with this email already exists."] }
-        if (error.error && typeof error.error === 'object') {
-          for (const key in error.error) {
-            if (Array.isArray(error.error[key])) {
-              errorMessages.push(...error.error[key]);
-            } else if (typeof error.error[key] === 'string') {
-              errorMessages.push(error.error[key]);
-            }
-          }
-        }
-
-        // Handle error response format: { error: string | string[] }
-        else if (error.error?.error) {
-          errorMessages = Array.isArray(error.error.error)
-            ? error.error.error
-            : [error.error.error];
-        }
-
-        // Display error messages
-        if (errorMessages.length > 0) {
-          messages.showMessage(
-            'error',
-            'Error',
-            errorMessages
-              .map((error: string) => translateService.instant(error))
-              .join('<br>')
-          );
-        } else {
-          messages.showMessage('error', 'Error', 'An unknown error occurred.');
-        }
-
+        handleBadRequest(error);
         return throwError(() => error);
       }
 
-      // 3- Unauthenticated requests
       if (error.status === 401) {
         const refreshToken = securityService.retrieveRefreshToken();
-        if (!refreshToken) {
-          handleUnauthorizedError();
+        if (refreshToken) {
+          return securityService.getNewAccessToken().pipe(
+            switchMap((res: any) => {
+              updateJwtData(res.access);
+              request = request.clone({
+                setHeaders: { Authorization: `Bearer ${res.access}` },
+              });
+              return next(request);
+            }),
+            catchError((refreshError: HttpErrorResponse) => {
+              return throwError(() => refreshError);
+            })
+          );
+        } else {
           return throwError(() => error);
         }
-
+      }
+      const refreshToken = securityService.retrieveRefreshToken();
+      if (refreshToken) {
         return securityService.getNewAccessToken().pipe(
           switchMap((res: any) => {
             updateJwtData(res.access);
@@ -86,44 +65,60 @@ export const errorInterceptor: HttpInterceptorFn = (request, next) => {
             });
             return next(request);
           }),
-          catchError(() => {
-            handleUnauthorizedError();
-            return throwError(() => error);
+          catchError((refreshError: HttpErrorResponse) => {
+            return throwError(() => refreshError);
           })
         );
+      } else {
+        return throwError(() => error);
       }
-
-      function handleUnauthorizedError() {
-        securityService.removeToken();
-        browserStorageService.removeData('local', securityService.localKey);
-        router.navigate([auth_routes_paths.LOGIN]);
-        messages.showMessage(
-          'error',
-          'Error',
-          translateService.instant('USER_NOT_AUTHORIZED')
-        );
-      }
-
-      function updateJwtData(accessToken: string): void {
-        const jwtData = securityService.allJwtData;
-        const newJwtData = { ...jwtData, access: accessToken };
-        securityService.allJwtData.update(() => newJwtData);
-        browserStorageService.setData('local', securityService.localKey, newJwtData);
-      }
-
-      // 4- Unauthorized requests
-      // if (error.status === 401) {
-      //   messages.showMessage(
-      //     'error',
-      //     'Error',
-      //     translateService.instant('USER_NOT_AUTHORIZED')
-      //   );
-      //   return throwError(() => error);
-      // }
-
-      return EMPTY;
     })
   );
+
+  function handleBadRequest(error: HttpErrorResponse) {
+    let errorMessages: string[] = [];
+
+    if (error.error && typeof error.error === 'object') {
+      for (const key in error.error) {
+        if (Array.isArray(error.error[key])) {
+          errorMessages.push(...error.error[key]);
+        } else if (typeof error.error[key] === 'string') {
+          errorMessages.push(error.error[key]);
+        }
+      }
+    } else if (error.error?.error) {
+      errorMessages = Array.isArray(error.error.error)
+        ? error.error.error
+        : [error.error.error];
+    }
+
+    if (errorMessages.length > 0) {
+      messages.showMessage(
+        'error',
+        'Error',
+        errorMessages.map((msg) => translateService.instant(msg)).join('<br>')
+      );
+    } else {
+      messages.showMessage('error', 'Error', 'An unknown error occurred.');
+    }
+  }
+
+  function updateJwtData(accessToken: string): void {
+    const jwtData = securityService.retrieveJwtData();
+    const newJwtData = { ...jwtData, access: accessToken };
+    securityService.allJwtData.update(() => newJwtData);
+    browserStorageService.setData(
+      'local',
+      securityService.localKey,
+      newJwtData
+    );
+
+    console.log('Updated JWT data:', newJwtData);
+    console.log(
+      'Updated JWT data in local storage:',
+      browserStorageService.getData('local', securityService.localKey)
+    );
+  }
 };
 
 const globalErrors = new Map<number, string>([
