@@ -94,7 +94,7 @@ export const errorInterceptor: HttpInterceptorFn = (request, next) => {
 
       function handleUnauthorizedError() {
         securityService.removeToken();
-        browserStorageService.remove('local', securityService.localKey);
+        browserStorageService.removeData('local', securityService.localKey);
         router.navigate(['/login']);
         messages.showMessage(
           'error',
@@ -103,10 +103,11 @@ export const errorInterceptor: HttpInterceptorFn = (request, next) => {
         );
       }
 
-      function updateJwtData(accessToken: string) {
-        const newJwt = securityService.allJwtData;
-        newJwt.update((value: any) => ({ ...value, access: accessToken }));
-        browserStorageService.set('local', securityService.localKey, newJwt());
+      function updateJwtData(accessToken: string): void {
+        const jwtData = securityService.allJwtData;
+        const newJwtData = { ...jwtData, access: accessToken };
+        securityService.allJwtData.update(() => newJwtData);
+        browserStorageService.setData('local', securityService.localKey, newJwtData);
       }
 
       // 4- Unauthorized requests
