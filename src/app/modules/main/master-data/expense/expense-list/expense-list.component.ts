@@ -1,11 +1,5 @@
-import { LiveAnnouncer } from '@angular/cdk/a11y';
-
 import { Component, effect, inject, viewChild } from '@angular/core';
 import { FormsModule } from '@angular/forms';
-import { MatFormFieldModule } from '@angular/material/form-field';
-import { MatInputModule } from '@angular/material/input';
-import { MatPaginatorModule, MatPaginator } from '@angular/material/paginator';
-import { MatSortModule, Sort } from '@angular/material/sort';
 import { RouterModule, Router } from '@angular/router';
 import { TranslateModule } from '@ngx-translate/core';
 import { ButtonModule } from 'primeng/button';
@@ -27,10 +21,6 @@ import { ExpenseService } from '../expense.service';
     ButtonModule,
     RouterModule,
     TableModule,
-    MatPaginatorModule,
-    MatFormFieldModule,
-    MatInputModule,
-    MatSortModule,
     InputTextModule,
     FormsModule,
     TranslateModule,
@@ -46,12 +36,10 @@ import { ExpenseService } from '../expense.service';
 })
 export default class ExpenseListComponent {
   languageService = inject(LanguagesService);
-  private _liveAnnouncer = inject(LiveAnnouncer);
   ExpenseService = inject(ExpenseService);
   securityService = inject(SecurityService);
   private router = inject(Router);
 
-  readonly paginator = viewChild.required(MatPaginator);
   dataSource: any[] = [];
 
   main_routes = main_routes_paths;

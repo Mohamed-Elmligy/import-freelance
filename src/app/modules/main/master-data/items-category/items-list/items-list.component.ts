@@ -2,8 +2,6 @@ import { LiveAnnouncer } from '@angular/cdk/a11y';
 
 import { Component, effect, inject, OnInit, viewChild } from '@angular/core';
 import { FormsModule } from '@angular/forms';
-import { MatFormFieldModule } from '@angular/material/form-field';
-import { MatInputModule } from '@angular/material/input';
 import { RouterModule, Router } from '@angular/router';
 import { TranslateModule } from '@ngx-translate/core';
 import { ButtonModule } from 'primeng/button';
@@ -26,8 +24,6 @@ import { TableModule } from 'primeng/table';
     ButtonModule,
     RouterModule,
     TableModule, // Added PrimeNG TableModule
-    MatFormFieldModule,
-    MatInputModule,
     InputTextModule,
     FormsModule,
     TranslateModule,

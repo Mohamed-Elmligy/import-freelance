@@ -164,7 +164,6 @@ export default class RepaymentsFormComponent {
     this.transactionService.getPaymentData(id).subscribe((data: any) => {
       this.paymentData.set(data);
       this.transactionService.paymentBatchies.set(data.available_payments);
-      console.log(this.transactionService.paymentBatchies());
     });
   }
 

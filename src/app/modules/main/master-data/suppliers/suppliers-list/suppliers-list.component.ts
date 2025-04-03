@@ -2,11 +2,6 @@ import { LiveAnnouncer } from '@angular/cdk/a11y';
 
 import { Component, effect, inject, viewChild } from '@angular/core';
 import { FormsModule } from '@angular/forms';
-import { MatFormFieldModule } from '@angular/material/form-field';
-import { MatInputModule } from '@angular/material/input';
-import { MatPaginatorModule, MatPaginator } from '@angular/material/paginator';
-import { MatSortModule, Sort } from '@angular/material/sort';
-import { MatTableModule, MatTableDataSource } from '@angular/material/table';
 import { RouterModule, Router } from '@angular/router';
 import { TranslateModule } from '@ngx-translate/core';
 import { ButtonModule } from 'primeng/button';
@@ -27,11 +22,6 @@ import { SuppliersService } from '../suppliers.service';
   imports: [
     ButtonModule,
     RouterModule,
-    MatTableModule,
-    MatPaginatorModule,
-    MatFormFieldModule,
-    MatInputModule,
-    MatSortModule,
     InputTextModule,
     FormsModule,
     TranslateModule,
@@ -41,8 +31,8 @@ import { SuppliersService } from '../suppliers.service';
     PanelModule,
     DatePickerModule,
     TooltipModule,
-    TableModule
-],
+    TableModule,
+  ],
   templateUrl: './suppliers-list.component.html',
   styles: ``,
 })
@@ -53,7 +43,6 @@ export default class SuppliersListComponent {
   securityService = inject(SecurityService);
   private router = inject(Router);
 
-  readonly paginator = viewChild.required(MatPaginator);
   dataSource: any[] = [];
 
   main_routes = main_routes_paths;
@@ -108,14 +97,6 @@ export default class SuppliersListComponent {
         String(val).toLowerCase().includes(filterValue.trim().toLowerCase())
       )
     );
-  }
-
-  announceSortChange(sortState: Sort) {
-    if (sortState.direction) {
-      this._liveAnnouncer.announce(`Sorted ${sortState.direction}ending`);
-    } else {
-      this._liveAnnouncer.announce('Sorting cleared');
-    }
   }
 
   editSupplier(supplierId: any) {

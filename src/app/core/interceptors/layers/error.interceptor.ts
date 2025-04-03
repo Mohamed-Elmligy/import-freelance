@@ -112,12 +112,6 @@ export const errorInterceptor: HttpInterceptorFn = (request, next) => {
       securityService.localKey,
       newJwtData
     );
-
-    console.log('Updated JWT data:', newJwtData);
-    console.log(
-      'Updated JWT data in local storage:',
-      browserStorageService.getData('local', securityService.localKey)
-    );
   }
 };
 

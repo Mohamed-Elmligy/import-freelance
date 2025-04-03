@@ -8,11 +8,9 @@ export class SpinnerService {
 
   show() {
     this.isLoading.set(true);
-    console.log('Spinner Service: Loading started');
   }
 
   hide() {
     this.isLoading.set(false);
-    console.log('Spinner Service: Loading finished');
   }
 }
