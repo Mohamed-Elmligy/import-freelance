@@ -9,7 +9,7 @@ export const unauthenticationGuard: CanActivateFn = (route, state) => {
   const showMessageService = inject(ShowMessageService);
   const router = inject(Router);
 
-  const token = browserStorageService.get('local', 'jwtToken');
+  const token = browserStorageService.getData('local', 'jwtToken');
 
   if (!token) {
     showMessageService.showMessage(

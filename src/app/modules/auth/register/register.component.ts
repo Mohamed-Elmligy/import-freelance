@@ -72,13 +72,6 @@ export default class RegisterComponent {
           );
           this.router.navigate([this.auth_routes.LOGIN]);
         },
-        error: (err) => {
-          this.messageService.showMessage(
-            'error',
-            'Error',
-            'Failed to create new user. Please try again.'
-          );
-        },
       });
   }
 

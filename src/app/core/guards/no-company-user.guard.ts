@@ -9,7 +9,10 @@ export const noCompanyUserGuard: CanActivateFn = (route, state) => {
   const showMessageService = inject(ShowMessageService);
   const router = inject(Router);
 
-  let UserHaveCompany = browserStorageService.get('local', 'jwtToken').company;
+  let UserHaveCompany = browserStorageService.getData(
+    'local',
+    'jwtToken'
+  ).company;
 
   if (!UserHaveCompany) {
     showMessageService.showMessage(

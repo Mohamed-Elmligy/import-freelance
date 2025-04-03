@@ -79,7 +79,7 @@ export const errorInterceptor: HttpInterceptorFn = (request, next) => {
               newJwt.update((value: any) => {
                 return { ...value, access: res.access };
               });
-              browserStorageService.set(
+              browserStorageService.setData(
                 'local',
                 securityService.localKey,
                 newJwt()
@@ -94,7 +94,7 @@ export const errorInterceptor: HttpInterceptorFn = (request, next) => {
             catchError((refreshError: HttpErrorResponse) => {
               // Token refresh failed. Redirect to login.
               securityService.removeToken();
-              browserStorageService.remove('local', securityService.localKey);
+              browserStorageService.removeData('local', securityService.localKey);
               router.navigate(['/login']);
               messages.showMessage(
                 'error',
@@ -107,7 +107,7 @@ export const errorInterceptor: HttpInterceptorFn = (request, next) => {
         } else {
           // No refresh token available. Redirect to login.
           securityService.removeToken();
-          browserStorageService.remove('local', securityService.localKey);
+          browserStorageService.removeData('local', securityService.localKey);
           router.navigate(['/login']);
           messages.showMessage(
             'error',

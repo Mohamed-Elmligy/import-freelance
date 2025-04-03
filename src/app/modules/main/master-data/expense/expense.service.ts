@@ -3,13 +3,14 @@ import { FormGroup } from '@angular/forms';
 import { ApiService } from '../../../../core/services/api.service';
 import { ShowMessageService } from '../../../../core/services/show-message.service';
 import { EXPENSE_APIS } from './expense.apis';
-import { formatDate } from '@angular/common';
+import { formatDate, Location } from '@angular/common';
 
 @Injectable({
   providedIn: 'root',
 })
 export class ExpenseService {
   private apiService = inject(ApiService);
+  private location = inject(Location);
   private showMessageService = inject(ShowMessageService);
   listOfCustomers = signal([]);
   expenseDeleted = signal(false);
@@ -89,9 +90,7 @@ export class ExpenseService {
             'Expense Created',
             'Expense has been created successfully'
           );
-        },
-        error: (err) => {
-          this.showMessageService.showMessage('error', 'Error', err.error);
+          this.location.back();
         },
       });
   }
@@ -121,9 +120,7 @@ export class ExpenseService {
             'Expense Updated',
             'Expense has been updated successfully'
           );
-        },
-        error: (err) => {
-          this.showMessageService.showMessage('error', 'Error', err.error);
+          this.location.back();
         },
       });
   }
@@ -139,9 +136,6 @@ export class ExpenseService {
             'Expense has been deleted successfully'
           );
           this.expenseDeleted.set(true);
-        },
-        error: (err) => {
-          this.showMessageService.showMessage('error', 'Error', err.error);
         },
       });
   }

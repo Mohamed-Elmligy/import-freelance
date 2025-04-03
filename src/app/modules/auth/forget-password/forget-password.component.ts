@@ -35,7 +35,7 @@ export default class ForgetPasswordComponent {
   private router = inject(Router);
   private showMessageService = inject(ShowMessageService);
   private http = inject(HttpClient);
-  access = this.storage.get('local', 'access');
+  access = this.storage.getData('local', 'access');
 
   protected form = this.formBuilder.group({
     new_password: [null, [Validators.required, Validators.minLength(8)]],

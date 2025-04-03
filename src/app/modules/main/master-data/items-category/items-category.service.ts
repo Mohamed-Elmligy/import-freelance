@@ -3,12 +3,14 @@ import { FormGroup } from '@angular/forms';
 import { ApiService } from '../../../../core/services/api.service';
 import { ShowMessageService } from '../../../../core/services/show-message.service';
 import { ITEM_APIS } from './item.api';
+import { Location } from '@angular/common';
 
 @Injectable({
   providedIn: 'root',
 })
 export class ItemsCategoryService {
   private apiService = inject(ApiService);
+  private location = inject(Location);
   private showMessageService = inject(ShowMessageService);
   listOfCustomers = signal([]);
   itemDeleted = signal(false);
@@ -62,9 +64,7 @@ export class ItemsCategoryService {
             'Item Created',
             'Item has been created successfully'
           );
-        },
-        error: (err) => {
-          this.showMessageService.showMessage('error', 'Error', err.error);
+          this.location.back();
         },
       });
   }
@@ -84,9 +84,7 @@ export class ItemsCategoryService {
             'Item Updated',
             'Item has been updated successfully'
           );
-        },
-        error: (err) => {
-          this.showMessageService.showMessage('error', 'Error', err.error);
+          this.location.back();
         },
       });
   }
@@ -100,9 +98,6 @@ export class ItemsCategoryService {
           'Item has been deleted successfully'
         );
         this.itemDeleted.set(true);
-      },
-      error: (err) => {
-        this.showMessageService.showMessage('error', 'Error', err.error);
       },
     });
   }

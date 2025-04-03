@@ -45,7 +45,7 @@ export default class ConfirmEmailComponent {
 
   submit(form: FormGroup) {
     const email = form.value.email;
-    this.storage.set('local', 'email', email);
+    this.storage.setData('local', 'email', email);
     this.apiService
       .sendDataToServer(this.apis.CONFIRM_EMAIL, form.value)
       .subscribe({

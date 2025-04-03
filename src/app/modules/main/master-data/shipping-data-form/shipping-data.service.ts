@@ -1,4 +1,4 @@
-import { formatDate } from '@angular/common';
+import { formatDate, Location } from '@angular/common';
 import { inject, Injectable, signal } from '@angular/core';
 import { FormGroup } from '@angular/forms';
 import { ApiService } from '../../../../core/services/api.service';
@@ -10,6 +10,7 @@ import { SHIPPING_DATA_APIS } from './shippingData.apis';
 })
 export class ShippingDataService {
   private apiService = inject(ApiService);
+  private location = inject(Location);
   private showMessageService = inject(ShowMessageService);
   listOfCustomers = signal([]);
   shippingDataDeleted = signal(false);
@@ -93,9 +94,7 @@ export class ShippingDataService {
             'Shipping Created',
             'Shipping has been created successfully'
           );
-        },
-        error: (err) => {
-          this.showMessageService.showMessage('error', 'Error', err.error);
+          this.location.back();
         },
       });
   }
@@ -127,9 +126,7 @@ export class ShippingDataService {
             'Shipping Updated',
             'Shipping has been updated successfully'
           );
-        },
-        error: (err) => {
-          this.showMessageService.showMessage('error', 'Error', err.error);
+          this.location.back();
         },
       });
   }
@@ -145,9 +142,6 @@ export class ShippingDataService {
             'Shipping has been deleted successfully'
           );
           this.shippingDataDeleted.set(true);
-        },
-        error: (err) => {
-          this.showMessageService.showMessage('error', 'Error', err.error);
         },
       });
   }

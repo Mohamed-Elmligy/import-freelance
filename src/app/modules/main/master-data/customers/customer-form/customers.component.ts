@@ -34,7 +34,6 @@ import { PageHeaderComponent } from '../../../../shared/components/page-header/p
     PageHeaderComponent,
   ],
   templateUrl: './customers.component.html',
-  styles: ``,
 })
 export default class CustomersComponent implements OnInit {
   route: MenuItem[] = [];
@@ -44,7 +43,7 @@ export default class CustomersComponent implements OnInit {
   private formBuilder = inject(FormBuilder);
   private customersService = inject(CustomersService);
 
-  customerData:{
+  customerData: {
     id: number;
     name: string;
     email: string;
@@ -74,7 +73,7 @@ export default class CustomersComponent implements OnInit {
   submit(form: FormGroup) {
     if (form.valid) {
       if (this.isUpdate) {
-        this.customersService.updateCustomer(
+        this.customersService.updateCustomerApi(
           form,
           this.customerId?.toString()!
         );
@@ -87,7 +86,7 @@ export default class CustomersComponent implements OnInit {
   ngOnInit() {
     this.customersService.getCustomerSequence().subscribe((data: any) => {
       this.customerData.code = data.next_sequence;
-    })
+    });
     this.route = [
       {
         icon: 'pi pi-users',
@@ -96,7 +95,6 @@ export default class CustomersComponent implements OnInit {
       },
       { label: 'customers', route: this.mainPaths.customers },
     ];
-
 
     this.activatedRoute.queryParams.subscribe((params) => {
       this.isUpdate = params['edit'] === 'true';
@@ -118,8 +116,6 @@ export default class CustomersComponent implements OnInit {
         }
       });
   }
-
-  
 
   reset(form: FormGroup) {
     form.reset();

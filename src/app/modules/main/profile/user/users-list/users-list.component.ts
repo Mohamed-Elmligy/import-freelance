@@ -148,9 +148,6 @@ export class UsersListComponent implements OnInit {
         );
         this.getUsersList();
       },
-      error: (err) => {
-        this.showMessageService.showMessage('error', 'Error', err.error);
-      },
     });
   }
 
