@@ -3,12 +3,14 @@ import { FormGroup } from '@angular/forms';
 import { ApiService } from '../../../../core/services/api.service';
 import { ShowMessageService } from '../../../../core/services/show-message.service';
 import { SUPPLIERS_APIS } from './suppliers.apis';
+import { Location } from '@angular/common';
 
 @Injectable({
   providedIn: 'root',
 })
 export class SuppliersService {
   private apiService = inject(ApiService);
+  private location = inject(Location);
   private showMessageService = inject(ShowMessageService);
   suppliertDeleted = signal(false);
 
@@ -77,9 +79,7 @@ export class SuppliersService {
             'Supplier Created',
             'Supplier has been created successfully'
           );
-        },
-        error: (err) => {
-          this.showMessageService.showMessage('error', 'Error', err.error);
+          this.location.back();
         },
       });
   }
@@ -103,9 +103,7 @@ export class SuppliersService {
             'Supplier Updated',
             'Supplier has been updated successfully'
           );
-        },
-        error: (err) => {
-          this.showMessageService.showMessage('error', 'Error', err.error);
+          this.location.back();
         },
       });
   }
@@ -121,9 +119,6 @@ export class SuppliersService {
             'Supplier has been deleted successfully'
           );
           this.suppliertDeleted.set(true);
-        },
-        error: (err) => {
-          this.showMessageService.showMessage('error', 'Error', err.error);
         },
       });
   }

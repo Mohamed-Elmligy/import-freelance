@@ -1,4 +1,4 @@
-import { formatDate } from '@angular/common';
+import { formatDate, Location } from '@angular/common';
 import { inject, Injectable, signal } from '@angular/core';
 import { FormGroup } from '@angular/forms';
 import { ApiService } from '../../../../core/services/api.service';
@@ -10,6 +10,7 @@ import { PAYMENT_APIS } from './payment.apis';
 })
 export class PaymentService {
   private apiService = inject(ApiService);
+  private location = inject(Location);
   private showMessageService = inject(ShowMessageService);
   listOfCustomers = signal([]);
   paymentDeleted = signal(false);
@@ -81,9 +82,7 @@ export class PaymentService {
             'Payment Created',
             'Payment has been created successfully'
           );
-        },
-        error: (err) => {
-          this.showMessageService.showMessage('error', 'Error', err.error);
+          this.location.back();
         },
       });
   }
@@ -107,9 +106,7 @@ export class PaymentService {
             'Payment Updated',
             'Payment has been updated successfully'
           );
-        },
-        error: (err) => {
-          this.showMessageService.showMessage('error', 'Error', err.error);
+          this.location.back();
         },
       });
   }
@@ -125,9 +122,6 @@ export class PaymentService {
             'Payment has been deleted successfully'
           );
           this.paymentDeleted.set(true);
-        },
-        error: (err) => {
-          this.showMessageService.showMessage('error', 'Error', err.error);
         },
       });
   }

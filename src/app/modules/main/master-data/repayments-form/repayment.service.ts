@@ -1,4 +1,4 @@
-import { formatDate } from '@angular/common';
+import { formatDate, Location } from '@angular/common';
 import { inject, Injectable, signal } from '@angular/core';
 import { FormGroup } from '@angular/forms';
 import { ApiService } from '../../../../core/services/api.service';
@@ -10,6 +10,7 @@ import { TRANSACTION_APIS, TRANSACTION_LOOKUP_APIS } from './transaction.apis';
 })
 export class RepaymentService {
   private apiService = inject(ApiService);
+  private location = inject(Location);
   private showMessageService = inject(ShowMessageService);
   listOfCustomers = signal([]);
   listOfSuppliers = signal([]);
@@ -107,9 +108,7 @@ export class RepaymentService {
             'Transaction Created',
             'Transaction has been created successfully'
           );
-        },
-        error: (err) => {
-          this.showMessageService.showMessage('error', 'Error', err.error);
+          this.location.back();
         },
       });
   }
@@ -141,6 +140,7 @@ export class RepaymentService {
             'Transaction Updated',
             'Transaction has been updated successfully'
           );
+          this.location.back();
         },
       });
   }

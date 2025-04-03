@@ -34,7 +34,7 @@ export class SecurityService {
   // #region actions
 
   logout() {
-    this.browserStorageService.clear('local');
+    this.browserStorageService.clearData('local');
     this.router.navigate(['/auth/login']);
   }
 
@@ -67,7 +67,7 @@ export class SecurityService {
   }
 
   updateUerCompanyStatus(state: boolean) {
-    this.browserStorageService.set('local', this.localKey, {
+    this.browserStorageService.setData('local', this.localKey, {
       ...this.retrieveJwtData(),
       company: state,
     });
@@ -87,6 +87,6 @@ export class SecurityService {
   }
 
   private getJwtDataFromStorage() {
-    return this.browserStorageService.get('local', this.localKey);
+    return this.browserStorageService.getData('local', this.localKey);
   }
 }

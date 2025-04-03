@@ -1,4 +1,4 @@
-import { formatDate } from '@angular/common';
+import { formatDate, Location } from '@angular/common';
 import { inject, Injectable, signal } from '@angular/core';
 import { FormGroup } from '@angular/forms';
 import { ApiService } from '../../../../core/services/api.service';
@@ -10,6 +10,7 @@ import { FISCAL_YEAR_APIS } from './fiscal-year.api';
 })
 export class FiscalYearService {
   private apiService = inject(ApiService);
+  private location = inject(Location);
   private showMessageService = inject(ShowMessageService);
   yearDeleted = signal(false);
 
@@ -87,13 +88,7 @@ export class FiscalYearService {
             'Year Created',
             'Year has been created successfully'
           );
-        },
-        error: (error) => {
-          this.showMessageService.showMessage(
-            'error',
-            'Error',
-            error.error.open_year[0]
-          );
+          this.location.back();
         },
       });
   }
@@ -119,6 +114,7 @@ export class FiscalYearService {
             'Year Updated',
             'Year has been updated successfully'
           );
+          this.location.back();
         },
       });
   }

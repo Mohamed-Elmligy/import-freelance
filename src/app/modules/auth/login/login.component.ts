@@ -46,14 +46,14 @@ export default class LoginComponent implements OnInit {
   });
 
   ngOnInit() {
-    this.browserStorage.clear('local');
+    this.browserStorage.clearData('local');
   }
 
   submit(form: FormGroup) {
     this.apiService.sendDataToServer(this.apis.LOGIN, form.value).subscribe({
       next: (response) => {
         this.router.navigate([this.main_routes.home]);
-        this.browserStorage.set('local', 'jwtToken', response);
+        this.browserStorage.setData('local', 'jwtToken', response);
       },
     });
   }

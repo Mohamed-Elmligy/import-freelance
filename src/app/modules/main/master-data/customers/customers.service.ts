@@ -20,7 +20,6 @@ export class CustomersService {
 
   customerCode: string = '';
 
-
   getList(page?: any, size?: any, filter?: any) {
     return this.apiService.getDataFromServer(
       `customer/list`,
@@ -83,9 +82,6 @@ export class CustomersService {
           );
           this.location.back();
         },
-        error: (err) => {
-          this.showMessageService.showMessage('error', 'Error', err.error);
-        },
       });
   }
 
@@ -93,14 +89,6 @@ export class CustomersService {
     return this.apiService.getDataFromServer(CUSTOMER_APIS.GET_CUSTOMER(+id));
   }
 
-  updateCustomer(data: FormGroup, id: string) {
-    this.confirmService.confirmSave(
-      'Are you sure you want to update this customer?',
-      () => {
-        this.updateCustomerApi(data, id);
-      }
-    );
-  }
   updateCustomerApi(data: FormGroup, id: string) {
     let modifiedModel = this.componentModelToApiModel(data);
     this.apiService
@@ -118,9 +106,6 @@ export class CustomersService {
           );
 
           this.location.back();
-        },
-        error: (err) => {
-          this.showMessageService.showMessage('error', 'Error', err.error);
         },
       });
   }
@@ -146,13 +131,12 @@ export class CustomersService {
           );
           this.customerDeleted.set(true);
         },
-        error: (err) => {
-          this.showMessageService.showMessage('error', 'Error', err.error);
-        },
       });
   }
 
   getCustomerSequence() {
-    return this.apiService.getDataFromServer(CUSTOMER_APIS.GET_CUSTOMER_SEQUENCE);
+    return this.apiService.getDataFromServer(
+      CUSTOMER_APIS.GET_CUSTOMER_SEQUENCE
+    );
   }
 }

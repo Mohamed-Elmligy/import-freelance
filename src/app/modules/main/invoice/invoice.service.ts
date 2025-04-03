@@ -157,10 +157,6 @@ export class InvoiceService {
             'Invoice has been created successfully'
           );
           this.location.back();
-        }),
-        catchError((err) => {
-          this.showMessageService.showMessage('error', 'Error', err.error);
-          throw err;
         })
       )
       .subscribe();
@@ -192,10 +188,6 @@ export class InvoiceService {
             'Invoice has been updated successfully'
           );
           this.location.back();
-        }),
-        catchError((err) => {
-          this.showMessageService.showMessage('error', 'Error', err.error);
-          throw err;
         })
       )
       .subscribe();
@@ -228,10 +220,6 @@ export class InvoiceService {
           );
           this.invoiceDeleted.set(true);
         }),
-        catchError((err) => {
-          this.showMessageService.showMessage('error', 'Error', err.error);
-          throw err;
-        })
       )
       .subscribe();
   }

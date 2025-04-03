@@ -133,7 +133,6 @@ export default class ProfileSettingsComponent implements OnInit {
               // Redirect to home page
               this.router.navigate(['/main/home']);
             },
-            error: (error) => {},
             complete: () => {
               // Show success message
               this.messageService.add({
@@ -155,9 +154,6 @@ export default class ProfileSettingsComponent implements OnInit {
 
               // Redirect to home page
               this.router.navigate(['/main/home']);
-            },
-            error: (error) => {
-              console.error('Error creating company!', error);
             },
             complete: () => {
               // Show success message

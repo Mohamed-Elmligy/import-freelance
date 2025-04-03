@@ -27,7 +27,7 @@ export default class VerifyOtpComponent {
   private showMessageService = inject(ShowMessageService);
   private router = inject(Router);
   private storage = inject(BrowserStorageService);
-  email = this.storage.get('local', 'email');
+  email = this.storage.setData('local', 'local', 'email');
   length: number = 6;
   protected form = this.formBuilder.group({
     otp: [null, [Validators.required, Validators.minLength(4)]],
@@ -39,7 +39,7 @@ export default class VerifyOtpComponent {
         otp: form.value.otp,
       })
       .subscribe((res: any) => {
-        this.storage.set('local', 'access', res.access);
+        this.storage.setData('local', 'access', res.access);
         this.router.navigate([this.ROUTES.FORGET_PASSWORD]);
         this.showMessageService.showMessage(
           'success',
