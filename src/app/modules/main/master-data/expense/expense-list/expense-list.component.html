@@ -26,85 +26,91 @@
               selectionMode="range"
               [readonlyInput]="true"
               [showButtonBar]="true"
-              styleClass="w-full"
-            />
-            <label for="on_label">{{ "date" | translate }}</label>
-          </p-float-label>
+              />
+              />
+              <label for="on_label">{{ "date" | translate }}</label>
+            </p-float-label>
+          </div>
         </div>
-      </div>
-    </ng-template>
-    <ng-template #end>
-      <button
-        pButton
-        pRipple
-        [label]="'search' | translate"
-        class="!bg-primary !border-primary me-2"
-      ></button>
-      <button
-        pButton
-        pRipple
-        [label]="'add' | translate"
-        icon="pi pi-plus"
-        class="!bg-secondary !border-secondary"
-        [routerLink]="main_routes.expenses"
-      ></button>
-    </ng-template>
-  </p-toolbar>
+      </ng-template>
+      <ng-template #end>
+        <button
+          pButton
+          pRipple
+          [label]="'search' | translate"
+          class="!bg-primary !border-primary me-2"
+        ></button>
+        <button
+          pButton
+          pRipple
+          [label]="'add' | translate"
+          icon="pi pi-plus"
+          class="!bg-secondary !border-secondary"
+          [routerLink]="main_routes.expenses"
+        ></button>
+      </ng-template>
+    </p-toolbar>
 
-  <p-table
-    [value]="dataSource"
-    [paginator]="true"
-    [rows]="10"
-    [rowsPerPageOptions]="[10, 20, 50]"
-    [sortMode]="'single'"
-    [responsiveLayout]="'scroll'"
-  >
-    <ng-template pTemplate="header">
-      <tr>
-        @for (col of tableColumns; track $index) {
-        <th [pSortableColumn]="col">
-          {{ col | translate }}
-          <p-sortIcon [field]="col"></p-sortIcon>
-        </th>
-        }
-        <th>{{ "actions" | translate }}</th>
-      </tr>
-    </ng-template>
-    <ng-template pTemplate="body" let-rowData>
-      <tr>
-        @for (col of tableColumns; track $index) {
-        <td>{{ rowData[col] }}</td>
-        }
-        <td>
-          <p-button
-            icon="pi pi-eye"
-            [rounded]="true"
-            [text]="true"
-            pTooltip="View"
-            tooltipPosition="top"
-            (click)="viewExpense(rowData.id)"
-            severity="success"
-          ></p-button>
-          <p-button
-            icon="pi pi-pencil"
-            [rounded]="true"
-            [text]="true"
-            severity="info"
-            pTooltip="Edit"
-            tooltipPosition="top"
-            (click)="editExpense(rowData.id)"
-          ></p-button>
-          <p-button
-            icon="pi pi-trash"
-            [rounded]="true"
-            [text]="true"
-            pTooltip="Delete"
-            tooltipPosition="top"
-            (click)="deleteExpense(rowData.id)"
-            severity="danger"
-          ></p-button>
-        </td>
-      </tr>
-    </ng-template>
-  </p-table>
-</div>
+    @if (!isLoading) {
+      <p-table
+        [value]="dataSource"
+        [paginator]="true"
+        [rows]="10"
+        [rowsPerPageOptions]="[10, 20, 50]"
+        [sortMode]="'single'"
+        [responsiveLayout]="'scroll'"
+        >
+        <ng-template pTemplate="header">
+          <tr>
+            @for (col of tableColumns; track $index) {
+              <th [pSortableColumn]="col">
+                {{ col | translate }}
+                <p-sortIcon [field]="col"></p-sortIcon>
+              </th>
+            }
+            <th>{{ "actions" | translate }}</th>
+          </tr>
+        </ng-template>
+        <ng-template pTemplate="body" let-rowData>
+          <tr>
+            @for (col of tableColumns; track $index) {
+              <td>{{ rowData[col] }}</td>
+            }
+            <td>
+              <p-button
+                icon="pi pi-eye"
+                [rounded]="true"
+                [text]="true"
+                pTooltip="View"
+                tooltipPosition="top"
+                (click)="viewExpense(rowData.id)"
+                severity="success"
+              ></p-button>
+              <p-button
+                icon="pi pi-pencil"
+                [rounded]="true"
+                [text]="true"
+                severity="info"
+                pTooltip="Edit"
+                tooltipPosition="top"
+                (click)="editExpense(rowData.id)"
+              ></p-button>
+              <p-button
+                icon="pi pi-trash"
+                [rounded]="true"
+                [text]="true"
+                pTooltip="Delete"
+                tooltipPosition="top"
+                (click)="deleteExpense(rowData.id)"
+                severity="danger"
+              ></p-button>
+            </td>
+          </tr>
+        </ng-template>
+      </p-table>
+    } @else {
+      @for (_ of [].constructor(10); track $index) {
+        <p-skeleton styleClass="w-full my-4"></p-skeleton>
+      }
+    }
+  </div>

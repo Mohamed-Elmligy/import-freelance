@@ -15,6 +15,7 @@ import { PanelModule } from 'primeng/panel';
 import { ToolbarModule, Toolbar } from 'primeng/toolbar';
 import { TooltipModule } from 'primeng/tooltip';
 import { TableModule } from 'primeng/table';
+import { Skeleton } from 'primeng/skeleton';
 
 @Component({
   selector: 'app-payments-list',
@@ -31,6 +32,7 @@ import { TableModule } from 'primeng/table';
     DatePickerModule,
     TooltipModule,
     TableModule,
+    Skeleton,
   ],
   templateUrl: './payments-list.component.html',
   styles: ``,
@@ -45,6 +47,7 @@ export default class PaymentsListComponent {
   main_routes = main_routes_paths;
   displayedColumns: string[] = [];
   tableColumns: string[] = [];
+  isLoading: boolean = false;
 
   constructor() {
     effect(() => {
@@ -55,13 +58,20 @@ export default class PaymentsListComponent {
   }
 
   getPaymentList(page: number = 1, size: number = 10) {
-    this.PaymentService.getList(page, size).subscribe((data: any) => {
-      this.tableColumns = this.PaymentService.PaymentHeaders;
-      this.displayedColumns = this.PaymentService.PaymentHeaders;
-      this.dataSource = this.PaymentService.apiModelToComponentModelList(
-        data.results
-      );
-    });
+    this.isLoading = true;
+    this.PaymentService.getList(page, size).subscribe(
+      (data: any) => {
+        this.tableColumns = this.PaymentService.PaymentHeaders;
+        this.displayedColumns = this.PaymentService.PaymentHeaders;
+        this.dataSource = this.PaymentService.apiModelToComponentModelList(
+          data.results
+        );
+        this.isLoading = false;
+      },
+      () => {
+        this.isLoading = false; // Handle error case
+      }
+    );
   }
 
   editPayment(paymentId: any) {

@@ -14,6 +14,7 @@ import { SecurityService } from '../../../../../core/services/security.service';
 import { LanguagesService } from '../../../../shared/services/languages.service';
 import { main_routes_paths } from '../../../main.routes';
 import { ExpenseService } from '../expense.service';
+import { Skeleton } from 'primeng/skeleton';
 
 @Component({
   selector: 'app-expense-list',
@@ -30,6 +31,7 @@ import { ExpenseService } from '../expense.service';
     PanelModule,
     DatePickerModule,
     TooltipModule,
+    Skeleton,
   ],
   templateUrl: './expense-list.component.html',
   styles: ``,
@@ -46,6 +48,7 @@ export default class ExpenseListComponent {
   displayedColumns: string[] = [];
   tableColumns: string[] = [];
   resultsLength = 0;
+  isLoading = false;
 
   constructor() {
     effect(() => {
@@ -56,14 +59,21 @@ export default class ExpenseListComponent {
   }
 
   getExpenseList(page: number = 1, size: number = 10) {
-    this.ExpenseService.getList(page, size).subscribe((data: any) => {
-      this.tableColumns = this.ExpenseService.ExpenseHeaders;
-      this.displayedColumns = this.ExpenseService.ExpenseHeaders;
-      this.dataSource = this.ExpenseService.apiModelToComponentModelList(
-        data.results
-      );
-      this.resultsLength = data.count;
-    });
+    this.isLoading = true;
+    this.ExpenseService.getList(page, size).subscribe(
+      (data: any) => {
+        this.tableColumns = this.ExpenseService.ExpenseHeaders;
+        this.displayedColumns = this.ExpenseService.ExpenseHeaders;
+        this.dataSource = this.ExpenseService.apiModelToComponentModelList(
+          data.results
+        );
+        this.resultsLength = data.count;
+        this.isLoading = false;
+      },
+      () => {
+        this.isLoading = false;
+      }
+    );
   }
 
   editExpense(expenseId: any) {

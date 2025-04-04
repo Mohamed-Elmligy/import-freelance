@@ -1,4 +1,8 @@
-<page-header [withBreadCrumb]="false" [title]="'SHIPPING_DATA' | translate" [route]="route"/>
+<page-header
+  [withBreadCrumb]="false"
+  [title]="'SHIPPING_DATA' | translate"
+  [route]="route"
+/>
 
 @if ((shippingId && isUpdate)|| (!shippingId && !isUpdate)) {
 <form class="max-w-3xl mx-auto" [formGroup]="form" (ngSubmit)="submit(form)">

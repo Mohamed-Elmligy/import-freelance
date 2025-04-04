@@ -25,6 +25,7 @@ import { PasswordModule } from 'primeng/password';
 import { ShowMessageService } from '../../../../../core/services/show-message.service';
 import { ConfirmSaveDeleteService } from '../../../../../core/services/confirm-save-delete.service';
 import { TableModule } from 'primeng/table';
+import { SkeletonModule } from 'primeng/skeleton';
 
 @Component({
   selector: 'app-users-list',
@@ -45,6 +46,7 @@ import { TableModule } from 'primeng/table';
     Dialog,
     ReactiveFormsModule,
     PasswordModule,
+    SkeletonModule,
   ],
   templateUrl: './users-list.component.html',
   styles: ``,
@@ -63,6 +65,7 @@ export default class UsersListComponent implements OnInit {
   resultsLength = 0;
 
   usersList: any[] = [];
+  isLoading: boolean = false;
 
   form = this.formBuilder.group({
     new_password: ['', [Validators.required]],
@@ -75,12 +78,14 @@ export default class UsersListComponent implements OnInit {
   }
 
   getUsersList(page = 1, size = 10, filter?: any) {
+    this.isLoading = true;
     this.apiService
       .getDataFromServer(PROFILE_APIS.GET_USERS_LIST, { page, size }, filter)
       .subscribe((data: any) => {
         this.tableColumns = this.usersList;
         this.dataSource = data.results;
         this.resultsLength = data.count;
+        this.isLoading = false;
       });
   }
 

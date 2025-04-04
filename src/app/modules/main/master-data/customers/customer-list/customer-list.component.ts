@@ -50,7 +50,7 @@ export default class CustomerListComponent {
   displayedColumns: string[] = [];
   tableColumns: string[] = [];
   resultsLength = 0;
-  fetchingInProgress = signal(false);
+  loading = true;
 
   constructor() {
     effect(() => {
@@ -61,7 +61,7 @@ export default class CustomerListComponent {
   }
 
   getCustomersList(page: number = 1, size: number = 10) {
-    this.fetchingInProgress.set(true);
+    this.loading = true;
     this.customerService.getList(page, size).subscribe((data: any) => {
       this.tableColumns = this.customerService.customerHeaders;
       this.displayedColumns = this.customerService.customerHeaders;
@@ -70,7 +70,7 @@ export default class CustomerListComponent {
       );
       this.dataSource = ModifideData;
       this.resultsLength = data.count;
-      this.fetchingInProgress.set(false);
+      this.loading = false;
     });
   }
 

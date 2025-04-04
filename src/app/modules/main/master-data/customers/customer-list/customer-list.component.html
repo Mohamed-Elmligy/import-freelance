@@ -59,6 +59,7 @@
     [totalRecords]="resultsLength"
     [rowsPerPageOptions]="[10, 20, 50]"
     styleClass="p-datatable-sm"
+    [loading]="loading"
   >
     <ng-template pTemplate="header">
       <tr>
@@ -72,13 +73,11 @@
       </tr>
     </ng-template>
     <ng-template pTemplate="body" let-element>
+      @if (!loading) {
       <tr>
-        @for (col of tableColumns; track col) { @if(!fetchingInProgress()){
+        @for (col of tableColumns; track col) { @if(element[col]){
         <td>{{ element[col] }}</td>
-        } @else if(fetchingInProgress()){
-        <td><p-skeleton /></td>
         } }
-
         <td>
           <p-button
             icon="pi pi-eye"
@@ -112,6 +111,9 @@
           ></p-button>
         </td>
       </tr>
+      } @else { @for (_ of [].constructor(10); track $index) {
+      <p-skeleton styleClass="w-full my-4"></p-skeleton>
+      } }
     </ng-template>
   </p-table>
 </div>

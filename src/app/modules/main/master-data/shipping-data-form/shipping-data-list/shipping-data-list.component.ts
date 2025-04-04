@@ -15,6 +15,7 @@ import { PanelModule } from 'primeng/panel';
 import { ToolbarModule, Toolbar } from 'primeng/toolbar';
 import { TooltipModule } from 'primeng/tooltip';
 import { TableModule } from 'primeng/table';
+import { SkeletonModule } from 'primeng/skeleton';
 
 @Component({
   selector: 'app-shipping-data-list',
@@ -31,6 +32,7 @@ import { TableModule } from 'primeng/table';
     DatePickerModule,
     TooltipModule,
     TableModule,
+    SkeletonModule,
   ],
   templateUrl: './shipping-data-list.component.html',
   styles: ``,
@@ -45,6 +47,7 @@ export default class ShippingDataListComponent {
   main_routes = main_routes_paths;
   displayedColumns: string[] = [];
   tableColumns: string[] = [];
+  isLoading: boolean = true;
 
   constructor() {
     effect(() => {
@@ -55,12 +58,14 @@ export default class ShippingDataListComponent {
   }
 
   getShippingList(page: number = 1, size: number = 10) {
+    this.isLoading = true;
     this.shippingDataService.getList(page, size).subscribe((data: any) => {
       this.tableColumns = this.shippingDataService.ShippingHeaders;
       this.displayedColumns = this.shippingDataService.ShippingHeaders;
       this.dataSource = this.shippingDataService.apiModelToComponentModelList(
         data.results
       );
+      this.isLoading = false;
     });
   }
 

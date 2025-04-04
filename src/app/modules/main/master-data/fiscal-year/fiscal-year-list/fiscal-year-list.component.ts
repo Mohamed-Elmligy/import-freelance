@@ -13,6 +13,7 @@ import { SecurityService } from '../../../../../core/services/security.service';
 import { LanguagesService } from '../../../../shared/services/languages.service';
 import { main_routes_paths } from '../../../main.routes';
 import { FiscalYearService } from '../fiscal-year.service';
+import { Skeleton } from 'primeng/skeleton';
 
 @Component({
   selector: 'app-fiscal-year-list',
@@ -26,7 +27,8 @@ import { FiscalYearService } from '../fiscal-year.service';
     Toolbar,
     DatePickerModule,
     TooltipModule,
-    TableModule, // Added PrimeNG Table module
+    TableModule,
+    Skeleton,
   ],
   templateUrl: './fiscal-year-list.component.html',
   styles: ``,
@@ -42,6 +44,7 @@ export default class FiscalYearListComponent {
   displayedColumns: string[] = [];
   tableColumns: string[] = [];
   resultsLength = 0;
+  isLoading = false; // Add loading state
 
   constructor() {
     effect(() => {
@@ -52,6 +55,7 @@ export default class FiscalYearListComponent {
   }
 
   getYearList(page: number = 1, size: number = 10) {
+    this.isLoading = true; // Set loading state to true
     this.YearService.getList(page, size).subscribe((data: any) => {
       this.tableColumns = this.YearService.yearHeaders;
       this.displayedColumns = this.YearService.yearHeaders;
@@ -59,6 +63,7 @@ export default class FiscalYearListComponent {
         data.results
       );
       this.resultsLength = data.count;
+      this.isLoading = false; // Set loading state to false
     });
   }
 

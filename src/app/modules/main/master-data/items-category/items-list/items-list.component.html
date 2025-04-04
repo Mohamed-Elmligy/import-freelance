@@ -51,6 +51,7 @@
     </ng-template>
   </p-toolbar>
 
+  @if (!isLoading) {
   <p-table
     [value]="dataSource"
     [paginator]="true"
@@ -107,4 +108,11 @@
       </tr>
     </ng-template>
   </p-table>
+  } @else {
+  <div class="p-d-flex p-flex-column p-ai-center p-my-5">
+    @for (_ of [].constructor(10); track $index) {
+    <p-skeleton styleClass="w-full my-4"></p-skeleton>
+    }
+  </div>
+  }
 </div>

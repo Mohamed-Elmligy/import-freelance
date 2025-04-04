@@ -11,9 +11,8 @@
       class="flex items-center justify-center sm:justify-start relative z-10 mb-5"
     >
       <img
-        src="{{totals.logo_img || ''}}"
+        src="{{ totals.logo_img || '' }}"
         alt="user-avatar-image"
-        
         class="border-4 border-solid border-secondary rounded-full object-cover w-40 h-40"
       />
     </div>
@@ -45,11 +44,9 @@
             </span>
           </div>
           <span class="text-2xl text-center text-primary font-bold block p-3">
-            {{totals.total_invoices}}
+            {{ totals.total_invoices }}
           </span>
-          <span class="text-gray-900 text-center block">
-            Invoices
-          </span>
+          <span class="text-gray-900 text-center block"> Invoices </span>
         </div>
         <div class="block rounded-2xl bg-white shadow-md p-6">
           <div class="flex items-center justify-center mb-3">
@@ -58,11 +55,9 @@
             </span>
           </div>
           <span class="text-2xl text-center text-primary font-bold block p-3">
-            {{totals.total_customers}}
+            {{ totals.total_customers }}
           </span>
-          <span class="text-gray-900 text-center block">
-            Customers
-          </span>
+          <span class="text-gray-900 text-center block"> Customers </span>
         </div>
         <div class="block rounded-2xl bg-white shadow-md p-6">
           <div class="flex items-center justify-center mb-3">
@@ -71,11 +66,9 @@
             </span>
           </div>
           <span class="text-2xl text-center text-primary font-bold block p-3">
-            {{totals.total_suppliers}}
+            {{ totals.total_suppliers }}
           </span>
-          <span class="text-gray-900 text-center block">
-            Suppliers
-          </span>
+          <span class="text-gray-900 text-center block"> Suppliers </span>
         </div>
         <div class="block rounded-2xl bg-white shadow-md p-6">
           <div class="flex items-center justify-center mb-3">
@@ -84,14 +77,11 @@
             </span>
           </div>
           <span class="text-2xl text-center text-primary font-bold block p-3">
-            {{totals.total_shipments}}
+            {{ totals.total_shipments }}
           </span>
-          <span class="text-gray-900 text-center block">
-            Shipment
-          </span>
+          <span class="text-gray-900 text-center block"> Shipment </span>
         </div>
       </div>
     </div>
   </div>
 </section>
-

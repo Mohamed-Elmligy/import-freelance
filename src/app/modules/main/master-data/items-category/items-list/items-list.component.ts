@@ -17,6 +17,7 @@ import { main_routes_paths } from '../../../main.routes';
 import { ItemsCategoryService } from '../items-category.service';
 import { HttpClient } from '@angular/common/http';
 import { TableModule } from 'primeng/table';
+import { Skeleton } from 'primeng/skeleton';
 
 @Component({
   selector: 'app-items-list',
@@ -33,6 +34,7 @@ import { TableModule } from 'primeng/table';
     DatePickerModule,
     TooltipModule,
     Toolbar,
+    Skeleton,
   ],
   templateUrl: './items-list.component.html',
   styles: ``,
@@ -45,6 +47,7 @@ export default class ItemsListComponent {
   private router = inject(Router);
   private http = inject(HttpClient);
   dataSource: any[] = []; // Changed to array for PrimeNG table
+  isLoading = true; // Add loading state
 
   main_routes = main_routes_paths;
   displayedColumns: string[] = [];
@@ -60,6 +63,7 @@ export default class ItemsListComponent {
   }
 
   getItemsList(page: number = 1, size: number = 10) {
+    this.isLoading = true; // Set loading to true before fetching
     this.ItemsCategoryService.getList(page, size).subscribe((data: any) => {
       this.tableColumns = this.ItemsCategoryService.itemsHeaders;
       this.displayedColumns = this.ItemsCategoryService.itemsHeaders;
@@ -67,6 +71,7 @@ export default class ItemsListComponent {
         data.results
       );
       this.resultsLength = data.count;
+      this.isLoading = false; // Set loading to false after fetching
     });
   }
 

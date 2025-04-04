@@ -14,6 +14,7 @@ import { SecurityService } from '../../../../core/services/security.service';
 import { LanguagesService } from '../../../shared/services/languages.service';
 import { main_routes_paths } from '../../main.routes';
 import { InvoiceService } from '../invoice.service';
+import { SkeletonModule } from 'primeng/skeleton';
 
 @Component({
   selector: 'app-invoices-list',
@@ -29,6 +30,7 @@ import { InvoiceService } from '../invoice.service';
     DatePickerModule,
     TooltipModule,
     TableModule, // Added PrimeNG TableModule
+    SkeletonModule,
   ],
   templateUrl: './invoices-list.component.html',
   styles: ``,
@@ -44,6 +46,7 @@ export default class InvoicesListComponent {
   displayedColumns: string[] = [];
   tableColumns: string[] = [];
   resultsLength = 0;
+  isLoading = true; // Add isLoading property
 
   constructor() {
     effect(() => {
@@ -54,6 +57,7 @@ export default class InvoicesListComponent {
   }
 
   getInvoicesList(page: number = 1, size: number = 10) {
+    this.isLoading = true; // Set loading to true
     this.invoiceService.getList(page, size).subscribe((data: any) => {
       this.tableColumns = this.invoiceService.invoiceHeaders;
       this.displayedColumns = [...this.invoiceService.invoiceHeaders];
@@ -61,6 +65,7 @@ export default class InvoicesListComponent {
         data.results
       );
       this.resultsLength = data.count;
+      this.isLoading = false; // Set loading to false after data is fetched
     });
   }
 
