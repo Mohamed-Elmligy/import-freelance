@@ -3,6 +3,7 @@ import { LiveAnnouncer } from '@angular/cdk/a11y';
 import { Component, inject, OnInit, viewChild } from '@angular/core';
 import {
   FormBuilder,
+  FormGroup,
   FormsModule,
   ReactiveFormsModule,
   Validators,
@@ -26,6 +27,8 @@ import { ShowMessageService } from '../../../../../core/services/show-message.se
 import { ConfirmSaveDeleteService } from '../../../../../core/services/confirm-save-delete.service';
 import { TableModule } from 'primeng/table';
 import { SkeletonModule } from 'primeng/skeleton';
+import { SelectButtonModule } from 'primeng/selectbutton';
+import { LanguagesService } from '../../../../shared/services/languages.service';
 
 @Component({
   selector: 'app-users-list',
@@ -47,6 +50,8 @@ import { SkeletonModule } from 'primeng/skeleton';
     ReactiveFormsModule,
     PasswordModule,
     SkeletonModule,
+    ReactiveFormsModule,
+    SelectButtonModule,
   ],
   templateUrl: './users-list.component.html',
 })
@@ -56,6 +61,8 @@ export default class UsersListComponent implements OnInit {
   private formBuilder = inject(FormBuilder);
   private showMessageService = inject(ShowMessageService);
   private confirmService = inject(ConfirmSaveDeleteService);
+  private languageService = inject(LanguagesService);
+
   visible: boolean = false;
   userId: string = '';
 
@@ -72,9 +79,32 @@ export default class UsersListComponent implements OnInit {
     confirm_password: ['', [Validators.required]],
   });
 
+  filterForm: FormGroup = this.formBuilder.group({
+    firstName: [''],
+    lastName: [''],
+    email: [''],
+    userType: [''],
+  });
+
+  stateOptions: any[] = [
+    {
+      label: this.languageService.layoutDir() == 'ltr' ? 'admin' : 'ادمن',
+      value: 'admin',
+    },
+    {
+      label: this.languageService.layoutDir() == 'ltr' ? 'user' : 'غير ادمن',
+      value: 'user',
+    },
+  ];
+
   ngOnInit(): void {
     this.usersList = ['first_name', 'last_name', 'email', 'user_type'];
     this.getUsersList();
+  }
+
+  applayFilter() {
+    let filterData = this.filterForm.getRawValue();
+    this.getUsersList(this.first + 1, this.rows, filterData);
   }
 
   getUsersList(page = 1, size = 10, filter?: any) {

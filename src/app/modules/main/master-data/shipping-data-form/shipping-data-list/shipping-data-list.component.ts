@@ -5,7 +5,12 @@ import { LanguagesService } from '../../../../shared/services/languages.service'
 import { main_routes_paths } from '../../../main.routes';
 import { ShippingDataService } from '../shipping-data.service';
 
-import { FormsModule } from '@angular/forms';
+import {
+  FormBuilder,
+  FormGroup,
+  FormsModule,
+  ReactiveFormsModule,
+} from '@angular/forms';
 import { TranslateModule } from '@ngx-translate/core';
 import { ButtonModule } from 'primeng/button';
 import { DatePickerModule } from 'primeng/datepicker';
@@ -33,13 +38,14 @@ import { SkeletonModule } from 'primeng/skeleton';
     TooltipModule,
     TableModule,
     SkeletonModule,
+    ReactiveFormsModule,
   ],
   templateUrl: './shipping-data-list.component.html',
 })
 export default class ShippingDataListComponent {
   languageService = inject(LanguagesService);
   private shippingDataService = inject(ShippingDataService);
-  securityService = inject(SecurityService);
+  private formBuilder = inject(FormBuilder);
   private router = inject(Router);
 
   dataSource: any[] = [];
@@ -51,6 +57,12 @@ export default class ShippingDataListComponent {
   rows: number = 10;
   totalRecords: number = 0;
 
+  filterForm: FormGroup = this.formBuilder.group({
+    name: [''],
+    container_sequence: [''],
+    port_name: [''],
+  });
+
   constructor() {
     effect(() => {
       this.shippingDataService.shippingDataDeleted();
@@ -59,21 +71,28 @@ export default class ShippingDataListComponent {
     });
   }
 
+  applayFilter() {
+    let filterData = this.filterForm.getRawValue();
+    this.getShippingList(this.first + 1, this.rows, filterData);
+  }
+
   onPageChange(event: any) {
     this.first = event.first;
     this.getShippingList(event.first + 1, event.rows);
   }
 
-  getShippingList(page: number = 1, size: number = 10) {
+  getShippingList(page: number = 1, size: number = 10, filterData: any = {}) {
     this.isLoading = true;
-    this.shippingDataService.getList(page, size).subscribe((data: any) => {
-      this.tableColumns = this.shippingDataService.ShippingHeaders;
-      this.displayedColumns = this.shippingDataService.ShippingHeaders;
-      this.dataSource = this.shippingDataService.apiModelToComponentModelList(
-        data.results
-      );
-      this.isLoading = false;
-    });
+    this.shippingDataService
+      .getList(page, size, filterData)
+      .subscribe((data: any) => {
+        this.tableColumns = this.shippingDataService.ShippingHeaders;
+        this.displayedColumns = this.shippingDataService.ShippingHeaders;
+        this.dataSource = this.shippingDataService.apiModelToComponentModelList(
+          data.results
+        );
+        this.isLoading = false;
+      });
   }
 
   editShipping(shippingId: any) {

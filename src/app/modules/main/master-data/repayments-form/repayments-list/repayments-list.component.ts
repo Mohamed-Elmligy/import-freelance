@@ -14,6 +14,7 @@ import { LanguagesService } from '../../../../shared/services/languages.service'
 import { main_routes_paths } from '../../../main.routes';
 import { RepaymentService } from '../repayment.service';
 import { Skeleton } from 'primeng/skeleton';
+import { FormBuilder, FormGroup, ReactiveFormsModule } from '@angular/forms';
 
 @Component({
   selector: 'app-repayments-list',
@@ -28,8 +29,9 @@ import { Skeleton } from 'primeng/skeleton';
     PanelModule,
     DatePickerModule,
     TooltipModule,
-    TableModule, // Added PrimeNG TableModule
+    TableModule, 
     Skeleton,
+    ReactiveFormsModule,
   ],
   templateUrl: './repayments-list.component.html',
 })
@@ -38,8 +40,9 @@ export default class RepaymentsListComponent {
   TransactionService = inject(RepaymentService);
   securityService = inject(SecurityService);
   private router = inject(Router);
+  private formBuilder = inject(FormBuilder);
 
-  dataSource: any[] = []; // Changed to array for PrimeNG table
+  dataSource: any[] = []; 
   main_routes = main_routes_paths;
   displayedColumns: string[] = [];
   tableColumns: string[] = [];
@@ -47,6 +50,11 @@ export default class RepaymentsListComponent {
   first: number = 0;
   rows: number = 10;
   totalRecords: number = 0;
+
+  filterForm: FormGroup = this.formBuilder.group({
+    customer_name: [''],
+    supplier: [''],
+  });
 
   constructor() {
     effect(() => {
@@ -56,14 +64,23 @@ export default class RepaymentsListComponent {
     });
   }
 
+  applayFilter() {
+    let filterData = this.filterForm.getRawValue();
+    this.getTransactionList(this.first + 1, this.rows, filterData);
+  }
+
   onPageChange(event: any) {
     this.first = event.first;
     this.getTransactionList(event.first + 1, event.rows);
   }
 
-  getTransactionList(page: number = 1, size: number = 10) {
+  getTransactionList(
+    page: number = 1,
+    size: number = 10,
+    filterData: any = {}
+  ) {
     this.isLoading = true; // Set loading to true
-    this.TransactionService.getList(page, size).subscribe(
+    this.TransactionService.getList(page, size, filterData).subscribe(
       (data: any) => {
         this.tableColumns = this.TransactionService.TransactionHeaders;
         this.displayedColumns = this.TransactionService.TransactionHeaders;

@@ -5,7 +5,12 @@ import { LanguagesService } from '../../../../shared/services/languages.service'
 import { main_routes_paths } from '../../../main.routes';
 import { PaymentService } from '../payment.service';
 
-import { FormsModule } from '@angular/forms';
+import {
+  FormBuilder,
+  FormGroup,
+  FormsModule,
+  ReactiveFormsModule,
+} from '@angular/forms';
 import { TranslateModule } from '@ngx-translate/core';
 import { ButtonModule } from 'primeng/button';
 import { DatePickerModule } from 'primeng/datepicker';
@@ -33,6 +38,7 @@ import { Skeleton } from 'primeng/skeleton';
     TooltipModule,
     TableModule,
     Skeleton,
+    ReactiveFormsModule,
   ],
   templateUrl: './payments-list.component.html',
 })
@@ -41,6 +47,7 @@ export default class PaymentsListComponent {
   PaymentService = inject(PaymentService);
   securityService = inject(SecurityService);
   private router = inject(Router);
+  private formBuilder = inject(FormBuilder);
 
   dataSource: any[] = [];
   main_routes = main_routes_paths;
@@ -51,6 +58,10 @@ export default class PaymentsListComponent {
   rows: number = 10;
   totalRecords: number = 0;
 
+  filterForm: FormGroup = this.formBuilder.group({
+    name: [''],
+  });
+
   constructor() {
     effect(() => {
       this.PaymentService.paymentDeleted();
@@ -59,14 +70,19 @@ export default class PaymentsListComponent {
     });
   }
 
+  applayFilter() {
+    let filterData = this.filterForm.getRawValue();
+    this.getPaymentList(this.first + 1, this.rows, filterData);
+  }
+
   onPageChange(event: any) {
     this.first = event.first;
     this.getPaymentList(event.first + 1, event.rows);
   }
 
-  getPaymentList(page: number = 1, size: number = 10) {
+  getPaymentList(page: number = 1, size: number = 10, filterData: any = {}) {
     this.isLoading = true;
-    this.PaymentService.getList(page, size).subscribe(
+    this.PaymentService.getList(page, size, filterData).subscribe(
       (data: any) => {
         this.tableColumns = this.PaymentService.PaymentHeaders;
         this.displayedColumns = this.PaymentService.PaymentHeaders;

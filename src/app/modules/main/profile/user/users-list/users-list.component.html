@@ -12,24 +12,33 @@
   <p-toolbar class="my-4 w-full">
     <ng-template #center>
       <div class="flex flex-row align-baseline justify-around">
-        <div class="grid md:grid-cols-4 sm:grid-cols-1">
+        <form
+          [formGroup]="filterForm"
+          class="grid md:grid-cols-4 sm:grid-cols-1 gap-5"
+        >
           <p-floatlabel variant="on" class="col-span-1">
-            <input pInputText id="user_name" class="" />
-            <label for="user_name">{{ "name" | translate }}</label>
+            <input pInputText id="firstName" formControlName="firstName" />
+            <label for="firstName">{{ "firstName" | translate }}</label>
           </p-floatlabel>
 
-          <p-float-label variant="on" class="col-span-1">
-            <p-datepicker
-              [iconDisplay]="'input'"
-              [showIcon]="true"
-              inputId="icondisplay"
-              selectionMode="range"
-              [readonlyInput]="true"
-              [showButtonBar]="true"
-            />
-            <label for="on_label">{{ "date" | translate }}</label>
-          </p-float-label>
-        </div>
+          <p-floatlabel variant="on" class="col-span-1">
+            <input pInputText id="lastName" formControlName="lastName" />
+            <label for="lastName">{{ "lastName" | translate }}</label>
+          </p-floatlabel>
+          <p-floatlabel variant="on" class="col-span-1">
+            <input pInputText id="email" formControlName="email" />
+            <label for="email">{{ "email" | translate }}</label>
+          </p-floatlabel>
+
+          <p-selectbutton
+            [options]="stateOptions"
+            [optionLabel]="'label' | translate"
+            optionValue="value"
+            styleClass="col-span-1"
+            formControlName="userType"
+            (onOptionClick)="applayFilter()"
+          />
+        </form>
       </div>
     </ng-template>
     <ng-template #end>
@@ -38,6 +47,7 @@
         pRipple
         [label]="'search' | translate"
         class="!bg-primary !border-primary me-2"
+        (click)="applayFilter()"
       ></button>
       <button
         pButton

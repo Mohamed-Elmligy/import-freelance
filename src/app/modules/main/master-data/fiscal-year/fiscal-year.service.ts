@@ -16,14 +16,7 @@ export class FiscalYearService {
   private showMessageService = inject(ShowMessageService);
   yearDeleted = signal(false);
 
-  yearHeaders = [
-    'name',
-    'country',
-    'from_date',
-    'to_date',
-    'is_active',
-    'created_at',
-  ];
+  yearHeaders = ['name', 'country', 'from_date', 'to_date', 'created_at'];
 
   getList(page?: any, size?: any, filter?: any) {
     return this.apiService.getDataFromServer(

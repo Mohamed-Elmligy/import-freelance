@@ -1,7 +1,12 @@
 import { LiveAnnouncer } from '@angular/cdk/a11y';
 
 import { Component, effect, inject, OnInit, viewChild } from '@angular/core';
-import { FormsModule } from '@angular/forms';
+import {
+  FormBuilder,
+  FormGroup,
+  FormsModule,
+  ReactiveFormsModule,
+} from '@angular/forms';
 import { RouterModule, Router } from '@angular/router';
 import { TranslateModule } from '@ngx-translate/core';
 import { ButtonModule } from 'primeng/button';
@@ -35,6 +40,7 @@ import { Skeleton } from 'primeng/skeleton';
     TooltipModule,
     Toolbar,
     Skeleton,
+    ReactiveFormsModule,
   ],
   templateUrl: './items-list.component.html',
 })
@@ -43,6 +49,7 @@ export default class ItemsListComponent {
   ItemsCategoryService = inject(ItemsCategoryService);
   securityService = inject(SecurityService);
   private router = inject(Router);
+  private formBuilder = inject(FormBuilder);
   dataSource: any[] = []; // Changed to array for PrimeNG table
   isLoading = true; // Add loading state
 
@@ -53,6 +60,10 @@ export default class ItemsListComponent {
   rows: number = 10;
   totalRecords: number = 0;
 
+  filterForm: FormGroup = this.formBuilder.group({
+    item: [''],
+  });
+
   constructor() {
     effect(() => {
       this.ItemsCategoryService.itemDeleted();
@@ -61,22 +72,28 @@ export default class ItemsListComponent {
     });
   }
 
+  applayFilter() {
+    let filterData = this.filterForm.getRawValue();
+    this.getItemsList(this.first + 1, this.rows, filterData);
+  }
+
   onPageChange(event: any) {
     this.first = event.first;
     this.getItemsList(event.first + 1, event.rows);
   }
 
-  getItemsList(page: number = 1, size: number = 10) {
+  getItemsList(page: number = 1, size: number = 10, filterData: any = {}) {
     this.isLoading = true; // Set loading to true before fetching
-    this.ItemsCategoryService.getList(page, size).subscribe((data: any) => {
-      this.tableColumns = this.ItemsCategoryService.itemsHeaders;
-      this.displayedColumns = this.ItemsCategoryService.itemsHeaders;
-      this.dataSource = this.ItemsCategoryService.apiModelToComponentModelList(
-        data.results
-      );
-      this.totalRecords = data.count;
-      this.isLoading = false; // Set loading to false after fetching
-    });
+    this.ItemsCategoryService.getList(page, size, filterData).subscribe(
+      (data: any) => {
+        this.tableColumns = this.ItemsCategoryService.itemsHeaders;
+        this.displayedColumns = this.ItemsCategoryService.itemsHeaders;
+        this.dataSource =
+          this.ItemsCategoryService.apiModelToComponentModelList(data.results);
+        this.totalRecords = data.count;
+        this.isLoading = false; // Set loading to false after fetching
+      }
+    );
   }
 
   applyFilter(event: Event) {

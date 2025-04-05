@@ -24,8 +24,12 @@ export class SuppliersService {
     'created_at',
   ];
 
-  getList(page?: any, size?: any) {
-    return this.apiService.getDataFromServer(`supplier/list`, { page, size });
+  getList(page?: any, size?: any, filter?: any) {
+    return this.apiService.getDataFromServer(
+      `supplier/list`,
+      { page, size },
+      filter
+    );
   }
 
   componentModelToApiModel(form: FormGroup) {

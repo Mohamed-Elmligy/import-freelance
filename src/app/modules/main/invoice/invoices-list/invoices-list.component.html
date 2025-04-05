@@ -8,25 +8,42 @@
   <p-toolbar class="my-4 w-full">
     <ng-template #center>
       <div class="flex flex-row align-baseline justify-around">
-        <div class="grid md:grid-cols-4 sm:grid-cols-1">
-          <p-floatlabel variant="on" class="md:col-span-1 sm:col-span-3 mx-2">
-            <input pInputText id="user_name" class="w-full" />
+        <form
+          [formGroup]="filterForm"
+          class="grid md:grid-cols-4 sm:grid-cols-1 gap-5"
+        >
+          <p-floatlabel variant="on" class="col-span-1">
+            <input pInputText id="user_name" formControlName="name" />
             <label for="user_name">{{ "name" | translate }}</label>
           </p-floatlabel>
 
-          <p-float-label variant="on" class="md:col-span-1 sm:col-span-3 mx-2">
-            <p-datepicker
-              [iconDisplay]="'input'"
-              [showIcon]="true"
-              inputId="icondisplay"
-              selectionMode="range"
-              [readonlyInput]="true"
-              [showButtonBar]="true"
-              styleClass="w-full"
+          <p-floatlabel variant="on" class="col-span-1">
+            <input
+              pInputText
+              id="supplier_name"
+              formControlName="supplier_name"
             />
-            <label for="on_label">{{ "date" | translate }}</label>
-          </p-float-label>
-        </div>
+            <label for="supplier_name">{{ "SUPPLIER_NAME" | translate }}</label>
+          </p-floatlabel>
+
+          <p-floatlabel variant="on" class="col-span-1">
+            <input
+              pInputText
+              id="invoiceNumber"
+              formControlName="invoiceNumber"
+            />
+            <label for="invoiceNumber">{{ "invoiceNumber" | translate }}</label>
+          </p-floatlabel>
+
+          <p-floatlabel variant="on">
+            <p-datepicker
+              inputId="invoiceDate"
+              formControlName="invoiceDate"
+              size="small"
+            />
+            <label for="invoiceDate">{{ "invoiceDate" | translate }}</label>
+          </p-floatlabel>
+        </form>
       </div>
     </ng-template>
 
@@ -36,6 +53,7 @@
         pRipple
         [label]="'search' | translate"
         class="!bg-primary !border-primary me-2"
+        (click)="applayFilter()"
       ></button>
       <button
         pButton

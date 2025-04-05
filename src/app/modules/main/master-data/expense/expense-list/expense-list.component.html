@@ -12,24 +12,26 @@
   <p-toolbar class="my-4 w-full">
     <ng-template #center>
       <div class="flex flex-row align-baseline justify-around">
-        <div class="grid md:grid-cols-4 sm:grid-cols-1">
+        <form
+          [formGroup]="filterForm"
+          class="grid md:grid-cols-4 sm:grid-cols-1 gap-5"
+        >
           <p-floatlabel variant="on" class="col-span-1">
-            <input pInputText id="user_name" class="" />
+            <input pInputText id="user_name" formControlName="name" />
             <label for="user_name">{{ "name" | translate }}</label>
           </p-floatlabel>
 
-          <p-float-label variant="on" class="col-span-1">
-            <p-datepicker
-              [iconDisplay]="'input'"
-              [showIcon]="true"
-              inputId="icondisplay"
-              selectionMode="range"
-              [readonlyInput]="true"
-              [showButtonBar]="true"
+          <p-floatlabel variant="on" class="col-span-1">
+            <input
+              pInputText
+              id="containerNumber"
+              formControlName="container_sequence"
             />
-            <label for="on_label">{{ "date" | translate }}</label>
-          </p-float-label>
-        </div>
+            <label for="containerNumber">{{
+              "containerNumber" | translate
+            }}</label>
+          </p-floatlabel>
+        </form>
       </div>
     </ng-template>
     <ng-template #end>
@@ -38,6 +40,7 @@
         pRipple
         [label]="'search' | translate"
         class="!bg-primary !border-primary me-2"
+        (click)="applayFilter()"
       ></button>
       <button
         pButton

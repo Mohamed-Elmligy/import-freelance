@@ -12,25 +12,25 @@
   <p-toolbar class="my-4 w-full">
     <ng-template #center>
       <div class="flex flex-row align-baseline justify-around">
-        <div class="grid md:grid-cols-4 sm:grid-cols-1">
+        <form
+          [formGroup]="filterForm"
+          class="grid md:grid-cols-4 sm:grid-cols-1 gap-5"
+        >
           <p-floatlabel variant="on" class="col-span-1">
-            <input pInputText id="user_name" class="" />
-            <label for="user_name">{{ "SUPPLIER_NAME" | translate }}</label>
+            <input pInputText id="user_name" formControlName="name" />
+            <label for="user_name">{{ "name" | translate }}</label>
           </p-floatlabel>
 
-          <p-float-label variant="on" class="col-span-1">
-            <p-datepicker
-              [iconDisplay]="'input'"
-              [showIcon]="true"
-              inputId="icondisplay"
-              selectionMode="range"
-              [readonlyInput]="true"
-              [showButtonBar]="true"
-              styleClass="w-full"
-            />
-            <label for="on_label">{{ "date" | translate }}</label>
-          </p-float-label>
-        </div>
+          <p-floatlabel variant="on" class="col-span-1">
+            <input pInputText id="code" formControlName="code" />
+            <label for="code">{{ "code" | translate }}</label>
+          </p-floatlabel>
+
+          <p-floatlabel variant="on" class="col-span-1">
+            <input pInputText id="store" formControlName="store" />
+            <label for="store">{{ "store_number" | translate }}</label>
+          </p-floatlabel>
+        </form>
       </div>
     </ng-template>
     <ng-template #end>
@@ -39,7 +39,7 @@
         pRipple
         [label]="'search' | translate"
         class="!bg-primary !border-primary me-2"
-        (click)="getSupplierList()"
+        (click)="applayFilter()"
       ></button>
       <button
         pButton

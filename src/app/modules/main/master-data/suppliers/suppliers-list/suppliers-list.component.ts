@@ -1,7 +1,12 @@
 import { LiveAnnouncer } from '@angular/cdk/a11y';
 
 import { Component, effect, inject, viewChild } from '@angular/core';
-import { FormsModule } from '@angular/forms';
+import {
+  FormBuilder,
+  FormGroup,
+  FormsModule,
+  ReactiveFormsModule,
+} from '@angular/forms';
 import { RouterModule, Router } from '@angular/router';
 import { TranslateModule } from '@ngx-translate/core';
 import { ButtonModule } from 'primeng/button';
@@ -34,6 +39,7 @@ import { SkeletonModule } from 'primeng/skeleton';
     TooltipModule,
     TableModule,
     SkeletonModule,
+    ReactiveFormsModule,
   ],
   templateUrl: './suppliers-list.component.html',
 })
@@ -41,6 +47,7 @@ export default class SuppliersListComponent {
   languageService = inject(LanguagesService);
   SupplierService = inject(SuppliersService);
   private router = inject(Router);
+  private formBuilder = inject(FormBuilder);
 
   dataSource: any[] = [];
 
@@ -52,6 +59,12 @@ export default class SuppliersListComponent {
   rows: number = 10;
   totalRecords: number = 0;
 
+  filterForm: FormGroup = this.formBuilder.group({
+    name: [''],
+    code: [''],
+    store: [''],
+  });
+
   constructor() {
     effect(() => {
       this.SupplierService.suppliertDeleted();
@@ -60,9 +73,14 @@ export default class SuppliersListComponent {
     });
   }
 
-  getSupplierList(page: number = 1, size: number = 10) {
+  applayFilter() {
+    const filterData = this.filterForm.value;
+    this.getSupplierList(this.first + 1, this.rows, filterData);
+  }
+
+  getSupplierList(page: number = 1, size: number = 10, filterData: any = {}) {
     this.isLoading = true;
-    this.SupplierService.getList(page, size).subscribe(
+    this.SupplierService.getList(page, size, filterData).subscribe(
       (data: any) => {
         this.tableColumns = this.SupplierService.SupplierHeaders;
         this.displayedColumns = this.SupplierService.SupplierHeaders;

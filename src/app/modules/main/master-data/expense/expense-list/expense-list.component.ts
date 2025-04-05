@@ -1,5 +1,10 @@
 import { Component, effect, inject, viewChild } from '@angular/core';
-import { FormsModule } from '@angular/forms';
+import {
+  FormBuilder,
+  FormGroup,
+  FormsModule,
+  ReactiveFormsModule,
+} from '@angular/forms';
 import { RouterModule, Router } from '@angular/router';
 import { TranslateModule } from '@ngx-translate/core';
 import { ButtonModule } from 'primeng/button';
@@ -32,6 +37,7 @@ import { Skeleton } from 'primeng/skeleton';
     DatePickerModule,
     TooltipModule,
     Skeleton,
+    ReactiveFormsModule,
   ],
   templateUrl: './expense-list.component.html',
 })
@@ -40,6 +46,7 @@ export default class ExpenseListComponent {
   ExpenseService = inject(ExpenseService);
   securityService = inject(SecurityService);
   private router = inject(Router);
+  private formBuilder = inject(FormBuilder);
 
   dataSource: any[] = [];
 
@@ -52,6 +59,11 @@ export default class ExpenseListComponent {
   rows: number = 10;
   totalRecords: number = 0;
 
+  filterForm: FormGroup = this.formBuilder.group({
+    name: [''],
+    container_sequence: [''],
+  });
+
   constructor() {
     effect(() => {
       this.ExpenseService.expenseDeleted();
@@ -60,9 +72,14 @@ export default class ExpenseListComponent {
     });
   }
 
-  getExpenseList(page: number = 1, size: number = 10) {
+  applayFilter() {
+    let filterData = this.filterForm.getRawValue();
+    this.getExpenseList(this.first + 1, this.rows, filterData);
+  }
+
+  getExpenseList(page: number = 1, size: number = 10, filterData: any = {}) {
     this.isLoading = true;
-    this.ExpenseService.getList(page, size).subscribe(
+    this.ExpenseService.getList(page, size, filterData).subscribe(
       (data: any) => {
         this.tableColumns = this.ExpenseService.ExpenseHeaders;
         this.displayedColumns = this.ExpenseService.ExpenseHeaders;

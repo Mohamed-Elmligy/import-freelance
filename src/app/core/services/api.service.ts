@@ -22,10 +22,27 @@ export class ApiService {
     pagination?: { page: number; size: number },
     filter?: any
   ) {
-    // this.removeInvalidValues(filter);
+    this.removeInvalidValues(filter);
     return this.HTTP.get<any>(base_url, {
       params: { ...pagination, ...filter },
     });
+  }
+
+  removeInvalidValues(filter: any) {
+    if (filter) {
+      for (const key in filter) {
+        if (
+          filter[key] === null ||
+          filter[key] === undefined ||
+          filter[key] === '' ||
+          (Array.isArray(filter[key]) && filter[key].length === 0) ||
+          (typeof filter[key] === 'object' &&
+            Object.keys(filter[key]).length === 0)
+        ) {
+          delete filter[key];
+        }
+      }
+    }
   }
 
   getDataFromServerById(base_url: string, id: number) {
