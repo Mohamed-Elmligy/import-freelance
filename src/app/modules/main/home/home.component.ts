@@ -14,7 +14,6 @@ export default class HomeComponent implements OnInit {
   private httpService = inject(ApiService);
 
   totals: HomeTotals = {} as HomeTotals;
-  loading: boolean = true; // Add loading state
   icons: string[] = ['description', 'person', 'store', 'local_shipping']; // Add icons array
   totalsKeys: string[] = [
     'total_invoices',
@@ -23,12 +22,15 @@ export default class HomeComponent implements OnInit {
     'total_shipments',
   ]; // Add keys array
   labels: string[] = ['Invoices', 'Customers', 'Suppliers', 'Shipment']; // Add labels array
+  isLoading = true; // Add isLoading property
 
   ngOnInit(): void {
     this.httpService.getDataFromServer('home').subscribe({
       next: (response: HomeTotals) => {
+        this.isLoading = true; // Set loading to true
+
         this.totals = response;
-        this.loading = false; // Set loading to false after data is loaded
+        this.isLoading = false; // Set loading to false
       },
     });
   }

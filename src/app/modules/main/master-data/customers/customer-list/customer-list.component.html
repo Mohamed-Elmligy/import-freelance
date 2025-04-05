@@ -8,17 +8,17 @@
   </div>
 </div>
 
-<div class="mat-elevation-z8 overflow-x-auto">
+<div class="mat-elevation-z8">
   <p-toolbar class="my-4 w-full">
     <ng-template #center>
       <div class="flex flex-row align-baseline justify-around">
         <div class="grid md:grid-cols-4 sm:grid-cols-1">
-          <p-floatlabel variant="on" class="md:col-span-1 sm:col-span-3 mx-2">
-            <input pInputText id="user_name" class="w-full" />
+          <p-floatlabel variant="on" class="col-span-1">
+            <input pInputText id="user_name" class="" />
             <label for="user_name">{{ "name" | translate }}</label>
           </p-floatlabel>
 
-          <p-float-label variant="on" class="md:col-span-1 sm:col-span-3 mx-2">
+          <p-float-label variant="on" class="col-span-1">
             <p-datepicker
               [iconDisplay]="'input'"
               [showIcon]="true"
@@ -26,7 +26,6 @@
               selectionMode="range"
               [readonlyInput]="true"
               [showButtonBar]="true"
-              styleClass="w-full"
             />
             <label for="on_label">{{ "date" | translate }}</label>
           </p-float-label>
@@ -39,7 +38,6 @@
         pRipple
         [label]="'search' | translate"
         class="!bg-primary !border-primary me-2"
-        (click)="applyFilters()"
       ></button>
       <button
         pButton
@@ -52,18 +50,18 @@
     </ng-template>
   </p-toolbar>
 
+  @if (!isLoading) {
   <p-table
     [value]="dataSource"
     [paginator]="true"
     [rows]="10"
-    [totalRecords]="resultsLength"
     [rowsPerPageOptions]="[10, 20, 50]"
-    styleClass="p-datatable-sm"
-    [loading]="loading"
+    [sortMode]="'single'"
+    [responsiveLayout]="'scroll'"
   >
     <ng-template pTemplate="header">
       <tr>
-        @for (col of tableColumns; track col) {
+        @for (col of tableColumns; track $index) {
         <th [pSortableColumn]="col">
           {{ col | translate }}
           <p-sortIcon [field]="col"></p-sortIcon>
@@ -72,12 +70,11 @@
         <th>{{ "actions" | translate }}</th>
       </tr>
     </ng-template>
-    <ng-template pTemplate="body" let-element>
-      @if (!loading) {
+    <ng-template pTemplate="body" let-rowData>
       <tr>
-        @for (col of tableColumns; track col) { @if(element[col]){
-        <td>{{ element[col] }}</td>
-        } }
+        @for (col of tableColumns; track $index) {
+        <td>{{ rowData[col] }}</td>
+        }
         <td>
           <p-button
             icon="pi pi-eye"
@@ -85,9 +82,8 @@
             [text]="true"
             pTooltip="View"
             tooltipPosition="top"
-            (click)="viewCustomer(element.id)"
+            (click)="viewCustomer(rowData.id)"
             severity="success"
-            class="mx-1"
           ></p-button>
           <p-button
             icon="pi pi-pencil"
@@ -96,8 +92,7 @@
             severity="info"
             pTooltip="Edit"
             tooltipPosition="top"
-            (click)="editCustomer(element.id)"
-            class="mx-1"
+            (click)="editCustomer(rowData.id)"
           ></p-button>
           <p-button
             icon="pi pi-trash"
@@ -105,15 +100,14 @@
             [text]="true"
             pTooltip="Delete"
             tooltipPosition="top"
-            (click)="deleteCustomer(element.id)"
+            (click)="deleteCustomer(rowData.id)"
             severity="danger"
-            class="mx-1"
           ></p-button>
         </td>
       </tr>
-      } @else { @for (_ of [].constructor(10); track $index) {
-      <p-skeleton styleClass="w-full my-4"></p-skeleton>
-      } }
     </ng-template>
   </p-table>
+  } @else { @for (_ of [].constructor(10); track $index) {
+  <p-skeleton styleClass="w-full my-4"></p-skeleton>
+  } }
 </div>

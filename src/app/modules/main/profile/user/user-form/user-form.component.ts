@@ -1,5 +1,5 @@
-import { CommonModule } from '@angular/common';
-import { Component, inject, OnInit } from '@angular/core';
+import { CommonModule, Location } from '@angular/common';
+import { Component, inject, OnInit, signal } from '@angular/core';
 import {
   FormBuilder,
   FormsModule,
@@ -19,6 +19,9 @@ import { SelectModule } from 'primeng/select';
 import { PasswordModule } from 'primeng/password';
 import { MenuItem } from 'primeng/api';
 import { main_routes_paths } from '../../../main.routes';
+import { PageHeaderComponent } from '../../../../shared/components/page-header/page-header.component';
+import { map } from 'rxjs';
+import { LookupsService } from '../../../../shared/services/lookups.service';
 
 @Component({
   selector: 'app-user-form',
@@ -26,7 +29,7 @@ import { main_routes_paths } from '../../../main.routes';
     FloatLabelModule,
     InputTextModule,
     FormsModule,
-    BreadcrumbModule,
+    PageHeaderComponent,
     RouterModule,
     CommonModule,
     ButtonModule,
@@ -44,10 +47,16 @@ export default class UserFormComponent implements OnInit {
   private activeRoute = inject(ActivatedRoute);
   private formBuilder = inject(FormBuilder);
   private showMessageService = inject(ShowMessageService);
+  private lookupService = inject(LookupsService);
+  private location = inject(Location);
+  listOfYears = signal([]);
+
   user_id = this.activeRoute.snapshot.queryParams['userId'];
   isUpdate = this.activeRoute.snapshot.queryParams['edit'];
-  items: MenuItem[] | undefined;
+
+  route: MenuItem[] | undefined;
   mainPaths = main_routes_paths;
+
   userTypes = [
     { label: 'Admin', value: 'admin' },
     { label: 'User', value: 'user' },
@@ -64,14 +73,6 @@ export default class UserFormComponent implements OnInit {
   });
 
   ngOnInit(): void {
-    this.items = [
-      {
-        icon: 'pi pi-users',
-        route: this.mainPaths.settings,
-        queryParams: { type: 'settings' },
-      },
-      { label: 'settings', route: this.mainPaths.settings },
-    ];
     if (this.isUpdate == 'true') {
       this.apiService
         .getDataFromServer(PROFILE_APIS.USER_DETAILS(this.user_id))
@@ -79,6 +80,23 @@ export default class UserFormComponent implements OnInit {
           this.userForm.patchValue(res);
         });
     }
+
+    this.route = [
+      {
+        icon: 'pi pi-dollar',
+        route: this.mainPaths.usersList,
+      },
+      { label: 'userList', route: this.mainPaths.usersList },
+    ];
+
+    this.lookupService
+      .getListOfLookups('fiscal-years')
+      .pipe(
+        map((data: any) => {
+          this.listOfYears.set(data);
+        })
+      )
+      .subscribe();
   }
 
   submitForm(): void {
@@ -95,6 +113,7 @@ export default class UserFormComponent implements OnInit {
             'Success',
             'User updated successfully'
           );
+          this.location.back();
         });
     } else {
       this.apiService
@@ -105,6 +124,7 @@ export default class UserFormComponent implements OnInit {
             'Success',
             'User created successfully'
           );
+          this.location.back();
         });
     }
   }
