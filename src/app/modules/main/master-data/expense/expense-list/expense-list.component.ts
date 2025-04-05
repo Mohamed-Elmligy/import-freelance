@@ -34,7 +34,6 @@ import { Skeleton } from 'primeng/skeleton';
     Skeleton,
   ],
   templateUrl: './expense-list.component.html',
-  styles: ``,
 })
 export default class ExpenseListComponent {
   languageService = inject(LanguagesService);
@@ -47,8 +46,11 @@ export default class ExpenseListComponent {
   main_routes = main_routes_paths;
   displayedColumns: string[] = [];
   tableColumns: string[] = [];
-  resultsLength = 0;
   isLoading = false;
+
+  first: number = 0;
+  rows: number = 10;
+  totalRecords: number = 0;
 
   constructor() {
     effect(() => {
@@ -67,13 +69,18 @@ export default class ExpenseListComponent {
         this.dataSource = this.ExpenseService.apiModelToComponentModelList(
           data.results
         );
-        this.resultsLength = data.count;
+        this.totalRecords = data.count;
         this.isLoading = false;
       },
       () => {
         this.isLoading = false;
       }
     );
+  }
+
+  onPageChange(event: any) {
+    this.first = event.first;
+    this.getExpenseList(event.first + 1, event.rows);
   }
 
   editExpense(expenseId: any) {

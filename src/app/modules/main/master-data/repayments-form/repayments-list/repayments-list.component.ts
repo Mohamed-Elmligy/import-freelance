@@ -29,10 +29,9 @@ import { Skeleton } from 'primeng/skeleton';
     DatePickerModule,
     TooltipModule,
     TableModule, // Added PrimeNG TableModule
-    Skeleton
+    Skeleton,
   ],
   templateUrl: './repayments-list.component.html',
-  styles: ``,
 })
 export default class RepaymentsListComponent {
   languageService = inject(LanguagesService);
@@ -44,8 +43,10 @@ export default class RepaymentsListComponent {
   main_routes = main_routes_paths;
   displayedColumns: string[] = [];
   tableColumns: string[] = [];
-  resultsLength = 0;
   isLoading: boolean = false; // Add loading state
+  first: number = 0;
+  rows: number = 10;
+  totalRecords: number = 0;
 
   constructor() {
     effect(() => {
@@ -53,6 +54,11 @@ export default class RepaymentsListComponent {
       this.getTransactionList();
       this.TransactionService.transactionDeleted.set(false);
     });
+  }
+
+  onPageChange(event: any) {
+    this.first = event.first;
+    this.getTransactionList(event.first + 1, event.rows);
   }
 
   getTransactionList(page: number = 1, size: number = 10) {
@@ -64,7 +70,7 @@ export default class RepaymentsListComponent {
         this.dataSource = this.TransactionService.apiModelToComponentModelList(
           data.results
         );
-        this.resultsLength = data.count;
+        this.totalRecords = data.count;
         this.isLoading = false; // Set loading to false after data is fetched
       },
       () => {

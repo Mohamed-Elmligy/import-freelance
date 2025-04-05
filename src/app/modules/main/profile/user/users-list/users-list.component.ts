@@ -49,7 +49,6 @@ import { SkeletonModule } from 'primeng/skeleton';
     SkeletonModule,
   ],
   templateUrl: './users-list.component.html',
-  styles: ``,
 })
 export default class UsersListComponent implements OnInit {
   private apiService = inject(ApiService);
@@ -62,8 +61,9 @@ export default class UsersListComponent implements OnInit {
 
   dataSource: any[] = [];
   tableColumns: string[] = [];
-  resultsLength = 0;
-
+  first: number = 0;
+  rows: number = 10;
+  totalRecords: number = 0;
   usersList: any[] = [];
   isLoading: boolean = false;
 
@@ -84,9 +84,14 @@ export default class UsersListComponent implements OnInit {
       .subscribe((data: any) => {
         this.tableColumns = this.usersList;
         this.dataSource = data.results;
-        this.resultsLength = data.count;
+        this.totalRecords = data.count;
         this.isLoading = false;
       });
+  }
+
+  onPageChange(event: any) {
+    this.first = event.first;
+    this.getUsersList(event.first + 1, event.rows);
   }
 
   createUser() {

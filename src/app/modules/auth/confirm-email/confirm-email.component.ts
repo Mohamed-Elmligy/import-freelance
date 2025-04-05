@@ -29,7 +29,6 @@ import { auth_routes_paths } from '../auth.routes';
     CommonModule,
   ],
   templateUrl: './confirm-email.component.html',
-  styles: ``,
 })
 export default class ConfirmEmailComponent {
   protected auth_routes = auth_routes_paths;

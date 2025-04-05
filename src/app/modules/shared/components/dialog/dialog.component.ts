@@ -8,7 +8,6 @@ import { DialogService } from './dialog.service';
   selector: 'app-dialog',
   imports: [Dialog, ButtonModule, InputTextModule, AvatarModule],
   templateUrl: './dialog.component.html',
-  styles: ``,
 })
 export class DialogComponent {
   dialogService = inject(DialogService);

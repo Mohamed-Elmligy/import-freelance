@@ -36,13 +36,10 @@ import { SkeletonModule } from 'primeng/skeleton';
     SkeletonModule,
   ],
   templateUrl: './suppliers-list.component.html',
-  styles: ``,
 })
 export default class SuppliersListComponent {
   languageService = inject(LanguagesService);
-  private _liveAnnouncer = inject(LiveAnnouncer);
   SupplierService = inject(SuppliersService);
-  securityService = inject(SecurityService);
   private router = inject(Router);
 
   dataSource: any[] = [];
@@ -50,8 +47,10 @@ export default class SuppliersListComponent {
   main_routes = main_routes_paths;
   displayedColumns: string[] = [];
   tableColumns: string[] = [];
-  resultsLength = 0;
   isLoading = false;
+  first: number = 0;
+  rows: number = 10;
+  totalRecords: number = 0;
 
   constructor() {
     effect(() => {
@@ -70,7 +69,7 @@ export default class SuppliersListComponent {
         this.dataSource = this.SupplierService.apiModelToComponentModelList(
           data.results
         );
-        this.resultsLength = data.count;
+        this.totalRecords = data.count;
         this.isLoading = false;
       },
       () => {
@@ -79,41 +78,9 @@ export default class SuppliersListComponent {
     );
   }
 
-  loadSuppliers(event: any) {
-    this.isLoading = true;
-    const page = event.first / event.rows + 1;
-    const size = event.rows;
-    this.SupplierService.getList(page, size).subscribe(
-      (data: any) => {
-        this.dataSource = this.SupplierService.apiModelToComponentModelList(
-          data.results
-        );
-        this.resultsLength = data.count;
-        this.isLoading = false;
-      },
-      () => {
-        this.isLoading = false;
-      }
-    );
-  }
-
-  onSort(event: any) {
-    const sortField = event.sortField;
-    const sortOrder = event.sortOrder === 1 ? 'asc' : 'desc';
-    this.dataSource.sort((a, b) => {
-      if (a[sortField] < b[sortField]) return sortOrder === 'asc' ? -1 : 1;
-      if (a[sortField] > b[sortField]) return sortOrder === 'asc' ? 1 : -1;
-      return 0;
-    });
-  }
-
-  applyFilter(event: Event) {
-    const filterValue = (event.target as HTMLInputElement).value;
-    this.dataSource = this.dataSource.filter((item) =>
-      Object.values(item).some((val) =>
-        String(val).toLowerCase().includes(filterValue.trim().toLowerCase())
-      )
-    );
+  onPageChange(event: any) {
+    this.first = event.first;
+    this.getSupplierList(event.first + 1, event.rows);
   }
 
   editSupplier(supplierId: any) {

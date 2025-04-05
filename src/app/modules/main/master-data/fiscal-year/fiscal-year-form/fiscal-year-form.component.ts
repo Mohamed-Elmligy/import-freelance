@@ -42,7 +42,6 @@ import { PageHeaderComponent } from '../../../../shared/components/page-header/p
     PageHeaderComponent,
   ],
   templateUrl: './fiscal-year-form.component.html',
-  styles: ``,
 })
 export default class FiscalYearFormComponent {
   mainPaths = main_routes_paths;

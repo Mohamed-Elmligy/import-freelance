@@ -33,7 +33,6 @@ import { SkeletonModule } from 'primeng/skeleton';
     SkeletonModule,
   ],
   templateUrl: './invoices-list.component.html',
-  styles: ``,
 })
 export default class InvoicesListComponent {
   languageService = inject(LanguagesService);
@@ -45,8 +44,10 @@ export default class InvoicesListComponent {
   main_routes = main_routes_paths;
   displayedColumns: string[] = [];
   tableColumns: string[] = [];
-  resultsLength = 0;
   isLoading = true; // Add isLoading property
+  first: number = 0;
+  rows: number = 10;
+  totalRecords: number = 0;
 
   constructor() {
     effect(() => {
@@ -54,6 +55,11 @@ export default class InvoicesListComponent {
       this.getInvoicesList();
       this.invoiceService.invoiceDeleted.set(false);
     });
+  }
+
+  onPageChange(event: any) {
+    this.first = event.first;
+    this.getInvoicesList(event.first + 1, event.rows);
   }
 
   getInvoicesList(page: number = 1, size: number = 10) {
@@ -64,7 +70,7 @@ export default class InvoicesListComponent {
       this.dataSource = this.invoiceService.apiModelToComponentModelList(
         data.results
       );
-      this.resultsLength = data.count;
+      this.totalRecords = data.count;
       this.isLoading = false; // Set loading to false after data is fetched
     });
   }

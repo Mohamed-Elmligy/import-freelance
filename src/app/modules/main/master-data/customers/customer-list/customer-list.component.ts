@@ -37,7 +37,6 @@ import { Skeleton } from 'primeng/skeleton';
     Skeleton,
   ],
   templateUrl: './customer-list.component.html',
-  styles: ``,
 })
 export default class CustomerListComponent {
   languageService = inject(LanguagesService);
@@ -49,8 +48,10 @@ export default class CustomerListComponent {
   main_routes = main_routes_paths;
   displayedColumns: string[] = [];
   tableColumns: string[] = [];
-  resultsLength = 0;
   isLoading = true;
+  first: number = 0;
+  rows: number = 10;
+  totalRecords: number = 0;
 
   constructor() {
     effect(() => {
@@ -69,13 +70,14 @@ export default class CustomerListComponent {
         data.results
       );
       this.dataSource = ModifideData;
-      this.resultsLength = data.count;
+      this.totalRecords = data.count;
       this.isLoading = false;
     });
   }
 
-  applyFilters() {
-    this.getCustomersList();
+  onPageChange(event: any) {
+    this.first = event.first;
+    this.getCustomersList(event.first + 1, event.rows);
   }
 
   editCustomer(customerId: any) {

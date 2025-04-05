@@ -31,7 +31,6 @@ import { Skeleton } from 'primeng/skeleton';
     Skeleton,
   ],
   templateUrl: './fiscal-year-list.component.html',
-  styles: ``,
 })
 export default class FiscalYearListComponent {
   languageService = inject(LanguagesService);
@@ -43,8 +42,10 @@ export default class FiscalYearListComponent {
   main_routes = main_routes_paths;
   displayedColumns: string[] = [];
   tableColumns: string[] = [];
-  resultsLength = 0;
   isLoading = false; // Add loading state
+  rows: number = 10;
+  first: number = 0;
+  totalRecords: number = 0;
 
   constructor() {
     effect(() => {
@@ -62,9 +63,14 @@ export default class FiscalYearListComponent {
       this.dataSource = this.YearService.apiModelToComponentModelList(
         data.results
       );
-      this.resultsLength = data.count;
+      this.totalRecords = data.count;
       this.isLoading = false; // Set loading state to false
     });
+  }
+
+  onPageChange(event: any) {
+    this.first = event.first;
+    this.getYearList(event.first + 1, event.rows);
   }
 
   editYear(yearId: any) {

@@ -40,7 +40,6 @@ import { LookupsService } from '../../../../shared/services/lookups.service';
     PasswordModule,
   ],
   templateUrl: './user-form.component.html',
-  styles: ``,
 })
 export default class UserFormComponent implements OnInit {
   private apiService = inject(ApiService);

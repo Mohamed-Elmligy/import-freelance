@@ -37,22 +37,21 @@ import { Skeleton } from 'primeng/skeleton';
     Skeleton,
   ],
   templateUrl: './items-list.component.html',
-  styles: ``,
 })
 export default class ItemsListComponent {
   languageService = inject(LanguagesService);
-  private _liveAnnouncer = inject(LiveAnnouncer);
   ItemsCategoryService = inject(ItemsCategoryService);
   securityService = inject(SecurityService);
   private router = inject(Router);
-  private http = inject(HttpClient);
   dataSource: any[] = []; // Changed to array for PrimeNG table
   isLoading = true; // Add loading state
 
   main_routes = main_routes_paths;
   displayedColumns: string[] = [];
   tableColumns: string[] = [];
-  resultsLength = 0;
+  first: number = 0;
+  rows: number = 10;
+  totalRecords: number = 0;
 
   constructor() {
     effect(() => {
@@ -60,6 +59,11 @@ export default class ItemsListComponent {
       this.getItemsList();
       this.ItemsCategoryService.itemDeleted.set(false);
     });
+  }
+
+  onPageChange(event: any) {
+    this.first = event.first;
+    this.getItemsList(event.first + 1, event.rows);
   }
 
   getItemsList(page: number = 1, size: number = 10) {
@@ -70,7 +74,7 @@ export default class ItemsListComponent {
       this.dataSource = this.ItemsCategoryService.apiModelToComponentModelList(
         data.results
       );
-      this.resultsLength = data.count;
+      this.totalRecords = data.count;
       this.isLoading = false; // Set loading to false after fetching
     });
   }

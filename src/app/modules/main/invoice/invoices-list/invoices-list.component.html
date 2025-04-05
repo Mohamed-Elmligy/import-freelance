@@ -52,10 +52,13 @@
   <p-table
     [value]="dataSource"
     [paginator]="true"
-    [rows]="10"
     [rowsPerPageOptions]="[10, 20, 50]"
     [sortMode]="'single'"
     class="w-full"
+    [rows]="rows"
+    [totalRecords]="totalRecords"
+    [first]="first"
+    (onPage)="onPageChange($event)"
   >
     <ng-template pTemplate="header">
       <tr>

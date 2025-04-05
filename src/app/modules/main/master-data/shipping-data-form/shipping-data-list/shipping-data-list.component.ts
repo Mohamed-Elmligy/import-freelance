@@ -35,7 +35,6 @@ import { SkeletonModule } from 'primeng/skeleton';
     SkeletonModule,
   ],
   templateUrl: './shipping-data-list.component.html',
-  styles: ``,
 })
 export default class ShippingDataListComponent {
   languageService = inject(LanguagesService);
@@ -48,6 +47,9 @@ export default class ShippingDataListComponent {
   displayedColumns: string[] = [];
   tableColumns: string[] = [];
   isLoading: boolean = true;
+  first: number = 0;
+  rows: number = 10;
+  totalRecords: number = 0;
 
   constructor() {
     effect(() => {
@@ -55,6 +57,11 @@ export default class ShippingDataListComponent {
       this.getShippingList();
       this.shippingDataService.shippingDataDeleted.set(false);
     });
+  }
+
+  onPageChange(event: any) {
+    this.first = event.first;
+    this.getShippingList(event.first + 1, event.rows);
   }
 
   getShippingList(page: number = 1, size: number = 10) {

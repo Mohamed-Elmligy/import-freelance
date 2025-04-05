@@ -34,7 +34,6 @@ import { PageHeaderComponent } from '../../../../shared/components/page-header/p
     PageHeaderComponent,
   ],
   templateUrl: './suppliers.component.html',
-  styles: ``,
 })
 export default class SuppliersComponent {
   route: MenuItem[] = [];

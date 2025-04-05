@@ -12,7 +12,6 @@ import { CommonModule } from '@angular/common';
   selector: 'app-user-data',
   imports: [TranslateModule, BreadcrumbModule, RouterModule, CommonModule],
   templateUrl: './user-data.component.html',
-  styles: ``,
 })
 export default class UserDataComponent {
   private apiService = inject(ApiService);

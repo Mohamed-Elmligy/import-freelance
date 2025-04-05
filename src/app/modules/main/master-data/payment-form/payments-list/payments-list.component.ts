@@ -35,7 +35,6 @@ import { Skeleton } from 'primeng/skeleton';
     Skeleton,
   ],
   templateUrl: './payments-list.component.html',
-  styles: ``,
 })
 export default class PaymentsListComponent {
   languageService = inject(LanguagesService);
@@ -48,6 +47,9 @@ export default class PaymentsListComponent {
   displayedColumns: string[] = [];
   tableColumns: string[] = [];
   isLoading: boolean = false;
+  first: number = 0;
+  rows: number = 10;
+  totalRecords: number = 0;
 
   constructor() {
     effect(() => {
@@ -55,6 +57,11 @@ export default class PaymentsListComponent {
       this.getPaymentList();
       this.PaymentService.paymentDeleted.set(false);
     });
+  }
+
+  onPageChange(event: any) {
+    this.first = event.first;
+    this.getPaymentList(event.first + 1, event.rows);
   }
 
   getPaymentList(page: number = 1, size: number = 10) {

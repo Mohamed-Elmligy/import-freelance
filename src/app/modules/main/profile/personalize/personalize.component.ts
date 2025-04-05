@@ -21,10 +21,9 @@ import { TabService } from '../../../../services/tab.service';
     ButtonModule,
     TranslateModule,
     FloatLabel,
-    Toast
-],
+    Toast,
+  ],
   templateUrl: './personalize.component.html',
-  styles: ``,
 })
 export class PersonalizeComponent implements OnInit {
   languagesList: any[] | undefined;
