@@ -29,6 +29,12 @@
         formControlName="invoiceNumber"
         (ngModelChange)="getInvoiceData($event.id); getPaymentData($event.id)"
       />
+      @if (form.get('invoiceNumber')?.hasError('required') &&
+      form.get('invoiceNumber')?.dirty) {
+      <p-message severity="error" variant="simple" size="small">{{
+        "requeridInput" | translate
+      }}</p-message
+      >}
     </div>
 
     <!-- Invoice Details -->
@@ -119,6 +125,12 @@
             class="w-full border-gray-300 rounded-md"
             formControlName="invoice_payment_number"
           />
+          @if (form.get('invoice_payment_number')?.hasError('required') &&
+          form.get('invoice_payment_number')?.dirty) {
+          <p-message severity="error" variant="simple" size="small">{{
+            "requeridInput" | translate
+          }}</p-message
+          >}
         </div>
       </div>
       <div class="col-span-12 md:col-span-4">
@@ -136,6 +148,12 @@
             class="w-full border-gray-300 rounded-md px-3 py-2"
             formControlName="amount"
           />
+          @if (form.get('amount')?.hasError('required') &&
+          form.get('amount')?.dirty) {
+          <p-message severity="error" variant="simple" size="small">{{
+            "requeridInput" | translate
+          }}</p-message
+          >}
         </div>
       </div>
       <div class="col-span-12 md:col-span-4">
@@ -152,7 +170,12 @@
             iconDisplay="input"
             class="w-full border-gray-300 rounded-md"
             formControlName="transactionDate"
-          />
+          />@if (form.get('transactionDate')?.hasError('required') &&
+          form.get('transactionDate')?.dirty) {
+          <p-message severity="error" variant="simple" size="small">{{
+            "requeridInput" | translate
+          }}</p-message
+          >}
         </div>
       </div>
     </div>

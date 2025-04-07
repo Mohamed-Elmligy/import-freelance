@@ -18,6 +18,7 @@ import { main_routes_paths } from '../../../main.routes';
 import { TextareaModule } from 'primeng/textarea';
 import { CustomersService } from '../customers.service';
 import { PageHeaderComponent } from '../../../../shared/components/page-header/page-header.component';
+import { MessageModule } from 'primeng/message';
 
 @Component({
   selector: 'app-customers',
@@ -32,6 +33,7 @@ import { PageHeaderComponent } from '../../../../shared/components/page-header/p
     ReactiveFormsModule,
     TextareaModule,
     PageHeaderComponent,
+    MessageModule,
   ],
   templateUrl: './customers.component.html',
 })

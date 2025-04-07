@@ -21,6 +21,7 @@ import { SelectModule } from 'primeng/select';
 import { LookupsService } from '../../../shared/services/lookups.service';
 import { PaymentService } from './payment.service';
 import { PageHeaderComponent } from '../../../shared/components/page-header/page-header.component';
+import { MessageModule } from 'primeng/message';
 
 @Component({
   selector: 'app-payment-form',
@@ -39,6 +40,7 @@ import { PageHeaderComponent } from '../../../shared/components/page-header/page
     ReactiveFormsModule,
     SelectModule,
     PageHeaderComponent,
+    MessageModule
   ],
   templateUrl: './payment-form.component.html',
 })

@@ -22,6 +22,7 @@ import { main_routes_paths } from '../../../main.routes';
 import { PageHeaderComponent } from '../../../../shared/components/page-header/page-header.component';
 import { map } from 'rxjs';
 import { LookupsService } from '../../../../shared/services/lookups.service';
+import { MessageModule } from 'primeng/message';
 
 @Component({
   selector: 'app-user-form',
@@ -38,6 +39,7 @@ import { LookupsService } from '../../../../shared/services/lookups.service';
     TranslateModule,
     SelectModule,
     PasswordModule,
+    MessageModule,
   ],
   templateUrl: './user-form.component.html',
 })
@@ -78,6 +80,11 @@ export default class UserFormComponent implements OnInit {
         .subscribe((res) => {
           this.userForm.patchValue(res);
         });
+    } else {
+      this.userForm
+        .get('password')
+        ?.setValidators([Validators.required, Validators.minLength(6)]);
+      this.userForm.get('password')?.updateValueAndValidity();
     }
 
     this.route = [

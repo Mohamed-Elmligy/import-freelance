@@ -18,6 +18,11 @@
         formControlName="name"
       >
       </p-select>
+      @if (form.get('name')?.hasError('required') && form.get('name')?.dirty) {
+      <p-message severity="error" variant="simple" size="small">{{
+        "requeridInput" | translate
+      }}</p-message
+      >}
       <label for="customer">{{ "name" | translate }}</label>
     </p-floatlabel>
 
@@ -29,6 +34,12 @@
         formControlName="containerSequence"
         class="w-full"
       />
+      @if (form.get('containerSequence')?.hasError('required') &&
+      form.get('containerSequence')?.dirty) {
+      <p-message severity="error" variant="simple" size="small">{{
+        "requeridInput" | translate
+      }}</p-message
+      >}
       <label for="Container">{{ "containerSequance" | translate }}</label>
     </p-floatlabel>
     <p-floatlabel variant="on" class="md:col-span-2 sm:col-span-4 my-2">
@@ -39,6 +50,12 @@
         class="w-full"
         formControlName="containerNumber"
       />
+      @if (form.get('containerNumber')?.hasError('required') &&
+      form.get('containerNumber')?.dirty) {
+      <p-message severity="error" variant="simple" size="small">{{
+        "requeridInput" | translate
+      }}</p-message
+      >}
       <label for="number">{{ "containerNumber" | translate }}</label>
     </p-floatlabel>
     <p-floatlabel variant="on" class="md:col-span-1 sm:col-span-4 my-2">
@@ -49,6 +66,12 @@
         formControlName="ShippingDate"
         styleClass="text-xs"
       />
+      @if (form.get('ShippingDate')?.hasError('required') &&
+      form.get('ShippingDate')?.dirty) {
+      <p-message severity="error" variant="simple" size="small">{{
+        "requeridInput" | translate
+      }}</p-message
+      >}
       <label for="date">{{ "ShippingDate" | translate }}</label>
     </p-floatlabel>
     <p-floatlabel variant="on" class="md:col-span-2 sm:col-span-4 my-2">

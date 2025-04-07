@@ -21,6 +21,7 @@ import { SelectModule } from 'primeng/select';
 import { LookupsService } from '../../../../shared/services/lookups.service';
 import { ExpenseService } from '../expense.service';
 import { PageHeaderComponent } from '../../../../shared/components/page-header/page-header.component';
+import { MessageModule } from 'primeng/message';
 
 @Component({
   selector: 'app-expense-form',
@@ -38,13 +39,14 @@ import { PageHeaderComponent } from '../../../../shared/components/page-header/p
     ReactiveFormsModule,
     SelectModule,
     PageHeaderComponent,
+    MessageModule,
   ],
   templateUrl: './expense-form.component.html',
 })
 export default class ExpenseFormComponent {
   mainPaths = main_routes_paths;
 
-  route: MenuItem[] =[];
+  route: MenuItem[] = [];
   listOfCustomers = signal([]);
 
   private formBuilder = inject(FormBuilder);

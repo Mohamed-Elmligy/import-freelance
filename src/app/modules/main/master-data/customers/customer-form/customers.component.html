@@ -7,7 +7,7 @@
 @if ((customerId && isUpdate)|| (!customerId && !isUpdate)) {
 <form class="max-w-3xl mx-auto" [formGroup]="form" (ngSubmit)="submit(form)">
   <div class="grid grid-cols-2 gap-5">
-    <p-floatlabel variant="on" class="md:col-span-1 col-span-2 my-2">
+    <!-- <p-floatlabel variant="on" class="md:col-span-1 col-span-2 my-2">
       <input
         pInputText
         id="customerCode"
@@ -18,7 +18,7 @@
         [value]="customerData.code"
       />
       <label for="customerCode">{{ "code" | translate }}</label>
-    </p-floatlabel>
+    </p-floatlabel> -->
     <p-floatlabel variant="on" class="md:col-span-1 col-span-2 my-2">
       <input
         pInputText
@@ -28,6 +28,11 @@
         class="w-full"
       />
       <label for="name">{{ "name" | translate }}</label>
+      @if (form.get('name')?.hasError('required') && form.get('name')?.dirty) {
+      <p-message severity="error" variant="simple" size="small">{{
+        "requeridInput" | translate
+      }}</p-message
+      >}
     </p-floatlabel>
     <p-floatlabel variant="on" class="md:col-span-1 col-span-2 my-2">
       <input
@@ -47,6 +52,12 @@
         formControlName="commission"
         class="w-full"
       />
+      @if (form.get('commission')?.hasError('required') &&
+      form.get('commission')?.dirty) {
+      <p-message severity="error" variant="simple" size="small">{{
+        "requeridInput" | translate
+      }}</p-message
+      >}
       <label for="commission">{{ "commission" | translate }}</label>
     </p-floatlabel>
 

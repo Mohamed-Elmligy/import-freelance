@@ -1,4 +1,8 @@
-<page-header [withBreadCrumb]="false" [title]="'ITEMS_CATEGORY_FORM' | translate" [route]="route"/>
+<page-header
+  [withBreadCrumb]="false"
+  [title]="'ITEMS_CATEGORY_FORM' | translate"
+  [route]="route"
+/>
 
 @if ((itemId && isUpdate)|| (!itemId && !isUpdate)) {
 <form class="max-w-3xl mx-auto" [formGroup]="form" (ngSubmit)="submit(form)">
@@ -11,6 +15,11 @@
         class="w-full m-0 md:mx-2"
         formControlName="name"
       />
+      @if (form.get('name')?.hasError('required') && form.get('name')?.dirty) {
+      <p-message severity="error" variant="simple" size="small">{{
+        "requeridInput" | translate
+      }}</p-message
+      >}
       <label for="itemName">{{ "item" | translate }}</label>
     </p-floatlabel>
   </div>

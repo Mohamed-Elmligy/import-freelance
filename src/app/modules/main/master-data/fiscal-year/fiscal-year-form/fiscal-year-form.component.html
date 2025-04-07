@@ -1,4 +1,8 @@
-<page-header [withBreadCrumb]="false" [title]="'FISCAL_YEAR_FORM' | translate" [route]="route"/>
+<page-header
+  [withBreadCrumb]="false"
+  [title]="'FISCAL_YEAR_FORM' | translate"
+  [route]="route"
+/>
 
 @if ((yearId && isUpdate)|| (!yearId && !isUpdate)) {
 <form class="max-w-3xl mx-auto" [formGroup]="form" (ngSubmit)="submit(form)">
@@ -11,6 +15,11 @@
         class="w-full m-0 md:mx-2"
         formControlName="name"
       />
+      @if (form.get('name')?.hasError('required') && form.get('name')?.dirty) {
+      <p-message severity="error" variant="simple" size="small">{{
+        "requeridInput" | translate
+      }}</p-message
+      >}
       <label for="name">{{ "FISCAL_YEAR_NAME" | translate }}</label>
     </p-floatlabel>
     <p-floatlabel variant="on" class="md:col-span-2 col-span-4 my-2">
@@ -31,6 +40,11 @@
         styleClass="w-full"
         formControlName="from_date"
       />
+        @if (form.get('from_date')?.hasError('required') && form.get('from_date')?.dirty) {
+      <p-message severity="error" variant="simple" size="small">{{
+        "requeridInput" | translate
+      }}</p-message
+      >}
       <label for="from_date">{{ "from_date" | translate }}</label>
     </p-floatlabel>
     <p-floatlabel variant="on" class="md:col-span-2 col-span-4 my-2">
@@ -41,6 +55,11 @@
         styleClass="w-full"
         formControlName="to_date"
       />
+        @if (form.get('to_date')?.hasError('required') && form.get('to_date')?.dirty) {
+      <p-message severity="error" variant="simple" size="small">{{
+        "requeridInput" | translate
+      }}</p-message
+      >}
       <label for="to_date">{{ "to_date" | translate }}</label>
     </p-floatlabel>
     <label>{{ "is_active" | translate }}</label>

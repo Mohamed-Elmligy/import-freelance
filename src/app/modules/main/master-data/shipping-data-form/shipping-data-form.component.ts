@@ -21,6 +21,7 @@ import { SelectModule } from 'primeng/select';
 import { LookupsService } from '../../../shared/services/lookups.service';
 import { ShippingDataService } from './shipping-data.service';
 import { PageHeaderComponent } from '../../../shared/components/page-header/page-header.component';
+import { MessageModule } from 'primeng/message';
 @Component({
   selector: 'app-shipping-data-form',
   imports: [
@@ -37,6 +38,7 @@ import { PageHeaderComponent } from '../../../shared/components/page-header/page
     SelectModule,
     TextareaModule,
     PageHeaderComponent,
+    MessageModule,
   ],
   templateUrl: './shipping-data-form.component.html',
 })

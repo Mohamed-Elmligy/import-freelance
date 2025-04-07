@@ -3,7 +3,6 @@ import {
   FormsModule,
   ReactiveFormsModule,
   FormBuilder,
-  Validators,
   FormGroup,
   FormArray,
 } from '@angular/forms';

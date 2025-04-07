@@ -14,6 +14,11 @@
         formControlName="name"
       >
       </p-select>
+        @if (form.get('name')?.hasError('required') && form.get('name')?.dirty) {
+      <p-message severity="error" variant="simple" size="small">{{
+        "requeridInput" | translate
+      }}</p-message
+      >}
       <label for="customer">{{ "name" | translate }}</label>
     </p-floatlabel>
   </div>
@@ -36,6 +41,11 @@
         class="w-full"
         formControlName="amount"
       />
+        @if (form.get('amount')?.hasError('required') && form.get('amount')?.dirty) {
+      <p-message severity="error" variant="simple" size="small">{{
+        "requeridInput" | translate
+      }}</p-message
+      >}
       <label for="payment">{{ "amount" | translate }}</label>
     </p-floatlabel>
     <p-floatlabel variant="on" class="md:col-span-1 col-span-3 my-2">
@@ -46,6 +56,11 @@
         styleClass="w-full"
         formControlName="expenseDate"
       />
+        @if (form.get('expenseDate')?.hasError('required') && form.get('expenseDate')?.dirty) {
+      <p-message severity="error" variant="simple" size="small">{{
+        "requeridInput" | translate
+      }}</p-message
+      >}
       <label for="date">{{ "expenseDate" | translate }}</label>
     </p-floatlabel>
   </div>

@@ -22,6 +22,7 @@ import { LookupsService } from '../../../shared/services/lookups.service';
 import { SelectModule } from 'primeng/select';
 import { PageHeaderComponent } from '../../../shared/components/page-header/page-header.component';
 import { TableModule } from 'primeng/table';
+import { MessageModule } from 'primeng/message';
 @Component({
   selector: 'app-repayments-form',
   imports: [
@@ -39,6 +40,7 @@ import { TableModule } from 'primeng/table';
     SelectModule,
     PageHeaderComponent,
     TableModule,
+    MessageModule,
   ],
   templateUrl: './repayments-form.component.html',
 })

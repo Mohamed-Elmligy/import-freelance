@@ -31,6 +31,12 @@
           inputId="customer"
         >
         </p-select>
+        @if (form.get('name')?.hasError('required') && form.get('name')?.dirty)
+        {
+        <p-message severity="error" variant="simple" size="small">{{
+          "requeridInput" | translate
+        }}</p-message
+        >}
       </div>
     </div>
 
@@ -51,6 +57,11 @@
           class="w-full border-gray-300 rounded-md"
           formControlName="paymentDate"
         />
+          @if (form.get('paymentDate')?.hasError('required') && form.get('paymentDate')?.dirty) {
+      <p-message severity="error" variant="simple" size="small">{{
+        "requeridInput" | translate
+      }}</p-message
+      >}
       </div>
     </div>
 
@@ -70,6 +81,11 @@
           class="w-full border-gray-300 rounded-md px-3 py-2"
           formControlName="amount"
         />
+          @if (form.get('amount')?.hasError('required') && form.get('amount')?.dirty) {
+      <p-message severity="error" variant="simple" size="small">{{
+        "requeridInput" | translate
+      }}</p-message
+      >}
       </div>
     </div>
 

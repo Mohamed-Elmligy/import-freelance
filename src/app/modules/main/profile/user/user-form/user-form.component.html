@@ -18,6 +18,12 @@
         formControlName="first_name"
         class="w-full"
       />
+      @if (userForm.get('first_name')?.hasError('required') &&
+      userForm.get('first_name')?.dirty) {
+      <p-message severity="error" variant="simple" size="small">{{
+        "requeridInput" | translate
+      }}</p-message
+      >}
       <label for="first_name">{{ "first_name" | translate }}</label>
     </p-floatlabel>
     <p-floatlabel variant="on" class="md:col-span-1 col-span-2 my-2">
@@ -28,6 +34,12 @@
         formControlName="last_name"
         class="w-full"
       />
+      @if (userForm.get('last_name')?.hasError('required') &&
+      userForm.get('last_name')?.dirty) {
+      <p-message severity="error" variant="simple" size="small">{{
+        "requeridInput" | translate
+      }}</p-message
+      >}
       <label for="last_name">{{ "last_name" | translate }}</label>
     </p-floatlabel>
     <p-floatlabel variant="on" class="md:col-span-1 col-span-2 my-2">
@@ -38,6 +50,12 @@
         formControlName="email"
         class="w-full"
       />
+      @if (userForm.get('email')?.hasError('required') &&
+      userForm.get('email')?.dirty) {
+      <p-message severity="error" variant="simple" size="small">{{
+        "requeridInput" | translate
+      }}</p-message
+      >}
       <label for="email">{{ "email" | translate }}</label>
     </p-floatlabel>
     <p-floatlabel variant="on" class="md:col-span-1 col-span-2 my-2">
@@ -47,7 +65,12 @@
         autocomplete="off"
         formControlName="username"
         class="w-full"
-      />
+      />@if (userForm.get('username')?.hasError('required') &&
+      userForm.get('username')?.dirty) {
+      <p-message severity="error" variant="simple" size="small">{{
+        "requeridInput" | translate
+      }}</p-message
+      >}
       <label for="username">{{ "user_name" | translate }}</label>
     </p-floatlabel>
     <p-floatlabel class="md:col-span-1 sm:col-span-3 my-2" variant="on">
@@ -60,7 +83,12 @@
         [showClear]="true"
         styleClass="w-full"
         formControlName="fiscal_year"
-      />
+      />@if (userForm.get('fiscal_year')?.hasError('required') &&
+      userForm.get('fiscal_year')?.dirty) {
+      <p-message severity="error" variant="simple" size="small">{{
+        "requeridInput" | translate
+      }}</p-message
+      >}
       <label for="fiscal_year">{{ "FISCAL_YEAR_NAME" | translate }}</label>
     </p-floatlabel>
 
@@ -70,7 +98,12 @@
         formControlName="password"
         [feedback]="false"
         [toggleMask]="true"
-      />
+      />@if (userForm.get('password')?.hasError('required') &&
+      userForm.get('password')?.dirty) {
+      <p-message severity="error" variant="simple" size="small">{{
+        "requeridInput" | translate
+      }}</p-message
+      >}
       <label for="password">{{ "password" | translate }}</label>
     </p-floatlabel>
     }
@@ -92,6 +125,12 @@
         filterBy="label"
         class="w-full"
       ></p-select>
+      @if (userForm.get('user_type')?.hasError('required') &&
+      userForm.get('user_type')?.dirty) {
+      <p-message severity="error" variant="simple" size="small">{{
+        "requeridInput" | translate
+      }}</p-message
+      >}
       <label for="user_type">{{ "user_type" | translate }}</label>
     </p-floatlabel>
   </div>

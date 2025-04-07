@@ -16,12 +16,12 @@ import { DatePicker } from 'primeng/datepicker';
 import { FloatLabelModule } from 'primeng/floatlabel';
 import { InputTextModule } from 'primeng/inputtext';
 import { TextareaModule } from 'primeng/textarea';
-import { LookupsService } from '../../../../shared/services/lookups.service';
 import { main_routes_paths } from '../../../main.routes';
 import { FiscalYearService } from '../fiscal-year.service';
 import { ToggleSwitchModule } from 'primeng/toggleswitch';
 import { Tag } from 'primeng/tag';
 import { PageHeaderComponent } from '../../../../shared/components/page-header/page-header.component';
+import { MessageModule } from 'primeng/message';
 
 @Component({
   selector: 'app-fiscal-year-form',
@@ -40,6 +40,7 @@ import { PageHeaderComponent } from '../../../../shared/components/page-header/p
     ToggleSwitchModule,
     Tag,
     PageHeaderComponent,
+    MessageModule,
   ],
   templateUrl: './fiscal-year-form.component.html',
 })

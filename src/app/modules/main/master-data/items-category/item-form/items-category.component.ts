@@ -20,6 +20,7 @@ import { BadgeModule } from 'primeng/badge';
 import { ToastModule } from 'primeng/toast';
 import { ItemsCategoryService } from '../items-category.service';
 import { PageHeaderComponent } from '../../../../shared/components/page-header/page-header.component';
+import { MessageModule } from 'primeng/message';
 @Component({
   selector: 'app-items-category',
   imports: [
@@ -38,6 +39,7 @@ import { PageHeaderComponent } from '../../../../shared/components/page-header/p
     BadgeModule,
     ToastModule,
     PageHeaderComponent,
+    MessageModule
   ],
   templateUrl: './items-category.component.html',
 
