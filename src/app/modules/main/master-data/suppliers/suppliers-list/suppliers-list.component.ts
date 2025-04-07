@@ -58,6 +58,7 @@ export default class SuppliersListComponent {
   first: number = 0;
   rows: number = 10;
   totalRecords: number = 0;
+  page: number = 1;
 
   filterForm: FormGroup = this.formBuilder.group({
     name: [''],
@@ -98,7 +99,9 @@ export default class SuppliersListComponent {
 
   onPageChange(event: any) {
     this.first = event.first;
-    this.getSupplierList(event.first + 1, event.rows);
+    this.rows = event.rows;
+    this.page = event.first / event.rows + 1;
+    this.getSupplierList(this.page, event.rows);
   }
 
   editSupplier(supplierId: any) {

@@ -55,6 +55,7 @@ export default class CustomerListComponent {
   isLoading = true;
   first: number = 0;
   rows: number = 10;
+  page: number = 1;
   totalRecords: number = 0;
 
   filterForm: FormGroup = this.formBuilder.group({
@@ -68,10 +69,10 @@ export default class CustomerListComponent {
       this.getCustomersList();
       this.customerService.customerDeleted.set(false);
     });
-  } 
+  }
 
   applayFilter() {
-    let filterData = this.filterForm.getRawValue();
+    let filterData = this.filterForm.value;
     this.getCustomersList(this.first + 1, this.rows, filterData);
   }
 
@@ -92,7 +93,9 @@ export default class CustomerListComponent {
 
   onPageChange(event: any) {
     this.first = event.first;
-    this.getCustomersList(event.first + 1, event.rows);
+    this.rows = event.rows;
+    this.page = event.first / event.rows + 1;
+    this.getCustomersList(this.page, event.rows);
   }
 
   editCustomer(customerId: any) {

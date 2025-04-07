@@ -44,7 +44,6 @@ import { Skeleton } from 'primeng/skeleton';
 export default class ExpenseListComponent {
   languageService = inject(LanguagesService);
   ExpenseService = inject(ExpenseService);
-  securityService = inject(SecurityService);
   private router = inject(Router);
   private formBuilder = inject(FormBuilder);
 
@@ -58,7 +57,7 @@ export default class ExpenseListComponent {
   first: number = 0;
   rows: number = 10;
   totalRecords: number = 0;
-
+  page: number = 1;
   filterForm: FormGroup = this.formBuilder.group({
     name: [''],
     container_sequence: [''],
@@ -97,7 +96,9 @@ export default class ExpenseListComponent {
 
   onPageChange(event: any) {
     this.first = event.first;
-    this.getExpenseList(event.first + 1, event.rows);
+    this.rows = event.rows;
+    this.page = event.first / event.rows + 1;
+    this.getExpenseList(this.page, event.rows);
   }
 
   editExpense(expenseId: any) {

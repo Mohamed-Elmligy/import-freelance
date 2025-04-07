@@ -56,6 +56,7 @@ export default class ShippingDataListComponent {
   first: number = 0;
   rows: number = 10;
   totalRecords: number = 0;
+  page: number = 1;
 
   filterForm: FormGroup = this.formBuilder.group({
     name: [''],
@@ -78,7 +79,9 @@ export default class ShippingDataListComponent {
 
   onPageChange(event: any) {
     this.first = event.first;
-    this.getShippingList(event.first + 1, event.rows);
+    this.rows = event.rows;
+    this.page = event.first / event.rows + 1;
+    this.getShippingList(this.page, event.rows);
   }
 
   getShippingList(page: number = 1, size: number = 10, filterData: any = {}) {

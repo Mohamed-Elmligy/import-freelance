@@ -54,6 +54,7 @@ export default class InvoicesListComponent {
   first: number = 0;
   rows: number = 10;
   totalRecords: number = 0;
+  page: number = 1;
 
   filterForm: FormGroup = this.formBuilder.group({
     name: [''],
@@ -83,7 +84,9 @@ export default class InvoicesListComponent {
 
   onPageChange(event: any) {
     this.first = event.first;
-    this.getInvoicesList(event.first + 1, event.rows);
+    this.rows = event.rows;
+    this.page = event.first / event.rows + 1;
+    this.getInvoicesList(this.page, event.rows);
   }
 
   getInvoicesList(page: number = 1, size: number = 10, filterData: any = {}) {

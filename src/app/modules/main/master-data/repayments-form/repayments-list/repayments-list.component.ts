@@ -29,7 +29,7 @@ import { FormBuilder, FormGroup, ReactiveFormsModule } from '@angular/forms';
     PanelModule,
     DatePickerModule,
     TooltipModule,
-    TableModule, 
+    TableModule,
     Skeleton,
     ReactiveFormsModule,
   ],
@@ -42,7 +42,7 @@ export default class RepaymentsListComponent {
   private router = inject(Router);
   private formBuilder = inject(FormBuilder);
 
-  dataSource: any[] = []; 
+  dataSource: any[] = [];
   main_routes = main_routes_paths;
   displayedColumns: string[] = [];
   tableColumns: string[] = [];
@@ -50,6 +50,7 @@ export default class RepaymentsListComponent {
   first: number = 0;
   rows: number = 10;
   totalRecords: number = 0;
+  page: number = 1;
 
   filterForm: FormGroup = this.formBuilder.group({
     customer_name: [''],
@@ -71,7 +72,9 @@ export default class RepaymentsListComponent {
 
   onPageChange(event: any) {
     this.first = event.first;
-    this.getTransactionList(event.first + 1, event.rows);
+    this.rows = event.rows;
+    this.page = event.first / event.rows + 1;
+    this.getTransactionList(this.page, event.rows);
   }
 
   getTransactionList(

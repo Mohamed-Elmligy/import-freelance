@@ -20,7 +20,6 @@
             <input pInputText id="user_name" formControlName="name" />
             <label for="user_name">{{ "name" | translate }}</label>
           </p-floatlabel>
-
         </form>
       </div>
     </ng-template>
@@ -57,6 +56,10 @@
     [totalRecords]="totalRecords"
     [first]="first"
     (onPage)="onPageChange($event)"
+    [lazy]="true"
+    [showCurrentPageReport]="true"
+    currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries"
+    [tableStyle]="{ 'min-width': '50rem' }"
   >
     <ng-template pTemplate="header">
       <tr>

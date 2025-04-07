@@ -57,7 +57,7 @@ export default class PaymentsListComponent {
   first: number = 0;
   rows: number = 10;
   totalRecords: number = 0;
-
+  page: number = 1;
   filterForm: FormGroup = this.formBuilder.group({
     name: [''],
   });
@@ -77,7 +77,9 @@ export default class PaymentsListComponent {
 
   onPageChange(event: any) {
     this.first = event.first;
-    this.getPaymentList(event.first + 1, event.rows);
+    this.rows = event.rows;
+    this.page = event.first / event.rows + 1;
+    this.getPaymentList(this.page, event.rows);
   }
 
   getPaymentList(page: number = 1, size: number = 10, filterData: any = {}) {

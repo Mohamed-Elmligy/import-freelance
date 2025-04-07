@@ -59,7 +59,7 @@ export default class ItemsListComponent {
   first: number = 0;
   rows: number = 10;
   totalRecords: number = 0;
-
+  page: number = 1;
   filterForm: FormGroup = this.formBuilder.group({
     item: [''],
   });
@@ -79,7 +79,9 @@ export default class ItemsListComponent {
 
   onPageChange(event: any) {
     this.first = event.first;
-    this.getItemsList(event.first + 1, event.rows);
+    this.rows = event.rows;
+    this.page = event.first / event.rows + 1;
+    this.getItemsList(this.page, event.rows);
   }
 
   getItemsList(page: number = 1, size: number = 10, filterData: any = {}) {

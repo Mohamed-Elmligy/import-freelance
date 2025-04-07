@@ -55,9 +55,13 @@
     [sortMode]="'single'"
     [responsiveLayout]="'scroll'"
     [rows]="rows"
-    [totalRecords]="totalRecords"
     [first]="first"
+    [totalRecords]="totalRecords"
     (onPage)="onPageChange($event)"
+    [lazy]="true"
+    [showCurrentPageReport]="true"
+    currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries"
+    [tableStyle]="{ 'min-width': '50rem' }"
   >
     <ng-template pTemplate="header">
       <tr>

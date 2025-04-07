@@ -50,7 +50,7 @@ export default class FiscalYearListComponent {
   rows: number = 10;
   first: number = 0;
   totalRecords: number = 0;
-
+  page: number = 1;
   stateOptions: any[] = [
     {
       label: this.languageService.layoutDir() == 'ltr' ? 'active' : 'نشط',
@@ -96,7 +96,9 @@ export default class FiscalYearListComponent {
 
   onPageChange(event: any) {
     this.first = event.first;
-    this.getYearList(event.first + 1, event.rows);
+    this.rows = event.rows;
+    this.page = event.first / event.rows + 1;
+    this.getYearList(this.page, event.rows);
   }
 
   editYear(yearId: any) {

@@ -73,6 +73,7 @@ export default class UsersListComponent implements OnInit {
   totalRecords: number = 0;
   usersList: any[] = [];
   isLoading: boolean = false;
+  page: number = 1;
 
   form = this.formBuilder.group({
     new_password: ['', [Validators.required]],
@@ -121,7 +122,9 @@ export default class UsersListComponent implements OnInit {
 
   onPageChange(event: any) {
     this.first = event.first;
-    this.getUsersList(event.first + 1, event.rows);
+    this.rows = event.rows;
+    this.page = event.first / event.rows + 1;
+    this.getUsersList(this.page, event.rows);
   }
 
   createUser() {
