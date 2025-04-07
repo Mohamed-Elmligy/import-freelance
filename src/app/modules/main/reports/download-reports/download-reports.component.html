@@ -128,6 +128,16 @@
           (onClick)="resetAll()"
         ></p-button>
 
+        @if(selectedReport()?.code === 'invoiceDetails') {
+        <p-button
+          [label]="'view' | translate"
+          icon="pi pi-eye"
+          class="flex-1 sm:flex-none"
+          (onClick)="visible = true; generateReport()"
+          [disabled]="!selectedReport()"
+        ></p-button>
+        }
+
         <p-button
           [label]="'Download' | translate"
           icon="pi pi-download"
@@ -139,3 +149,33 @@
     </ng-template>
   </p-card>
 </section>
+
+<!-- Dialog for viewing report details --><p-dialog
+  header="Header"
+  [modal]="true"
+  [(visible)]="visible"
+  [style]="{ width: '50rem' }"
+  [breakpoints]="{ '1199px': '75vw', '575px': '90vw' }"
+  [maximizable]="true"
+>
+  <div class="card">
+    <!-- <p-table [value]="products" [tableStyle]="{ 'min-width': '50rem' }">
+      <ng-template #header>
+        <tr>
+          <th>Code</th>
+          <th>Name</th>
+          <th>Category</th>
+          <th>Quantity</th>
+        </tr>
+      </ng-template>
+      <ng-template #body let-product>
+        <tr>
+          <td>{{ product.code }}</td>
+          <td>{{ product.name }}</td>
+          <td>{{ product.category }}</td>
+          <td>{{ product.quantity }}</td>
+        </tr>
+      </ng-template>
+    </p-table> -->
+  </div>
+</p-dialog>

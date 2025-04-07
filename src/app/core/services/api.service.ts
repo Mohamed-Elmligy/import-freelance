@@ -19,9 +19,10 @@ export class ApiService {
 
   getDataFromServer(
     base_url: string,
-    pagination?: { page: number; size: number },
+    pagination?: { page: number | null; size: number | null },
     filter?: any
   ) {
+    this.removeInvalidValues(pagination);
     this.removeInvalidValues(filter);
     return this.HTTP.get<any>(base_url, {
       params: { ...pagination, ...filter },

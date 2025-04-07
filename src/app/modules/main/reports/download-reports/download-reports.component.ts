@@ -11,6 +11,9 @@ import { TranslateModule } from '@ngx-translate/core';
 import { reportsApis } from '../reports.apis';
 import { ShowMessageService } from '../../../../core/services/show-message.service';
 import { LanguagesService } from '../../../shared/services/languages.service';
+import { ApiService } from '../../../../core/services/api.service';
+import { Dialog } from 'primeng/dialog';
+import { TableModule } from 'primeng/table';
 
 @Component({
   selector: 'app-download-reports',
@@ -23,6 +26,8 @@ import { LanguagesService } from '../../../shared/services/languages.service';
     FormsModule,
     PageHeaderComponent,
     TranslateModule,
+    Dialog,
+    TableModule,
   ],
   templateUrl: './download-reports.component.html',
 })
@@ -39,7 +44,10 @@ export default class DownloadReportsComponent {
   selectedSupplier: SupplierList | undefined;
 
   selectedInvoice: InvoiceList | undefined;
+
   containerSequence: string | undefined;
+
+  visible: boolean = false;
 
   reportsTypesTranslation = {
     en: {
@@ -75,6 +83,17 @@ export default class DownloadReportsComponent {
     ];
   }
 
+  generateReport() {
+    this.reportService
+      .getInvoiceDetails({
+        container_number: this.containerSequence,
+        customer_id: this.selectedCustomer,
+      })
+      .subscribe((res) => {
+        console.log(res);
+      });
+  }
+
   onReportTypeChange(selectedReport: ReportType) {
     this.selectedReport.set(selectedReport);
 
@@ -100,7 +119,6 @@ export default class DownloadReportsComponent {
     const selectedReport = this.selectedReport();
     const selectedCustomer = this.selectedCustomer;
     const selectedSupplier = this.selectedSupplier;
-    const selectedInvoice = this.selectedInvoice;
     const containerSequence = this.containerSequence;
 
     if (!selectedReport) {

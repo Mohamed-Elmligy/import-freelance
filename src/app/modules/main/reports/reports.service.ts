@@ -6,6 +6,7 @@ import {
   InvoiceList,
   SupplierList,
 } from './download-reports/download-reports.component';
+import { reportsApis } from './reports.apis';
 
 @Injectable({
   providedIn: 'root',
@@ -39,6 +40,14 @@ export class ReportsService {
         this.listOfInvoices.set(res);
       });
     }
+  }
+
+  getInvoiceDetails(filter: any) {
+    return this.api.getDataFromServer(
+      reportsApis.getInvoiceDetails,
+      { size: null, page: null },
+      filter
+    );
   }
 
   downloadReport(type: string, filter?: any) {
