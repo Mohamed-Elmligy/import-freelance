@@ -1,4 +1,4 @@
-import { Component, inject, signal } from '@angular/core';
+import { Component, HostListener, inject, signal } from '@angular/core';
 import {
   FormsModule,
   ReactiveFormsModule,
@@ -56,6 +56,7 @@ import { PageHeaderComponent } from '../../../shared/components/page-header/page
   templateUrl: './create-invoice.component.html',
 })
 export default class CreateInvoiceComponent {
+  @HostListener('document:keydown', ['$event'])
   route: MenuItem[] = [];
   mainPaths = main_routes_paths;
 
@@ -286,6 +287,23 @@ export default class CreateInvoiceComponent {
         .subscribe((data: any) => {
           this.form.patchValue(data);
         });
+    }
+  }
+
+  handleKeyboardEvent(event: KeyboardEvent): void {
+    if (event.key === 'Enter') {
+      event.preventDefault(); // Prevent default Enter key behavior
+      const formElements = Array.from(
+        document.querySelectorAll(
+          'input, select, textarea, button'
+        ) as NodeListOf<HTMLElement>
+      );
+      const currentIndex = formElements.indexOf(
+        document.activeElement as HTMLElement
+      );
+      if (currentIndex > -1 && currentIndex < formElements.length - 1) {
+        formElements[currentIndex + 1].focus(); // Focus on the next element
+      }
     }
   }
 }
