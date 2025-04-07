@@ -7,7 +7,7 @@
 @if ((supplierId && isUpdate)|| (!supplierId && !isUpdate)) {
 <form class="max-w-3xl mx-auto" [formGroup]="form" (ngSubmit)="submit(form)">
   <div class="grid grid-cols-2 gap-5">
-    <!-- <p-floatlabel variant="on" class="md:col-span-1 col-span-2 my-2">
+    <p-floatlabel variant="on" class="md:col-span-1 col-span-2 my-2">
       <input
         pInputText
         id="supplierCode"
@@ -18,7 +18,7 @@
         [value]="supplierData.code"
       />
       <label for="supplierCode">{{ "SUPPLIER_CODE" | translate }}</label>
-    </p-floatlabel> -->
+    </p-floatlabel>
     <p-floatlabel variant="on" class="md:col-span-1 col-span-2 my-2">
       <input
         pInputText
