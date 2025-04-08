@@ -42,8 +42,13 @@ export class InvoiceService {
     const formatPaymentDate = (date: any) =>
       date ? formatDate(date, 'yyyy-MM-dd', 'en') : null;
 
+    // Check if required fields exist (only customer and supplier are required)
+    if (!form.value.customer || !form.value.supplier) {
+      throw new Error('Required fields (customer or supplier) are missing');
+    }
+
     return {
-      item_category: form.value.item_category.id,
+      item_category:  form.value.item_category?.id || null, // Handle optional item_category
       customer: form.value.customer.id,
       supplier: form.value.supplier.id,
       invoice_number: form.value.invoice_number,
