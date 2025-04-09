@@ -28,7 +28,7 @@ export class ExpenseService {
   getList(page?: any, size?: any, filter?: any) {
     return this.apiService.getDataFromServer(
       `expenses/list`,
-      { page, size },
+      { page, count: size },
       filter
     );
   }

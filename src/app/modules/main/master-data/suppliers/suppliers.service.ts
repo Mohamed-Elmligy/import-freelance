@@ -27,7 +27,7 @@ export class SuppliersService {
   getList(page?: any, size?: any, filter?: any) {
     return this.apiService.getDataFromServer(
       `supplier/list`,
-      { page, size },
+      { page, count: size },
       filter
     );
   }

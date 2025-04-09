@@ -29,7 +29,7 @@ export class ShippingDataService {
   getList(page?: any, size?: any, filter?: any) {
     return this.apiService.getDataFromServer(
       `shipment/list`,
-      { page, size },
+      { page, count: size },
       filter
     );
   }

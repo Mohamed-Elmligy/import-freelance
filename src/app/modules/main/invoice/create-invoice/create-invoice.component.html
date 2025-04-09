@@ -260,8 +260,6 @@
                   <th scope="col" class="py-2 text-center">
                     {{ "CBM_height" | translate }}
                   </th>
-                  
-                  
                 </tr>
               </thead>
               <tbody class="bg-white divide-y divide-gray-200 text-center">
@@ -285,7 +283,7 @@
                         class="w-full"
                         pSize="small"
                         style="width: 50px !important"
-                        
+                        placeholder="0"
                       />
                     </td>
                     <td
@@ -322,6 +320,8 @@
                         formControlName="box_count"
                         style="width: 70px !important"
                         pSize="small"
+                        placeholder="0"
+                        (input)="calculateTotalBoxes()"
                       />
                     </td>
                     <td
@@ -334,6 +334,7 @@
                         formControlName="item_in_box"
                         style="width: 70px !important"
                         pSize="small"
+                        placeholder="0"
                       />
                     </td>
                     <td
@@ -346,6 +347,7 @@
                         formControlName="item_price"
                         style="width: 70px !important"
                         pSize="small"
+                        placeholder="0.00"
                       />
                     </td>
                     <td
@@ -358,6 +360,7 @@
                         formControlName="store_cbm"
                         style="width: 70px !important"
                         pSize="small"
+                        placeholder="0.00"
                       />
                     </td>
                     <td
@@ -370,6 +373,7 @@
                         formControlName="length"
                         style="width: 70px !important"
                         pSize="small"
+                        placeholder="0.00"
                       />
                     </td>
                     <td
@@ -382,6 +386,7 @@
                         formControlName="width"
                         style="width: 70px !important"
                         pSize="small"
+                        placeholder="0.00"
                       />
                     </td>
                     <td
@@ -394,6 +399,7 @@
                         formControlName="height"
                         style="width: 70px !important"
                         pSize="small"
+                        placeholder="0.00"
                       />
                     </td>
 
@@ -407,6 +413,7 @@
                         formControlName="weight"
                         style="width: 70px !important"
                         pSize="small"
+                        placeholder="0.00"
                       />
                     </td>
                     <td

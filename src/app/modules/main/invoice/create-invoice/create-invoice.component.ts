@@ -112,39 +112,39 @@ export default class CreateInvoiceComponent {
     customer: [null],
     supplier: [null],
     item_category: [null],
-    total_amount: [0.0],
-    discount_amount: [0.0],
-    net_amount: [0.0],
+    total_amount: [0],
+    discount_amount: [0],
+    net_amount: [0],
     invoice_number: [null],
-    total_boxes: [0.0],
-    total_cbm: [0.0],
-    totalCBM: [0.0],
-    total_weight: [0.0],
+    total_boxes: [0],
+    total_cbm: [0],
+    totalCBM: [0],
+    total_weight: [0],
     invoice_date: [new Date()], // Set default to current date
-    first_payment_amount: [0.0],
+    first_payment_amount: [],
     first_payment_date: [null],
-    second_payment_amount: [0.0],
+    second_payment_amount: [],
     second_payment_date: [null],
-    third_payment_amount: [0.0],
+    third_payment_amount: [],
     third_payment_date: [null],
-    fourth_payment_amount: [0.0],
+    fourth_payment_amount: [],
     fourth_payment_date: [null],
     invoice_lines: this.formBuilder.array([], []),
   });
 
   generateItemLine(): FormGroup {
     return this.formBuilder.group({
-      container_sequence: [0],
+      container_sequence: [],
       item_code: [null],
       item_description: [null],
-      box_count: [0],
-      item_in_box: [0],
-      item_price: [0.0],
-      store_cbm: [0.0],
-      height: [0.0],
-      width: [0.0],
-      length: [0.0],
-      weight: [0.0],
+      box_count: [],
+      item_in_box: [],
+      item_price: [],
+      store_cbm: [],
+      height: [],
+      width: [],
+      length: [],
+      weight: [],
       id: [null],
     });
   }
@@ -230,6 +230,20 @@ export default class CreateInvoiceComponent {
     if (this.invoiceId) {
       this.isUpdate ? this.getForUpdateInvoice() : this.getInvoiceById();
     }
+
+    // Subscribe to changes in the form array to calculate totals
+    this.invoice_linesFormArray.valueChanges.subscribe(() => {
+      this.calculateTotalBoxes();
+      this.calculateTotalWeight();
+      this.calculateTotalAmount();
+      this.calculateNetAmount();
+      this.calculateTotalCBM();
+    });
+
+    // Subscribe to changes in discount_amount to recalculate net_amount
+    this.form.get('discount_amount')?.valueChanges.subscribe(() => {
+      this.calculateNetAmount();
+    });
   }
 
   private initializeLookups(): void {
@@ -303,6 +317,63 @@ export default class CreateInvoiceComponent {
           this.form.patchValue(data);
         });
     }
+  }
+
+  calculateTotalBoxes(): void {
+    const totalBoxes = this.invoice_linesFormArray.controls.reduce(
+      (sum, line) => {
+        const boxCount = parseFloat(line.get('box_count')?.value) || 0; // Parse as number
+        return sum + boxCount;
+      },
+      0
+    );
+    this.form.get('total_boxes')?.setValue(totalBoxes, { emitEvent: false });
+  }
+
+  calculateTotalWeight(): void {
+    const totalWeight = this.invoice_linesFormArray.controls.reduce(
+      (sum, line) => {
+        const weight = parseFloat(line.get('weight')?.value) || 0; // Parse as number
+        return sum + weight;
+      },
+      0
+    );
+    this.form.get('total_weight')?.setValue(totalWeight, { emitEvent: false });
+  }
+
+  calculateTotalAmount(): void {
+    const totalAmount = this.invoice_linesFormArray.controls.reduce(
+      (sum, line) => {
+        const itemPrice = parseFloat(line.get('item_price')?.value) || 0;
+        const itemInBox = parseFloat(line.get('item_in_box')?.value) || 0;
+        const boxCount = parseFloat(line.get('box_count')?.value) || 0;
+        return sum + itemPrice * itemInBox * boxCount;
+      },
+      0
+    );
+    this.form.get('total_amount')?.setValue(totalAmount, { emitEvent: false });
+  }
+
+  calculateNetAmount(): void {
+    const totalAmount =
+      parseFloat(String(this.form.get('total_amount')?.value)) || 0;
+    const discountAmount =
+      parseFloat(String(this.form.get('discount_amount')?.value)) || 0;
+    const netAmount = totalAmount - discountAmount;
+    this.form.get('net_amount')?.setValue(netAmount, { emitEvent: false });
+  }
+
+  calculateTotalCBM(): void {
+    const totalCBM = this.invoice_linesFormArray.controls.reduce(
+      (sum, line) => {
+        const height = parseFloat(line.get('height')?.value) || 0;
+        const width = parseFloat(line.get('width')?.value) || 0;
+        const length = parseFloat(line.get('length')?.value) || 0;
+        return sum + height * width * length;
+      },
+      0
+    );
+    this.form.get('total_cbm')?.setValue(totalCBM, { emitEvent: false });
   }
 }
 

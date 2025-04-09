@@ -45,7 +45,7 @@ export class ReportsService {
   getInvoiceDetails(filter: any) {
     return this.api.getDataFromServer(
       reportsApis.getInvoiceDetails,
-      { size: null, page: null },
+      { count: null, page: null },
       filter
     );
   }

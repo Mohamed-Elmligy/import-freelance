@@ -111,7 +111,11 @@ export default class UsersListComponent implements OnInit {
   getUsersList(page = 1, size = 10, filter?: any) {
     this.isLoading = true;
     this.apiService
-      .getDataFromServer(PROFILE_APIS.GET_USERS_LIST, { page, size }, filter)
+      .getDataFromServer(
+        PROFILE_APIS.GET_USERS_LIST,
+        { page, count: size },
+        filter
+      )
       .subscribe((data: any) => {
         this.tableColumns = this.usersList;
         this.dataSource = data.results;

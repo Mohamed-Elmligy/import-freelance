@@ -32,7 +32,7 @@ export class RepaymentService {
   getList(page?: any, size?: any, filter?: any) {
     return this.apiService.getDataFromServer(
       `transaction/list`,
-      { page, size },
+      { page, count: size },
       filter
     );
   }
