@@ -5,6 +5,7 @@ import {
   FormBuilder,
   FormGroup,
   FormArray,
+  Validators,
 } from '@angular/forms';
 import { ActivatedRoute, RouterModule } from '@angular/router';
 import { TranslateModule } from '@ngx-translate/core';
@@ -109,8 +110,8 @@ export default class CreateInvoiceComponent {
   ];
 
   protected form = this.formBuilder.group({
-    customer: [null],
-    supplier: [null],
+    customer: [null, Validators.required],
+    supplier: [null, Validators.required],
     item_category: [null],
     total_amount: [0],
     discount_amount: [0],
