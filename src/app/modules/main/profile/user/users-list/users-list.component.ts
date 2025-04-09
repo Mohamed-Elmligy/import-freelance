@@ -99,7 +99,7 @@ export default class UsersListComponent implements OnInit {
   ];
 
   ngOnInit(): void {
-    this.usersList = ['first_name', 'last_name', 'email', 'user_type'];
+    this.usersList = ['first_name', 'last_name', 'email', 'user_type', 'fiscal_year'];
     this.getUsersList();
   }
 
