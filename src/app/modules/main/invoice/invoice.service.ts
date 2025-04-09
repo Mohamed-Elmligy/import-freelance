@@ -48,7 +48,7 @@ export class InvoiceService {
     }
 
     return {
-      item_category:  form.value.item_category?.id || null, // Handle optional item_category
+      item_category: form.value.item_category?.id || null, // Handle optional item_category
       customer: form.value.customer.id,
       supplier: form.value.supplier.id,
       invoice_number: form.value.invoice_number,
@@ -66,15 +66,15 @@ export class InvoiceService {
         const invoiceLine: any = {
           container_sequence: item.container_sequence,
           item_code: item.item_code,
-          item_description: item.item_description,
+          item_description: item.item_description || null,
           box_count: item.box_count,
           item_in_box: item.item_in_box,
           item_price: item.item_price,
           store_cbm: item.store_cbm,
-          height: item.height,
-          width: item.width,
-          length: item.length,
-          weight: item.weight,
+          height: item.height ?? 0,
+          width: item.width ?? 0,
+          length: item.length ?? 0,
+          weight: item.weight ?? 0,
         };
         if (item.id) {
           invoiceLine.id = item.id;
@@ -116,7 +116,7 @@ export class InvoiceService {
         id: item.id,
         container_sequence: item.container_sequence,
         item_code: item.item_code,
-        item_description: item.item_description,
+        item_description: item.item_description || null,
         box_count: item.box_count,
         item_in_box: item.item_in_box,
         item_price: item.item_price,

@@ -1,19 +1,16 @@
 import { HttpErrorResponse, HttpInterceptorFn } from '@angular/common/http';
 import { inject } from '@angular/core';
-import { catchError, EMPTY, switchMap, throwError, of } from 'rxjs';
+import { catchError, switchMap, throwError } from 'rxjs';
 import { TranslateService } from '@ngx-translate/core';
 import { ShowMessageService } from '../../services/show-message.service';
 import { SecurityService } from '../../services/security.service';
 import { BrowserStorageService } from '../../services/browser-storage.service';
-import { Router } from '@angular/router';
-import { auth_routes_paths } from '../../../modules/auth/auth.routes';
 
 export const errorInterceptor: HttpInterceptorFn = (request, next) => {
   const translateService = inject(TranslateService);
   const messages = inject(ShowMessageService);
   const securityService = inject(SecurityService);
   const browserStorageService = inject(BrowserStorageService);
-  const router = inject(Router);
 
   return next(request).pipe(
     catchError((error: HttpErrorResponse) => {
@@ -32,7 +29,8 @@ export const errorInterceptor: HttpInterceptorFn = (request, next) => {
       }
 
       if (error.status === 400) {
-        handleBadRequest(error);
+        const errors = handleBadRequest(error.error);
+        messages.showMessage('error', 'Error', errors.join(', '));
         return throwError(() => error);
       }
 
@@ -55,52 +53,35 @@ export const errorInterceptor: HttpInterceptorFn = (request, next) => {
           return throwError(() => error);
         }
       }
-      const refreshToken = securityService.retrieveRefreshToken();
-      if (refreshToken) {
-        return securityService.getNewAccessToken().pipe(
-          switchMap((res: any) => {
-            updateJwtData(res.access);
-            request = request.clone({
-              setHeaders: { Authorization: `Bearer ${res.access}` },
-            });
-            return next(request);
-          }),
-          catchError((refreshError: HttpErrorResponse) => {
-            return throwError(() => refreshError);
-          })
-        );
-      } else {
-        return throwError(() => error);
-      }
+      return throwError(() => error);
     })
   );
 
-  function handleBadRequest(error: HttpErrorResponse) {
-    let errorMessages: string[] = [];
+  function handleBadRequest(error: any) {
+    const messages: string[] = [];
 
-    if (error.error && typeof error.error === 'object') {
-      for (const key in error.error) {
-        if (Array.isArray(error.error[key])) {
-          errorMessages.push(...error.error[key]);
-        } else if (typeof error.error[key] === 'string') {
-          errorMessages.push(error.error[key]);
-        }
+    // Handle nested error format like { invoice_lines: [{ store_cbm: ["msg"] }] }
+    for (const key in error) {
+      if (Array.isArray(error[key])) {
+        error[key].forEach((item: any) => {
+          if (typeof item === 'object') {
+            for (const innerKey in item) {
+              if (Array.isArray(item[innerKey])) {
+                item[innerKey].forEach((msg: string) => {
+                  messages.push(`${innerKey}: ${msg}`);
+                });
+              }
+            }
+          } else if (typeof item === 'string') {
+            messages.push(item);
+          }
+        });
+      } else if (typeof error[key] === 'string') {
+        messages.push(error[key]);
       }
-    } else if (error.error?.error) {
-      errorMessages = Array.isArray(error.error.error)
-        ? error.error.error
-        : [error.error.error];
     }
 
-    if (errorMessages.length > 0) {
-      messages.showMessage(
-        'error',
-        'Error',
-        errorMessages.map((msg) => translateService.instant(msg)).join('<br>')
-      );
-    } else {
-      messages.showMessage('error', 'Error', 'An unknown error occurred.');
-    }
+    return messages;
   }
 
   function updateJwtData(accessToken: string): void {
