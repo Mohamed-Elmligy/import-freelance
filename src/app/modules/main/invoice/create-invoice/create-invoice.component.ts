@@ -114,7 +114,7 @@ export default class CreateInvoiceComponent {
     supplier: [null, Validators.required],
     item_category: [null],
     total_amount: [0],
-    discount_amount: [0],
+    discount_amount: [null],
     net_amount: [0],
     invoice_number: [null],
     total_boxes: [0],
@@ -370,7 +370,8 @@ export default class CreateInvoiceComponent {
         const height = parseFloat(line.get('height')?.value) || 0;
         const width = parseFloat(line.get('width')?.value) || 0;
         const length = parseFloat(line.get('length')?.value) || 0;
-        return sum + height * width * length;
+        const boxCount = parseFloat(line.get('box_count')?.value) || 0;
+        return sum +(( height * width * length * boxCount) / 1000000);
       },
       0
     );
