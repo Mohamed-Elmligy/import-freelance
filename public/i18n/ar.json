@@ -181,5 +181,9 @@
   "First Payment": "الدفعة الاولى",
   "Second Payment": "الدفعة الثانية",
   "Third Payment": "الدفعة الثالثة",
-  "Fourth Payment": "الدفعة الرابعة"
+  "Fourth Payment": "الدفعة الرابعة",
+  "reportDetails": "تفاصيل التقرير",
+  "Download": "تحميل",
+  "view": "عرض",
+  "Cancel": "الغاء"
 }

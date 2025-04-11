@@ -5,15 +5,16 @@ import { FloatLabel } from 'primeng/floatlabel';
 import { Select } from 'primeng/select';
 import { FormsModule } from '@angular/forms';
 import { CardModule } from 'primeng/card';
-import { ReportsService } from '../reports.service';
+import { ReportsService, reportVewType } from '../reports.service';
 import { PageHeaderComponent } from '../../../shared/components/page-header/page-header.component';
 import { TranslateModule } from '@ngx-translate/core';
 import { reportsApis } from '../reports.apis';
 import { ShowMessageService } from '../../../../core/services/show-message.service';
 import { LanguagesService } from '../../../shared/services/languages.service';
-import { ApiService } from '../../../../core/services/api.service';
 import { Dialog } from 'primeng/dialog';
 import { TableModule } from 'primeng/table';
+import { CommonModule } from '@angular/common';
+import { TooltipModule } from 'primeng/tooltip';
 
 @Component({
   selector: 'app-download-reports',
@@ -28,6 +29,8 @@ import { TableModule } from 'primeng/table';
     TranslateModule,
     Dialog,
     TableModule,
+    CommonModule,
+    TooltipModule,
   ],
   templateUrl: './download-reports.component.html',
 })
@@ -38,6 +41,18 @@ export default class DownloadReportsComponent {
 
   reportsTypes: ReportType[] | undefined;
   selectedReport = signal<ReportType | undefined>(undefined);
+
+  reportView: reportVewType = {
+    results: [],
+    totals: {
+      box_count: 0,
+      item_in_box: 0,
+      item_price: 0,
+      total_price: 0,
+      total_cbm: 0,
+      total_weight: 0,
+    },
+  };
 
   selectedCustomer: CustomerList | undefined;
 
@@ -89,8 +104,9 @@ export default class DownloadReportsComponent {
         container_number: this.containerSequence,
         customer_id: this.selectedCustomer,
       })
-      .subscribe((res) => {
-        console.log(res);
+      .subscribe((res: reportVewType) => {
+        this.reportView = res;
+        this.visible = true;
       });
   }
 

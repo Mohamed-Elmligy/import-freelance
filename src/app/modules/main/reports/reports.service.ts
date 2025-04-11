@@ -56,3 +56,65 @@ export class ReportsService {
     });
   }
 }
+
+export type reportVewType = {
+  totals: totalsType;
+  results: resultsType[];
+};
+
+export type totalsType = {
+  box_count: number;
+  item_in_box: number;
+  item_price: number;
+  total_price: number;
+  total_cbm: number;
+  total_weight: number;
+};
+
+export type resultsType = {
+  invoice_number: string;
+  customer_code: string;
+  container_sequence: number;
+  item_code: string;
+  item_description: string;
+  box_count: number;
+  item_in_box: number;
+  item_price: number;
+  store_cbm: number;
+  Width: number;
+  Length: number;
+  Height: number;
+  total_price: number;
+  total_cbm: number;
+  total_weight: number;
+};
+
+// {
+//     "totals": {
+//         "box_count": 34,
+//         "item_in_box": 48,
+//         "item_price": 984.0,
+//         "total_price": 1605888.0,
+//         "total_cbm": 0.29,
+//         "total_weight": 136.0
+//     },
+//     "results": [
+//         {
+//             "invoice_number": "342",
+//             "customer_code": "AB53",
+//             "container_sequence": 22,
+//             "item_code": "test",
+//             "item_description": "test test test test",
+//             "box_count": 34,
+//             "item_in_box": 48,
+//             "item_price": 984.0,
+//             "store_cbm": 87.0,
+//             "Width": 85.0,
+//             "Length": 488.0,
+//             "Height": 7.0,
+//             "total_price": 1605888.0,
+//             "total_cbm": 0.29,
+//             "total_weight": 136.0
+//         }
+//     ]
+// }

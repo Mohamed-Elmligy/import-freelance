@@ -180,5 +180,9 @@
   "First Payment": "First Payment",
   "Second Payment": "Second Payment",
   "Third Payment": "Third Payment",
-  "Fourth Payment": "Fourth Payment"
+  "Fourth Payment": "Fourth Payment",
+  "reportDetails": "Report Details",
+  "Download": "Download",
+  "view": "View",
+  "Cancel": "Cancel"
 }
