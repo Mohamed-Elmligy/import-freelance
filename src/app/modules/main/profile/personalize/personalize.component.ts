@@ -3,15 +3,12 @@ import { FormsModule } from '@angular/forms';
 import { SelectModule } from 'primeng/select';
 import { ButtonModule } from 'primeng/button';
 
-import { TranslateModule, TranslateService } from '@ngx-translate/core';
+import { TranslateModule } from '@ngx-translate/core';
 import { FloatLabel } from 'primeng/floatlabel';
 import { LanguagesService } from '../../../shared/services/languages.service';
 import LoginComponent from '../../../auth/login/login.component';
 import { Toast } from 'primeng/toast';
-import { MessageService } from 'primeng/api';
-import { BrowserStorageService } from '../../../../core/services/browser-storage.service';
 import { ShowMessageService } from '../../../../core/services/show-message.service';
-import { TabService } from '../../../../services/tab.service';
 
 @Component({
   selector: 'app-personalize',
@@ -45,5 +42,6 @@ export class PersonalizeComponent implements OnInit {
   }
   changeLang() {
     this.languageService.changeLanguage(this.selectedLanguage.code);
+    this.languageService.updateLanguage();
   }
 }

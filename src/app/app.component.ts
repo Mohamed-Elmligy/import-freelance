@@ -47,6 +47,7 @@ export class AppComponent {
   ) {}
   ngOnInit() {
     this.languageService.initLanguage();
+    this.languageService.getDefaultLanguage();
     this.tostDir =
       this.languageService.layoutDir() == 'rtl' ? 'top-left' : 'top-right';
   }
