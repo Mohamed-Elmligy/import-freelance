@@ -1,88 +1,41 @@
-<page-header
-  [withBreadCrumb]="false"
-  [title]="'invoiceDetails' | translate"
-  [route]="route"
-/>
+<page-header [withBreadCrumb]="false" [title]="'invoiceDetails' | translate" [route]="route" />
 
 @if ((invoiceId && isUpdate)|| (!invoiceId && !isUpdate)) {
-<form
-  class="max-w-full mx-auto bg-white p-6 rounded-lg shadow-md"
-  [formGroup]="form"
-  (ngSubmit)="submit(form)"
->
+<form class="max-w-full mx-auto bg-white p-6 rounded-lg shadow-md" [formGroup]="form" (ngSubmit)="submit(form)">
   <div class="grid grid-cols-3 gap-5">
     <p-floatlabel class="md:col-span-1 sm:col-span-3 my-2" variant="on">
-      <p-select
-        id="name"
-        [options]="listOfCustomers()"
-        optionLabel="name"
-        [filter]="true"
-        [showClear]="true"
-        styleClass="w-full"
-        formControlName="customer"
-      />
+      <p-select id="name" [options]="listOfCustomers()" optionLabel="name" [filter]="true" [showClear]="true"
+        styleClass="w-full" formControlName="customer" />
       <label for="name">{{ "name" | translate }}</label>
     </p-floatlabel>
 
     <p-floatlabel class="md:col-span-1 sm:col-span-3 my-2" variant="on">
-      <p-select
-        id="supplier"
-        [options]="listOfSuppliers()"
-        optionLabel="name"
-        [filter]="true"
-        [showClear]="true"
-        styleClass="w-full"
-        formControlName="supplier"
-      />
+      <p-select id="supplier" [options]="listOfSuppliers()" optionLabel="name" [filter]="true" [showClear]="true"
+        styleClass="w-full" formControlName="supplier" />
       <label for="supplier">{{ "SUPPLIER_NAME" | translate }}</label>
     </p-floatlabel>
 
     <p-floatlabel class="md:col-span-1 sm:col-span-3 my-2" variant="on">
-      <p-select
-        id="item_category"
-        [options]="listOfItems()"
-        optionLabel="name"
-        [filter]="true"
-        [showClear]="true"
-        styleClass="w-full"
-        formControlName="item_category"
-      />
+      <p-select id="item_category" [options]="listOfItems()" optionLabel="name" [filter]="true" [showClear]="true"
+        styleClass="w-full" formControlName="item_category" />
       <label for="item_category">{{ "ITEMS_CATEGORY" | translate }}</label>
     </p-floatlabel>
   </div>
 
   <div class="grid grid-cols-3 gap-5">
     <p-floatlabel variant="on" class="md:col-span-1 col-span-3 my-2">
-      <input
-        pInputText
-        id="invoice_number"
-        autocomplete="off"
-        formControlName="invoice_number"
-        class="w-full"
-      />
+      <input pInputText id="invoice_number" autocomplete="off" formControlName="invoice_number" class="w-full" />
       <label for="invoice_number">{{ "invoice_number" | translate }}</label>
     </p-floatlabel>
 
     <p-floatlabel variant="on" class="md:col-span-1 col-span-3 my-2">
-      <input
-        pInputText
-        id="discount_invoice"
-        autocomplete="off"
-        formControlName="discount_amount"
-        class="w-full"
-      />
+      <input pInputText id="discount_invoice" autocomplete="off" formControlName="discount_amount" class="w-full" />
       <label for="discount_invoice">{{ "discount_invoice" | translate }}</label>
     </p-floatlabel>
 
     <p-floatlabel variant="on" class="md:col-span-1 col-span-3 my-2">
-      <p-datepicker
-        inputId="invoiceDate"
-        [showButtonBar]="true"
-        showIcon
-        iconDisplay="input"
-        styleClass="w-full"
-        formControlName="invoice_date"
-      />
+      <p-datepicker inputId="invoiceDate" [showButtonBar]="true" showIcon iconDisplay="input" styleClass="w-full"
+        formControlName="invoice_date" />
       <label for="invoiceDate">{{ "invoiceDate" | translate }}</label>
     </p-floatlabel>
   </div>
@@ -91,105 +44,75 @@
     <div class="md:col-span-1 col-span-3 my-2 bg-gray-100 p-4 rounded-md">
       <label class="text-md font-bold" for="boxQnt">{{
         "boxQnt" | translate
-      }}</label>
+        }}</label>
       <p>{{ form.get("total_boxes")?.value }}</p>
     </div>
 
     <div class="md:col-span-1 col-span-3 my-2 bg-gray-100 p-4 rounded-md">
       <label class="text-md font-bold" for="total_cbm">{{
         "totalCBM" | translate
-      }}</label>
-      <p>{{ form.get("total_cbm")?.value }}</p>
+        }}</label>
+      <p>{{ form.get("total_cbm")?.value | number:'1.3-3'}}</p>
     </div>
 
     <div class="md:col-span-1 col-span-3 my-2 bg-gray-100 p-4 rounded-md">
       <label class="text-md font-bold" for="totalWeight">{{
         "totalWeight" | translate
-      }}</label>
-      <p>{{ form.get("total_weight")?.value }}</p>
+        }}</label>
+      <p>{{ form.get("total_weight")?.value | number:'1.3-3' }}</p>
     </div>
 
     <div class="md:col-span-1 col-span-3 my-2 bg-gray-100 p-4 rounded-md">
       <label class="text-md font-bold" for="total_invoice">{{
         "total_invoice" | translate
-      }}</label>
-      <p>{{ form.get("total_amount")?.value }}</p>
+        }}</label>
+      <p>{{ form.get("total_amount")?.value | number:'1.3-3' }}</p>
     </div>
 
     <div class="md:col-span-1 col-span-3 my-2 bg-gray-100 p-4 rounded-md">
       <label class="text-md font-bold" for="netAmount">{{
         "netAmount" | translate
-      }}</label>
-      <p>{{ form.get("net_amount")?.value }}</p>
+        }}</label>
+      <p>{{ form.get("net_amount")?.value | number:'1.3-3' }}</p>
     </div>
   </div>
 
   <div class="grid md:grid-cols-6 grid-cols-1 gap-5">
     <p-floatlabel variant="on" class="md:col-span-1 col-span-3 my-2">
-      <input
-        pInputText
-        id="firstBatchNumber"
-        autocomplete="off"
-        formControlName="first_payment_amount"
-        class="w-full"
-      />
+      <input pInputText id="firstBatchNumber" autocomplete="off" formControlName="first_payment_amount"
+        class="w-full" />
       <label for="firstBatchNumber">{{ "firstBatchNumber" | translate }}</label>
     </p-floatlabel>
 
     <p-floatlabel variant="on" class="md:col-span-1 col-span-2 my-2">
-      <p-datepicker
-        inputId="firstBatchDate"
-        showIcon
-        iconDisplay="input"
-        styleClass="w-full"
-        formControlName="first_payment_date"
-      />
+      <p-datepicker inputId="firstBatchDate" showIcon iconDisplay="input" styleClass="w-full"
+        formControlName="first_payment_date" />
       <label for="date">{{ "firstBatchDate" | translate }}</label>
     </p-floatlabel>
 
     <p-floatlabel variant="on" class="md:col-span-1 col-span-2 my-2">
-      <input
-        pInputText
-        id="secondBatchNumber"
-        autocomplete="off"
-        formControlName="second_payment_amount"
-        class="w-full"
-      />
+      <input pInputText id="secondBatchNumber" autocomplete="off" formControlName="second_payment_amount"
+        class="w-full" />
       <label for="secondBatchNumber">{{
         "secondBatchNumber" | translate
-      }}</label>
+        }}</label>
     </p-floatlabel>
 
     <p-floatlabel variant="on" class="md:col-span-1 col-span-2 my-2">
-      <p-datepicker
-        inputId="secondBatchDate"
-        showIcon
-        iconDisplay="input"
-        styleClass="w-full"
-        formControlName="second_payment_date"
-      />
+      <p-datepicker inputId="secondBatchDate" showIcon iconDisplay="input" styleClass="w-full"
+        formControlName="second_payment_date" />
       <label for="date">{{ "secondBatchDate" | translate }}</label>
     </p-floatlabel>
 
     <p-floatlabel variant="on" class="md:col-span-1 col-span-2 my-2">
-      <input
-        pInputText
-        id="thirdBatchNumber"
-        autocomplete="off"
-        formControlName="third_payment_amount"
-        class="w-full"
-      />
+      <input pInputText id="thirdBatchNumber" autocomplete="off" formControlName="third_payment_amount"
+        class="w-full" />
       <label for="thirdBatchNumber">{{ "thirdBatchNumber" | translate }}</label>
     </p-floatlabel>
 
     <p-floatlabel variant="on" class="md:col-span-1 col-span-2 my-2">
-      <p-datepicker
-        inputId="thirdBatchDate"
-        showIcon
-        iconDisplay="input"
-        styleClass="w-full"
-        formControlName="third_payment_date"
-      />
+      <p-datepicker inputId="thirdBatchDate" showIcon iconDisplay="input" styleClass="w-full"
+        formControlName="third_payment_date" />
       <label for="date">{{ "thirdBatchDate" | translate }}</label>
     </p-floatlabel>
   </div>
@@ -198,24 +121,14 @@
     <div class="overflow-x-auto">
       <div class="min-w-full inline-block align-middle">
         <div class="flex flex-row align-baseline justify-between">
-          <p-button
-            icon="pi pi-plus-circle"
-            severity="info"
-            pTooltip="Add new Item"
-            tooltipPosition="top"
-            class="m-2"
-            (onClick)="addItem()"
-          ></p-button>
+          <p-button icon="pi pi-plus-circle" severity="info" pTooltip="Add new Item" tooltipPosition="top" class="m-2"
+            (onClick)="addItem()"></p-button>
         </div>
 
         <div class="overflow-x-auto border rounded-lg border-gray-300 mt-4">
           <div formArrayName="invoice_lines">
-            <table
-              class="min-w-full divide-y divide-gray-200 rounded-xl shadow-sm"
-            >
-              <thead
-                class="bg-primary text-white uppercase tracking-wider text-left text-xs leading-4 font-medium"
-              >
+            <table class="min-w-full divide-y divide-gray-200 rounded-xl shadow-sm">
+              <thead class="bg-primary text-white uppercase tracking-wider text-left text-xs leading-4 font-medium">
                 <tr>
                   <th rowspan="2" scope="col" class="py-2 text-center">
                     {{ "number" | translate }}
@@ -267,177 +180,61 @@
                 {
                 <ng-container>
                   <tr [formGroupName]="$index" class="hover:bg-gray-50">
-                    <td
-                      class="whitespace-nowrap text-sm text-gray-500 py-2 px-2"
-                    >
+                    <td class="whitespace-nowrap text-sm text-gray-500 py-2 px-2">
                       {{ $index + 1 }}
                     </td>
-                    <td
-                      class="whitespace-nowrap text-sm leading-5 font-normal text-gray-900"
-                    >
-                      <input
-                        pInputText
-                        id="container"
-                        autocomplete="off"
-                        formControlName="container_sequence"
-                        class="w-full"
-                        pSize="small"
-                        style="width: 50px !important"
-                        placeholder="0"
-                      />
+                    <td class="whitespace-nowrap text-sm leading-5 font-normal text-gray-900">
+                      <input pInputText id="container" autocomplete="off" formControlName="container_sequence"
+                        class="w-full" pSize="small" style="width: 50px !important" placeholder="0" type="number" />
                     </td>
-                    <td
-                      class="whitespace-nowrap text-sm leading-5 font-normal text-gray-900"
-                    >
-                      <input
-                        pInputText
-                        id="item"
-                        autocomplete="off"
-                        formControlName="item_code"
-                        pSize="small"
-                        style="width: 50px !important"
-                      />
+                    <td class="whitespace-nowrap text-sm leading-5 font-normal text-gray-900">
+                      <input pInputText id="item" autocomplete="off" formControlName="item_code" pSize="small"
+                        style="width: 50px !important" />
                     </td>
-                    <td
-                      class="whitespace-nowrap text-sm leading-5 font-normal text-gray-900"
-                    >
-                      <input
-                        pInputText
-                        id="desorption"
-                        autocomplete="off"
-                        formControlName="item_description"
-                        style="width: 200px !important"
-                        pSize="small"
-                      />
+                    <td class="whitespace-nowrap text-sm leading-5 font-normal text-gray-900">
+                      <input pInputText id="desorption" autocomplete="off" formControlName="item_description"
+                        style="width: 200px !important" pSize="small" />
                     </td>
-                    <td
-                      class="whitespace-nowrap text-sm leading-5 font-normal text-gray-900"
-                    >
-                      <input
-                        pInputText
-                        id="boxQnt"
-                        autocomplete="off"
-                        formControlName="box_count"
-                        style="width: 70px !important"
-                        pSize="small"
-                        placeholder="0"
-                        (input)="calculateTotalBoxes()"
-                      />
+                    <td class="whitespace-nowrap text-sm leading-5 font-normal text-gray-900">
+                      <input pInputText id="boxQnt" autocomplete="off" formControlName="box_count"
+                        style="width: 70px !important" pSize="small" placeholder="0" (input)="calculateTotalBoxes()"
+                        type="number" />
                     </td>
-                    <td
-                      class="whitespace-nowrap text-sm leading-5 font-normal text-gray-900"
-                    >
-                      <input
-                        pInputText
-                        id="qunNumber"
-                        autocomplete="off"
-                        formControlName="item_in_box"
-                        style="width: 70px !important"
-                        pSize="small"
-                        placeholder="0"
-                      />
+                    <td class="whitespace-nowrap text-sm leading-5 font-normal text-gray-900">
+                      <input pInputText id="qunNumber" autocomplete="off" formControlName="item_in_box"
+                        style="width: 70px !important" pSize="small" placeholder="0" type="number" />
                     </td>
-                    <td
-                      class="whitespace-nowrap text-sm leading-5 font-normal text-gray-900"
-                    >
-                      <input
-                        pInputText
-                        id="price"
-                        autocomplete="off"
-                        formControlName="item_price"
-                        style="width: 70px !important"
-                        pSize="small"
-                        placeholder="0.00"
-                      />
+                    <td class="whitespace-nowrap text-sm leading-5 font-normal text-gray-900">
+                      <input pInputText id="price" autocomplete="off" formControlName="item_price"
+                        style="width: 70px !important" pSize="small" placeholder="0.00" type="number" />
                     </td>
-                    <td
-                      class="whitespace-nowrap text-sm leading-5 font-normal text-gray-900"
-                    >
-                      <input
-                        pInputText
-                        id="CBM_store"
-                        autocomplete="off"
-                        formControlName="store_cbm"
-                        style="width: 70px !important"
-                        pSize="small"
-                        placeholder="0.00"
-                      />
+                    <td class="whitespace-nowrap text-sm leading-5 font-normal text-gray-900">
+                      <input pInputText id="CBM_store" autocomplete="off" formControlName="store_cbm"
+                        style="width: 70px !important" pSize="small" placeholder="0.00" type="number" />
                     </td>
-                    <td
-                      class="whitespace-nowrap text-sm leading-5 font-normal text-gray-900"
-                    >
-                      <input
-                        pInputText
-                        id="CBM_length"
-                        autocomplete="off"
-                        formControlName="length"
-                        style="width: 70px !important"
-                        pSize="small"
-                        placeholder="0.00"
-                      />
+                    <td class="whitespace-nowrap text-sm leading-5 font-normal text-gray-900">
+                      <input pInputText id="CBM_length" autocomplete="off" formControlName="length"
+                        style="width: 70px !important" pSize="small" placeholder="0.00" type="number" />
                     </td>
-                    <td
-                      class="whitespace-nowrap text-sm leading-5 font-normal text-gray-900"
-                    >
-                      <input
-                        pInputText
-                        id="CBM_width"
-                        autocomplete="off"
-                        formControlName="width"
-                        style="width: 70px !important"
-                        pSize="small"
-                        placeholder="0.00"
-                      />
+                    <td class="whitespace-nowrap text-sm leading-5 font-normal text-gray-900">
+                      <input pInputText id="CBM_width" autocomplete="off" formControlName="width"
+                        style="width: 70px !important" pSize="small" placeholder="0.00" type="number" />
                     </td>
-                    <td
-                      class="whitespace-nowrap text-sm leading-5 font-normal text-gray-900"
-                    >
-                      <input
-                        pInputText
-                        id="CBM_height"
-                        autocomplete="off"
-                        formControlName="height"
-                        style="width: 70px !important"
-                        pSize="small"
-                        placeholder="0.00"
-                      />
+                    <td class="whitespace-nowrap text-sm leading-5 font-normal text-gray-900">
+                      <input pInputText id="CBM_height" autocomplete="off" formControlName="height"
+                        style="width: 70px !important" pSize="small" placeholder="0.00" type="number" />
                     </td>
 
-                    <td
-                      class="whitespace-nowrap text-sm leading-5 font-normal text-gray-900"
-                    >
-                      <input
-                        pInputText
-                        id="weight"
-                        autocomplete="off"
-                        formControlName="weight"
-                        style="width: 70px !important"
-                        pSize="small"
-                        placeholder="0.00"
-                      />
+                    <td class="whitespace-nowrap text-sm leading-5 font-normal text-gray-900">
+                      <input pInputText id="weight" autocomplete="off" formControlName="weight"
+                        style="width: 70px !important" pSize="small" placeholder="0.00" type="number" />
                     </td>
-                    <td
-                      class="whitespace-nowrap text-sm leading-5 font-normal text-gray-900"
-                    >
-                      <p-button
-                        icon="pi pi-trash"
-                        pTooltip="Delete Item"
-                        tooltipPosition="top"
-                        severity="warn"
-                        rounded
-                        text
-                        (onClick)="deleteFormLine($index)"
-                      ></p-button>
+                    <td class="whitespace-nowrap text-sm leading-5 font-normal text-gray-900">
+                      <p-button icon="pi pi-trash" pTooltip="Delete Item" tooltipPosition="top" severity="warn" rounded
+                        text (onClick)="deleteFormLine($index)"></p-button>
 
-                      <p-button
-                        icon="pi pi-plus-circle"
-                        pTooltip="Add new Item"
-                        tooltipPosition="top"
-                        severity="info"
-                        rounded
-                        text
-                        (onClick)="addItem()"
-                      ></p-button>
+                      <p-button icon="pi pi-plus-circle" pTooltip="Add new Item" tooltipPosition="top" severity="info"
+                        rounded text (onClick)="addItem()"></p-button>
                     </td>
                   </tr>
                 </ng-container>
@@ -452,21 +249,10 @@
 
   <!-- Save and Clear Buttons -->
   <div class="flex justify-end mt-6">
-    <p-button
-      class="!text-xs"
-      [label]="'save' | translate"
-      [raised]="true"
-      type="submit"
-    />
+    <p-button class="!text-xs" [label]="'save' | translate" [raised]="true" type="submit" />
 
-    <p-button
-      class="!text-xs mx-2"
-      [label]="'clear' | translate"
-      [raised]="true"
-      severity="contrast"
-      type="button"
-      (onClick)="reset(form)"
-    />
+    <p-button class="!text-xs mx-2" [label]="'clear' | translate" [raised]="true" severity="contrast" type="button"
+      (onClick)="reset(form)" />
   </div>
 </form>
 
@@ -553,39 +339,27 @@
       <div class="col-span-1">
         <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-2 gap-4">
           <div class="invoice-payment">
-            <span
-              ><b>{{ "firstBatchNumber" | translate }}</b></span
-            ><br />
+            <span><b>{{ "firstBatchNumber" | translate }}</b></span><br />
             <span>{{ invoiceData.first_payment_amount }}</span>
           </div>
           <div class="invoice-payment">
-            <span
-              ><b>{{ "firstBatchDate" | translate }}</b></span
-            ><br />
+            <span><b>{{ "firstBatchDate" | translate }}</b></span><br />
             <span>{{ invoiceData.first_payment_date }}</span>
           </div>
           <div class="invoice-payment">
-            <span
-              ><b>{{ "secondBatchNumber" | translate }}</b></span
-            ><br />
+            <span><b>{{ "secondBatchNumber" | translate }}</b></span><br />
             <span>{{ invoiceData.second_payment_amount }}</span>
           </div>
           <div class="invoice-payment">
-            <span
-              ><b>{{ "secondBatchDate" | translate }}</b></span
-            ><br />
+            <span><b>{{ "secondBatchDate" | translate }}</b></span><br />
             <span>{{ invoiceData.second_payment_date }}</span>
           </div>
           <div class="invoice-payment">
-            <span
-              ><b>{{ "thirdBatchNumber" | translate }}</b></span
-            ><br />
+            <span><b>{{ "thirdBatchNumber" | translate }}</b></span><br />
             <span>{{ invoiceData.third_payment_amount }}</span>
           </div>
           <div class="invoice-payment">
-            <span
-              ><b>{{ "thirdBatchDate" | translate }}</b></span
-            ><br />
+            <span><b>{{ "thirdBatchDate" | translate }}</b></span><br />
             <span>{{ invoiceData.third_payment_date }}</span>
           </div>
         </div>
@@ -594,13 +368,8 @@
   </p-card>
 
   <p-card header="{{ 'invoiceLines' | translate }}">
-    <p-table
-      [value]="invoiceData.invoice_lines"
-      responsiveLayout="scroll"
-      showGridlines
-      stripedRows
-      styleClass="p-datatable-sm"
-    >
+    <p-table [value]="invoiceData.invoice_lines" responsiveLayout="scroll" showGridlines stripedRows
+      styleClass="p-datatable-sm">
       <ng-template pTemplate="header">
         <tr>
           <th>{{ "number" | translate }}</th>

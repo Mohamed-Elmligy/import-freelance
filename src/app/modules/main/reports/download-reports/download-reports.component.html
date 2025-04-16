@@ -150,7 +150,8 @@
   </p-card>
 </section>
 
-<!-- Dialog for viewing report details --><p-dialog
+<!-- Dialog for viewing report details -->
+<p-dialog
   [header]="'reportDetails' | translate"
   [modal]="true"
   [(visible)]="visible"
@@ -158,6 +159,7 @@
   [breakpoints]="{ '1199px': '75vw', '575px': '90vw' }"
   [maximizable]="true"
 >
+
   <p-card styleClass="'w-full'" class="shadow-sm">
     <div class="grid grid-cols-6 gap-4 p-4">
       <p class="col-span-2">
@@ -166,11 +168,11 @@
       </p>
       <p class="col-span-2">
         <span>{{ "itemQnt" | translate }} </span>:
-        <span>{{ reportView.totals.item_in_box }}</span>
+        <span>{{ reportView.totals.total_items_count }}</span>
       </p>
       <p class="col-span-2">
         <span>{{ "price" | translate }}</span
-        >: <span>{{ reportView.totals.item_price }}</span>
+        >: <span>{{ reportView.totals.total_item_price | number:'1.2-2'}}</span>
       </p>
       <p class="col-span-2">
         <span>{{ "totalCBM" | translate }}</span
@@ -178,11 +180,11 @@
       </p>
       <p class="col-span-2">
         <span>{{ "totalPrice" | translate }}</span
-        >: <span>{{ reportView.totals.total_price }}</span>
+        >: <span>{{ reportView.totals.total_price | number:'1.2-2' }}</span>
       </p>
       <p class="col-span-2">
         <span>{{ "totalWeight" | translate }}</span
-        >: <span>{{ reportView.totals.total_weight }}</span>
+        >: <span>{{ (reportView.totals.total_weight / 1000) | number:'1.2-2' }} {{'TON'| translate}}</span>
       </p>
     </div>
   </p-card>
@@ -232,12 +234,12 @@
           <td>{{ item.item_description }}</td>
           <td>{{ item.box_count }}</td>
           <td>{{ item.item_in_box }}</td>
-          <td>{{ item.item_price | currency : "EGP" }}</td>
+          <td>{{ item.item_price | number:'1.2-2'  }}</td>
           <td>{{ item.store_cbm }}</td>
           <td>{{ item.Width }}</td>
           <td>{{ item.Length }}</td>
           <td>{{ item.Height }}</td>
-          <td>{{ item.total_price | currency : "EGP" }}</td>
+          <td>{{ item.total_price | number:'1.2-2'  }}</td>
           <td>{{ item.total_cbm }}</td>
           <td>{{ item.total_weight }}</td>
         </tr>

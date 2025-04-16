@@ -29,10 +29,12 @@ import { CardModule } from 'primeng/card';
 import { TableModule } from 'primeng/table';
 import { ConfirmSaveDeleteService } from '../../../../core/services/confirm-save-delete.service';
 import { PageHeaderComponent } from '../../../shared/components/page-header/page-header.component';
+import { CommonModule } from '@angular/common';
 
 @Component({
   selector: 'app-create-invoice',
   imports: [
+    CommonModule,
     FloatLabelModule,
     InputTextModule,
     FormsModule,
