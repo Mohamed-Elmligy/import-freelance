@@ -23,14 +23,17 @@ function isUnAuthenticatedApi(url: string): boolean {
 }
 
 export const authInterceptor: HttpInterceptorFn = (request, next) => {
-  if (!isUnAuthenticatedApi(request.url)) {
-    const authenticatedRequest = request.clone({
-      headers: request.headers.set(
-        'Authorization',
-        `Bearer ${inject(SecurityService).jwtToken}`
-      ),
-    });
-    return next(authenticatedRequest);
+  const securityService = inject(SecurityService);
+
+  if (isUnAuthenticatedApi(request.url)) {
+    return next(request);
   }
-  return next(request);
+
+  const authenticatedRequest = request.clone({
+    setHeaders: {
+      Authorization: `Bearer ${securityService.jwtToken}`,
+    },
+  });
+
+  return next(authenticatedRequest);
 };
