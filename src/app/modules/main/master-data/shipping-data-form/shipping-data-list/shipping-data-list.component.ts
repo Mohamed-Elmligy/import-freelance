@@ -104,7 +104,7 @@ export default class ShippingDataListComponent {
     });
   }
 
-  deleteShipping(id: string) {
+  deleteShipping(id: number) {
     this.shippingDataService.deleteShipping(id);
   }
 

@@ -121,6 +121,7 @@ export default class CreateInvoiceComponent {
     invoice_number: [null],
     total_boxes: [0],
     total_cbm: [0],
+    total_store_cbm: [0],
     totalCBM: [0],
     total_weight: [0],
     invoice_date: [new Date()], // Set default to current date
@@ -241,6 +242,7 @@ export default class CreateInvoiceComponent {
       this.calculateTotalAmount();
       this.calculateNetAmount();
       this.calculateTotalCBM();
+      this.calculateTotalStoreCBM();
     });
 
     // Subscribe to changes in discount_amount to recalculate net_amount
@@ -248,6 +250,7 @@ export default class CreateInvoiceComponent {
       this.calculateNetAmount();
     });
   }
+  
 
   private initializeLookups(): void {
     this.lookupService
@@ -336,8 +339,9 @@ export default class CreateInvoiceComponent {
   calculateTotalWeight(): void {
     const totalWeight = this.invoice_linesFormArray.controls.reduce(
       (sum, line) => {
-        const weight = parseFloat(line.get('weight')?.value) || 0; // Parse as number
-        return sum + weight;
+        const weight = parseFloat(line.get('weight')?.value) || 0; 
+        const boxCount = parseFloat(line.get('box_count')?.value) || 0;
+        return sum + weight * boxCount;
       },
       0
     );
@@ -379,7 +383,21 @@ export default class CreateInvoiceComponent {
     );
     this.form.get('total_cbm')?.setValue(totalCBM, { emitEvent: false });
   }
+
+  calculateTotalStoreCBM(): void {
+    const totalStoreCBM = this.invoice_linesFormArray.controls.reduce(
+      (total, line) => {
+        const boxCount = parseFloat(line.get('box_count')?.value) || 0;
+        const storeCBM = parseFloat(line.get('store_cbm')?.value) || 0;
+        return total + boxCount * storeCBM;
+      },
+      0
+    );
+    this.form.get('total_store_cbm')?.setValue(totalStoreCBM, { emitEvent: false });
+  }
+
 }
+
 
 export interface InvoiceLine {
   container_sequence: number;
@@ -415,6 +433,7 @@ export interface InvoiceUpdateData {
   fourth_payment_date: string;
   total_boxes: string;
   total_cbm: string;
+  total_store_cbm: string;
   total_weight: string;
   invoice_lines: InvoiceLine[];
 }

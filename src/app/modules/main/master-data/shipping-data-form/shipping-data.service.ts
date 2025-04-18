@@ -20,7 +20,7 @@ export class ShippingDataService {
   ShippingHeaders = [
     'name',
     'containerNumber',
-    'amount',
+    'containerSequance',
     'ShippingDate',
     'port',
     'created_at',
@@ -38,7 +38,7 @@ export class ShippingDataService {
     return {
       customer: form.get('name')?.value.id,
       container_number: form.get('containerNumber')?.value,
-      container_sequence: form.get('containerSequence')?.value,
+      container_sequence: form.get('containerSequance')?.value,
       port_name: form.get('port')?.value,
       shipping_date: formatDate(
         form.get('ShippingDate')?.value,
@@ -79,7 +79,7 @@ export class ShippingDataService {
       return {
         name: item.customer,
         containerNumber: item.container_number,
-        amount: item.container_sequence,
+        containerSequance: item.container_sequence,
         ShippingDate: item.shipping_date,
         port: item.port_name,
         created_at: new Date(item.created_at).toLocaleDateString('en-GB'),
@@ -136,7 +136,7 @@ export class ShippingDataService {
       });
   }
 
-  deleteShipping(id: string) {
+  deleteShipping(id: number) {
     this.confirmService.confirmDelete(
       'Are you sure you want to delete this shipping?',
       () => {
@@ -145,15 +145,25 @@ export class ShippingDataService {
     );
   }
 
-  deleteShippingApi(id: string) {
+  deleteShippingApi(id: number) {
     this.apiService.deleteDataOnServer(
-      SHIPPING_DATA_APIS.DELETE_SHIPPING_DATA(+id)
-    );
-    this.showMessageService.showMessage(
-      'success',
-      'Shipping Deleted',
-      'Shipping has been deleted successfully'
-    );
-    this.shippingDataDeleted.set(true);
+      SHIPPING_DATA_APIS.DELETE_SHIPPING_DATA(id)
+    ).subscribe({
+      next: () => {
+        this.showMessageService.showMessage(
+          'success',
+          'Shipping Deleted',
+          'Shipping has been deleted successfully'
+        );
+        this.shippingDataDeleted.set(true);
+      },
+      error: (err) => {
+        this.showMessageService.showMessage(
+          'error',
+          'Delete Failed',
+          'Failed to delete shipping data'
+        );
+      }
+    });
   }
 }
