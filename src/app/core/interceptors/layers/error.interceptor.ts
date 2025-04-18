@@ -1,12 +1,23 @@
-import { HttpInterceptorFn, HttpErrorResponse } from '@angular/common/http';
+import {
+  HttpInterceptorFn,
+  HttpErrorResponse,
+  HttpEvent,
+} from '@angular/common/http';
 import { inject } from '@angular/core';
 import { Router } from '@angular/router';
 import { ShowMessageService } from '../../services/show-message.service';
-import { catchError, throwError } from 'rxjs';
+import { catchError, Observable, switchMap, throwError } from 'rxjs';
+import { SecurityService } from '../../services/security.service';
+import { BrowserStorageService } from '../../services/browser-storage.service';
 
-export const errorInterceptor: HttpInterceptorFn = (req, next) => {
+export const errorInterceptor: HttpInterceptorFn = (
+  req,
+  next
+): Observable<HttpEvent<unknown>> => {
   const router = inject(Router);
   const showMessageService = inject(ShowMessageService);
+  const securityService = inject(SecurityService);
+  const browserStorageService = inject(BrowserStorageService);
 
   return next(req).pipe(
     catchError((error: HttpErrorResponse) => {
@@ -15,21 +26,34 @@ export const errorInterceptor: HttpInterceptorFn = (req, next) => {
       if (error.error instanceof ErrorEvent) {
         // Client-side or network error
         errorMessage = `Client Error: ${error.error.message}`;
-        showMessageService.showMessage('error', 'Error', errorMessage);
-
+        showMessageService.showMessage('error', 'Error', errorMessage);     
       } else {
         // Server-side error
         switch (error.status) {
           case 0:
             errorMessage = 'Unable to connect to the server.';
-            break;
           case 400:
             errorMessage = handleBadRequest(error.error).join(', ');
             // errorMessage = error.error?.error || 'Bad request.';
             break;
-          case 401:            
-            errorMessage = error.error?.detail || 'Unauthorized. Please log in first.';
-            router.navigate(['/auth/login']);
+          case 401:
+            const refreshToken = securityService.retrieveRefreshToken();
+            if (refreshToken) {
+              return securityService.getNewAccessToken().pipe(
+                switchMap((res: any) => {
+                  updateJwtData(res.access);
+                  req = req.clone({
+                    setHeaders: { Authorization: `Bearer ${res.access}` },
+                  });
+                  return next(req);
+                }),
+                catchError((refreshError: HttpErrorResponse) => {
+                  return throwError(() => refreshError);
+                })
+              );
+            } else {
+              return throwError(() => error);
+            }
             break;
           case 403:
             errorMessage = 'Forbidden. You do not have permission.';
@@ -41,7 +65,8 @@ export const errorInterceptor: HttpInterceptorFn = (req, next) => {
             errorMessage = 'Internal server error.';
             break;
           default:
-            errorMessage = error.error?.message || `Unexpected Error: ${error.status}`;
+            errorMessage =
+              error.error?.message || `Unexpected Error: ${error.status}`;
             break;
         }
 
@@ -51,8 +76,17 @@ export const errorInterceptor: HttpInterceptorFn = (req, next) => {
       return throwError(() => error);
     })
   );
+  function updateJwtData(accessToken: string): void {
+    const jwtData = securityService.retrieveJwtData();
+    const newJwtData = { ...jwtData, access: accessToken };
+    securityService.allJwtData.update(() => newJwtData);
+    browserStorageService.setData(
+      'local',
+      securityService.localKey,
+      newJwtData
+    );
+  }
 };
-
 
 function handleBadRequest(error: any) {
   const messages: string[] = [];
