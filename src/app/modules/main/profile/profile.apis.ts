@@ -6,7 +6,7 @@ export const PROFILE_APIS = {
   GET_COMPANY: () => `company/retrieve`,
   USER_UPDATE: (id: string) => `account/update/${id}`,
   USER_DETAILS: (id: string) => `account/user/${id}`,
-  USER_DELETE: (id: string) => `/account/delete/${id}`,
+  USER_DELETE: (id: string) => `account/delete/${id}`,
   USER_RESET_PASSWORD: (id: string) => `account/reset-password/${id}`,
-  RESET_PASSWORD: `account/change-password`,
+  RESET_PASSWORD: `account/change-password`,  
 };

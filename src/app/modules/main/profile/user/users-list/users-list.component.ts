@@ -144,12 +144,7 @@ export default class UsersListComponent implements OnInit {
   }
 
   deleteUser(id: string) {
-    this.confirmService.confirmDelete(
-      'Are you sure you want to delete this user?',
-      () => {
-        this.deleteUserApi(id);
-      }
-    );
+    this.deleteUserApi(id);
   }
 
   deleteUserApi(id: string) {
