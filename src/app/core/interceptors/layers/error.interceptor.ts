@@ -26,12 +26,13 @@ export const errorInterceptor: HttpInterceptorFn = (
       if (error.error instanceof ErrorEvent) {
         // Client-side or network error
         errorMessage = `Client Error: ${error.error.message}`;
-        showMessageService.showMessage('error', 'Error', errorMessage);     
+        showMessageService.showMessage('error', 'Error', errorMessage);
       } else {
         // Server-side error
         switch (error.status) {
           case 0:
             errorMessage = 'Unable to connect to the server.';
+            break;
           case 400:
             errorMessage = handleBadRequest(error.error).join(', ');
             // errorMessage = error.error?.error || 'Bad request.';
