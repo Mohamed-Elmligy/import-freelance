@@ -38,7 +38,7 @@ export class ShippingDataService {
     return {
       customer: form.get('name')?.value.id,
       container_number: form.get('containerNumber')?.value,
-      container_sequence: form.get('containerSequance')?.value,
+      container_sequence: form.get('containerSequence')?.value,
       port_name: form.get('port')?.value,
       shipping_date: formatDate(
         form.get('ShippingDate')?.value,
@@ -146,24 +146,24 @@ export class ShippingDataService {
   }
 
   deleteShippingApi(id: number) {
-    this.apiService.deleteDataOnServer(
-      SHIPPING_DATA_APIS.DELETE_SHIPPING_DATA(id)
-    ).subscribe({
-      next: () => {
-        this.showMessageService.showMessage(
-          'success',
-          'Shipping Deleted',
-          'Shipping has been deleted successfully'
-        );
-        this.shippingDataDeleted.set(true);
-      },
-      error: (err) => {
-        this.showMessageService.showMessage(
-          'error',
-          'Delete Failed',
-          'Failed to delete shipping data'
-        );
-      }
-    });
+    this.apiService
+      .deleteDataOnServer(SHIPPING_DATA_APIS.DELETE_SHIPPING_DATA(id))
+      .subscribe({
+        next: () => {
+          this.showMessageService.showMessage(
+            'success',
+            'Shipping Deleted',
+            'Shipping has been deleted successfully'
+          );
+          this.shippingDataDeleted.set(true);
+        },
+        error: (err) => {
+          this.showMessageService.showMessage(
+            'error',
+            'Delete Failed',
+            'Failed to delete shipping data'
+          );
+        },
+      });
   }
 }
