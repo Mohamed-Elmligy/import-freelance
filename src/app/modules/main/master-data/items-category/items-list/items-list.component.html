@@ -12,10 +12,7 @@
   <p-toolbar class="my-4 w-full">
     <ng-template #center>
       <div class="flex flex-row align-baseline justify-around">
-        <form
-          [formGroup]="filterForm"
-          class="grid md:grid-cols-4 sm:grid-cols-1 gap-5"
-        >
+        <form [formGroup]="filterForm" class="grid grid-cols-1 gap-5">
           <p-floatlabel variant="on" class="col-span-1">
             <input pInputText id="item" formControlName="item" />
             <label for="item">{{ "item" | translate }}</label>
