@@ -56,6 +56,10 @@ export class InvoiceService {
       total_amount: form.value.total_amount,
       net_amount: form.value.net_amount,
       discount_amount: form.value.discount_amount ?? 0,
+      total_boxes: form.value.total_boxes,
+      total_cbm: form.value.total_cbm,
+      total_store_cbm: form.value.total_store_cbm,
+      total_weight: form.value.total_weight,
       first_payment_amount: form.value.first_payment_amount,
       first_payment_date: formatPaymentDate(form.value.first_payment_date),
       second_payment_amount: form.value.second_payment_amount,
@@ -155,6 +159,28 @@ export class InvoiceService {
 
   createInvoice(data: FormGroup) {
     let modifiedModel = this.componentModelToApiModel(data);
+    // remove all empty lines from invoice_lines
+    modifiedModel.invoice_lines = modifiedModel.invoice_lines.filter(
+      (line: any) =>
+        line.item_code &&
+        line.item_description &&
+        line.box_count &&
+        line.item_in_box &&
+        line.item_price &&
+        line.store_cbm &&
+        line.height &&
+        line.width &&
+        line.length
+    );
+    // check if invoice_lines is empty
+    if (modifiedModel.invoice_lines.length === 0) {
+      this.showMessageService.showMessage(
+        'error',
+        'Invoice Lines Required',
+        'Please add at least one invoice line'
+      );
+      return;
+    }
     this.apiService
       .sendDataToServer(INVOICE_APIS.CREATE_INVOICE, modifiedModel)
       .pipe(

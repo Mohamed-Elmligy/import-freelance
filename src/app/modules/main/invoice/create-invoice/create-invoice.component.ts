@@ -122,7 +122,6 @@ export default class CreateInvoiceComponent {
     total_boxes: [0],
     total_cbm: [0],
     total_store_cbm: [0],
-    totalCBM: [0],
     total_weight: [0],
     invoice_date: [new Date()], // Set default to current date
     first_payment_amount: [],
@@ -250,7 +249,6 @@ export default class CreateInvoiceComponent {
       this.calculateNetAmount();
     });
   }
-  
 
   private initializeLookups(): void {
     this.lookupService
@@ -339,7 +337,7 @@ export default class CreateInvoiceComponent {
   calculateTotalWeight(): void {
     const totalWeight = this.invoice_linesFormArray.controls.reduce(
       (sum, line) => {
-        const weight = parseFloat(line.get('weight')?.value) || 0; 
+        const weight = parseFloat(line.get('weight')?.value) || 0;
         const boxCount = parseFloat(line.get('box_count')?.value) || 0;
         return sum + weight * boxCount;
       },
@@ -377,7 +375,7 @@ export default class CreateInvoiceComponent {
         const width = parseFloat(line.get('width')?.value) || 0;
         const length = parseFloat(line.get('length')?.value) || 0;
         const boxCount = parseFloat(line.get('box_count')?.value) || 0;
-        return sum +(( height * width * length * boxCount) / 1000000);
+        return sum + (height * width * length * boxCount) / 1000000;
       },
       0
     );
@@ -393,11 +391,11 @@ export default class CreateInvoiceComponent {
       },
       0
     );
-    this.form.get('total_store_cbm')?.setValue(totalStoreCBM, { emitEvent: false });
+    this.form
+      .get('total_store_cbm')
+      ?.setValue(totalStoreCBM, { emitEvent: false });
   }
-
 }
-
 
 export interface InvoiceLine {
   container_sequence: number;
