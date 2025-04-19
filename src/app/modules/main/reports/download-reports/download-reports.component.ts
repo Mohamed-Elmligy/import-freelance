@@ -46,8 +46,8 @@ export default class DownloadReportsComponent {
     results: [],
     totals: {
       box_count: 0,
-      total_items_count: 0,
-      total_item_price: 0,
+      item_in_box: 0,
+      item_price: 0,
       total_price: 0,
       total_cbm: 0,
       total_weight: 0,
