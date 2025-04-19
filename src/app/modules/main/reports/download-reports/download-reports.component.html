@@ -43,7 +43,10 @@
     </ng-template>
 
     <!-- Dynamic Form Fields -->
-    <div class="grid grid-cols-1 md:grid-cols-2 gap-4 px-4 pb-4">
+    <form
+      [formGroup]="filterForm"
+      class="grid grid-cols-1 md:grid-cols-2 gap-4 px-4 pb-4"
+    >
       @switch (selectedReport()?.code) { @case ('invoiceDetails') {
       <p-floatlabel class="w-full" variant="over">
         <p-select
@@ -51,45 +54,45 @@
           [options]="reportService.listOfCustomers()"
           optionLabel="name"
           optionValue="id"
-          [(ngModel)]="selectedCustomer"
+          formControlName="customer_id"
           class="w-full"
           [showClear]="true"
         ></p-select>
         <label for="customer">{{ "SelectCustomer" | translate }}</label>
       </p-floatlabel>
-      <p-floatlabel class="w-full" variant="over">
+      <p-floatlabel class="w-full" variant="on">
         <input
           pInputText
-          id="containerSequence"
+          id="container_number "
           autocomplete="off"
-          [(ngModel)]="containerSequence"
+          formControlName="container_number"
           class="w-full"
         />
-        <label for="containerSequence">{{
+        <label for="container_number ">{{
           "containerSequance" | translate
         }}</label>
       </p-floatlabel>
 
-      <!-- <p-floatlabel class="w-full" variant="over">
+      <!-- <p-floatlabel class="w-full" variant="on">
         <p-select
           inputId="invoice"
           [options]="reportService.listOfInvoices()"
           optionLabel="invoice_number"
           optionValue="id"
-          [(ngModel)]="selectedInvoice"
+          formControlName="selectedInvoice"
           class="w-full"
           [showClear]="true"
         ></p-select>
         <label for="invoice">{{ "SelectInvoice" | translate }}</label>
       </p-floatlabel> -->
       } @case ('supplierReport') {
-      <p-floatlabel class="w-full" variant="over">
+      <p-floatlabel class="w-full" variant="on">
         <p-select
           inputId="supplier"
           [options]="reportService.listOfSuppliers()"
           optionLabel="name"
           optionValue="id"
-          [(ngModel)]="selectedSupplier"
+          formControlName="supplier_code"
           class="w-full"
           [showClear]="true"
         ></p-select>
@@ -105,14 +108,14 @@
           [options]="reportService.listOfCustomers()"
           optionLabel="name"
           optionValue="id"
-          [(ngModel)]="selectedCustomer"
+          formControlName="customer_id"
           class="w-full"
           [showClear]="true"
         ></p-select>
         <label for="customer">{{ "SelectCustomer" | translate }}</label>
       </p-floatlabel>
       } } }
-    </div>
+    </form>
 
     <!-- Action Buttons -->
     <ng-template #footer>

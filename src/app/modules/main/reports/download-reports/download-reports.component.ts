@@ -3,7 +3,7 @@ import { ButtonModule } from 'primeng/button';
 import { InputTextModule } from 'primeng/inputtext';
 import { FloatLabel } from 'primeng/floatlabel';
 import { Select } from 'primeng/select';
-import { FormsModule } from '@angular/forms';
+import { FormBuilder, FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { CardModule } from 'primeng/card';
 import { ReportsService, reportVewType } from '../reports.service';
 import { PageHeaderComponent } from '../../../shared/components/page-header/page-header.component';
@@ -31,6 +31,7 @@ import { TooltipModule } from 'primeng/tooltip';
     TableModule,
     CommonModule,
     TooltipModule,
+    ReactiveFormsModule,
   ],
   templateUrl: './download-reports.component.html',
 })
@@ -38,6 +39,7 @@ export default class DownloadReportsComponent {
   languageService = inject(LanguagesService);
   reportService = inject(ReportsService);
   showMessageService = inject(ShowMessageService);
+  private formBuilder = inject(FormBuilder);
 
   reportsTypes: ReportType[] | undefined;
   selectedReport = signal<ReportType | undefined>(undefined);
@@ -54,13 +56,20 @@ export default class DownloadReportsComponent {
     },
   };
 
-  selectedCustomer: CustomerList | undefined;
+  filterForm = this.formBuilder.group({
+    customer_id: [null],
+    supplier_code: [null],
+    selectedInvoice: [null],
+    container_number: [null],
+  });
 
-  selectedSupplier: SupplierList | undefined;
+  // customer_id: CustomerList | undefined;
 
-  selectedInvoice: InvoiceList | undefined;
+  // supplier_code: SupplierList | undefined;
 
-  containerSequence: string | undefined;
+  // selectedInvoice: InvoiceList | undefined;
+
+  // container_number : string | undefined;
 
   visible: boolean = false;
 
@@ -99,11 +108,15 @@ export default class DownloadReportsComponent {
   }
 
   generateReport() {
+    const selectedReport = this.selectedReport();
+    if (!selectedReport) {
+      return;
+    }
+    const type: keyof typeof reportsApis =
+      selectedReport.code as keyof typeof reportsApis;
+
     this.reportService
-      .getInvoiceDetails({
-        container_number: this.containerSequence,
-        customer_id: this.selectedCustomer,
-      })
+      .viewReport(type, this.filterForm.value)
       .subscribe((res: reportVewType) => {
         this.reportView = res;
         this.visible = true;
@@ -133,9 +146,9 @@ export default class DownloadReportsComponent {
 
   downloadReport() {
     const selectedReport = this.selectedReport();
-    const selectedCustomer = this.selectedCustomer;
-    const selectedSupplier = this.selectedSupplier;
-    const containerSequence = this.containerSequence;
+    const customer_id = this.filterForm.get('customer_id')?.value;
+    const supplier_code = this.filterForm.get('supplier_code')?.value;
+    const container_number = this.filterForm.get('container_number ')?.value;
 
     if (!selectedReport) {
       return;
@@ -152,7 +165,7 @@ export default class DownloadReportsComponent {
 
     switch (selectedReport.code) {
       case 'invoiceDetails':
-        if (!selectedCustomer && !containerSequence) {
+        if (!customer_id && !container_number) {
           this.showMessageService.showMessage(
             'error',
             'Unvalid Paremeters',
@@ -161,18 +174,18 @@ export default class DownloadReportsComponent {
           return;
         }
 
-        if (selectedCustomer) {
-          params.customer_id = selectedCustomer;
+        if (customer_id) {
+          params.customer_id = customer_id;
         }
 
-        if (containerSequence) {
-          params.container_number = containerSequence;
+        if (container_number) {
+          params.container_number = container_number;
         }
 
         break;
 
       case 'supplierReport':
-        if (!selectedSupplier) {
+        if (!supplier_code) {
           this.showMessageService.showMessage(
             'error',
             'Unvalid Paremeters',
@@ -181,11 +194,11 @@ export default class DownloadReportsComponent {
           return;
         }
 
-        params.supplier_code = selectedSupplier;
+        params.supplier_code = supplier_code;
         break;
 
       case 'customerFinancialReport':
-        if (!selectedCustomer) {
+        if (!customer_id) {
           this.showMessageService.showMessage(
             'error',
             'Unvalid Paremeters',
@@ -194,14 +207,14 @@ export default class DownloadReportsComponent {
           return;
         }
 
-        params.customer_id = selectedCustomer;
+        params.customer_id = customer_id;
         break;
 
       case 'totalPaymentsReport':
-        params.customer_id = selectedCustomer;
+        params.customer_id = customer_id;
         break;
       case 'totalExpensesReport':
-        params.customer_id = selectedCustomer;
+        params.customer_id = customer_id;
         break;
     }
 
@@ -210,9 +223,7 @@ export default class DownloadReportsComponent {
 
   resetAll() {
     this.selectedReport.set(undefined);
-    this.selectedCustomer = undefined;
-    this.selectedSupplier = undefined;
-    this.selectedInvoice = undefined;
+    this.filterForm.reset();
   }
 }
 

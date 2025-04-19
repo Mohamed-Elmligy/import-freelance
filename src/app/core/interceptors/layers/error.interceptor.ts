@@ -30,13 +30,13 @@ export const errorInterceptor: HttpInterceptorFn = (request, next) => {
         case 0:
           errorMessage = 'Unable to connect to the server.';
           break;
-          case 400:
-            if (typeof error.error === 'string') {
-              errorMessage = error.error;
-            } else {
-              errorMessage = handleBadRequestErrors(error.error);
-            }
-            break;
+        case 400:
+          if (typeof error.error === 'string') {
+            errorMessage = error.error;
+          } else {
+            errorMessage = handleBadRequestErrors(error.error);
+          }
+          break;
         case 401:
           if (error.error?.code === 'token_not_valid') {
             return securityService.getNewAccessToken().pipe(

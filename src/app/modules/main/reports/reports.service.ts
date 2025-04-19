@@ -42,12 +42,16 @@ export class ReportsService {
     }
   }
 
-  getInvoiceDetails(filter: any) {
+  viewReport(api: keyof typeof reportsApis, filter: any) {
     return this.api.getDataFromServer(
-      reportsApis.getInvoiceDetails,
+      this.getApiEndpoint(api),
       { count: null, page: null },
       filter
     );
+  }
+
+  getApiEndpoint(key: keyof typeof reportsApis): string {
+    return reportsApis[key];
   }
 
   downloadReport(type: string, filter?: any) {
