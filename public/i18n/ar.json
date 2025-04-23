@@ -187,5 +187,10 @@
   "reportDetails": "تفاصيل التقرير",
   "Download": "تحميل",
   "view": "عرض",
-  "Cancel": "الغاء"
+  "Cancel": "الغاء",
+  "rmb_exchange_rate": "سعر صرف اليوان",
+  "usd_exchange_rate": "سعر صرف الدولار",
+  "customs_cost": "تكلفة الجمارك",
+  "sea_shipping_cost": "تكلفة الشحن البحري",
+  "land_shipping_cost": "تكلفة الشحن البري"
 }

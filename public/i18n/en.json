@@ -186,5 +186,10 @@
   "reportDetails": "Report Details",
   "Download": "Download",
   "view": "View",
-  "Cancel": "Cancel"
+  "Cancel": "Cancel",
+  "rmb_exchange_rate": "RMB Exchange Rate",
+  "usd_exchange_rate": "USD Exchange Rate",
+  "customs_cost": "Customs Cost",
+  "sea_shipping_cost": "Sea Shipping Cost",
+  "land_shipping_cost": "Land Shipping Cost"
 }
