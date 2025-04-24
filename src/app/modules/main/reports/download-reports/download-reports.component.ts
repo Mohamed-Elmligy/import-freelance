@@ -118,13 +118,11 @@ export default class DownloadReportsComponent {
   }
 
   viewReportApi(type: any) {
+    console.log(type);
+
     let notEmpityKey = Object.values(this.filterForm.value).find(
       (value) => value != null || value != undefined
     );
-
-    console.log(this.filterForm.value);
-
-    console.log(notEmpityKey);
 
     if (notEmpityKey) {
       this.reportService

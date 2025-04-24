@@ -131,7 +131,6 @@
           (onClick)="resetAll()"
         ></p-button>
 
-        @if(selectedReport()?.code === 'invoiceDetails') {
         <p-button
           [label]="'view' | translate"
           icon="pi pi-eye"
@@ -139,7 +138,6 @@
           (onClick)="generateReport(true)"
           [disabled]="!selectedReport()"
         ></p-button>
-        }
 
         <p-button
           [label]="'Download' | translate"

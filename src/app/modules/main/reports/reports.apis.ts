@@ -7,4 +7,5 @@ export const reportsApis = {
   get_invoiceDetails: 'reports/invoice-details',
   get_totalExpensesReport: 'reports/expenses-view',
   get_totalPaymentsReport: 'reports/payments-view',
+  get_supplierReport: 'reports/view-supplier-report',
 };
