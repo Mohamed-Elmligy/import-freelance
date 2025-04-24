@@ -13,7 +13,7 @@
           class="grid md:grid-cols-4 sm:grid-cols-1 gap-5"
         >
           <p-floatlabel variant="on" class="col-span-1">
-            <input pInputText id="user_name" formControlName="name" />
+            <input pInputText id="user_name" formControlName="customer_name" />
             <label for="user_name">{{ "name" | translate }}</label>
           </p-floatlabel>
 
@@ -30,18 +30,9 @@
             <input
               pInputText
               id="invoiceNumber"
-              formControlName="invoiceNumber"
+              formControlName="invoice_number"
             />
             <label for="invoiceNumber">{{ "invoiceNumber" | translate }}</label>
-          </p-floatlabel>
-
-          <p-floatlabel variant="on">
-            <p-datepicker
-              inputId="invoiceDate"
-              formControlName="invoiceDate"
-              size="small"
-            />
-            <label for="invoiceDate">{{ "invoiceDate" | translate }}</label>
           </p-floatlabel>
         </form>
       </div>

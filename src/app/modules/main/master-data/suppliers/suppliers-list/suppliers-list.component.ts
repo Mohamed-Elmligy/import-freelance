@@ -63,7 +63,7 @@ export default class SuppliersListComponent {
   filterForm: FormGroup = this.formBuilder.group({
     name: [''],
     code: [''],
-    store: [''],
+    store_number: [''],
   });
 
   constructor() {

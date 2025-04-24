@@ -59,7 +59,7 @@ export default class PaymentsListComponent {
   totalRecords: number = 0;
   page: number = 1;
   filterForm: FormGroup = this.formBuilder.group({
-    name: [''],
+    customer_name: [''],
   });
 
   constructor() {

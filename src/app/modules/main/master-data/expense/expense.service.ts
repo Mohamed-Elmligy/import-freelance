@@ -19,7 +19,7 @@ export class ExpenseService {
 
   ExpenseHeaders = [
     'name',
-    'containerNumber',
+    'containerSequance',
     'amount',
     'expenseDate',
     'created_at',
@@ -74,7 +74,7 @@ export class ExpenseService {
     return data.map((item) => {
       return {
         name: item.customer,
-        containerNumber: item.container_number,
+        containerSequance: item.container_number,
         amount: item.amount,
         expenseDate: item.expense_date,
         description: item.description,

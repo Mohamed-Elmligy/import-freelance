@@ -16,7 +16,13 @@ export class FiscalYearService {
   private showMessageService = inject(ShowMessageService);
   yearDeleted = signal(false);
 
-  yearHeaders = ['name', 'country', 'from_date', 'to_date', 'created_at'];
+  yearHeaders = [
+    'FISCAL_YEAR_NAME',
+    'country',
+    'from_date',
+    'to_date',
+    'created_at',
+  ];
 
   getList(page?: any, size?: any, filter?: any) {
     return this.apiService.getDataFromServer(
@@ -64,7 +70,7 @@ export class FiscalYearService {
   ) {
     return data.map((item) => {
       return {
-        name: item.name,
+        FISCAL_YEAR_NAME: item.name,
         country: item.country,
         from_date: item.from_date,
         to_date: item.to_date,

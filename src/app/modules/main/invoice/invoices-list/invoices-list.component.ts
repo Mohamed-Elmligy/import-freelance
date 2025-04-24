@@ -57,10 +57,9 @@ export default class InvoicesListComponent {
   page: number = 1;
 
   filterForm: FormGroup = this.formBuilder.group({
-    name: [''],
-    invoiceDate: [''],
+    customer_name: [''],
     supplier_name: [''],
-    invoiceNumber: [''],
+    invoice_number: [''],
   });
 
   constructor() {

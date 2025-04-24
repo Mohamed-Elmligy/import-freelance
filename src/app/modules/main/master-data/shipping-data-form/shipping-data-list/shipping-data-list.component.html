@@ -14,10 +14,10 @@
       <div class="flex flex-row align-baseline justify-around">
         <form
           [formGroup]="filterForm"
-          class="grid md:grid-cols-3 sm:grid-cols-1 gap-5"
+          class="grid md:grid-cols-4 sm:grid-cols-1 gap-5"
         >
           <p-floatlabel variant="on" class="col-span-1">
-            <input pInputText id="user_name" formControlName="name" />
+            <input pInputText id="user_name" formControlName="customer_name" />
             <label for="user_name">{{ "name" | translate }}</label>
           </p-floatlabel>
 
@@ -25,10 +25,21 @@
             <input
               pInputText
               id="containerNumber"
-              formControlName="container_sequence"
+              formControlName="container_number"
             />
             <label for="containerNumber">{{
               "containerNumber" | translate
+            }}</label>
+          </p-floatlabel>
+
+          <p-floatlabel variant="on" class="col-span-1">
+            <input
+              pInputText
+              id="contatierSequance"
+              formControlName="container_sequence"
+            />
+            <label for="contatierSequance">{{
+              "contatierSequance" | translate
             }}</label>
           </p-floatlabel>
 
