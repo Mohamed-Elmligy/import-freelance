@@ -48,6 +48,11 @@ export class ShippingDataService {
         'en-US'
       ),
       description: form.get('description')?.value,
+      land_shipping_cost: form.get('land_shipping_cost')?.value,
+      sea_shipping_cost: form.get('sea_shipping_cost')?.value,
+      customs_cost: form.get('customs_cost')?.value,
+      usd_exchange_rate: form.get('usd_exchange_rate')?.value,
+      rmb_exchange_rate: form.get('rmb_exchange_rate')?.value,
     };
   }
 
@@ -62,6 +67,11 @@ export class ShippingDataService {
       port: data.port_name,
       ShippingDate: new Date(data.shipping_date),
       description: data.description,
+      land_shipping_cost: data.land_shipping_cost,
+      sea_shipping_cost: data.sea_shipping_cost,
+      customs_cost: data.customs_cost,
+      usd_exchange_rate: data.usd_exchange_rate,
+      rmb_exchange_rate: data.rmb_exchange_rate,
     });
   }
 
