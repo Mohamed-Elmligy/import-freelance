@@ -136,7 +136,7 @@
           [label]="'view' | translate"
           icon="pi pi-eye"
           class="flex-1 sm:flex-none"
-          (onClick)="visible = true; generateReport()"
+          (onClick)="generateReport(true)"
           [disabled]="!selectedReport()"
         ></p-button>
         }

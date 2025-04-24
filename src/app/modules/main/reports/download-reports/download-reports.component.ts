@@ -107,20 +107,41 @@ export default class DownloadReportsComponent {
     ];
   }
 
-  generateReport() {
+  generateReport(viewReport: boolean = false) {
     const selectedReport = this.selectedReport();
     if (!selectedReport) {
       return;
     }
     const type: keyof typeof reportsApis =
       selectedReport.code as keyof typeof reportsApis;
+    if (viewReport) this.viewReportApi('get_' + type);
+  }
 
-    this.reportService
-      .viewReport(type, this.filterForm.value)
-      .subscribe((res: reportVewType) => {
-        this.reportView = res;
-        this.visible = true;
-      });
+  viewReportApi(type: any) {
+    let notEmpityKey = Object.values(this.filterForm.value).find(
+      (value) => value != null || value != undefined
+    );
+
+    console.log(this.filterForm.value);
+
+    console.log(notEmpityKey);
+
+    if (notEmpityKey) {
+      this.reportService
+        .reportApi(type, this.filterForm.value)
+        .subscribe((res: reportVewType) => {
+          this.reportView = res;
+          this.visible = true;
+        });
+    } else {
+      this.visible = false;
+      this.showMessageService.showMessage(
+        'error',
+        'Unvalid Paremeters',
+        'Please select one atleast Paremeter'
+      );
+      return;
+    }
   }
 
   onReportTypeChange(selectedReport: ReportType) {
