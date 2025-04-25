@@ -161,6 +161,7 @@ export default class DownloadReportsComponent {
         this.reportService.getListOfCustomers();
         break;
     }
+    this.filterForm.reset();
   }
 
   downloadReport() {
