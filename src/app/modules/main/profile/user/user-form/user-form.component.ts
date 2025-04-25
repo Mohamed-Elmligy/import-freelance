@@ -29,7 +29,6 @@ import { MessageModule } from 'primeng/message';
   imports: [
     FloatLabelModule,
     InputTextModule,
-    FormsModule,
     PageHeaderComponent,
     RouterModule,
     CommonModule,
