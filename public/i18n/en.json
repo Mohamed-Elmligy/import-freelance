@@ -213,4 +213,9 @@
   "second_payment_date": "Second Payment Date",
   "third_payment_amount": "Third Payment",
   "third_payment_date": "Third Payment Date"
+  "rmb_exchange_rate": "RMB Exchange Rate",
+  "usd_exchange_rate": "USD Exchange Rate",
+  "customs_cost": "Customs Cost",
+  "sea_shipping_cost": "Sea Shipping Cost",
+  "land_shipping_cost": "Land Shipping Cost"
 }

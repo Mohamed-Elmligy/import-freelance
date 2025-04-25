@@ -54,7 +54,7 @@ export default class RepaymentsListComponent {
 
   filterForm: FormGroup = this.formBuilder.group({
     customer_name: [''],
-    supplier: [''],
+    supplier_name: [''],
   });
 
   constructor() {

@@ -59,8 +59,9 @@ export default class ShippingDataListComponent {
   page: number = 1;
 
   filterForm: FormGroup = this.formBuilder.group({
-    name: [''],
+    customer_name: [''],
     container_sequence: [''],
+    container_number: [''],
     port_name: [''],
   });
 

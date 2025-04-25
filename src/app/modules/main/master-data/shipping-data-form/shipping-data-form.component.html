@@ -58,13 +58,13 @@
       >}
       <label for="number">{{ "containerNumber" | translate }}</label>
     </p-floatlabel>
-    <p-floatlabel variant="on" class="md:col-span-1 sm:col-span-4 my-2">
+    <p-floatlabel variant="on" class="md:col-span-2 sm:col-span-4 my-2">
       <p-datepicker
         inputId="date"
         showIcon
         iconDisplay="input"
         formControlName="ShippingDate"
-        styleClass="text-xs"
+        styleClass="w-full"
       />
       @if (form.get('ShippingDate')?.hasError('required') &&
       form.get('ShippingDate')?.dirty) {
@@ -74,6 +74,7 @@
       >}
       <label for="date">{{ "ShippingDate" | translate }}</label>
     </p-floatlabel>
+
     <p-floatlabel variant="on" class="md:col-span-2 sm:col-span-4 my-2">
       <input
         pInputText
@@ -83,6 +84,69 @@
         class="w-full"
       />
       <label for="port">{{ "port" | translate }}</label>
+    </p-floatlabel>
+
+    <p-floatlabel variant="on" class="md:col-span-2 sm:col-span-4 my-2">
+      <input
+        pInputText
+        id="customs_cost"
+        autocomplete="off"
+        formControlName="customs_cost"
+        class="w-full"
+      />
+      <label for="customs_cost">{{ "customs_cost" | translate }}</label>
+    </p-floatlabel>
+
+    <p-floatlabel variant="on" class="md:col-span-2 sm:col-span-4 my-2">
+      <input
+        pInputText
+        id="land_shipping_cost"
+        autocomplete="off"
+        formControlName="land_shipping_cost"
+        class="w-full"
+      />
+      <label for="land_shipping_cost">{{
+        "land_shipping_cost" | translate
+      }}</label>
+    </p-floatlabel>
+
+    <p-floatlabel variant="on" class="md:col-span-2 sm:col-span-4 my-2">
+      <input
+        pInputText
+        id="sea_shipping_cost"
+        autocomplete="off"
+        formControlName="sea_shipping_cost"
+        class="w-full"
+      />
+      <label for="sea_shipping_cost">{{
+        "sea_shipping_cost" | translate
+      }}</label>
+    </p-floatlabel>
+
+    <p-floatlabel variant="on" class="md:col-span-2 sm:col-span-4 my-2">
+      <input
+        pInputText
+        id="usd_exchange_rate"
+        autocomplete="off"
+        formControlName="usd_exchange_rate"
+        class="w-full"
+      />
+      <label for="usd_exchange_rate">{{
+        "usd_exchange_rate" | translate
+      }}</label>
+    </p-floatlabel>
+
+    <p-floatlabel variant="on" class="md:col-span-2 sm:col-span-4 my-2">
+      <input
+        pInputText
+        id="rmb_exchange_rate"
+        autocomplete="off"
+        formControlName="rmb_exchange_rate"
+        class="w-full"
+      />
+      <label for="rmb_exchange_rate">{{
+        "rmb_exchange_rate" | translate
+      }}</label>
     </p-floatlabel>
 
     <p-floatlabel variant="on" class="col-span-4">
@@ -141,6 +205,50 @@
       {{ shippingData.shipping_date | date : "dd/MM/yyyy" }}
     </p>
   </div>
+
+  <div class="col-span-2 flex flex-row align-baseline justify-start">
+    <h2 class="me-2 font-bold text-xl">
+      {{ "land_shipping_cost" | translate }}:
+    </h2>
+    <p class="text-base text-md mt-1">
+      {{ shippingData.land_shipping_cost }}
+    </p>
+  </div>
+
+  <div class="col-span-2 flex flex-row align-baseline justify-start">
+    <h2 class="me-2 font-bold text-xl">
+      {{ "sea_shipping_cost" | translate }}:
+    </h2>
+    <p class="text-base text-md mt-1">
+      {{ shippingData.sea_shipping_cost }}
+    </p>
+  </div>
+
+  <div class="col-span-2 flex flex-row align-baseline justify-start">
+    <h2 class="me-2 font-bold text-xl">{{ "customs_cost" | translate }}:</h2>
+    <p class="text-base text-md mt-1">
+      {{ shippingData.customs_cost }}
+    </p>
+  </div>
+
+  <div class="col-span-2 flex flex-row align-baseline justify-start">
+    <h2 class="me-2 font-bold text-xl">
+      {{ "usd_exchange_rate" | translate }}:
+    </h2>
+    <p class="text-base text-md mt-1">
+      {{ shippingData.usd_exchange_rate }}
+    </p>
+  </div>
+
+  <div class="col-span-2 flex flex-row align-baseline justify-start">
+    <h2 class="me-2 font-bold text-xl">
+      {{ "rmb_exchange_rate" | translate }}:
+    </h2>
+    <p class="text-base text-md mt-1">
+      {{ shippingData.rmb_exchange_rate }}
+    </p>
+  </div>
+
   <div class="col-span-2 flex flex-row align-baseline justify-start">
     <h2 class="me-2 font-bold text-xl">{{ "description" | translate }}:</h2>
     <p class="text-base text-md mt-1">

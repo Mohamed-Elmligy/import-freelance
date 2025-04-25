@@ -19,7 +19,7 @@
         class="w-full"
       />
       @if (userForm.get('first_name')?.hasError('required') &&
-      userForm.get('first_name')?.dirty) {
+      userForm.get('first_name')?.touched) {
       <p-message severity="error" variant="simple" size="small">{{
         "requeridInput" | translate
       }}</p-message
@@ -35,7 +35,7 @@
         class="w-full"
       />
       @if (userForm.get('last_name')?.hasError('required') &&
-      userForm.get('last_name')?.dirty) {
+      userForm.get('last_name')?.touched) {
       <p-message severity="error" variant="simple" size="small">{{
         "requeridInput" | translate
       }}</p-message
@@ -51,7 +51,7 @@
         class="w-full"
       />
       @if (userForm.get('email')?.hasError('required') &&
-      userForm.get('email')?.dirty) {
+      userForm.get('email')?.touched) {
       <p-message severity="error" variant="simple" size="small">{{
         "requeridInput" | translate
       }}</p-message
@@ -66,7 +66,7 @@
         formControlName="username"
         class="w-full"
       />@if (userForm.get('username')?.hasError('required') &&
-      userForm.get('username')?.dirty) {
+      userForm.get('username')?.touched) {
       <p-message severity="error" variant="simple" size="small">{{
         "requeridInput" | translate
       }}</p-message
@@ -84,7 +84,7 @@
         styleClass="w-full"
         formControlName="fiscal_year"
       />@if (userForm.get('fiscal_year')?.hasError('required') &&
-      userForm.get('fiscal_year')?.dirty) {
+      userForm.get('fiscal_year')?.touched) {
       <p-message severity="error" variant="simple" size="small">{{
         "requeridInput" | translate
       }}</p-message
@@ -99,7 +99,7 @@
         [feedback]="false"
         [toggleMask]="true"
       />@if (userForm.get('password')?.hasError('required') &&
-      userForm.get('password')?.dirty) {
+      userForm.get('password')?.touched) {
       <p-message severity="error" variant="simple" size="small">{{
         "requeridInput" | translate
       }}</p-message
@@ -107,15 +107,7 @@
       <label for="password">{{ "password" | translate }}</label>
     </p-floatlabel>
     }
-    <p-floatlabel
-      variant="on"
-      [ngClass]="
-        isUpdate == 'true'
-          ? 'md:col-span-1 col-span-2'
-          : 'md:col-span-2 col-span-2'
-      "
-      class="my-2"
-    >
+    <p-floatlabel variant="on" class="my-2">
       <p-select
         [options]="userTypes"
         formControlName="user_type"
@@ -123,16 +115,38 @@
         [filter]="true"
         optionValue="value"
         filterBy="label"
-        class="w-full"
+        class="w-full col-span-1"
+        (onChange)="userTypeValidation()"
       ></p-select>
       @if (userForm.get('user_type')?.hasError('required') &&
-      userForm.get('user_type')?.dirty) {
+      userForm.get('user_type')?.touched) {
       <p-message severity="error" variant="simple" size="small">{{
         "requeridInput" | translate
       }}</p-message
       >}
       <label for="user_type">{{ "user_type" | translate }}</label>
     </p-floatlabel>
+
+    @if (userForm.get('user_type')?.value == 'customer') {
+    <p-floatlabel variant="on" class="my-2">
+      <p-select
+        [options]="listOfCustomers()"
+        formControlName="customer"
+        optionLabel="name"
+        [filter]="true"
+        optionValue="id"
+        filterBy="label"
+        class="w-full"
+      ></p-select>
+      @if (userForm.get('customer')?.hasError('required') &&
+      userForm.get('customer')?.touched) {
+      <p-message severity="error" variant="simple" size="small">{{
+        "requeridInput" | translate
+      }}</p-message
+      >}
+      <label for="customer">{{ "name" | translate }}</label>
+    </p-floatlabel>
+    }
   </div>
   <div class="grid grid-cols-2">
     <p-button

@@ -54,17 +54,16 @@ export default class FiscalYearListComponent {
   stateOptions: any[] = [
     {
       label: this.languageService.layoutDir() == 'ltr' ? 'active' : 'نشط',
-      value: 'active',
+      value: 'True',
     },
     {
       label: this.languageService.layoutDir() == 'ltr' ? 'inactive' : 'غير نشط',
-      value: 'in_active',
+      value: 'False',
     },
   ];
 
   filterForm: FormGroup = this.formBuilder.group({
-    name: [''],
-    country: [''],
+    year_name: [''],
     is_active: [''],
   });
 

@@ -50,6 +50,7 @@ export default class UserFormComponent implements OnInit {
   private lookupService = inject(LookupsService);
   private location = inject(Location);
   listOfYears = signal([]);
+  listOfCustomers = signal([]);
 
   user_id = this.activeRoute.snapshot.queryParams['userId'];
   isUpdate = this.activeRoute.snapshot.queryParams['edit'];
@@ -60,6 +61,7 @@ export default class UserFormComponent implements OnInit {
   userTypes = [
     { label: 'Admin', value: 'admin' },
     { label: 'User', value: 'user' },
+    { label: 'Customer', value: 'customer' },
   ];
 
   userForm = this.formBuilder.group({
@@ -67,9 +69,10 @@ export default class UserFormComponent implements OnInit {
     last_name: [null, [Validators.required]],
     email: [null, [Validators.required]],
     username: [null, [Validators.required]],
-    user_type: [null, [Validators.required]],
-    fiscal_year: [null, [Validators.required]],
+    user_type: ['', [Validators.required]],
+    fiscal_year: [null],
     password: [null],
+    customer: [null],
   });
 
   ngOnInit(): void {
@@ -102,6 +105,29 @@ export default class UserFormComponent implements OnInit {
         })
       )
       .subscribe();
+
+    this.lookupService
+      .getListOfLookups('customers')
+      .pipe(
+        map((data: any) => {
+          this.listOfCustomers.set(data);
+        })
+      )
+      .subscribe();
+  }
+
+  userTypeValidation() {
+    if ((this, this.userForm.get('user_type')?.value == 'customer')) {
+      this.userForm.get('customer')?.setValidators([Validators.required]);
+      this.userForm.get('fiscal_year')?.setValidators([Validators.required]);
+      this.userForm.get('customer')?.updateValueAndValidity();
+      this.userForm.get('fiscal_year')?.updateValueAndValidity();
+    } else {
+      this.userForm.get('customer')?.clearValidators();
+      this.userForm.get('fiscal_year')?.clearValidators();
+      this.userForm.get('customer')?.updateValueAndValidity();
+      this.userForm.get('fiscal_year')?.updateValueAndValidity();
+    }
   }
 
   submitForm(): void {
@@ -121,16 +147,27 @@ export default class UserFormComponent implements OnInit {
           this.location.back();
         });
     } else {
-      this.apiService
-        .sendDataToServer(PROFILE_APIS.CREATE_USER(), this.userForm.value)
-        .subscribe((res) => {
-          this.showMessageService.showMessage(
-            'success',
-            'Success',
-            'User created successfully'
-          );
-          this.location.back();
-        });
+      if (this.userForm.valid) {
+        this.apiService
+          .sendDataToServer(PROFILE_APIS.CREATE_USER(), this.userForm.value)
+          .subscribe((res) => {
+            this.showMessageService.showMessage(
+              'success',
+              'Success',
+              'User created successfully'
+            );
+            this.location.back();
+          });
+      } else {
+        this.userForm.markAllAsTouched();
+        this.userForm.markAsDirty();
+        this.userForm.updateValueAndValidity();
+        this.showMessageService.showMessage(
+          'error',
+          'Error',
+          'Please fill all required fields'
+        );
+      }
     }
   }
 
