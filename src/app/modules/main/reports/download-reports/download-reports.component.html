@@ -191,16 +191,18 @@
       </ng-template>
       <ng-template #header>
         <tr>
-          @for (item of reportView.results |keyvalue; track $index) {
-          <th>{{ item.key | translate }}</th>
+          @for (obj of reportView.results[0] |keyvalue; track $index) {
+          <th>{{ obj.key | translate }}</th>
           }
         </tr>
       </ng-template>
       <ng-template #body let-item>
         <tr>
-          @for (item of reportView.results |keyvalue; track $index) {
-          <td>{{ item.value }}</td>
-          }
+          @for (item of reportView.results; track $index) { @for (obj of
+          item|keyvalue; track $index) {
+
+          <th>{{ obj.value }}</th>
+          } }
         </tr>
       </ng-template>
     </p-table>
