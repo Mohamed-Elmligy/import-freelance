@@ -42,7 +42,7 @@ export class ReportsService {
     }
   }
 
-  viewReport(api: keyof typeof reportsApis, filter: any) {
+  reportApi(api: keyof typeof reportsApis, filter: any) {
     return this.api.getDataFromServer(
       this.getApiEndpoint(api),
       { count: null, page: null },
