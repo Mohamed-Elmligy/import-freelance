@@ -60,6 +60,7 @@ export default class PaymentsListComponent {
   page: number = 1;
   filterForm: FormGroup = this.formBuilder.group({
     customer_name: [''],
+    customer_code: [''],
   });
 
   constructor() {

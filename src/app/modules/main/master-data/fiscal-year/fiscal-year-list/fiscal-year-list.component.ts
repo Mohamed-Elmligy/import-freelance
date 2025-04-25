@@ -54,11 +54,11 @@ export default class FiscalYearListComponent {
   stateOptions: any[] = [
     {
       label: this.languageService.layoutDir() == 'ltr' ? 'active' : 'نشط',
-      value: 'true',
+      value: 'True',
     },
     {
       label: this.languageService.layoutDir() == 'ltr' ? 'inactive' : 'غير نشط',
-      value: 'false',
+      value: 'False',
     },
   ];
 
