@@ -118,8 +118,6 @@ export default class DownloadReportsComponent {
   }
 
   viewReportApi(type: any) {
-    console.log(type);
-
     let notEmpityKey = Object.values(this.filterForm.value).find(
       (value) => value != null || value != undefined
     );
@@ -164,7 +162,7 @@ export default class DownloadReportsComponent {
     this.filterForm.reset();
   }
 
-  downloadReport() {
+  downloadReport(type: 'pdf' | 'excel') {
     const selectedReport = this.selectedReport();
     const customer_id = this.filterForm.get('customer_id')?.value;
     const supplier_code = this.filterForm.get('supplier_code')?.value;
@@ -175,8 +173,11 @@ export default class DownloadReportsComponent {
     }
 
     const reportApi =
-      reportsApis[selectedReport.code as keyof typeof reportsApis];
-
+      type == 'excel'
+        ? reportsApis[selectedReport.code as keyof typeof reportsApis]
+        : reportsApis[
+            ('pdf_' + selectedReport.code) as keyof typeof reportsApis
+          ];
     if (!reportApi) {
       return;
     }
@@ -237,8 +238,24 @@ export default class DownloadReportsComponent {
         params.customer_id = customer_id;
         break;
     }
-
-    this.reportService.downloadReport(reportApi, params);
+    const selectedFileName = this.reportsTypes?.find(
+      (report) => report.code === selectedReport.code
+    )?.name;
+    if (type == 'excel') {
+      this.reportService.downloadReport(
+        'excel',
+        reportApi,
+        params,
+        selectedFileName
+      );
+    } else if (type == 'pdf') {
+      this.reportService.downloadReport(
+        'pdf',
+        reportApi,
+        params,
+        selectedFileName
+      );
+    }
   }
 
   resetAll() {

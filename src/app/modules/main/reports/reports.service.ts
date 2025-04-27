@@ -17,6 +17,7 @@ export class ReportsService {
   listOfCustomers = signal<CustomerList[] | undefined>([]);
   listOfSuppliers = signal<SupplierList[] | undefined>([]);
   listOfInvoices = signal<InvoiceList[] | undefined>([]);
+  todayDate = new Date().toISOString().split('T')[0];
 
   getListOfCustomers() {
     if (this.listOfCustomers()?.length == 0) {
@@ -54,10 +55,24 @@ export class ReportsService {
     return reportsApis[key];
   }
 
-  downloadReport(type: string, filter?: any) {
-    this.api.downloadFile(type, filter).subscribe((res) => {
-      this.api.handleDownloadDocument(res, type, 'xlsx');
-    });
+  downloadReport(fileType: string, type: string, filter?: any, fileName?: any) {
+    if (fileType == 'excel') {
+      this.api.downloadFile(type, filter).subscribe((res) => {
+        this.api.handleDownloadDocument(
+          res,
+          fileName + '_' + this.todayDate,
+          'xlsx'
+        );
+      });
+    } else if (fileType == 'pdf') {
+      this.api.downloadFile(type, filter).subscribe((res) => {
+        this.api.handleDownloadDocument(
+          res,
+          fileName + '_' + this.todayDate,
+          'pdf'
+        );
+      });
+    }
   }
 }
 

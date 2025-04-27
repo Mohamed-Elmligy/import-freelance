@@ -8,7 +8,6 @@ import { environment } from '../../../../environments/environment';
 export const httpInterceptor: HttpInterceptorFn = (request, next) => {
   const translateService = inject(TranslateService);
   const baseURL = environment.baseUrl;
-  console.log('request.url', request.url);
   if (request.url.startsWith('http') || request.url.startsWith('https')) {
     // If the request URL is absolute (starts with http or https), do not modify it
     return next(request);

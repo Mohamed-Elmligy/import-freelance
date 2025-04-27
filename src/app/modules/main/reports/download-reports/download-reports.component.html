@@ -143,7 +143,7 @@
           [label]="'Download' | translate"
           icon="pi pi-download"
           class="flex-1 sm:flex-none"
-          (onClick)="downloadReport()"
+          (onClick)="downloadReport('excel')"
           [disabled]="!selectedReport()"
         ></p-button>
       </div>
@@ -183,14 +183,22 @@
       [tableStyle]="{ 'min-width': '50rem' }"
     >
       <ng-template #caption>
-        <div class="flex items-center justify-between">
+        <div class="flex items-center justify-start gap-4">
           <p-button
             [pTooltip]="'Download' | translate"
             tooltipPosition="left"
             icon="pi pi-cloud-download"
             rounded
             raised
-            (onClick)="downloadReport()"
+            (onClick)="downloadReport('excel')"
+          />
+          <p-button
+            [pTooltip]="'print' | translate"
+            tooltipPosition="left"
+            icon="pi pi-file-pdf"
+            rounded
+            raised
+            (onClick)="downloadReport('pdf')"
           />
         </div>
       </ng-template>

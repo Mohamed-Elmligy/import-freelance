@@ -91,9 +91,6 @@ export default class ShippingDataFormComponent {
   }
 
   ngOnInit() {
-    console.log(this.shippingId);
-    console.log(this.isUpdate);
-
     if (!this.shippingId && !this.isUpdate) {
       this.getUSDRateData();
       this.getCNYRateData();

@@ -1,11 +1,12 @@
 export const reportsApis = {
-  invoiceDetails: 'reports/invoice-details/download',
-  supplierReport: 'reports/supplier-report',
   customerFinancialReport: 'reports/customer-financial-report',
+  supplierReport: 'reports/supplier-report',
+  invoiceDetails: 'reports/invoice-details/download',
   totalPaymentsReport: 'reports/payments-download',
   totalExpensesReport: 'reports/expenses-download',
-  get_invoiceDetails: 'reports/invoice-details',
   get_totalExpensesReport: 'reports/expenses-view',
   get_totalPaymentsReport: 'reports/payments-view',
   get_supplierReport: 'reports/view-supplier-report',
+  get_invoiceDetails: 'reports/invoice-details',
+  pdf_invoiceDetails: 'reports/invoice-details/pdf',
 };
