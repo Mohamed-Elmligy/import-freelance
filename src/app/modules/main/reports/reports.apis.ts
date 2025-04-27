@@ -9,4 +9,5 @@ export const reportsApis = {
   get_supplierReport: 'reports/view-supplier-report',
   get_invoiceDetails: 'reports/invoice-details',
   pdf_invoiceDetails: 'reports/invoice-details/pdf',
+  pdf_supplierReport: 'reports/supplier-report/pdf',
 };
