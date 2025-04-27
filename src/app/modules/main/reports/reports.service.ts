@@ -82,8 +82,8 @@ export type reportVewType = {
 };
 
 export type totalsType = {
-  box_count: number;
   item_in_box: number;
+  box_count: number;
   item_price: number;
   total_price: number;
   total_cbm: number;

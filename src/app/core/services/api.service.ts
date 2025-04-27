@@ -109,17 +109,25 @@ export class ApiService {
   ) {
     if (!progress) return;
     const url = URL.createObjectURL(progress.message as Blob);
-    const a = document.createElement('a');
-    a.style.display = 'none';
-    a.href = url;
+    
+    if (fileType === 'pdf') {
+      // For PDFs, open in new tab
+      window.open(url, '_blank');
+    } else {
+      // For Excel files, download as before
+      const a = document.createElement('a');
+      a.style.display = 'none';
+      a.href = url;
+      a.download = `${fileName}.${fileType}`;
+      document.body.appendChild(a);
+      a.click();
+      document.body.removeChild(a);
+    }
 
-    a.download = `${fileName}.${fileType}`;
-
-    document.body.appendChild(a);
-    a.click();
-
-    window.URL.revokeObjectURL(url);
-    document.body.removeChild(a);
+    // Clean up the URL object
+    setTimeout(() => {
+      window.URL.revokeObjectURL(url);
+    }, 100);
   }
 
   downloadFile(URL: string, params?: {}) {

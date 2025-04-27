@@ -146,6 +146,13 @@
           (onClick)="downloadReport('excel')"
           [disabled]="!selectedReport()"
         ></p-button>
+        <p-button
+          [label]="'Print' | translate"
+          icon="pi pi-print"
+          class="flex-1 sm:flex-none"
+          (onClick)="downloadReport('pdf')"
+          [disabled]="!selectedReport()"
+        ></p-button>
       </div>
     </ng-template>
   </p-card>
