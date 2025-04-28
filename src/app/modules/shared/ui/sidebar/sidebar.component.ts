@@ -129,9 +129,29 @@ export class SidebarComponent {
         styleClass: 'menu-header',
         items: [
           {
-            label: 'DOWNLOAD_REPORTS',
-            icon: 'pi pi-chart-bar',
-            routerLink: this.mainRoutes.downloadReports,
+            label: 'CONTAINER_DETAILS',
+            icon: 'pi pi-box',
+            routerLink: this.mainRoutes.reports.containerDetails,
+          },
+          {
+            label: 'SUPPLIER_REPORT',
+            icon: 'pi pi-truck',
+            routerLink: this.mainRoutes.reports.supplierReport,
+          },
+          {
+            label: 'CUSTOMER_FINANCIAL_REPORT',
+            icon: 'pi pi-user',
+            routerLink: this.mainRoutes.reports.customerFinancialReport,
+          },
+          {
+            label: 'TOTAL_PAYMENTS_REPORT',
+            icon: 'pi pi-wallet',
+            routerLink: this.mainRoutes.reports.totalPaymentsReport,
+          },
+          {
+            label: 'TOTAL_EXPENSES_REPORT',
+            icon: 'pi pi-dollar',
+            routerLink: this.mainRoutes.reports.totalExpensesReport,
           },
         ],
       },

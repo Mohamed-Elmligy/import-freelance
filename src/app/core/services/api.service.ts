@@ -3,6 +3,7 @@ import { Injectable, inject } from '@angular/core';
 
 import { catchError, map } from 'rxjs/operators';
 import { throwError } from 'rxjs';
+import { MessageService } from 'primeng/api';
 
 export enum ProgressStatus {
   progress = 'progress',
@@ -14,6 +15,7 @@ export enum ProgressStatus {
 })
 export class ApiService {
   private HTTP = inject(HttpClient);
+  private messages = inject(MessageService);
 
   constructor() {}
 
