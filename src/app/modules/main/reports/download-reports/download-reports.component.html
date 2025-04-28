@@ -6,39 +6,11 @@
 
 <section class="container mx-auto px-4 py-6">
   <p-card class="max-w-4xl mx-auto shadow-lg" [styleClass]="'report-card'">
-    <!-- Report Type Selection -->
-    <ng-template #header>
-      <div class="px-4 pt-4">
-        <p-floatlabel class="w-full max-w-xs mx-auto mb-6" variant="over">
-          <p-select
-            inputId="reportType"
-            [options]="reportsTypes"
-            optionLabel="name"
-            class="w-full"
-            [(ngModel)]="selectedReport"
-            (onChange)="onReportTypeChange($event.value)"
-            [showClear]="true"
-          ></p-select>
-          <label for="reportType" class="font-semibold">
-            {{ "ReportType" | translate }}
-          </label>
-        </p-floatlabel>
-      </div>
-    </ng-template>
-
     <!-- Report Parameters Section -->
-    <ng-template #title>
-      <h2 class="text-xl font-bold text-gray-800 dark:text-gray-200">
-        {{ "ReportParameters" | translate }}
-      </h2>
-    </ng-template>
 
     <ng-template #subtitle>
       <p class="text-gray-600 dark:text-gray-400 mb-6">
-        {{
-          "After selecting a report type, please select at least one of these parameters."
-            | translate
-        }}
+        {{ "Please select at least one of these parameters." | translate }}
       </p>
     </ng-template>
 
@@ -73,18 +45,6 @@
         }}</label>
       </p-floatlabel>
 
-      <!-- <p-floatlabel class="w-full" variant="on">
-        <p-select
-          inputId="invoice"
-          [options]="reportService.listOfInvoices()"
-          optionLabel="invoice_number"
-          optionValue="id"
-          formControlName="selectedInvoice"
-          class="w-full"
-          [showClear]="true"
-        ></p-select>
-        <label for="invoice">{{ "SelectInvoice" | translate }}</label>
-      </p-floatlabel> -->
       } @case ('supplierReport') {
       <p-floatlabel class="w-full" variant="on">
         <p-select
@@ -99,7 +59,7 @@
         <label for="supplier">{{ "SelectSupplier" | translate }}</label>
       </p-floatlabel>
       } @default {
-      <!-- Handle customer-based reports -->
+
       @if ([ 'customerFinancialReport', 'totalPaymentsReport',
       'totalExpensesReport' ].includes(selectedReport()?.code || '')) {
       <p-floatlabel class="w-full" variant="over">
@@ -211,15 +171,19 @@
       </ng-template>
       <ng-template #header>
         <tr>
-          @for (obj of reportView.results[0] |keyvalue; track $index) {
-          <th>{{ obj.key | translate }}</th>
+          @if (selectedReport()) {
+            @for (column of reportColumns[selectedReport()!.code]; track $index) {
+              <th>{{ column | translate }}</th>
+            }
           }
         </tr>
       </ng-template>
       <ng-template #body let-item>
         <tr>
-          @for (item of item |keyvalue; track $index) {
-          <td>{{ item.value }}</td>
+          @if (selectedReport()) {
+            @for (column of reportColumns[selectedReport()!.code]; track $index) {
+              <td>{{ item[column] }}</td>
+            }
           }
         </tr>
       </ng-template>

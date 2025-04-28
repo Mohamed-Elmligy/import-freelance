@@ -15,6 +15,7 @@ import { Dialog } from 'primeng/dialog';
 import { TableModule } from 'primeng/table';
 import { CommonModule } from '@angular/common';
 import { TooltipModule } from 'primeng/tooltip';
+import { ActivatedRoute } from '@angular/router';
 
 @Component({
   selector: 'app-download-reports',
@@ -35,11 +36,27 @@ import { TooltipModule } from 'primeng/tooltip';
   ],
   templateUrl: './download-reports.component.html',
 })
-export default class DownloadReportsComponent {
+export default class DownloadReportsComponent implements OnInit {
   languageService = inject(LanguagesService);
   reportService = inject(ReportsService);
   showMessageService = inject(ShowMessageService);
-  private formBuilder = inject(FormBuilder);
+  private formBuilder: FormBuilder;
+  private route: ActivatedRoute;
+
+  constructor(
+    formBuilder: FormBuilder,
+    route: ActivatedRoute
+  ) {
+    this.formBuilder = formBuilder;
+    this.route = route;
+    this.filterForm = this.formBuilder.group({
+      customer_id: [null],
+      supplier_code: [null],
+      selectedInvoice: [null],
+      container_number: [null],
+    });
+    this.ngOnInit();
+  }
 
   reportsTypes: ReportType[] | undefined;
   selectedReport = signal<ReportType | undefined>(undefined);
@@ -56,20 +73,64 @@ export default class DownloadReportsComponent {
     },
   };
 
-  filterForm = this.formBuilder.group({
-    customer_id: [null],
-    supplier_code: [null],
-    selectedInvoice: [null],
-    container_number: [null],
-  });
+  reportColumns: { [K in ReportType['code']]: string[] } = {
+    invoiceDetails: [
+      'container_sequence',
+      'item_code',
+      'item_description',
+      'box_count',
+      'item_in_box',
+      'store_cbm',
+      'item_price',
+      'length',
+      'width',
+      'height',
+      'total_cbm',
+      'total_price',
+      'total_weight',
+    ],
+    supplierReport: [
+      "invoice_number",
+      "customer__name",
+      "net_amount",
+      "first_payment_amount",
+      "first_payment_date",
+      "second_payment_amount",
+      "second_payment_date",
+      "third_payment_amount",
+      "third_payment_date",
+      "balance",
+    ],
+    customerFinancialReport: [
+      "invoice_number",
+      "customer__name",
+      "net_amount",
+      "first_payment_amount",
+      "first_payment_date",
+      "second_payment_amount",
+      "second_payment_date",
+      "third_payment_amount",
+      "third_payment_date",
+      "balance"
+    ],
+    totalPaymentsReport: [
+      "customer_code",
+      "customer_name",
+      "date",
+      "amount",
+      "description",
+    ],
+    totalExpensesReport: [
+      "customer_code",
+      "customer_name",
+      "date",
+      "amount",
+      "description",
+      "container_number",
+    ]
+  };
 
-  // customer_id: CustomerList | undefined;
-
-  // supplier_code: SupplierList | undefined;
-
-  // selectedInvoice: InvoiceList | undefined;
-
-  // container_number : string | undefined;
+  filterForm: any;
 
   visible: boolean = false;
 
@@ -92,7 +153,7 @@ export default class DownloadReportsComponent {
   ngOnInit(): void {
     const translation =
       this.reportsTypesTranslation[
-        this.languageService.layoutDir() === 'rtl' ? 'ar' : 'en'
+      this.languageService.layoutDir() === 'rtl' ? 'ar' : 'en'
       ];
 
     this.reportsTypes = [
@@ -105,6 +166,16 @@ export default class DownloadReportsComponent {
       { name: translation.totalPaymentsReport, code: 'totalPaymentsReport' },
       { name: translation.totalExpensesReport, code: 'totalExpensesReport' },
     ];
+
+    // Get the report type from the route data
+    const reportType = this.route.snapshot.data['reportType'];
+    if (reportType) {
+      const selectedReport = this.reportsTypes.find(r => r.code === reportType);
+      if (selectedReport) {
+        this.selectedReport.set(selectedReport);
+        this.onReportTypeChange(selectedReport);
+      }
+    }
   }
 
   generateReport(viewReport: boolean = false) {
@@ -166,7 +237,7 @@ export default class DownloadReportsComponent {
     const selectedReport = this.selectedReport();
     const customer_id = this.filterForm.get('customer_id')?.value;
     const supplier_code = this.filterForm.get('supplier_code')?.value;
-    const container_number = this.filterForm.get('container_number ')?.value;
+    const container_number = this.filterForm.get('container_number')?.value;
 
     if (!selectedReport) {
       return;
@@ -176,8 +247,8 @@ export default class DownloadReportsComponent {
       type == 'excel'
         ? reportsApis[selectedReport.code as keyof typeof reportsApis]
         : reportsApis[
-            ('pdf_' + selectedReport.code) as keyof typeof reportsApis
-          ];
+        ('pdf_' + selectedReport.code) as keyof typeof reportsApis
+        ];
     if (!reportApi) {
       return;
     }
@@ -190,7 +261,7 @@ export default class DownloadReportsComponent {
           this.showMessageService.showMessage(
             'error',
             'Unvalid Paremeters',
-            'Please select customer or invoice'
+            'Please select customer or container number'
           );
           return;
         }
@@ -259,14 +330,19 @@ export default class DownloadReportsComponent {
   }
 
   resetAll() {
-    this.selectedReport.set(undefined);
-    this.filterForm.reset();
+    // Only reset form values without clearing the selected report type
+    this.filterForm.patchValue({
+      customer_id: null,
+      supplier_code: null,
+      selectedInvoice: null,
+      container_number: null,
+    });
   }
 }
 
 export interface ReportType {
   name: string;
-  code: string;
+  code: 'invoiceDetails' | 'supplierReport' | 'customerFinancialReport' | 'totalPaymentsReport' | 'totalExpensesReport';
 }
 
 export interface CustomerList {

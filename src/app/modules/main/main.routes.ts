@@ -152,6 +152,46 @@ const main_routes: Routes = [
       import('./profile/user/users-list/users-list.component'),
     canActivate: [noCompanyUserGuard],
   },
+  {
+    path: 'reports',
+    children: [
+      {
+        path: 'container-details',
+        loadComponent: () =>
+          import('./reports/download-reports/download-reports.component'),
+        data: { reportType: 'invoiceDetails' },
+        canActivate: [noCompanyUserGuard],
+      },
+      {
+        path: 'supplier-report',
+        loadComponent: () =>
+          import('./reports/download-reports/download-reports.component'),
+        data: { reportType: 'supplierReport' },
+        canActivate: [noCompanyUserGuard],
+      },
+      {
+        path: 'customer-financial-report',
+        loadComponent: () =>
+          import('./reports/download-reports/download-reports.component'),
+        data: { reportType: 'customerFinancialReport' },
+        canActivate: [noCompanyUserGuard],
+      },
+      {
+        path: 'total-payments-report',
+        loadComponent: () =>
+          import('./reports/download-reports/download-reports.component'),
+        data: { reportType: 'totalPaymentsReport' },
+        canActivate: [noCompanyUserGuard],
+      },
+      {
+        path: 'total-expenses-report',
+        loadComponent: () =>
+          import('./reports/download-reports/download-reports.component'),
+        data: { reportType: 'totalExpensesReport' },
+        canActivate: [noCompanyUserGuard],
+      },
+    ],
+  },
 ];
 
 export default main_routes;
@@ -181,4 +221,11 @@ export const main_routes_paths = {
   invoicesList: '/main/invoices-list',
   yearList: '/main/year-list',
   usersList: '/main/users-list',
+  reports: {
+    containerDetails: '/main/reports/container-details',
+    supplierReport: '/main/reports/supplier-report',
+    customerFinancialReport: '/main/reports/customer-financial-report',
+    totalPaymentsReport: '/main/reports/total-payments-report',
+    totalExpensesReport: '/main/reports/total-expenses-report',
+  },
 } as const;
