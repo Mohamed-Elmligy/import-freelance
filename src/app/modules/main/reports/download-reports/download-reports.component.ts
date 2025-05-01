@@ -67,9 +67,9 @@ export default class DownloadReportsComponent implements OnInit {
       box_count: 0,
       item_in_box: 0,
       item_price: 0,
-      total_price: 0,
       total_cbm: 0,
       total_weight: 0,
+      total_price: 0,
     },
   };
 
@@ -82,11 +82,13 @@ export default class DownloadReportsComponent implements OnInit {
       'item_in_box',
       'store_cbm',
       'item_price',
+      'total_price',
+      'unit_price',
+      'amount_price',
       'length',
       'width',
       'height',
       'total_cbm',
-      'total_price',
       'total_weight',
     ],
     supplierReport: [
