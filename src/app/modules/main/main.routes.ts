@@ -177,6 +177,13 @@ const main_routes: Routes = [
         canActivate: [noCompanyUserGuard],
       },
       {
+        path: 'supplier-financial-report',
+        loadComponent: () =>
+          import('./reports/download-reports/download-reports.component'),
+        data: { reportType: 'supplierFinancialReport' },
+        canActivate: [noCompanyUserGuard],
+      },
+      {
         path: 'total-payments-report',
         loadComponent: () =>
           import('./reports/download-reports/download-reports.component'),
@@ -225,6 +232,7 @@ export const main_routes_paths = {
     containerDetails: '/main/reports/container-details',
     supplierReport: '/main/reports/supplier-report',
     customerFinancialReport: '/main/reports/customer-financial-report',
+    supplierFinancialReport: '/main/reports/supplier-financial-report',
     totalPaymentsReport: '/main/reports/total-payments-report',
     totalExpensesReport: '/main/reports/total-expenses-report',
   },

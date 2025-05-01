@@ -144,6 +144,11 @@ export class SidebarComponent {
             routerLink: this.mainRoutes.reports.customerFinancialReport,
           },
           {
+            label: 'SUPPLIER_FINANCIAL_REPORT',
+            icon: 'pi pi-truck',
+            routerLink: this.mainRoutes.reports.supplierFinancialReport,
+          },
+          {
             label: 'TOTAL_PAYMENTS_REPORT',
             icon: 'pi pi-wallet',
             routerLink: this.mainRoutes.reports.totalPaymentsReport,

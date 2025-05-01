@@ -102,16 +102,11 @@ export default class DownloadReportsComponent implements OnInit {
       "balance",
     ],
     customerFinancialReport: [
-      "invoice_number",
-      "customer__name",
-      "net_amount",
-      "first_payment_amount",
-      "first_payment_date",
-      "second_payment_amount",
-      "second_payment_date",
-      "third_payment_amount",
-      "third_payment_date",
-      "balance"
+      "container",
+      "total_amount",
+      "total_commission",
+      "total_expense",
+      "total_line",
     ],
     totalPaymentsReport: [
       "customer_code",
@@ -127,7 +122,19 @@ export default class DownloadReportsComponent implements OnInit {
       "amount",
       "description",
       "container_number",
-    ]
+    ],
+    supplierFinancialReport: [
+      "invoice_number",
+      "customer_name",
+      "net_amount",
+      "first_payment_amount",
+      "first_payment_date",
+      "second_payment_amount",
+      "second_payment_date",
+      "third_payment_amount",
+      "third_payment_date",
+      "balance",
+    ],
   };
 
   filterForm: any;
@@ -141,13 +148,15 @@ export default class DownloadReportsComponent implements OnInit {
       customerFinancialReport: 'Customer Financial Report',
       totalPaymentsReport: 'Total Payments Report',
       totalExpensesReport: 'Total Expenses Report',
+      supplierFinancialReport: 'Supplier Financial Report',
     },
     ar: {
       containerDetails: 'تقرير شراء الحاوية',
       supplierReport: 'تقرير مالي للمورد',
-      customerFinancialReport: 'تقرير مالى للعميل',
-      totalPaymentsReport: 'تقرير الدفعات',
-      totalExpensesReport: 'تقرير المصاريف',
+      customerFinancialReport: 'تقرير مالي للعميل',
+      totalPaymentsReport: 'تقرير إجمالي المدفوعات',
+      totalExpensesReport: 'تقرير إجمالي المصروفات',
+      supplierFinancialReport: 'تقرير مالي للمورد',
     },
   };
   ngOnInit(): void {
@@ -165,6 +174,7 @@ export default class DownloadReportsComponent implements OnInit {
       },
       { name: translation.totalPaymentsReport, code: 'totalPaymentsReport' },
       { name: translation.totalExpensesReport, code: 'totalExpensesReport' },
+      { name: translation.supplierFinancialReport, code: 'supplierFinancialReport' },
     ];
 
     // Get the report type from the route data
@@ -221,7 +231,9 @@ export default class DownloadReportsComponent implements OnInit {
         break;
 
       case 'supplierReport':
+      case 'supplierFinancialReport':
         this.reportService.getListOfSuppliers();
+        this.reportService.getListOfCustomers();
         break;
 
       case 'customerFinancialReport':
@@ -289,6 +301,16 @@ export default class DownloadReportsComponent implements OnInit {
         params.supplier_code = supplier_code;
         break;
 
+      case 'supplierFinancialReport':
+        // Both fields are optional, so no validation needed
+        if (supplier_code) {
+          params.supplier_id = supplier_code;
+        }
+        if (customer_id) {
+          params.customer_id = customer_id;
+        }
+        break;
+
       case 'customerFinancialReport':
         if (!customer_id) {
           this.showMessageService.showMessage(
@@ -342,7 +364,7 @@ export default class DownloadReportsComponent implements OnInit {
 
 export interface ReportType {
   name: string;
-  code: 'invoiceDetails' | 'supplierReport' | 'customerFinancialReport' | 'totalPaymentsReport' | 'totalExpensesReport';
+  code: 'invoiceDetails' | 'supplierReport' | 'customerFinancialReport' | 'totalPaymentsReport' | 'totalExpensesReport' | 'supplierFinancialReport';
 }
 
 export interface CustomerList {
