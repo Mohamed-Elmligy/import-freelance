@@ -29,6 +29,7 @@ import { TableModule } from 'primeng/table';
 import { SkeletonModule } from 'primeng/skeleton';
 import { SelectButtonModule } from 'primeng/selectbutton';
 import { LanguagesService } from '../../../../shared/services/languages.service';
+import { UserPermissionService } from '../../../../../services/user-permission.service';
 
 @Component({
   selector: 'app-users-list',
@@ -62,7 +63,7 @@ export default class UsersListComponent implements OnInit {
   private showMessageService = inject(ShowMessageService);
   private confirmService = inject(ConfirmSaveDeleteService);
   private languageService = inject(LanguagesService);
-
+  userPermissionService = inject(UserPermissionService);
   visible: boolean = false;
   userId: string = '';
 
@@ -99,7 +100,13 @@ export default class UsersListComponent implements OnInit {
   ];
 
   ngOnInit(): void {
-    this.usersList = ['first_name', 'last_name', 'email', 'user_type', 'fiscal_year'];
+    this.usersList = [
+      'first_name',
+      'last_name',
+      'email',
+      'user_type',
+      'fiscal_year',
+    ];
     this.getUsersList();
   }
 

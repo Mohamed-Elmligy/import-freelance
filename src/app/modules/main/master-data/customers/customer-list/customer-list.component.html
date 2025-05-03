@@ -36,6 +36,8 @@
         class="!bg-primary !border-primary me-2"
         (click)="applayFilter()"
       ></button>
+      @if(userPernissions.userPermissions()?.permissions?.customers?.includes('create_customers'))
+      {
       <button
         pButton
         pRipple
@@ -44,6 +46,7 @@
         class="!bg-secondary !border-secondary"
         [routerLink]="main_routes.customers"
       ></button>
+      }
     </ng-template>
   </p-toolbar>
 
@@ -80,6 +83,9 @@
         <td>{{ rowData[col] }}</td>
         }
         <td>
+          @if
+          (userPernissions.userPermissions()?.permissions?.customers?.includes('view_customers'))
+          {
           <p-button
             icon="pi pi-eye"
             [rounded]="true"
@@ -89,6 +95,10 @@
             (click)="viewCustomer(rowData.id)"
             severity="success"
           ></p-button>
+          } @if
+          (userPernissions.userPermissions()?.permissions?.customers?.includes('edit_customers'))
+          {
+
           <p-button
             icon="pi pi-pencil"
             [rounded]="true"
@@ -98,6 +108,9 @@
             tooltipPosition="top"
             (click)="editCustomer(rowData.id)"
           ></p-button>
+          } @if
+          (userPernissions.userPermissions()?.permissions?.customers?.includes('delete_customers'))
+          {
           <p-button
             icon="pi pi-trash"
             [rounded]="true"
@@ -106,7 +119,8 @@
             tooltipPosition="top"
             (click)="deleteCustomer(rowData.id)"
             severity="danger"
-          ></p-button>
+          ></p-button
+          >}
         </td>
       </tr>
     </ng-template>

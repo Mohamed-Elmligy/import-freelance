@@ -97,8 +97,8 @@
         }
         <td>
           @if
-          (userPermissionService.userPermissions()?.permissions?.invoices?.includes('edit_invoices'))
-          { }
+          (userPermissionService.userPermissions()?.permissions?.invoices?.includes('view_invoices'))
+          {
           <p-button
             icon="pi pi-eye"
             [rounded]="true"
@@ -109,8 +109,8 @@
             severity="success"
             class="mx-1"
           ></p-button>
-          @if
-          (userPermissionService.userPermissions()?.permissions?.invoices?.includes('view_invoices'))
+          } @if
+          (userPermissionService.userPermissions()?.permissions?.invoices?.includes('edit_invoices'))
           {
           <p-button
             icon="pi pi-pencil"

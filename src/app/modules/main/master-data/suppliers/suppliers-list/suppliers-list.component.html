@@ -41,6 +41,9 @@
         class="!bg-primary !border-primary me-2"
         (click)="applayFilter()"
       ></button>
+      @if
+      (userPermissionService.userPermissions()?.permissions?.suppliers?.includes('create_suppliers'))
+      {
       <button
         pButton
         pRipple
@@ -48,7 +51,8 @@
         icon="pi pi-plus"
         class="!bg-secondary !border-secondary"
         [routerLink]="main_routes.suppliers"
-      ></button>
+      ></button
+      >}
     </ng-template>
   </p-toolbar>
 
@@ -83,6 +87,9 @@
         <td>{{ element[col] }}</td>
         }
         <td>
+          @if
+          (userPermissionService.userPermissions()?.permissions?.suppliers?.includes('view_suppliers'))
+          {
           <p-button
             icon="pi pi-eye"
             [rounded]="true"
@@ -91,7 +98,10 @@
             tooltipPosition="top"
             (click)="viewSupplier(element.id)"
             severity="success"
-          ></p-button>
+          ></p-button
+          >} @if
+          (userPermissionService.userPermissions()?.permissions?.suppliers?.includes('edit_suppliers'))
+          {
           <p-button
             icon="pi pi-pencil"
             [rounded]="true"
@@ -100,7 +110,10 @@
             pTooltip="Edit"
             tooltipPosition="top"
             (click)="editSupplier(element.id)"
-          ></p-button>
+          ></p-button
+          >} @if
+          (userPermissionService.userPermissions()?.permissions?.suppliers?.includes('delete_suppliers'))
+          {
           <p-button
             icon="pi pi-trash"
             [rounded]="true"
@@ -109,7 +122,8 @@
             tooltipPosition="top"
             (click)="deleteSupplier(element.id)"
             severity="danger"
-          ></p-button>
+          ></p-button
+          >}
         </td>
       </tr>
     </ng-template>

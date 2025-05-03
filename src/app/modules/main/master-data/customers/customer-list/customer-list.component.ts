@@ -21,6 +21,7 @@ import { LanguagesService } from '../../../../shared/services/languages.service'
 import { main_routes_paths } from '../../../main.routes';
 import { CustomersService } from '../customers.service';
 import { Skeleton } from 'primeng/skeleton';
+import { UserPermissionService } from '../../../../../services/user-permission.service';
 
 @Component({
   selector: 'app-customer-list',
@@ -46,6 +47,7 @@ import { Skeleton } from 'primeng/skeleton';
 export default class CustomerListComponent {
   languageService = inject(LanguagesService);
   customerService = inject(CustomersService);
+  userPernissions = inject(UserPermissionService);
   private router = inject(Router);
   private formBuilder = inject(FormBuilder);
   dataSource: any[] = [];

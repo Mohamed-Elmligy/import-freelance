@@ -21,6 +21,7 @@ import { ToolbarModule, Toolbar } from 'primeng/toolbar';
 import { TooltipModule } from 'primeng/tooltip';
 import { TableModule } from 'primeng/table';
 import { SkeletonModule } from 'primeng/skeleton';
+import { UserPermissionService } from '../../../../../services/user-permission.service';
 
 @Component({
   selector: 'app-shipping-data-list',
@@ -47,6 +48,7 @@ export default class ShippingDataListComponent {
   private shippingDataService = inject(ShippingDataService);
   private formBuilder = inject(FormBuilder);
   private router = inject(Router);
+  userPermissionService = inject(UserPermissionService);
 
   dataSource: any[] = [];
   main_routes = main_routes_paths;

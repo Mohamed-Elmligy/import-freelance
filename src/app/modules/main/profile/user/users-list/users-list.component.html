@@ -49,6 +49,9 @@
         class="!bg-primary !border-primary me-2"
         (click)="applayFilter()"
       ></button>
+      @if
+      (userPermissionService.userPermissions()?.permissions?.accounts?.includes('create_account'))
+      {
       <button
         pButton
         pRipple
@@ -56,7 +59,8 @@
         icon="pi pi-plus"
         class="!bg-secondary !border-secondary"
         (click)="createUser()"
-      ></button>
+      ></button
+      >}
     </ng-template>
   </p-toolbar>
 
@@ -93,6 +97,10 @@
         <td>{{ rowData[col] }}</td>
         }
         <td>
+          @if
+          (userPermissionService.userPermissions()?.permissions?.accounts?.includes('view_account'))
+          {
+
           <p-button
             icon="pi pi-eye"
             [rounded]="true"
@@ -101,7 +109,11 @@
             tooltipPosition="top"
             (click)="viewUser(rowData.id)"
             severity="success"
-          ></p-button>
+          ></p-button
+          >} @if
+          (userPermissionService.userPermissions()?.permissions?.accounts?.includes('edit_account'))
+          {
+
           <p-button
             icon="pi pi-pencil"
             [rounded]="true"
@@ -110,7 +122,11 @@
             pTooltip="Edit"
             tooltipPosition="top"
             (click)="editUser(rowData.id)"
-          ></p-button>
+          ></p-button
+          >} @if
+          (userPermissionService.userPermissions()?.permissions?.accounts?.includes('edit_account'))
+          {
+
           <p-button
             (click)="showDialog(rowData.id)"
             icon="pi pi-key"
@@ -119,7 +135,11 @@
             pTooltip="Reset Password"
             tooltipPosition="top"
             severity="secondary"
-          ></p-button>
+          ></p-button
+          >} @if
+          (userPermissionService.userPermissions()?.permissions?.accounts?.includes('delete_account'))
+          {
+
           <p-button
             icon="pi pi-trash"
             [rounded]="true"
@@ -128,7 +148,8 @@
             tooltipPosition="top"
             (click)="deleteUser(rowData.id)"
             severity="danger"
-          ></p-button>
+          ></p-button
+          >}
         </td>
       </tr>
     </ng-template>

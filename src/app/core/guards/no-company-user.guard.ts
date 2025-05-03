@@ -13,7 +13,7 @@ export const noCompanyUserGuard: CanActivateFn = (route, state) => {
     'local',
     'jwtToken'
   ).company;
-
+ 
   if (!UserHaveCompany) {
     showMessageService.showMessage(
       'warn',

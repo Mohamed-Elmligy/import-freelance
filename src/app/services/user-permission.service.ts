@@ -56,7 +56,7 @@ export type UserPermissions = {
 //       "create_expenses",
 //       "edit_expenses",
 //       "delete_expenses"
-//     ],
+//     ], 
 //     "customers": [
 //       "view_customers",
 //       "create_customers",

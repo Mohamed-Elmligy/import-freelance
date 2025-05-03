@@ -36,6 +36,9 @@
         class="!bg-primary !border-primary me-2"
         (click)="applayFilter()"
       ></button>
+      @if
+      (userPermissionService.userPermissions()?.permissions?.transactions?.includes('create_transactions'))
+      {
       <button
         pButton
         pRipple
@@ -43,7 +46,8 @@
         icon="pi pi-plus"
         class="!bg-secondary !border-secondary"
         [routerLink]="main_routes.transactions"
-      ></button>
+      ></button
+      >}
     </ng-template>
   </p-toolbar>
 
@@ -83,6 +87,10 @@
         <td>{{ rowData[col] }}</td>
         }
         <td>
+          @if
+          (userPermissionService.userPermissions()?.permissions?.transactions?.includes('view_transactions'))
+          {
+
           <p-button
             icon="pi pi-eye"
             [rounded]="true"
@@ -91,7 +99,11 @@
             tooltipPosition="top"
             (click)="viewTransaction(rowData.id)"
             severity="success"
-          ></p-button>
+          ></p-button
+          >} @if
+          (userPermissionService.userPermissions()?.permissions?.transactions?.includes('edit_transactions'))
+          {
+
           <p-button
             icon="pi pi-pencil"
             [rounded]="true"
@@ -100,7 +112,11 @@
             pTooltip="Edit"
             tooltipPosition="top"
             (click)="editTransaction(rowData.id)"
-          ></p-button>
+          ></p-button
+          >} @if
+          (userPermissionService.userPermissions()?.permissions?.transactions?.includes('delete_transactions'))
+          {
+
           <p-button
             icon="pi pi-trash"
             [rounded]="true"
@@ -109,7 +125,8 @@
             tooltipPosition="top"
             (click)="deleteTransaction(rowData.id)"
             severity="danger"
-          ></p-button>
+          ></p-button
+          >}
         </td>
       </tr>
     </ng-template>

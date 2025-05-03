@@ -15,6 +15,7 @@ import { main_routes_paths } from '../../../main.routes';
 import { RepaymentService } from '../repayment.service';
 import { Skeleton } from 'primeng/skeleton';
 import { FormBuilder, FormGroup, ReactiveFormsModule } from '@angular/forms';
+import { UserPermissionService } from '../../../../../services/user-permission.service';
 
 @Component({
   selector: 'app-repayments-list',
@@ -41,6 +42,7 @@ export default class RepaymentsListComponent {
   securityService = inject(SecurityService);
   private router = inject(Router);
   private formBuilder = inject(FormBuilder);
+  userPermissionService = inject(UserPermissionService);
 
   dataSource: any[] = [];
   main_routes = main_routes_paths;

@@ -58,6 +58,9 @@
         class="!bg-primary !border-primary me-2"
         (click)="applayFilter()"
       ></button>
+      @if
+      (userPermissionService.userPermissions()?.permissions?.shipments?.includes('create_shipments'))
+      {
       <button
         pButton
         pRipple
@@ -65,7 +68,8 @@
         icon="pi pi-plus"
         class="!bg-secondary !border-secondary"
         [routerLink]="main_routes.shippingData"
-      ></button>
+      ></button
+      >}
     </ng-template>
   </p-toolbar>
 
@@ -104,6 +108,10 @@
         <td>{{ element[col] }}</td>
         }
         <td>
+          @if
+          (userPermissionService.userPermissions()?.permissions?.shipments?.includes('view_shipments'))
+          {
+
           <p-button
             icon="pi pi-eye"
             [rounded]="true"
@@ -112,7 +120,11 @@
             tooltipPosition="top"
             (click)="viewShipping(element.id)"
             severity="success"
-          ></p-button>
+          ></p-button
+          >} @if
+          (userPermissionService.userPermissions()?.permissions?.shipments?.includes('edit_shipments'))
+          {
+
           <p-button
             icon="pi pi-pencil"
             [rounded]="true"
@@ -121,7 +133,11 @@
             pTooltip="Edit"
             tooltipPosition="top"
             (click)="editShipping(element.id)"
-          ></p-button>
+          ></p-button
+          >} @if
+          (userPermissionService.userPermissions()?.permissions?.shipments?.includes('delete_shipments'))
+          {
+
           <p-button
             icon="pi pi-trash"
             [rounded]="true"
@@ -131,6 +147,7 @@
             (click)="deleteShipping(element.id)"
             severity="danger"
           ></p-button>
+          }
         </td>
       </tr>
     </ng-template>

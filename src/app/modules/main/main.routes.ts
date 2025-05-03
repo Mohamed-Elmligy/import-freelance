@@ -1,5 +1,33 @@
 import { Routes } from '@angular/router';
 import { noCompanyUserGuard } from '../../core/guards/no-company-user.guard';
+import {
+  customersEditPermissionsGuard,
+  customersListPermissionsGuard,
+} from '../../core/guards/customers-permissions.guard';
+import {
+  suppliersEditPermissionsGuard,
+  suppliersListPermissionsGuard,
+} from '../../core/guards/suppliers-permissions.guard';
+import {
+  expensesEditPermissionsGuard,
+  expensesListPermissionsGuard,
+} from '../../core/guards/expense-permissions.guard';
+import {
+  transactionsEditPermissionsGuard,
+  transactionsListPermissionsGuard,
+} from '../../core/guards/transactions-permissions.guard';
+import {
+  shipmentsEditPermissionsGuard,
+  shipmentsListPermissionsGuard,
+} from '../../core/guards/shipments-permissions.guard';
+import {
+  invoicesEditPermissionsGuard,
+  invoicesListPermissionsGuard,
+} from '../../core/guards/invoices-permissions.guard';
+import {
+  accountsEditPermissionsGuard,
+  accountsListPermissionsGuard,
+} from '../../core/guards/accounts-permissions.guard';
 
 const main_routes: Routes = [
   { path: '', redirectTo: 'home', pathMatch: 'full' },
@@ -12,13 +40,13 @@ const main_routes: Routes = [
     path: 'customers-list',
     loadComponent: () =>
       import('./master-data/customers/customer-list/customer-list.component'),
-    canActivate: [noCompanyUserGuard],
+    canActivate: [noCompanyUserGuard, customersListPermissionsGuard],
   },
   {
     path: 'suppliers-list',
     loadComponent: () =>
       import('./master-data/suppliers/suppliers-list/suppliers-list.component'),
-    canActivate: [noCompanyUserGuard],
+    canActivate: [noCompanyUserGuard, suppliersListPermissionsGuard],
   },
   {
     path: 'items-category-list',
@@ -38,7 +66,7 @@ const main_routes: Routes = [
     path: 'expenses-list',
     loadComponent: () =>
       import('./master-data/expense/expense-list/expense-list.component'),
-    canActivate: [noCompanyUserGuard],
+    canActivate: [noCompanyUserGuard, expensesListPermissionsGuard],
   },
   {
     path: 'transactions-list',
@@ -46,7 +74,7 @@ const main_routes: Routes = [
       import(
         './master-data/repayments-form/repayments-list/repayments-list.component'
       ),
-    canActivate: [noCompanyUserGuard],
+    canActivate: [noCompanyUserGuard, transactionsListPermissionsGuard],
   },
   {
     path: 'shipping-data-list',
@@ -54,7 +82,7 @@ const main_routes: Routes = [
       import(
         './master-data/shipping-data-form/shipping-data-list/shipping-data-list.component'
       ),
-    canActivate: [noCompanyUserGuard],
+    canActivate: [noCompanyUserGuard, shipmentsListPermissionsGuard],
   },
   {
     path: 'year-list',
@@ -68,29 +96,29 @@ const main_routes: Routes = [
     path: 'invoices-list',
     loadComponent: () =>
       import('./invoice/invoices-list/invoices-list.component'),
-    canActivate: [noCompanyUserGuard],
+    canActivate: [noCompanyUserGuard, invoicesListPermissionsGuard],
   },
   {
     path: 'user-data',
     loadComponent: () => import('./profile/user/user-data/user-data.component'),
-    canActivate: [noCompanyUserGuard],
+    canActivate: [noCompanyUserGuard, accountsListPermissionsGuard],
   },
   {
     path: 'user-form',
     loadComponent: () => import('./profile/user/user-form/user-form.component'),
-    canActivate: [noCompanyUserGuard],
+    canActivate: [noCompanyUserGuard, accountsEditPermissionsGuard],
   },
   {
     path: 'customers',
     loadComponent: () =>
       import('./master-data/customers/customer-form/customers.component'),
-    canActivate: [noCompanyUserGuard],
+    canActivate: [noCompanyUserGuard, customersEditPermissionsGuard],
   },
   {
     path: 'suppliers',
     loadComponent: () =>
       import('./master-data/suppliers/suppliers-form/suppliers.component'),
-    canActivate: [noCompanyUserGuard],
+    canActivate: [noCompanyUserGuard, suppliersEditPermissionsGuard],
   },
   {
     path: 'items-category',
@@ -108,19 +136,19 @@ const main_routes: Routes = [
     path: 'expenses',
     loadComponent: () =>
       import('./master-data/expense/expense-form/expense-form.component'),
-    canActivate: [noCompanyUserGuard],
+    canActivate: [noCompanyUserGuard, expensesEditPermissionsGuard],
   },
   {
     path: 'transactions',
     loadComponent: () =>
       import('./master-data/repayments-form/repayments-form.component'),
-    canActivate: [noCompanyUserGuard],
+    canActivate: [noCompanyUserGuard, transactionsEditPermissionsGuard],
   },
   {
     path: 'shipping-data',
     loadComponent: () =>
       import('./master-data/shipping-data-form/shipping-data-form.component'),
-    canActivate: [noCompanyUserGuard],
+    canActivate: [noCompanyUserGuard, shipmentsEditPermissionsGuard],
   },
   {
     path: 'year',
@@ -134,7 +162,7 @@ const main_routes: Routes = [
     path: 'invoices',
     loadComponent: () =>
       import('./invoice/create-invoice/create-invoice.component'),
-    canActivate: [noCompanyUserGuard],
+    canActivate: [noCompanyUserGuard, invoicesEditPermissionsGuard],
   },
   {
     path: 'download-reports',
@@ -150,7 +178,7 @@ const main_routes: Routes = [
     path: 'users-list',
     loadComponent: () =>
       import('./profile/user/users-list/users-list.component'),
-    canActivate: [noCompanyUserGuard],
+    canActivate: [noCompanyUserGuard, accountsListPermissionsGuard],
   },
   {
     path: 'reports',

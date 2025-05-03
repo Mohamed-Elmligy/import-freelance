@@ -20,6 +20,7 @@ import { LanguagesService } from '../../../../shared/services/languages.service'
 import { main_routes_paths } from '../../../main.routes';
 import { ExpenseService } from '../expense.service';
 import { Skeleton } from 'primeng/skeleton';
+import { UserPermissionService } from '../../../../../services/user-permission.service';
 
 @Component({
   selector: 'app-expense-list',
@@ -46,7 +47,7 @@ export default class ExpenseListComponent {
   ExpenseService = inject(ExpenseService);
   private router = inject(Router);
   private formBuilder = inject(FormBuilder);
-
+  userPermissionService = inject(UserPermissionService);
   dataSource: any[] = [];
 
   main_routes = main_routes_paths;

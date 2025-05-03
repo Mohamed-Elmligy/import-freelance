@@ -22,6 +22,7 @@ import { LanguagesService } from '../../../../shared/services/languages.service'
 import { main_routes_paths } from '../../../main.routes';
 import { SuppliersService } from '../suppliers.service';
 import { SkeletonModule } from 'primeng/skeleton';
+import { UserPermissionService } from '../../../../../services/user-permission.service';
 
 @Component({
   selector: 'app-suppliers-list',
@@ -48,6 +49,7 @@ export default class SuppliersListComponent {
   SupplierService = inject(SuppliersService);
   private router = inject(Router);
   private formBuilder = inject(FormBuilder);
+  userPermissionService = inject(UserPermissionService);
 
   dataSource: any[] = [];
 
