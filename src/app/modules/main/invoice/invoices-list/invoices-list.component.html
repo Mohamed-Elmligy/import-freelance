@@ -46,6 +46,9 @@
         class="!bg-primary !border-primary me-2"
         (click)="applayFilter()"
       ></button>
+      @if
+      (userPermissionService.userPermissions()?.permissions?.invoices?.includes('create_invoices'))
+      {
       <button
         pButton
         pRipple
@@ -54,6 +57,7 @@
         class="!bg-secondary !border-secondary"
         [routerLink]="main_routes.invoices"
       ></button>
+      }
     </ng-template>
   </p-toolbar>
 
@@ -92,6 +96,9 @@
         </td>
         }
         <td>
+          @if
+          (userPermissionService.userPermissions()?.permissions?.invoices?.includes('edit_invoices'))
+          { }
           <p-button
             icon="pi pi-eye"
             [rounded]="true"
@@ -102,6 +109,9 @@
             severity="success"
             class="mx-1"
           ></p-button>
+          @if
+          (userPermissionService.userPermissions()?.permissions?.invoices?.includes('view_invoices'))
+          {
           <p-button
             icon="pi pi-pencil"
             [rounded]="true"
@@ -112,6 +122,9 @@
             (click)="editInvoice(rowData.id)"
             class="mx-1"
           ></p-button>
+          } @if
+          (userPermissionService.userPermissions()?.permissions?.invoices?.includes('delete_invoices'))
+          {
           <p-button
             icon="pi pi-trash"
             [rounded]="true"
@@ -122,6 +135,8 @@
             severity="danger"
             class="mx-1"
           ></p-button>
+
+          }
         </td>
       </tr>
     </ng-template>

@@ -5,7 +5,6 @@ import { LanguagesService } from './modules/shared/services/languages.service';
 import { Toast } from 'primeng/toast';
 import { ConfirmDialog } from 'primeng/confirmdialog';
 import { ProgressSpinnerModule } from 'primeng/progressspinner';
-import { SpinnerService } from './services/spinner.service';
 
 @Component({
   selector: 'app-root',
@@ -22,9 +21,6 @@ import { SpinnerService } from './services/spinner.service';
       <p-toast [position]="tostDir" />
       <p-confirmdialog />
       <router-outlet />
-      @if ( spinnerService.isLoading() ) {
-      <p-progress-spinner ariaLabel="loading" class="global-spinner" />
-      }
     </div>
   `,
   styles: `
@@ -41,10 +37,6 @@ export class AppComponent {
   title = 'shipMaster';
   languageService = inject(LanguagesService);
   tostDir: any;
-  constructor(
-    public spinnerService: SpinnerService,
-    public injector: EnvironmentInjector
-  ) {}
   ngOnInit() {
     this.languageService.initLanguage();
     this.languageService.getDefaultLanguage();

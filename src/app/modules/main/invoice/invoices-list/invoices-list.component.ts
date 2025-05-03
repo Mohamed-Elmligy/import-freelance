@@ -20,6 +20,7 @@ import { LanguagesService } from '../../../shared/services/languages.service';
 import { main_routes_paths } from '../../main.routes';
 import { InvoiceService } from '../invoice.service';
 import { SkeletonModule } from 'primeng/skeleton';
+import { UserPermissionService } from '../../../../services/user-permission.service';
 
 @Component({
   selector: 'app-invoices-list',
@@ -45,6 +46,7 @@ export default class InvoicesListComponent {
   invoiceService = inject(InvoiceService);
   private router = inject(Router);
   private formBuilder = inject(FormBuilder);
+  public userPermissionService = inject(UserPermissionService);
 
   dataSource: any[] = []; // Changed to a simple array
   main_routes = main_routes_paths;

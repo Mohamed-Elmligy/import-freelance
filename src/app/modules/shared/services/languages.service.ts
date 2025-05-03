@@ -10,6 +10,9 @@ export class LanguagesService {
   private apiService = inject(ApiService);
 
   defaultLanguage = signal<string>('ar');
+  tostDir = signal<any>(
+    this.defaultLanguage() == 'en' ? 'top-right' : 'top-left'
+  );
 
   layoutDir = signal<any>(this.defaultLanguage() == 'en' ? 'ltr' : 'rtl');
 
