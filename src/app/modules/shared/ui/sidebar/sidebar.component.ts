@@ -1,4 +1,4 @@
-import { Component, inject, signal } from '@angular/core';
+import { Component, effect, inject, signal } from '@angular/core';
 import { MenuItem } from 'primeng/api';
 import { MenuModule } from 'primeng/menu';
 import { BadgeModule } from 'primeng/badge';
@@ -41,8 +41,6 @@ export class SidebarComponent {
   userPermissions = signal<UserPermissions | null>(null);
 
   ngOnInit() {
-    this.initializeMenu();
-    this.handleNavigation();
     this.callUserPermission();
   }
 
@@ -51,14 +49,8 @@ export class SidebarComponent {
       next: (response) => {
         this.userPermissions.set(response);
         this.userPermissionService.userPermissions.set(response);
-        console.log(
-          this.userPermissions()?.permissions.customers.includes(
-            'view_customers'
-          )
-        );
-      },
-      error: (error) => {
-        console.error('Error fetching user permissions:', error);
+        this.initializeMenu();
+        this.handleNavigation();
       },
     });
   }
@@ -92,18 +84,22 @@ export class SidebarComponent {
             icon: 'pi pi-users',
             routerLink: this.mainRoutes.customersList,
             visible:
-              this.userPermissions()?.permissions.customers.includes(
+              this.userPermissions()?.permissions?.customers?.includes(
                 'view_customers'
-              ),
+              ) == undefined
+                ? false
+                : true,
           },
           {
             label: 'SUPPLIERS',
             icon: 'pi pi-truck',
             routerLink: this.mainRoutes.suppliersList,
             visible:
-              this.userPermissions()?.permissions.suppliers.includes(
+              this.userPermissions()?.permissions?.suppliers?.includes(
                 'view_suppliers'
-              ),
+              ) == undefined
+                ? false
+                : true,
           },
           {
             label: 'ITEMS_CATEGORY',
@@ -116,9 +112,11 @@ export class SidebarComponent {
             icon: 'pi pi-truck',
             routerLink: this.mainRoutes.shippingDataList,
             visible:
-              this.userPermissions()?.permissions.shipments.includes(
+              this.userPermissions()?.permissions?.shipments?.includes(
                 'view_shipping_data'
-              ),
+              ) == undefined
+                ? false
+                : true,
           },
           {
             label: 'FISCAL_YEARS',
@@ -138,9 +136,11 @@ export class SidebarComponent {
             icon: 'pi pi-credit-card',
             routerLink: this.mainRoutes.transactionsList,
             visible:
-              this.userPermissions()?.permissions.transactions.includes(
+              this.userPermissions()?.permissions?.transactions?.includes(
                 'view_transactions'
-              ),
+              ) == undefined
+                ? false
+                : true,
           },
           {
             label: 'PAYMENTS',
@@ -153,9 +153,11 @@ export class SidebarComponent {
             icon: 'pi pi-dollar',
             routerLink: this.mainRoutes.expensesList,
             visible:
-              this.userPermissions()?.permissions.expenses.includes(
+              this.userPermissions()?.permissions?.expenses?.includes(
                 'view_expenses'
-              ),
+              ) == undefined
+                ? false
+                : true,
           },
         ],
       },
@@ -169,9 +171,11 @@ export class SidebarComponent {
             icon: 'pi pi-list',
             routerLink: this.mainRoutes.invoicesList,
             visible:
-              this.userPermissions()?.permissions.invoices.includes(
+              this.userPermissions()?.permissions?.invoices?.includes(
                 'view_invoices'
-              ),
+              ) == undefined
+                ? false
+                : true,
           },
         ],
       },
@@ -180,13 +184,15 @@ export class SidebarComponent {
         icon: 'pi pi-chart-bar',
         styleClass: 'menu-header',
         visible:
-          this.userPermissions()?.permissions.reports.includes('view_reports'),
+          this.userPermissions()?.permissions?.reports?.includes(
+            'view_reports'
+          ),
         items: [
           {
             label: 'CONTAINER_DETAILS',
             icon: 'pi pi-box',
             routerLink: this.mainRoutes.reports.containerDetails,
-            visible: this.userPermissions()?.permissions.reports.includes(
+            visible: this.userPermissions()?.permissions?.reports?.includes(
               'view_customer_reports'
             ),
           },
@@ -194,7 +200,7 @@ export class SidebarComponent {
             label: 'SUPPLIER_REPORT',
             icon: 'pi pi-truck',
             routerLink: this.mainRoutes.reports.supplierReport,
-            visible: this.userPermissions()?.permissions.reports.includes(
+            visible: this.userPermissions()?.permissions?.reports?.includes(
               'view_supplier_reports'
             ),
           },
@@ -202,7 +208,7 @@ export class SidebarComponent {
             label: 'CUSTOMER_FINANCIAL_REPORT',
             icon: 'pi pi-user',
             routerLink: this.mainRoutes.reports.customerFinancialReport,
-            visible: this.userPermissions()?.permissions.reports.includes(
+            visible: this.userPermissions()?.permissions?.reports?.includes(
               'view_customer_reports'
             ),
           },
@@ -210,7 +216,7 @@ export class SidebarComponent {
             label: 'SUPPLIER_FINANCIAL_REPORT',
             icon: 'pi pi-truck',
             routerLink: this.mainRoutes.reports.supplierFinancialReport,
-            visible: this.userPermissions()?.permissions.reports.includes(
+            visible: this.userPermissions()?.permissions?.reports?.includes(
               'view_supplier_reports'
             ),
           },
@@ -218,7 +224,7 @@ export class SidebarComponent {
             label: 'TOTAL_PAYMENTS_REPORT',
             icon: 'pi pi-wallet',
             routerLink: this.mainRoutes.reports.totalPaymentsReport,
-            visible: this.userPermissions()?.permissions.reports.includes(
+            visible: this.userPermissions()?.permissions?.reports?.includes(
               'view_payment_reports'
             ),
           },
@@ -226,7 +232,7 @@ export class SidebarComponent {
             label: 'TOTAL_EXPENSES_REPORT',
             icon: 'pi pi-dollar',
             routerLink: this.mainRoutes.reports.totalExpensesReport,
-            visible: this.userPermissions()?.permissions.reports.includes(
+            visible: this.userPermissions()?.permissions?.reports?.includes(
               'view_expenses_reports'
             ),
           },
@@ -248,9 +254,11 @@ export class SidebarComponent {
             icon: 'pi pi-users',
             routerLink: this.mainRoutes.usersList,
             visible:
-              this.userPermissions()?.permissions.accounts.includes(
+              this.userPermissions()?.permissions?.accounts?.includes(
                 'view_account'
-              ),
+              ) == undefined
+                ? false
+                : true,
           },
           {
             label: 'LOGOUT',
