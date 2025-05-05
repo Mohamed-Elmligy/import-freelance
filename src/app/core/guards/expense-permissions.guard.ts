@@ -3,9 +3,14 @@ import { UserPermissionService } from '../../services/user-permission.service';
 import { inject } from '@angular/core';
 import { ShowMessageService } from '../services/show-message.service';
 
-export const expensesListPermissionsGuard: CanActivateFn = (route, state) => {
+export const expensesListPermissionsGuard: CanActivateFn = async (route, state) => {
   const userPermissionsService = inject(UserPermissionService);
   const showMessageService = inject(ShowMessageService);
+
+  // If permissions are not loaded, try to load them
+  if (!userPermissionsService.userPermissions()) {
+    await userPermissionsService.loadUserPermissions();
+  }
 
   if (
     !userPermissionsService
@@ -22,9 +27,14 @@ export const expensesListPermissionsGuard: CanActivateFn = (route, state) => {
   return true;
 };
 
-export const expensesViewPermissionsGuard: CanActivateFn = (route, state) => {
+export const expensesViewPermissionsGuard: CanActivateFn = async (route, state) => {
   const userPermissionsService = inject(UserPermissionService);
   const showMessageService = inject(ShowMessageService);
+
+  // If permissions are not loaded, try to load them
+  if (!userPermissionsService.userPermissions()) {
+    await userPermissionsService.loadUserPermissions();
+  }
 
   if (
     !userPermissionsService
@@ -41,9 +51,14 @@ export const expensesViewPermissionsGuard: CanActivateFn = (route, state) => {
   return true;
 };
 
-export const expensesEditPermissionsGuard: CanActivateFn = (route, state) => {
+export const expensesEditPermissionsGuard: CanActivateFn = async (route, state) => {
   const userPermissionsService = inject(UserPermissionService);
   const showMessageService = inject(ShowMessageService);
+
+  // If permissions are not loaded, try to load them
+  if (!userPermissionsService.userPermissions()) {
+    await userPermissionsService.loadUserPermissions();
+  }
 
   if (
     !userPermissionsService

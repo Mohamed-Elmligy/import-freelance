@@ -1,5 +1,7 @@
 import { Routes } from '@angular/router';
 import { unauthenticationGuard } from './core/guards/unauthentication.guard';
+import { inject } from '@angular/core';
+import { UserPermissionService } from './services/user-permission.service';
 
 export const routes: Routes = [
   { path: '', pathMatch: 'full', redirectTo: 'auth' },
@@ -16,6 +18,12 @@ export const routes: Routes = [
   {
     path: 'main',
     title: 'Home page',
+    resolve: {
+      permissions: () => {
+        const userPermissionsService = inject(UserPermissionService);
+        return userPermissionsService.loadUserPermissions();
+      }
+    },
     loadComponent: () =>
       import('./layouts/main-layout/main-layout.component').then(
         (m) => m.default

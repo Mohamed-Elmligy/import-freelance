@@ -50,7 +50,7 @@
         (click)="applayFilter()"
       ></button>
       @if
-      (userPermissionService.userPermissions()?.permissions?.accounts?.includes('create_account'))
+      (userPermissionService.userPermissions()?.permissions?.accounts?.includes('create_accounts'))
       {
       <button
         pButton
@@ -98,7 +98,7 @@
         }
         <td>
           @if
-          (userPermissionService.userPermissions()?.permissions?.accounts?.includes('view_account'))
+          (userPermissionService.userPermissions()?.permissions?.accounts?.includes('edit_accounts'))
           {
 
           <p-button
@@ -111,7 +111,7 @@
             severity="success"
           ></p-button
           >} @if
-          (userPermissionService.userPermissions()?.permissions?.accounts?.includes('edit_account'))
+          (userPermissionService.userPermissions()?.permissions?.accounts?.includes('edit_accounts'))
           {
 
           <p-button
@@ -124,7 +124,7 @@
             (click)="editUser(rowData.id)"
           ></p-button
           >} @if
-          (userPermissionService.userPermissions()?.permissions?.accounts?.includes('edit_account'))
+          (userPermissionService.userPermissions()?.permissions?.accounts?.includes('edit_accounts'))
           {
 
           <p-button
@@ -137,7 +137,7 @@
             severity="secondary"
           ></p-button
           >} @if
-          (userPermissionService.userPermissions()?.permissions?.accounts?.includes('delete_account'))
+          (userPermissionService.userPermissions()?.permissions?.accounts?.includes('delete_accounts'))
           {
 
           <p-button
