@@ -9,6 +9,15 @@ export class UserPermissionService {
   userPermissions = signal<UserPermissions | null>(null);
   private loadingPromise: Promise<void> | null = null;
 
+  constructor() {
+    this.getUserPermissions().subscribe({
+      next: (response) => {
+        console.log(response);
+        this.userPermissions.set(response);
+      },
+    });
+  }
+
   async loadUserPermissions() {
     // If permissions are already loaded, no need to load again
     if (this.userPermissions()) {

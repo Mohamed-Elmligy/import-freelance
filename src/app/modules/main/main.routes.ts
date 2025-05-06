@@ -162,7 +162,7 @@ const main_routes: Routes = [
     path: 'invoices',
     loadComponent: () =>
       import('./invoice/create-invoice/create-invoice.component'),
-    canActivate: [noCompanyUserGuard, invoicesEditPermissionsGuard],
+    canActivate: [noCompanyUserGuard],
   },
   {
     path: 'download-reports',

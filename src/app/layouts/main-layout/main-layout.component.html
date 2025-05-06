@@ -8,6 +8,7 @@
 >
   <app-sidebar />
 </p-drawer>
+
 <p-button
   (click)="visible = true"
   icon="pi pi-bars"
@@ -24,6 +25,7 @@
     <app-sidebar></app-sidebar>
   </div>
 </aside>
+
 <div
   class="p-4"
   [ngClass]="languageService.layoutDir() == 'ltr' ? 'lg:ml-64' : 'lg:mr-64'"

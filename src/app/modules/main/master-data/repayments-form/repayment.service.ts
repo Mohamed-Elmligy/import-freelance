@@ -69,7 +69,7 @@ export class RepaymentService {
     );
     form.patchValue({
       invoiceNumber: selectedInvoice,
-      remainingAmount: data.amount,
+      amount: data.amount,
       invoice_payment_number: data.invoice_payment_number,
       transactionDate: new Date(data.pay_date),
       description: data.discription,
