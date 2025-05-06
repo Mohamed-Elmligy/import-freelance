@@ -23,6 +23,7 @@ import { SelectModule } from 'primeng/select';
 import { PageHeaderComponent } from '../../../shared/components/page-header/page-header.component';
 import { TableModule } from 'primeng/table';
 import { MessageModule } from 'primeng/message';
+import { InputNumberModule } from 'primeng/inputnumber';
 @Component({
   selector: 'app-repayments-form',
   imports: [
@@ -41,6 +42,7 @@ import { MessageModule } from 'primeng/message';
     PageHeaderComponent,
     TableModule,
     MessageModule,
+    InputNumberModule,
   ],
   templateUrl: './repayments-form.component.html',
 })

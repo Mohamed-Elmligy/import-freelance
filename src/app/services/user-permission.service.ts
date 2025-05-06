@@ -7,6 +7,44 @@ import { ApiService } from '../core/services/api.service';
 export class UserPermissionService {
   apiService = inject(ApiService);
   userPermissions = signal<UserPermissions | null>(null);
+  private loadingPromise: Promise<void> | null = null;
+
+  constructor() {
+    this.getUserPermissions().subscribe({
+      next: (response) => {
+        console.log(response);
+        this.userPermissions.set(response);
+      },
+    });
+  }
+
+  async loadUserPermissions() {
+    // If permissions are already loaded, no need to load again
+    if (this.userPermissions()) {
+      return Promise.resolve();
+    }
+
+    // If there's already a loading promise, return it to avoid duplicate calls
+    if (this.loadingPromise) {
+      return this.loadingPromise;
+    }
+
+    // Create new loading promise
+    this.loadingPromise = new Promise<void>(async (resolve) => {
+      try {
+        const permissions = await this.getUserPermissions().toPromise();
+        this.userPermissions.set(permissions);
+      } catch (error) {
+        console.error('Error loading user permissions:', error);
+      } finally {
+        this.loadingPromise = null;
+        resolve();
+      }
+    });
+
+    return this.loadingPromise;
+  }
+
   getUserPermissions() {
     return this.apiService.getDataFromServer('account/current/permissions');
   }
@@ -25,6 +63,10 @@ export type UserPermissions = {
     suppliers: string[];
     shipments: string[];
     reports: string[];
+    items: string[];
+    items_category: string[];
+    fiscal_year: string[];
+    payments: string[];
   };
 };
 

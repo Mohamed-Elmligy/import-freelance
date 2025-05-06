@@ -47,7 +47,7 @@
         (click)="applayFilter()"
       ></button>
       @if
-      (userPermissionService.userPermissions()?.permissions?.invoices?.includes('create_invoices'))
+      (userPermissionService.userPermissions()?.permissions?.invoices?.includes('create_invoices') ?? false)
       {
       <button
         pButton
@@ -96,9 +96,7 @@
         </td>
         }
         <td>
-          @if
-          (userPermissionService.userPermissions()?.permissions?.invoices?.includes('view_invoices'))
-          {
+          @if (userPermissionService.userPermissions()?.permissions?.invoices?.includes('view_invoices') ?? false) {
           <p-button
             icon="pi pi-eye"
             [rounded]="true"
@@ -109,9 +107,7 @@
             severity="success"
             class="mx-1"
           ></p-button>
-          } @if
-          (userPermissionService.userPermissions()?.permissions?.invoices?.includes('edit_invoices'))
-          {
+          } @if (userPermissionService.userPermissions()?.permissions?.invoices?.includes('edit_invoices') ?? false) {
           <p-button
             icon="pi pi-pencil"
             [rounded]="true"
@@ -122,9 +118,7 @@
             (click)="editInvoice(rowData.id)"
             class="mx-1"
           ></p-button>
-          } @if
-          (userPermissionService.userPermissions()?.permissions?.invoices?.includes('delete_invoices'))
-          {
+          } @if (userPermissionService.userPermissions()?.permissions?.invoices?.includes('delete_invoices') ?? false) {
           <p-button
             icon="pi pi-trash"
             [rounded]="true"

@@ -216,6 +216,7 @@
   "remain_amount": "Remaining Amount",
   "supplier_code": "Supplier Code",
   "supplier_name": "Supplier Name",
+  "supplierName": "Supplier Name",
   "total_net_amount": "Total Net Amount",
   "customer__name": "Customer Name",
   "first_payment_amount": "First Payment",

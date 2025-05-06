@@ -15,7 +15,6 @@ import { PanelModule } from 'primeng/panel';
 import { ToolbarModule } from 'primeng/toolbar';
 import { TooltipModule } from 'primeng/tooltip';
 import { TableModule } from 'primeng/table'; // Added PrimeNG TableModule
-import { SecurityService } from '../../../../core/services/security.service';
 import { LanguagesService } from '../../../shared/services/languages.service';
 import { main_routes_paths } from '../../main.routes';
 import { InvoiceService } from '../invoice.service';
