@@ -86,9 +86,7 @@ export class SidebarComponent {
             visible:
               this.userPermissions()?.permissions?.customers?.includes(
                 'view_customers'
-              ) == undefined
-                ? false
-                : true,
+              ) ?? false,
           },
           {
             label: 'SUPPLIERS',
@@ -97,15 +95,16 @@ export class SidebarComponent {
             visible:
               this.userPermissions()?.permissions?.suppliers?.includes(
                 'view_suppliers'
-              ) == undefined
-                ? false
-                : true,
+              ) ?? false,
           },
           {
             label: 'ITEMS_CATEGORY',
             icon: 'pi pi-th-large',
             routerLink: this.mainRoutes.itemsCategoryList,
-            visible: false, //not implemented yet
+            visible:
+              this.userPermissions()?.permissions?.items?.includes(
+                'view_items'
+              ) ?? false,
           },
           {
             label: 'SHIPPING_DATA',
@@ -114,15 +113,16 @@ export class SidebarComponent {
             visible:
               this.userPermissions()?.permissions?.shipments?.includes(
                 'view_shipping_data'
-              ) == undefined
-                ? false
-                : true,
+              ) ?? false,
           },
           {
             label: 'FISCAL_YEARS',
             icon: 'pi pi-calendar',
             routerLink: this.mainRoutes.yearList,
-            visible: false, //not implemented yet
+            visible:
+              this.userPermissions()?.permissions?.fiscal_year?.includes(
+                'view_fiscal_year'
+              ) ?? false,
           },
         ],
       },
@@ -138,15 +138,16 @@ export class SidebarComponent {
             visible:
               this.userPermissions()?.permissions?.transactions?.includes(
                 'view_transactions'
-              ) == undefined
-                ? false
-                : true,
+              ) ?? false,
           },
           {
             label: 'PAYMENTS',
             icon: 'pi pi-wallet',
             routerLink: this.mainRoutes.paymentsList,
-            visible: false, //not implemented yet
+            visible:
+              this.userPermissions()?.permissions?.payments?.includes(
+                'view_payments'
+              ) ?? false,
           },
           {
             label: 'EXPENSES',
@@ -155,9 +156,7 @@ export class SidebarComponent {
             visible:
               this.userPermissions()?.permissions?.expenses?.includes(
                 'view_expenses'
-              ) == undefined
-                ? false
-                : true,
+              ) ?? false,
           },
         ],
       },
@@ -165,6 +164,7 @@ export class SidebarComponent {
         label: 'INVOICES',
         icon: 'pi pi-file',
         styleClass: 'menu-header',
+        visible:false,
         items: [
           {
             label: 'ALL_INVOICES',
@@ -173,9 +173,7 @@ export class SidebarComponent {
             visible:
               this.userPermissions()?.permissions?.invoices?.includes(
                 'view_invoices'
-              ) == undefined
-                ? false
-                : true,
+              ) ?? false,
           },
         ],
       },
@@ -186,15 +184,15 @@ export class SidebarComponent {
         visible:
           this.userPermissions()?.permissions?.reports?.includes(
             'view_reports'
-          ),
+          ) ?? false,
         items: [
           {
             label: 'CONTAINER_DETAILS',
             icon: 'pi pi-box',
             routerLink: this.mainRoutes.reports.containerDetails,
             visible: this.userPermissions()?.permissions?.reports?.includes(
-              'view_customer_reports'
-            ),
+              'view_container_reports'
+            ) ?? false,
           },
           {
             label: 'SUPPLIER_REPORT',
@@ -202,23 +200,23 @@ export class SidebarComponent {
             routerLink: this.mainRoutes.reports.supplierReport,
             visible: this.userPermissions()?.permissions?.reports?.includes(
               'view_supplier_reports'
-            ),
+            ) ?? false,
           },
           {
             label: 'CUSTOMER_FINANCIAL_REPORT',
             icon: 'pi pi-user',
             routerLink: this.mainRoutes.reports.customerFinancialReport,
             visible: this.userPermissions()?.permissions?.reports?.includes(
-              'view_customer_reports'
-            ),
+              'view_customer_financial_reports'
+            ) ?? false,
           },
           {
             label: 'SUPPLIER_FINANCIAL_REPORT',
             icon: 'pi pi-truck',
             routerLink: this.mainRoutes.reports.supplierFinancialReport,
             visible: this.userPermissions()?.permissions?.reports?.includes(
-              'view_supplier_reports'
-            ),
+              'view_supplier_financial_reports'
+            ) ?? false,
           },
           {
             label: 'TOTAL_PAYMENTS_REPORT',
@@ -226,7 +224,7 @@ export class SidebarComponent {
             routerLink: this.mainRoutes.reports.totalPaymentsReport,
             visible: this.userPermissions()?.permissions?.reports?.includes(
               'view_payment_reports'
-            ),
+            ) ?? false,
           },
           {
             label: 'TOTAL_EXPENSES_REPORT',
@@ -234,7 +232,7 @@ export class SidebarComponent {
             routerLink: this.mainRoutes.reports.totalExpensesReport,
             visible: this.userPermissions()?.permissions?.reports?.includes(
               'view_expenses_reports'
-            ),
+            ) ?? false,
           },
         ],
       },
@@ -247,7 +245,7 @@ export class SidebarComponent {
             label: 'SETTINGS',
             icon: 'pi pi-cog',
             routerLink: this.mainRoutes.settings,
-            visible: false,
+            visible: true,
           },
           {
             label: 'userList',
@@ -256,9 +254,7 @@ export class SidebarComponent {
             visible:
               this.userPermissions()?.permissions?.accounts?.includes(
                 'view_account'
-              ) == undefined
-                ? false
-                : true,
+              ) ?? false,
           },
           {
             label: 'LOGOUT',

@@ -1,6 +1,5 @@
 import { inject, Injectable, signal } from '@angular/core';
 import { ApiService } from '../core/services/api.service';
-import { Observable, from, shareReplay } from 'rxjs';
 
 @Injectable({
   providedIn: 'root',
@@ -55,6 +54,10 @@ export type UserPermissions = {
     suppliers: string[];
     shipments: string[];
     reports: string[];
+    items: string[];
+    items_category: string[];
+    fiscal_year: string[];
+    payments: string[];
   };
 };
 
