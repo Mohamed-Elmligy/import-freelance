@@ -6,6 +6,7 @@ import ProfileSettingsComponent from '../profile-settings/profile-settings.compo
 import { PersonalizeComponent } from '../personalize/personalize.component';
 import { TranslateModule } from '@ngx-translate/core';
 import { TabService } from '../../../../services/tab.service';
+import { userIsAdmin } from '../../../../core/guards/no-company-user.guard';
 
 @Component({
   selector: 'app-settings',
@@ -21,8 +22,14 @@ import { TabService } from '../../../../services/tab.service';
 export default class SettingsComponent implements OnInit {
   activeTab: any = '0';
   private tabService = inject(TabService);
+  userIsAdmin = userIsAdmin();
   ngOnInit(): void {
-    this.activeTab = this.tabService.getLastActiveTab()?.toString() || '0';
+    if (this.userIsAdmin === 'Admin') {
+      this.activeTab = '0';
+    } else {
+      this.activeTab = '1';
+    }
+    // this.activeTab = this.tabService.getLastActiveTab()?.toString() || '0';
   }
 
   onTabChange(event: any): void {

@@ -12,7 +12,6 @@ export class UserPermissionService {
   constructor() {
     this.getUserPermissions().subscribe({
       next: (response) => {
-        console.log(response);
         this.userPermissions.set(response);
       },
     });

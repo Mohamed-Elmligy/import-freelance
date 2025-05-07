@@ -51,7 +51,7 @@ export default class DownloadReportsComponent implements OnInit {
     this.route = route;
     this.filterForm = this.formBuilder.group({
       customer_id: [null],
-      supplier_code: [null],
+      supplier_id: [null],
       selectedInvoice: [null],
       container_number: [null],
     });
@@ -250,7 +250,7 @@ export default class DownloadReportsComponent implements OnInit {
   downloadReport(type: 'pdf' | 'excel') {
     const selectedReport = this.selectedReport();
     const customer_id = this.filterForm.get('customer_id')?.value;
-    const supplier_code = this.filterForm.get('supplier_code')?.value;
+    const supplier_id = this.filterForm.get('supplier_id')?.value;
     const container_number = this.filterForm.get('container_number')?.value;
 
     if (!selectedReport) {
@@ -291,7 +291,7 @@ export default class DownloadReportsComponent implements OnInit {
         break;
 
       case 'supplierReport':
-        if (!supplier_code) {
+        if (!supplier_id) {
           this.showMessageService.showMessage(
             'error',
             'Unvalid Paremeters',
@@ -300,13 +300,13 @@ export default class DownloadReportsComponent implements OnInit {
           return;
         }
 
-        params.supplier_code = supplier_code;
+        params.supplier_id = supplier_id;
         break;
 
       case 'supplierFinancialReport':
         // Both fields are optional, so no validation needed
-        if (supplier_code) {
-          params.supplier_id = supplier_code;
+        if (supplier_id) {
+          params.supplier_id = supplier_id;
         }
         if (customer_id) {
           params.customer_id = customer_id;
@@ -357,7 +357,7 @@ export default class DownloadReportsComponent implements OnInit {
     // Only reset form values without clearing the selected report type
     this.filterForm.patchValue({
       customer_id: null,
-      supplier_code: null,
+      supplier_id: null,
       selectedInvoice: null,
       container_number: null,
     });

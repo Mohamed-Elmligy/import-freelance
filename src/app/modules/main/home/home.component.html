@@ -35,9 +35,9 @@
 
   <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
     <div
-      class="rounded-2xl py-10 bg-gray-50 flex flex-col items-center justify-center gap-16 lg:flex-row lg:gap-32"
+      class="rounded-2xl bg-gray-50 flex flex-col items-center justify-center gap-16 lg:flex-row lg:gap-32"
     >
-      <div class="w-full lg:w-4/5 grid gap-16 lg:grid-cols-4 sm:grid-cols-2">
+      <div class="w-full lg:w-4/5 grid gap-16  sm:grid-cols-2">
         <div class="block rounded-2xl bg-white shadow-md p-6">
           <div class="flex items-center justify-center mb-3">
             <span class="text-4xl text-primary font-bold material-icons">
@@ -45,10 +45,11 @@
             </span>
           </div>
           <span class="text-2xl text-center text-primary font-bold block p-3">
-            {{ totals.total_invoices }}
+            {{ totals.total_number_of_invoices }}
           </span>
-          <span class="text-gray-900 text-center block"> Invoices </span>
+          <span class="text-gray-900 text-center block"> {{'total_number_of_invoices'|translate}} </span>
         </div>
+        @if(userIsAdmin==='Admin'){
         <div class="block rounded-2xl bg-white shadow-md p-6">
           <div class="flex items-center justify-center mb-3">
             <span class="text-4xl text-primary font-bold material-icons">
@@ -56,10 +57,11 @@
             </span>
           </div>
           <span class="text-2xl text-center text-primary font-bold block p-3">
-            {{ totals.total_customers }}
+            {{ totals.total_number_of_customers }}
           </span>
-          <span class="text-gray-900 text-center block"> Customers </span>
+          <span class="text-gray-900 text-center block"> {{'total_number_of_customers'|translate}} </span>
         </div>
+        
         <div class="block rounded-2xl bg-white shadow-md p-6">
           <div class="flex items-center justify-center mb-3">
             <span class="text-4xl text-primary font-bold material-icons">
@@ -67,10 +69,11 @@
             </span>
           </div>
           <span class="text-2xl text-center text-primary font-bold block p-3">
-            {{ totals.total_suppliers }}
+            {{ totals.total_number_of_suppliers }}
           </span>
-          <span class="text-gray-900 text-center block"> Suppliers </span>
+          <span class="text-gray-900 text-center block"> {{'total_number_of_suppliers'|translate}} </span>
         </div>
+        
         <div class="block rounded-2xl bg-white shadow-md p-6">
           <div class="flex items-center justify-center mb-3">
             <span class="text-4xl text-primary font-bold material-icons">
@@ -78,10 +81,24 @@
             </span>
           </div>
           <span class="text-2xl text-center text-primary font-bold block p-3">
-            {{ totals.total_shipments }}
+            {{ totals.total_number_of_shipments }}
           </span>
-          <span class="text-gray-900 text-center block"> Shipment </span>
+          <span class="text-gray-900 text-center block"> {{'total_number_of_shipments'|translate}} </span>
         </div>
+      }
+      @if(userIsAdmin==='Customer'){
+        <div class="block rounded-2xl bg-white shadow-md p-6">
+          <div class="flex items-center justify-center mb-3">
+            <span class="text-4xl text-primary font-bold material-icons">
+              money
+            </span>
+          </div>
+          <span class="text-2xl text-center text-primary font-bold block p-3">
+            {{ totals.customer_invoices_amount }}
+          </span>
+          <span class="text-gray-900 text-center block"> {{'customer_invoices_amount'|translate}} </span>
+        </div>  
+      }
       </div>
     </div>
   </div>

@@ -13,7 +13,7 @@ export const noCompanyUserGuard: CanActivateFn = (route, state) => {
     'local',
     'jwtToken'
   ).company;
- 
+
   if (!UserHaveCompany) {
     showMessageService.showMessage(
       'warn',
@@ -23,4 +23,15 @@ export const noCompanyUserGuard: CanActivateFn = (route, state) => {
     return router.navigate([main_routes_paths.settings]);
   }
   return true;
+};
+
+export const userIsAdmin = () => {
+  const browserStorageService = inject(BrowserStorageService);
+
+  let UserIsAdmin = browserStorageService.getData(
+    'local',
+    'jwtToken'
+  ).user_type;
+
+  return UserIsAdmin;
 };

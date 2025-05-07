@@ -4,7 +4,7 @@ import { SecurityService } from '../../../core/services/security.service';
 import { ApiService } from '../../../core/services/api.service';
 import { SkeletonModule } from 'primeng/skeleton';
 import { LanguagesService } from '../../shared/services/languages.service';
-import { UserPermissionService } from '../../../services/user-permission.service';
+import { userIsAdmin } from '../../../core/guards/no-company-user.guard';
 
 @Component({
   selector: 'app-home',
@@ -15,15 +15,16 @@ export default class HomeComponent implements OnInit {
   public securityService = inject(SecurityService);
   private httpService = inject(ApiService);
   languageService = inject(LanguagesService);
-  // userPermissionService = inject(UserPermissionService);
+  userIsAdmin = userIsAdmin();
 
   totals: HomeTotals = {} as HomeTotals;
   icons: string[] = ['description', 'person', 'store', 'local_shipping']; // Add icons array
   totalsKeys: string[] = [
-    'total_invoices',
-    'total_customers',
-    'total_suppliers',
-    'total_shipments',
+    'total_number_of_invoices',
+    'total_number_of_customers',
+    'total_number_of_suppliers',
+    'total_number_of_shipments',
+    'customer_invoices_amount',
   ]; // Add keys array
   labels: string[] = ['Invoices', 'Customers', 'Suppliers', 'Shipment']; // Add labels array
   isLoading = true; // Add isLoading property
@@ -45,8 +46,9 @@ export default class HomeComponent implements OnInit {
 type HomeTotals = {
   cover_img: string;
   logo_img: string;
-  total_invoices: number;
-  total_customers: number;
-  total_suppliers: number;
-  total_shipments: number;
+  total_number_of_invoices: number;
+  total_number_of_customers: number;
+  total_number_of_suppliers: number;
+  total_number_of_shipments: number;
+  customer_invoices_amount: number;
 };
