@@ -43,10 +43,7 @@ export default class DownloadReportsComponent implements OnInit {
   private formBuilder: FormBuilder;
   private route: ActivatedRoute;
 
-  constructor(
-    formBuilder: FormBuilder,
-    route: ActivatedRoute
-  ) {
+  constructor(formBuilder: FormBuilder, route: ActivatedRoute) {
     this.formBuilder = formBuilder;
     this.route = route;
     this.filterForm = this.formBuilder.group({
@@ -92,50 +89,45 @@ export default class DownloadReportsComponent implements OnInit {
       'total_weight',
     ],
     supplierReport: [
-      "invoice_number",
-      "customer__name",
-      "net_amount",
-      "first_payment_amount",
-      "first_payment_date",
-      "second_payment_amount",
-      "second_payment_date",
-      "third_payment_amount",
-      "third_payment_date",
-      "balance",
+      'invoice_number',
+      'customer__name',
+      'net_amount',
+      'first_payment_amount',
+      'first_payment_date',
+      'second_payment_amount',
+      'second_payment_date',
+      'third_payment_amount',
+      'third_payment_date',
+      'balance',
     ],
     customerFinancialReport: [
-      "container",
-      "total_amount",
-      "total_commission",
-      "total_expense",
-      "total_line",
+      'container',
+      'total_amount',
+      'total_commission',
+      'total_expense',
+      'total_line',
     ],
     totalPaymentsReport: [
-      "customer_code",
-      "customer_name",
-      "date",
-      "amount",
-      "description",
+      'customer_code',
+      'customer_name',
+      'date',
+      'amount',
+      'description',
     ],
     totalExpensesReport: [
-      "customer_code",
-      "customer_name",
-      "date",
-      "amount",
-      "description",
-      "container_number",
+      'customer_code',
+      'customer_name',
+      'date',
+      'amount',
+      'description',
+      'container_number',
     ],
     supplierFinancialReport: [
-      "invoice_number",
-      "customer_name",
-      "net_amount",
-      "first_payment_amount",
-      "first_payment_date",
-      "second_payment_amount",
-      "second_payment_date",
-      "third_payment_amount",
-      "third_payment_date",
-      "balance",
+      'invoice_number',
+      'customer_code',
+      'customer_name',
+      'amount',
+      'invoice_date',
     ],
   };
 
@@ -164,7 +156,7 @@ export default class DownloadReportsComponent implements OnInit {
   ngOnInit(): void {
     const translation =
       this.reportsTypesTranslation[
-      this.languageService.layoutDir() === 'rtl' ? 'ar' : 'en'
+        this.languageService.layoutDir() === 'rtl' ? 'ar' : 'en'
       ];
 
     this.reportsTypes = [
@@ -176,13 +168,18 @@ export default class DownloadReportsComponent implements OnInit {
       },
       { name: translation.totalPaymentsReport, code: 'totalPaymentsReport' },
       { name: translation.totalExpensesReport, code: 'totalExpensesReport' },
-      { name: translation.supplierFinancialReport, code: 'supplierFinancialReport' },
+      {
+        name: translation.supplierFinancialReport,
+        code: 'supplierFinancialReport',
+      },
     ];
 
     // Get the report type from the route data
     const reportType = this.route.snapshot.data['reportType'];
     if (reportType) {
-      const selectedReport = this.reportsTypes.find(r => r.code === reportType);
+      const selectedReport = this.reportsTypes.find(
+        (r) => r.code === reportType
+      );
       if (selectedReport) {
         this.selectedReport.set(selectedReport);
         this.onReportTypeChange(selectedReport);
@@ -261,8 +258,8 @@ export default class DownloadReportsComponent implements OnInit {
       type == 'excel'
         ? reportsApis[selectedReport.code as keyof typeof reportsApis]
         : reportsApis[
-        ('pdf_' + selectedReport.code) as keyof typeof reportsApis
-        ];
+            ('pdf_' + selectedReport.code) as keyof typeof reportsApis
+          ];
     if (!reportApi) {
       return;
     }
@@ -366,7 +363,13 @@ export default class DownloadReportsComponent implements OnInit {
 
 export interface ReportType {
   name: string;
-  code: 'invoiceDetails' | 'supplierReport' | 'customerFinancialReport' | 'totalPaymentsReport' | 'totalExpensesReport' | 'supplierFinancialReport';
+  code:
+    | 'invoiceDetails'
+    | 'supplierReport'
+    | 'customerFinancialReport'
+    | 'totalPaymentsReport'
+    | 'totalExpensesReport'
+    | 'supplierFinancialReport';
 }
 
 export interface CustomerList {
