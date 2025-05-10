@@ -226,14 +226,14 @@ export class SidebarComponent {
                 ) ?? false,
           },
           {
-            label: 'SUPPLIER_FINANCIAL_REPORT',
+            label: 'SUPPLIER_PAYABLES_REPORT',
             icon: 'pi pi-truck',
-            routerLink: this.mainRoutes.reports.supplierFinancialReport,
+            routerLink: this.mainRoutes.reports.supplierPayablesReport,
             visible:
               this.userPermissionService
                 .userPermissions()
                 ?.permissions?.reports?.includes(
-                  'view_supplier_financial_reports'
+                  'view_supplier_payables_reports'
                 ) ?? false,
           },
           {

@@ -122,12 +122,12 @@ export default class DownloadReportsComponent implements OnInit {
       'description',
       'container_number',
     ],
-    supplierFinancialReport: [
+    supplierPayablesReport: [
       'invoice_number',
-      'customer_code',
-      'customer_name',
+      'supplier_name',
+      'store_number',
       'amount',
-      'invoice_date',
+      'due_date',
     ],
   };
 
@@ -142,7 +142,7 @@ export default class DownloadReportsComponent implements OnInit {
       customerFinancialReport: 'Customer Financial Report',
       totalPaymentsReport: 'Total Payments Report',
       totalExpensesReport: 'Total Expenses Report',
-      supplierFinancialReport: 'Supplier Financial Report',
+      supplierPayablesReport: 'Supplier Payables Report',
     },
     ar: {
       containerDetails: 'تقرير شراء الحاوية',
@@ -150,7 +150,7 @@ export default class DownloadReportsComponent implements OnInit {
       customerFinancialReport: 'تقرير مالي للعميل',
       totalPaymentsReport: 'تقرير إجمالي المدفوعات',
       totalExpensesReport: 'تقرير إجمالي المصروفات',
-      supplierFinancialReport: 'تقرير مالي للمورد',
+      supplierPayablesReport: 'تقرير المستحقات للمورد',
     },
   };
   ngOnInit(): void {
@@ -169,8 +169,8 @@ export default class DownloadReportsComponent implements OnInit {
       { name: translation.totalPaymentsReport, code: 'totalPaymentsReport' },
       { name: translation.totalExpensesReport, code: 'totalExpensesReport' },
       {
-        name: translation.supplierFinancialReport,
-        code: 'supplierFinancialReport',
+        name: translation.supplierPayablesReport,
+        code: 'supplierPayablesReport',
       },
     ];
 
@@ -202,7 +202,11 @@ export default class DownloadReportsComponent implements OnInit {
       (value) => value != null || value != undefined
     );
 
-    if (notEmpityKey) {
+    const reportsWithoutParameters = ['supplierPayablesReport'];
+    if (
+      notEmpityKey ||
+      reportsWithoutParameters.includes(this.selectedReport()?.code || '')
+    ) {
       this.reportService
         .reportApi(type, this.filterForm.value)
         .subscribe((res: reportVewType) => {
@@ -230,9 +234,8 @@ export default class DownloadReportsComponent implements OnInit {
         break;
 
       case 'supplierReport':
-      case 'supplierFinancialReport':
+      case 'supplierPayablesReport':
         this.reportService.getListOfSuppliers();
-        this.reportService.getListOfCustomers();
         break;
 
       case 'customerFinancialReport':
@@ -300,15 +303,12 @@ export default class DownloadReportsComponent implements OnInit {
         params.supplier_id = supplier_id;
         break;
 
-      case 'supplierFinancialReport':
-        // Both fields are optional, so no validation needed
-        if (supplier_id) {
-          params.supplier_id = supplier_id;
-        }
-        if (customer_id) {
-          params.customer_id = customer_id;
-        }
-        break;
+      // case 'supplierPayablesReport':
+      //   // Both fields are optional, so no validation needed
+      //   if (supplier_id) {
+      //     params.supplier_id = supplier_id;
+      //   }
+      //   break;
 
       case 'customerFinancialReport':
         if (!customer_id) {
@@ -369,7 +369,7 @@ export interface ReportType {
     | 'customerFinancialReport'
     | 'totalPaymentsReport'
     | 'totalExpensesReport'
-    | 'supplierFinancialReport';
+    | 'supplierPayablesReport';
 }
 
 export interface CustomerList {

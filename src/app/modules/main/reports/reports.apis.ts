@@ -19,7 +19,7 @@ export const reportsApis = {
   get_totalPaymentsReport: 'reports/payments-report',
   pdf_totalPaymentsReport: 'reports/payments-report/pdf',
 
-  supplierFinancialReport: 'reports/supplier-financial/download',
-  get_supplierFinancialReport: 'reports/supplier-financial',
-  pdf_supplierFinancialReport: 'reports/supplier-financial/pdf',
+  supplierPayablesReport: 'reports/supplier-payables/download',
+  get_supplierPayablesReport: 'reports/supplier-payables',
+  pdf_supplierPayablesReport: 'reports/supplier-payables/pdf',
 };
