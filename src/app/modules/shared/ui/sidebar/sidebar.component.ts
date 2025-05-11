@@ -113,7 +113,7 @@ export class SidebarComponent {
             visible:
               this.userPermissionService
                 .userPermissions()
-                ?.permissions?.shipments?.includes('view_shipping_data') ??
+                ?.permissions?.shipments?.includes('view_shipments') ??
               false,
           },
           {
