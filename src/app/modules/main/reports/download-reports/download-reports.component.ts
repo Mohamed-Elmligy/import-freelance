@@ -80,6 +80,21 @@ export default class DownloadReportsComponent implements OnInit {
       'store_cbm',
       'item_price',
       'total_price',
+      'length',
+      'width',
+      'height',
+      'total_cbm',
+      'total_weight',
+    ],
+    containerPrice: [
+      'container_sequence',
+      'item_code',
+      'item_description',
+      'box_count',
+      'item_in_box',
+      'store_cbm',
+      'item_price',
+      'total_price',
       'unit_price',
       'amount_price',
       'length',
@@ -137,7 +152,8 @@ export default class DownloadReportsComponent implements OnInit {
 
   reportsTypesTranslation = {
     en: {
-      containerDetails: 'Container Details',
+      containerDetails: 'Container Details Report',
+      containerPrice: 'Container Cost Report',
       supplierReport: 'Supplier Report',
       customerFinancialReport: 'Customer Financial Report',
       totalPaymentsReport: 'Total Payments Report',
@@ -145,7 +161,8 @@ export default class DownloadReportsComponent implements OnInit {
       supplierPayablesReport: 'Supplier Payables Report',
     },
     ar: {
-      containerDetails: 'تقرير شراء الحاوية',
+      containerDetails: 'تقرير بيانات الحاوية',
+      containerPrice: 'تقرير تكلفة الحاوية',
       supplierReport: 'تقرير مالي للمورد',
       customerFinancialReport: 'تقرير مالي للعميل',
       totalPaymentsReport: 'تقرير إجمالي المدفوعات',
@@ -161,6 +178,7 @@ export default class DownloadReportsComponent implements OnInit {
 
     this.reportsTypes = [
       { name: translation.containerDetails, code: 'invoiceDetails' },
+      { name: translation.containerPrice, code: 'containerPrice' },
       { name: translation.supplierReport, code: 'supplierReport' },
       {
         name: translation.customerFinancialReport,
@@ -202,7 +220,11 @@ export default class DownloadReportsComponent implements OnInit {
       (value) => value != null || value != undefined
     );
 
-    const reportsWithoutParameters = ['supplierPayablesReport'];
+    const reportsWithoutParameters = [
+      'supplierPayablesReport',
+      'totalExpensesReport',
+      'totalPaymentsReport',
+    ];
     if (
       notEmpityKey ||
       reportsWithoutParameters.includes(this.selectedReport()?.code || '')
@@ -229,6 +251,7 @@ export default class DownloadReportsComponent implements OnInit {
 
     switch (selectedReport.code) {
       case 'invoiceDetails':
+      case 'containerPrice':
         this.reportService.getListOfCustomers();
         this.reportService.getListOfInvoices();
         break;
@@ -271,6 +294,7 @@ export default class DownloadReportsComponent implements OnInit {
 
     switch (selectedReport.code) {
       case 'invoiceDetails':
+      case 'containerPrice':
         if (!customer_id && !container_number) {
           this.showMessageService.showMessage(
             'error',
@@ -365,6 +389,7 @@ export interface ReportType {
   name: string;
   code:
     | 'invoiceDetails'
+    | 'containerPrice'
     | 'supplierReport'
     | 'customerFinancialReport'
     | 'totalPaymentsReport'

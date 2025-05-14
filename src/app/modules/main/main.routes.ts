@@ -191,6 +191,13 @@ const main_routes: Routes = [
         canActivate: [noCompanyUserGuard],
       },
       {
+        path: 'container-price',
+        loadComponent: () =>
+          import('./reports/download-reports/download-reports.component'),
+        data: { reportType: 'containerPrice' },
+        canActivate: [noCompanyUserGuard],
+      },
+      {
         path: 'supplier-report',
         loadComponent: () =>
           import('./reports/download-reports/download-reports.component'),
@@ -258,6 +265,7 @@ export const main_routes_paths = {
   usersList: '/main/users-list',
   reports: {
     containerDetails: '/main/reports/container-details',
+    containerPrice: '/main/reports/container-price',
     supplierReport: '/main/reports/supplier-report',
     customerFinancialReport: '/main/reports/customer-financial-report',
     supplierPayablesReport: '/main/reports/supplier-payables-report',

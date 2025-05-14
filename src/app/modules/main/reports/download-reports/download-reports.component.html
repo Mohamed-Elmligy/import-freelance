@@ -1,6 +1,6 @@
 <page-header
   [withBreadCrumb]="false"
-  [title]="'REPORTS' | translate"
+  [title]="(selectedReport()?.name ?? '' | translate)"
   class="mb-4"
 ></page-header>
 
@@ -46,7 +46,33 @@
           "containerSequance" | translate
         }}</label>
       </p-floatlabel>
-
+      } @case ('containerPrice') {
+      <p-floatlabel class="w-full" variant="over">
+        <p-select
+          inputId="customer"
+          [options]="reportService.listOfCustomers()"
+          optionLabel="name"
+          optionValue="id"
+          [filter]="true"
+          filterBy="name"
+          formControlName="customer_id"
+          class="w-full"
+          [showClear]="true"
+        ></p-select>
+        <label for="customer">{{ "SelectCustomer" | translate }}</label>
+      </p-floatlabel>
+      <p-floatlabel class="w-full" variant="on">
+        <input
+          pInputText
+          id="container_number "
+          autocomplete="off"
+          formControlName="container_number"
+          class="w-full"
+        />
+        <label for="container_number ">{{
+          "containerSequance" | translate
+        }}</label>
+      </p-floatlabel>
       } @case ('supplierReport') {
       <p-floatlabel class="w-full" variant="on">
         <p-select
@@ -77,9 +103,7 @@
         ></p-select>
         <label for="supplier">{{ "SelectSupplier" | translate }}</label>
       </p-floatlabel>
-      } @default {
-
-      @if ([ 'customerFinancialReport', 'totalPaymentsReport',
+      } @default { @if ([ 'customerFinancialReport', 'totalPaymentsReport',
       'totalExpensesReport' ].includes(selectedReport()?.code || '')) {
       <p-floatlabel class="w-full" variant="over">
         <p-select
@@ -192,20 +216,18 @@
       </ng-template>
       <ng-template #header>
         <tr>
-          @if (selectedReport()) {
-            @for (column of reportColumns[selectedReport()!.code]; track $index) {
-              <th>{{ column | translate }}</th>
-            }
-          }
+          @if (selectedReport()) { @for (column of
+          reportColumns[selectedReport()!.code]; track $index) {
+          <th>{{ column | translate }}</th>
+          } }
         </tr>
       </ng-template>
       <ng-template #body let-item>
         <tr>
-          @if (selectedReport()) {
-            @for (column of reportColumns[selectedReport()!.code]; track $index) {
-              <td>{{ item[column] }}</td>
-            }
-          }
+          @if (selectedReport()) { @for (column of
+          reportColumns[selectedReport()!.code]; track $index) {
+          <td>{{ item[column] }}</td>
+          } }
         </tr>
       </ng-template>
     </p-table>

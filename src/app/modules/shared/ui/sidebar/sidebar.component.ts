@@ -205,6 +205,16 @@ export class SidebarComponent {
               false,
           },
           {
+            label: 'CONTAINER_COST',
+            icon: 'pi pi-box',
+            routerLink: this.mainRoutes.reports.containerPrice,
+            visible:
+              this.userPermissionService
+                .userPermissions()
+                ?.permissions?.reports?.includes('view_container_reports') ??
+              false,
+          },
+          {
             label: 'SUPPLIER_REPORT',
             icon: 'pi pi-truck',
             routerLink: this.mainRoutes.reports.supplierReport,
