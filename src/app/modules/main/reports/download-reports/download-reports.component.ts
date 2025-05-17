@@ -105,15 +105,15 @@ export default class DownloadReportsComponent implements OnInit {
     ],
     supplierReport: [
       'invoice_number',
-      'customer__name',
-      'net_amount',
+      'customer_name',
+      'invoice_amount',
       'first_payment_amount',
       'first_payment_date',
       'second_payment_amount',
       'second_payment_date',
       'third_payment_amount',
       'third_payment_date',
-      'balance',
+      'remaining',
     ],
     customerFinancialReport: [
       'container',
@@ -144,6 +144,15 @@ export default class DownloadReportsComponent implements OnInit {
       'amount',
       'due_date',
     ],
+    transactionReport: [
+      'invoice_number',
+      'customer_name',
+      'supplier_name',
+      'invoice_payment_number',
+      'amount',
+      'pay_date',
+      'description',
+    ],
   };
 
   filterForm: any;
@@ -159,6 +168,7 @@ export default class DownloadReportsComponent implements OnInit {
       totalPaymentsReport: 'Total Payments Report',
       totalExpensesReport: 'Total Expenses Report',
       supplierPayablesReport: 'Supplier Payables Report',
+      transactionReport: 'Transaction Report',
     },
     ar: {
       containerDetails: 'تقرير بيانات الحاوية',
@@ -168,6 +178,7 @@ export default class DownloadReportsComponent implements OnInit {
       totalPaymentsReport: 'تقرير إجمالي المدفوعات',
       totalExpensesReport: 'تقرير إجمالي المصروفات',
       supplierPayablesReport: 'تقرير المستحقات للمورد',
+      transactionReport: 'تقرير التسديدات',
     },
   };
   ngOnInit(): void {
@@ -190,6 +201,7 @@ export default class DownloadReportsComponent implements OnInit {
         name: translation.supplierPayablesReport,
         code: 'supplierPayablesReport',
       },
+      { name: translation.transactionReport, code: 'transactionReport' },
     ];
 
     // Get the report type from the route data
@@ -224,6 +236,7 @@ export default class DownloadReportsComponent implements OnInit {
       'supplierPayablesReport',
       'totalExpensesReport',
       'totalPaymentsReport',
+      'transactionReport',
     ];
     if (
       notEmpityKey ||
@@ -264,6 +277,7 @@ export default class DownloadReportsComponent implements OnInit {
       case 'customerFinancialReport':
       case 'totalPaymentsReport':
       case 'totalExpensesReport':
+      case 'transactionReport':
         this.reportService.getListOfCustomers();
         break;
     }
@@ -327,13 +341,6 @@ export default class DownloadReportsComponent implements OnInit {
         params.supplier_id = supplier_id;
         break;
 
-      // case 'supplierPayablesReport':
-      //   // Both fields are optional, so no validation needed
-      //   if (supplier_id) {
-      //     params.supplier_id = supplier_id;
-      //   }
-      //   break;
-
       case 'customerFinancialReport':
         if (!customer_id) {
           this.showMessageService.showMessage(
@@ -353,6 +360,11 @@ export default class DownloadReportsComponent implements OnInit {
       case 'totalExpensesReport':
         params.customer_id = customer_id;
         break;
+      case 'transactionReport':
+        params.customer_id = customer_id;
+        params.supplier_id = supplier_id;
+        break;
+
     }
     const selectedFileName = this.reportsTypes?.find(
       (report) => report.code === selectedReport.code
@@ -394,7 +406,8 @@ export interface ReportType {
     | 'customerFinancialReport'
     | 'totalPaymentsReport'
     | 'totalExpensesReport'
-    | 'supplierPayablesReport';
+    | 'supplierPayablesReport'
+    | 'transactionReport';
 }
 
 export interface CustomerList {

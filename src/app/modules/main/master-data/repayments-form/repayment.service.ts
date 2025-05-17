@@ -40,7 +40,7 @@ export class RepaymentService {
   componentModelToApiModel(form: FormGroup) {
     return {
       invoice: form.get('invoiceNumber')?.value.id,
-      discription: form.get('description')?.value,
+      description: form.get('description')?.value,
       amount: form.get('amount')?.value,
       pay_date: formatDate(
         form.get('transactionDate')?.value,
@@ -72,7 +72,7 @@ export class RepaymentService {
       amount: data.amount,
       invoice_payment_number: data.invoice_payment_number,
       transactionDate: new Date(data.pay_date),
-      description: data.discription,
+      description: data.description,
     });
   }
 

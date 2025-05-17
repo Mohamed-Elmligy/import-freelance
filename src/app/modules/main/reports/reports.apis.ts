@@ -26,4 +26,8 @@ export const reportsApis = {
   invoiceDetails: 'reports/container-details/download',
   get_invoiceDetails: 'reports/container-details',
   pdf_invoiceDetails: 'reports/container-details/pdf',
+
+  transactionReport: 'reports/transaction-report/download',
+  get_transactionReport: 'reports/transaction-report',
+  pdf_transactionReport: 'reports/transaction-report/pdf',
 };

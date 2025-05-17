@@ -94,14 +94,14 @@ export default class RepaymentsFormComponent {
     amount: number;
     pay_date: Date;
     invoice_payment_number: string;
-    discription: string;
+    description: string;
   } = {
     customer: '',
     supplier: '',
     amount: 0,
     pay_date: new Date(),
     invoice_payment_number: '',
-    discription: '',
+    description: '',
   };
 
   protected form = this.formBuilder.group({

@@ -232,6 +232,13 @@ const main_routes: Routes = [
         data: { reportType: 'totalExpensesReport' },
         canActivate: [noCompanyUserGuard],
       },
+      {
+        path: 'transaction-report',
+        loadComponent: () =>
+          import('./reports/download-reports/download-reports.component'),
+        data: { reportType: 'transactionReport' },
+        canActivate: [noCompanyUserGuard],
+      },
     ],
   },
 ];
@@ -271,5 +278,6 @@ export const main_routes_paths = {
     supplierPayablesReport: '/main/reports/supplier-payables-report',
     totalPaymentsReport: '/main/reports/total-payments-report',
     totalExpensesReport: '/main/reports/total-expenses-report',
+    transactionReport: '/main/reports/transaction-report',
   },
 } as const;

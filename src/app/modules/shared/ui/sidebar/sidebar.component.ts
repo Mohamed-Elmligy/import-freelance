@@ -266,6 +266,16 @@ export class SidebarComponent {
                 ?.permissions?.reports?.includes('view_expenses_reports') ??
               false,
           },
+          {
+            label: 'TRANSACTION_REPORT',
+            icon: 'pi pi-file',
+            routerLink: this.mainRoutes.reports.transactionReport,
+            visible:
+              this.userPermissionService
+                .userPermissions()
+                ?.permissions?.reports?.includes('view_transaction_reports') ??
+              false,
+          },
         ],
       },
       {

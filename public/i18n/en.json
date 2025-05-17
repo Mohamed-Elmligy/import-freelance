@@ -178,6 +178,7 @@
   "total_pieces": "Total Pieces",
   "transactionDate": "Transaction Date",
   "TRANSACTIONS": "Transactions",
+  "TRANSACTION_REPORT": "Transaction Report",
   "TRANSACTION_FORM": "Transaction Form",
   "TRANSACTIONS_LIST": "Transactions List",
   "user_name": "Username",

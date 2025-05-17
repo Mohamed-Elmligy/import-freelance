@@ -119,7 +119,38 @@
         ></p-select>
         <label for="customer">{{ "SelectCustomer" | translate }}</label>
       </p-floatlabel>
-      } } }
+      } }
+      @case ('transactionReport') {
+      <p-floatlabel class="w-full" variant="over">
+        <p-select
+          inputId="customer"
+          [options]="reportService.listOfCustomers()"
+          optionLabel="name"
+          optionValue="id"
+          [filter]="true"
+          filterBy="name"
+          [showClear]="true"
+          formControlName="customer_id"
+          class="w-full"
+        ></p-select>
+        <label for="customer">{{ "SelectCustomer" | translate }}</label>
+      </p-floatlabel>
+      <p-floatlabel class="w-full" variant="over">
+        <p-select
+          inputId="supplier"
+          [options]="reportService.listOfSuppliers()"
+          optionLabel="name"
+          optionValue="id"
+          [filter]="true"
+          filterBy="name"
+          [showClear]="true"
+          formControlName="supplier_id"
+          class="w-full"
+        ></p-select>
+        <label for="supplier">{{ "SelectSupplier" | translate }}</label>
+      </p-floatlabel>
+      }
+    }
     </form>
 
     <!-- Action Buttons -->
