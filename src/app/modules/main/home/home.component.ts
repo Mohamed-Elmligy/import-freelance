@@ -5,10 +5,11 @@ import { ApiService } from '../../../core/services/api.service';
 import { SkeletonModule } from 'primeng/skeleton';
 import { LanguagesService } from '../../shared/services/languages.service';
 import { userIsAdmin } from '../../../core/guards/no-company-user.guard';
+import { CommonModule } from '@angular/common';
 
 @Component({
   selector: 'app-home',
-  imports: [TranslateModule, SkeletonModule],
+  imports: [TranslateModule, SkeletonModule, CommonModule],
   templateUrl: './home.component.html',
 })
 export default class HomeComponent implements OnInit {

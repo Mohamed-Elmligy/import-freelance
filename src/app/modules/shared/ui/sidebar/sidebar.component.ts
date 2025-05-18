@@ -211,7 +211,7 @@ export class SidebarComponent {
             visible:
               this.userPermissionService
                 .userPermissions()
-                ?.permissions?.reports?.includes('view_container_reports') ??
+                ?.permissions?.reports?.includes('view_container_cost_reports') ??
               false,
           },
           {

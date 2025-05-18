@@ -38,9 +38,9 @@
       class="rounded-2xl bg-gray-50 flex flex-col items-center justify-center gap-16 lg:flex-row lg:gap-32"
     >
       <div class="grid gap-16 sm:grid-cols-4">
-        <div class="block rounded bg-white shadow-md p-6">
+        <div class="block rounded bg-white shadow-md p-6 w-fit">
           <div class="flex items-center justify-center mb-3">
-            <span class="text-4xl text-primary font-bold material-icons">
+            <span class="text-4xl sm:text-5xl text-primary font-bold material-icons">
               description
             </span>
           </div>
@@ -52,9 +52,9 @@
           </span>
         </div>
         @if(userIsAdmin==='Admin'){
-        <div class="block rounded bg-white shadow-md p-6">
+        <div class="block rounded bg-white shadow-md p-6 w-fit">
           <div class="flex items-center justify-center mb-3">
-            <span class="text-4xl text-primary font-bold material-icons">
+            <span class="text-4xl sm:text-5xl text-primary font-bold material-icons">
               person
             </span>
           </div>
@@ -66,9 +66,9 @@
           </span>
         </div>
 
-        <div class="block rounded bg-white shadow-md p-6">
+        <div class="block rounded bg-white shadow-md p-6 w-fit">
           <div class="flex items-center justify-center mb-3">
-            <span class="text-4xl text-primary font-bold material-icons">
+            <span class="text-4xl sm:text-5xl text-primary font-bold material-icons">
               store
             </span>
           </div>
@@ -80,9 +80,9 @@
           </span>
         </div>
 
-        <div class="block rounded bg-white shadow-md p-6">
+        <div class="block rounded bg-white shadow-md p-6 w-fit">
           <div class="flex items-center justify-center mb-3">
-            <span class="text-4xl text-primary font-bold material-icons">
+            <span class="text-4xl sm:text-5xl text-primary font-bold material-icons">
               local_shipping
             </span>
           </div>
@@ -94,14 +94,14 @@
           </span>
         </div>
         } @if(userIsAdmin==='Customer'){
-        <div class="block rounded bg-white shadow-md p-6">
+        <div class="block rounded bg-white shadow-md p-6 w-fit">
           <div class="flex items-center justify-center mb-3">
             <span class="text-4xl text-primary font-bold material-icons">
               money
             </span>
           </div>
-          <span class="text-2xl text-center text-primary font-bold block p-3">
-            {{ totals.customer_invoices_amount }}
+          <span class="text-2xl sm:text-xl text-center text-primary font-bold block p-3">
+            {{ totals.customer_invoices_amount | number : "1.2-2" }}
           </span>
           <span class="text-gray-900 text-center block">
             {{ "customer_invoices_amount" | translate }}
