@@ -163,14 +163,10 @@ export class InvoiceService {
     modifiedModel.invoice_lines = modifiedModel.invoice_lines.filter(
       (line: any) =>
         line.item_code &&
-        line.item_description &&
         line.box_count &&
         line.item_in_box &&
         line.item_price &&
-        line.store_cbm &&
-        line.height &&
-        line.width &&
-        line.length
+        line.store_cbm
     );
     // check if invoice_lines is empty
     if (modifiedModel.invoice_lines.length === 0) {
