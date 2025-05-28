@@ -347,7 +347,7 @@ export default class CreateInvoiceComponent {
   }
 
   calculateTotalAmount(): void {
-    const totalAmount = this.invoice_linesFormArray.controls.reduce(
+    const totalAmount = Number(this.invoice_linesFormArray.controls.reduce(
       (sum, line) => {
         const itemPrice = parseFloat(line.get('item_price')?.value) || 0;
         const itemInBox = parseFloat(line.get('item_in_box')?.value) || 0;
@@ -355,7 +355,7 @@ export default class CreateInvoiceComponent {
         return sum + itemPrice * itemInBox * boxCount;
       },
       0
-    );
+    ).toFixed(3));
     this.form.get('total_amount')?.setValue(totalAmount, { emitEvent: false });
   }
 
@@ -364,7 +364,7 @@ export default class CreateInvoiceComponent {
       parseFloat(String(this.form.get('total_amount')?.value)) || 0;
     const discountAmount =
       parseFloat(String(this.form.get('discount_amount')?.value)) || 0;
-    const netAmount = totalAmount - discountAmount;
+    const netAmount = Number((totalAmount - discountAmount).toFixed(3));
     this.form.get('net_amount')?.setValue(netAmount, { emitEvent: false });
   }
 
