@@ -72,6 +72,7 @@ export default class DownloadReportsComponent implements OnInit {
 
   reportColumns: { [K in ReportType['code']]: string[] } = {
     invoiceDetails: [
+      'invoice_number',
       'container_sequence',
       'item_code',
       'item_description',
@@ -87,6 +88,7 @@ export default class DownloadReportsComponent implements OnInit {
       'total_weight',
     ],
     containerPrice: [
+      'invoice_number',
       'container_sequence',
       'item_code',
       'item_description',
@@ -252,8 +254,8 @@ export default class DownloadReportsComponent implements OnInit {
       this.visible = false;
       this.showMessageService.showMessage(
         'error',
-        'Unvalid Paremeters',
-        'Please select one atleast Paremeter'
+        'Invalid Parameters',
+        'Please select one atleast Parameter'
       );
       return;
     }
@@ -312,7 +314,7 @@ export default class DownloadReportsComponent implements OnInit {
         if (!customer_id && !container_number) {
           this.showMessageService.showMessage(
             'error',
-            'Unvalid Paremeters',
+            'Invalid Parameters',
             'Please select customer or container number'
           );
           return;
@@ -327,12 +329,11 @@ export default class DownloadReportsComponent implements OnInit {
         }
 
         break;
-
       case 'supplierReport':
         if (!supplier_id) {
           this.showMessageService.showMessage(
             'error',
-            'Unvalid Paremeters',
+            'Invalid Parameters',
             'Please select supplier'
           );
           return;
@@ -340,12 +341,11 @@ export default class DownloadReportsComponent implements OnInit {
 
         params.supplier_id = supplier_id;
         break;
-
       case 'customerFinancialReport':
         if (!customer_id) {
           this.showMessageService.showMessage(
             'error',
-            'Unvalid Paremeters',
+            'Invalid Parameters',
             'Please select customer'
           );
           return;
@@ -353,7 +353,6 @@ export default class DownloadReportsComponent implements OnInit {
 
         params.customer_id = customer_id;
         break;
-
       case 'totalPaymentsReport':
         params.customer_id = customer_id;
         break;
@@ -364,7 +363,9 @@ export default class DownloadReportsComponent implements OnInit {
         params.customer_id = customer_id;
         params.supplier_id = supplier_id;
         break;
-
+      case 'supplierPayablesReport':
+        params.supplier_id = supplier_id;
+        break;
     }
     const selectedFileName = this.reportsTypes?.find(
       (report) => report.code === selectedReport.code
