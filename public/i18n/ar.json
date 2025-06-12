@@ -216,7 +216,7 @@
   "customer_code": "كود العميل",
   "customer_name": "اسم العميل",
   "box_count": "عدد الكراتين",
-  "total_cbm": "اجمالى الحجم",
+  "total_cbm": "الحجم الفعلي",
   "total_item_price": "اجمالى مبلغ الصنف",
   "total_price": "اجمالى المبلغ RMB",
   "total_amount_price_egp": "اجمالى المبلغ EGP",

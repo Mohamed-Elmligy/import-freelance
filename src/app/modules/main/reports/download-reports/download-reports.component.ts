@@ -73,17 +73,13 @@ export default class DownloadReportsComponent implements OnInit {
   reportColumns: { [K in ReportType['code']]: string[] } = {
     invoiceDetails: [
       'invoice_number',
-      'container_sequence',
       'item_code',
       'item_description',
       'box_count',
       'item_in_box',
-      'store_cbm',
       'item_price',
       'total_price',
-      'length',
-      'width',
-      'height',
+      'store_cbm',
       'total_cbm',
       'total_weight',
     ],
