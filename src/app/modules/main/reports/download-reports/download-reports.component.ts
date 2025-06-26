@@ -115,10 +115,10 @@ export default class DownloadReportsComponent implements OnInit {
     ],
     customerFinancialReport: [
       'container',
-      'total_amount',
-      'total_commission',
-      'total_expense',
-      'total_line',
+      'total_container_price',
+      'total_container_expenses',
+      'total_container_commission',
+      'total_amount_needed',
     ],
     totalPaymentsReport: [
       'customer_code',

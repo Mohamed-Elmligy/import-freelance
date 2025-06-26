@@ -124,13 +124,13 @@ export default class CreateInvoiceComponent {
     total_store_cbm: [0],
     total_weight: [0],
     invoice_date: [new Date()], // Set default to current date
-    first_payment_amount: [],
+    first_payment_amount: [0],
     first_payment_date: [null],
-    second_payment_amount: [],
+    second_payment_amount: [0],
     second_payment_date: [null],
-    third_payment_amount: [],
+    third_payment_amount: [0],
     third_payment_date: [null],
-    fourth_payment_amount: [],
+    fourth_payment_amount: [0],
     fourth_payment_date: [null],
     invoice_lines: this.formBuilder.array([], []),
   });
@@ -405,9 +405,9 @@ export interface InvoiceLine {
   item_in_box: number;
   item_price: string;
   store_cbm: string;
-  width: string;
-  length: string;
-  height: string;
+  width: number;
+  length: number;
+  height: number;
   weight: string;
 }
 
