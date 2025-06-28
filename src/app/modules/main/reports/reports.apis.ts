@@ -30,4 +30,8 @@ export const reportsApis = {
   transactionReport: 'reports/transaction-report/download',
   get_transactionReport: 'reports/transaction-report',
   pdf_transactionReport: 'reports/transaction-report/pdf',
+
+  officeBalanceReport: 'reports/office-balance/download',
+  get_officeBalanceReport: 'reports/office-balance',
+  pdf_officeBalanceReport: 'reports/office-balance/pdf',
 };

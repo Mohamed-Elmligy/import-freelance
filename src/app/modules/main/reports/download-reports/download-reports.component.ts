@@ -151,6 +151,13 @@ export default class DownloadReportsComponent implements OnInit {
       'pay_date',
       'description',
     ],
+    officeBalanceReport: [
+      'customer_code',
+      'customer_name',
+      'payment',
+      'expense',
+      'customer_balance',
+    ],
   };
 
   filterForm: any;
@@ -167,6 +174,7 @@ export default class DownloadReportsComponent implements OnInit {
       totalExpensesReport: 'Total Expenses Report',
       supplierPayablesReport: 'Supplier Payables Report',
       transactionReport: 'Transaction Report',
+      officeBalanceReport: 'Office Balance Report',
     },
     ar: {
       containerDetails: 'تقرير بيانات الحاوية',
@@ -177,6 +185,7 @@ export default class DownloadReportsComponent implements OnInit {
       totalExpensesReport: 'تقرير إجمالي المصروفات',
       supplierPayablesReport: 'تقرير المستحقات للمورد',
       transactionReport: 'تقرير التسديدات',
+      officeBalanceReport: 'تقرير ميزانية المكتب',
     },
   };
   ngOnInit(): void {
@@ -200,6 +209,7 @@ export default class DownloadReportsComponent implements OnInit {
         code: 'supplierPayablesReport',
       },
       { name: translation.transactionReport, code: 'transactionReport' },
+      { name: translation.officeBalanceReport, code: 'officeBalanceReport' },
     ];
 
     // Get the report type from the route data
@@ -235,6 +245,7 @@ export default class DownloadReportsComponent implements OnInit {
       'totalExpensesReport',
       'totalPaymentsReport',
       'transactionReport',
+      'officeBalanceReport',
     ];
     if (
       notEmpityKey ||
@@ -251,7 +262,7 @@ export default class DownloadReportsComponent implements OnInit {
       this.showMessageService.showMessage(
         'error',
         'Invalid Parameters',
-        'Please select one atleast Parameter'
+        'برجاء اختيار احد الفلاتر الموجودة علي الاقل'
       );
       return;
     }
@@ -277,6 +288,8 @@ export default class DownloadReportsComponent implements OnInit {
       case 'totalExpensesReport':
       case 'transactionReport':
         this.reportService.getListOfCustomers();
+        break;
+      case 'officeBalanceReport':
         break;
     }
     this.filterForm.reset();
@@ -307,11 +320,11 @@ export default class DownloadReportsComponent implements OnInit {
     switch (selectedReport.code) {
       case 'invoiceDetails':
       case 'containerPrice':
-        if (!customer_id && !container_number) {
+        if (!customer_id || !container_number) {
           this.showMessageService.showMessage(
             'error',
             'Invalid Parameters',
-            'Please select customer or container number'
+            'برجاء اختيار احد الفلاتر الموجودة علي الاقل'
           );
           return;
         }
@@ -330,7 +343,7 @@ export default class DownloadReportsComponent implements OnInit {
           this.showMessageService.showMessage(
             'error',
             'Invalid Parameters',
-            'Please select supplier'
+            'برجاء اختيار احد الفلاتر الموجودة علي الاقل'
           );
           return;
         }
@@ -342,7 +355,7 @@ export default class DownloadReportsComponent implements OnInit {
           this.showMessageService.showMessage(
             'error',
             'Invalid Parameters',
-            'Please select customer'
+            'برجاء اختيار احد الفلاتر الموجودة علي الاقل'
           );
           return;
         }
@@ -404,7 +417,8 @@ export interface ReportType {
     | 'totalPaymentsReport'
     | 'totalExpensesReport'
     | 'supplierPayablesReport'
-    | 'transactionReport';
+    | 'transactionReport'
+    | 'officeBalanceReport';
 }
 
 export interface CustomerList {

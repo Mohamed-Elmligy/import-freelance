@@ -10,7 +10,7 @@
 
     <ng-template #subtitle>
       <p class="text-gray-600 dark:text-gray-400 mb-6">
-        {{ "Please select at least one of these parameters." | translate }}
+        {{ selectedReport()?.code === 'officeBalanceReport' ? ('PRESS_VIEW_DOWNLOAD_PRINT' | translate) : ('PLEASE_SELECT_PARAMETERS' | translate) }}
       </p>
     </ng-template>
 

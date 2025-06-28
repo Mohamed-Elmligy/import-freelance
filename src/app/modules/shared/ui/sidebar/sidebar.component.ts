@@ -276,6 +276,16 @@ export class SidebarComponent {
                 ?.permissions?.reports?.includes('view_transaction_reports') ??
               false,
           },
+          {
+            label: 'OFFICE_BALANCE_REPORT',
+            icon: 'pi pi-dollar',
+            routerLink: this.mainRoutes.reports.officeBalanceReport,
+            visible:
+              this.userPermissionService
+                .userPermissions()
+                ?.permissions?.reports?.includes('view_office_balance_reports') ??
+              false,
+          },
         ],
       },
       {
