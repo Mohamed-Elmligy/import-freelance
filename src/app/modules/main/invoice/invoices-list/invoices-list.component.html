@@ -39,6 +39,14 @@
     </ng-template>
 
     <ng-template #end>
+      <input #fileInput type="file" (change)="onFileSelected($event)" accept=".xlsx, .xls" style="display: none" />
+      <button
+        pButton
+        pRipple
+        [label]="'upload' | translate"
+        class="!bg-info !border-info me-2"
+        (click)="fileInput.click()"
+      ></button>
       <button
         pButton
         pRipple
@@ -57,7 +65,8 @@
         class="!bg-secondary !border-secondary"
         [routerLink]="main_routes.invoices"
       ></button>
-      }
+    }
+    
     </ng-template>
   </p-toolbar>
 

@@ -38,6 +38,10 @@ export class InvoiceService {
     );
   }
 
+  uploadInvoiceFile(file: FormData) {
+    return this.apiService.uploadFile('invoice/upload', file);
+  }
+
   componentModelToApiModel(form: FormGroup) {
     const formatPaymentDate = (date: any) =>
       date ? formatDate(date, 'yyyy-MM-dd', 'en') : null;

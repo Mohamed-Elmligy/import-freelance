@@ -1,4 +1,6 @@
-import { Component, effect, inject } from '@angular/core';
+import { Component, effect, inject, ViewChild, ElementRef } from '@angular/core';
+import { HttpEventType, HttpErrorResponse } from '@angular/common/http';
+import { MessageService } from 'primeng/api';
 import {
   FormBuilder,
   FormGroup,
@@ -63,11 +65,92 @@ export default class InvoicesListComponent {
     invoice_number: [''],
   });
 
-  constructor() {
+  @ViewChild('fileInput') fileInput!: ElementRef;
+  isUploading = false;
+
+  constructor(private messageService: MessageService) {
     effect(() => {
       this.invoiceService.invoiceDeleted();
       this.getInvoicesList();
       this.invoiceService.invoiceDeleted.set(false);
+    });
+  }
+
+  onFileSelected(event: Event) {
+    const input = event.target as HTMLInputElement;
+    if (input.files && input.files.length > 0) {
+      const file = input.files[0];
+      this.uploadInvoice(file);
+      // Reset the file input
+      this.fileInput.nativeElement.value = '';
+    }
+  }
+
+  uploadInvoice(file: File) {
+    // Check if file is an Excel file
+    const allowedExtensions = ['.xlsx', '.xls'];
+    const fileExtension = file.name.split('.').pop()?.toLowerCase();
+    
+    if (!fileExtension || !allowedExtensions.includes(`.${fileExtension}`)) {
+      this.messageService.add({
+        severity: 'error',
+        summary: 'Error',
+        detail: 'Only Excel files (.xlsx, .xls) are allowed.'
+      });
+      return;
+    }
+
+    this.isUploading = true;
+    const formData = new FormData();
+    formData.append('file', file);
+
+    this.invoiceService.uploadInvoiceFile(formData).subscribe({
+      next: (event: any) => {
+        if (event.type === HttpEventType.Response) {
+          this.isUploading = false;
+          this.messageService.add({
+            severity: 'success',
+            summary: 'Success',
+            detail: 'File processed successfully!',
+            life: 5000
+          });
+          // Refresh the invoices list
+          this.getInvoicesList();
+        }
+      },
+      error: (error: HttpErrorResponse) => {
+        this.isUploading = false;
+        
+        // Check if there are validation errors in the response
+        if (error.error?.errors?.length > 0) {
+          // Show a summary message
+          this.messageService.add({
+            severity: 'warn',
+            summary: 'Validation Errors',
+            detail: `Found ${error.error.errors.length} issues in the uploaded file. Please review the details below.`,
+            life: 10000
+          });
+          
+          // Show each validation error as a separate message
+          error.error.errors.forEach((err: {row: string; error: string}) => {
+            this.messageService.add({
+              severity: 'warn',
+              summary: `Row: ${err.row}`,
+              detail: err.error,
+              life: 10000,
+              closable: true
+            });
+          });
+        } else {
+          // Handle other types of errors
+          this.messageService.add({
+            severity: 'error',
+            summary: 'Error',
+            detail: error.error?.message || 'Failed to process file.',
+            life: 10000
+          });
+        }
+      }
     });
   }
 

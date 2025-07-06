@@ -31,6 +31,22 @@ export class ApiService {
     });
   }
 
+  uploadFile(url: string, formData: FormData, reportProgress = true) {
+    return this.HTTP.post(url, formData, {
+      reportProgress: true,
+      observe: 'events'
+    }).pipe(
+      catchError((error: any) => {
+        this.messages.add({
+          severity: 'error',
+          summary: 'Error',
+          detail: error.error?.message || 'Failed to upload file.'
+        });
+        return throwError(() => error);
+      })
+    );
+  }
+
   removeInvalidValues(filter: any) {
     if (filter) {
       for (const key in filter) {
