@@ -24,6 +24,7 @@
   "clientName": "Client Name",
   "code": "Client Code",
   "commission": "Commission",
+  "commission_amount": "Commission",
   "confirmOTP": "Confirm OTP",
   "confirmPassword": "Confirm Password",
   "container": "Container",

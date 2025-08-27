@@ -155,6 +155,7 @@ export default class DownloadReportsComponent implements OnInit {
       'customer_code',
       'customer_name',
       'payment',
+      'commission_amount',
       'expense',
       'customer_balance',
     ],

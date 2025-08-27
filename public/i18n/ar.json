@@ -25,6 +25,7 @@
   "clientName": "اسم العميل",
   "code": "كود العميل",
   "commission": "عمولة",
+  "commission_amount": "العمولة",
   "confirmOTP": "تاكيد رمز التحقق",
   "confirmPassword": "تأكيد كلمة المرور",
   "container": "الحاوية",
