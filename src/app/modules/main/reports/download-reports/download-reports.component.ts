@@ -137,10 +137,12 @@ export default class DownloadReportsComponent implements OnInit {
     ],
     supplierPayablesReport: [
       'invoice_number',
+      'customer_name',
       'supplier_name',
       'store_number',
       'amount',
       'due_date',
+      'invoice_date',
     ],
     transactionReport: [
       'invoice_number',
