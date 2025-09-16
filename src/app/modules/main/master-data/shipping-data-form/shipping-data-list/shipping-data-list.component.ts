@@ -72,6 +72,8 @@ export default class ShippingDataListComponent {
   });
 
   constructor() {
+    // Initialize pagination for this component
+    this.paginationService.initializeForComponent();
     // Load initial data
     this.getShippingList();
     

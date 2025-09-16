@@ -64,6 +64,8 @@ export default class RepaymentsListComponent {
   });
 
   constructor() {
+    // Initialize pagination for this component
+    this.paginationService.initializeForComponent();
     // Load initial data
     this.getTransactionList();
     

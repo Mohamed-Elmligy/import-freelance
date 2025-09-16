@@ -70,6 +70,8 @@ export default class ItemsListComponent {
   });
 
   constructor() {
+    // Initialize pagination for this component
+    this.paginationService.initializeForComponent();
     // Load initial data
     this.getItemsList();
     

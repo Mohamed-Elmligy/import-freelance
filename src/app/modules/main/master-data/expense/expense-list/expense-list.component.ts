@@ -69,6 +69,8 @@ export default class ExpenseListComponent {
   });
 
   constructor() {
+    // Initialize pagination for this component
+    this.paginationService.initializeForComponent();
     // Load initial data
     this.getExpenseList();
     

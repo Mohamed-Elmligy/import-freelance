@@ -4,6 +4,7 @@ import { SecurityService } from '../../../../../core/services/security.service';
 import { LanguagesService } from '../../../../shared/services/languages.service';
 import { main_routes_paths } from '../../../main.routes';
 import { PaymentService } from '../payment.service';
+import { PaginationService } from '../../../../../core/services/pagination.service';
 
 import {
   FormBuilder,
@@ -48,22 +49,27 @@ export default class PaymentsListComponent {
   securityService = inject(SecurityService);
   private router = inject(Router);
   private formBuilder = inject(FormBuilder);
+  private paginationService = inject(PaginationService);
 
   dataSource: any[] = [];
   main_routes = main_routes_paths;
   displayedColumns: string[] = [];
   tableColumns: string[] = [];
   isLoading: boolean = false;
-  first: number = 0;
-  rows: number = 10;
-  totalRecords: number = 0;
-  page: number = 1;
+  
+  // Pagination properties - get from service
+  get first(): number { return this.paginationService.getPaginationState().first; }
+  get rows(): number { return this.paginationService.getPaginationState().rows; }
+  get totalRecords(): number { return this.paginationService.getPaginationState().totalRecords; }
+  get page(): number { return this.paginationService.getPaginationState().page; }
   filterForm: FormGroup = this.formBuilder.group({
     customer_name: [''],
     customer_code: [''],
   });
 
   constructor() {
+    // Initialize pagination for this component
+    this.paginationService.initializeForComponent();
     // Load initial data
     this.getPaymentList();
     
@@ -77,19 +83,16 @@ export default class PaymentsListComponent {
   applayFilter() {
     let filterData = this.filterForm.getRawValue();
     // Reset pagination when filtering
-    this.first = 0;
-    this.page = 1;
+    this.paginationService.resetPagination();
     this.getPaymentList(this.page, this.rows, filterData);
   }
 
   onPageChange(event: any) {
-    this.first = event.first;
-    this.rows = event.rows;
-    this.page = Math.floor(event.first / event.rows) + 1;
+    const paginationState = this.paginationService.handlePageChange(event);
     
     // Get current filter data to maintain filters during pagination
     let filterData = this.filterForm.getRawValue();
-    this.getPaymentList(this.page, event.rows, filterData);
+    this.getPaymentList(paginationState.page, paginationState.rows, filterData);
   }
 
   getPaymentList(page: number = 1, size: number = 10, filterData: any = {}) {
@@ -101,8 +104,8 @@ export default class PaymentsListComponent {
         this.dataSource = this.PaymentService.apiModelToComponentModelList(
           data.results
         );
-        // Set total records for pagination
-        this.totalRecords = data.total || data.count || 0;
+        // Set total records for pagination using the service
+        this.paginationService.setTotalRecords(data.count || 0);
         this.isLoading = false;
       },
       () => {

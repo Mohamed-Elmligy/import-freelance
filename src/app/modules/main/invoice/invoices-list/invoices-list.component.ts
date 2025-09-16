@@ -73,6 +73,8 @@ export default class InvoicesListComponent {
   isUploading = false;
 
   constructor(private messageService: MessageService) {
+    // Initialize pagination for this component
+    this.paginationService.initializeForComponent();
     // Load initial data
     this.getInvoicesList();
     

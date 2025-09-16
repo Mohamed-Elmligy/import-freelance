@@ -71,6 +71,8 @@ export default class CustomerListComponent {
   });
 
   constructor() {
+    // Initialize pagination for this component
+    this.paginationService.initializeForComponent();
     // Load initial data
     this.getCustomersList();
     

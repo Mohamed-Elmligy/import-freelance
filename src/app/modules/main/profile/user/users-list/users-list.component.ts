@@ -105,6 +105,9 @@ export default class UsersListComponent implements OnInit {
   ];
 
   ngOnInit(): void {
+    // Initialize pagination for this component
+    this.paginationService.initializeForComponent();
+    
     this.usersList = [
       'first_name',
       'last_name',

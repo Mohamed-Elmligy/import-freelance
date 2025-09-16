@@ -73,6 +73,8 @@ export default class SuppliersListComponent {
   });
 
   constructor() {
+    // Initialize pagination for this component
+    this.paginationService.initializeForComponent();
     // Load initial data
     this.getSupplierList();
     

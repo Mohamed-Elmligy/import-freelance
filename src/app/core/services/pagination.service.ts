@@ -40,7 +40,7 @@ export class PaginationService {
   }
 
   /**
-   * Reset pagination to first page
+   * Reset pagination to first page with default rows
    */
   resetPagination(): void {
     this.paginationState.set({
@@ -49,6 +49,27 @@ export class PaginationService {
       page: 1,
       totalRecords: 0,
     });
+  }
+
+  /**
+   * Reset pagination to first page but keep current rows count
+   */
+  resetPaginationKeepRows(): void {
+    const currentRows = this.paginationState().rows;
+    this.paginationState.set({
+      first: 0,
+      rows: currentRows,
+      page: 1,
+      totalRecords: 0,
+    });
+  }
+
+  /**
+   * Initialize pagination for a new component
+   * This should be called when a component loads to ensure clean state
+   */
+  initializeForComponent(): void {
+    this.resetPagination();
   }
 
   /**
