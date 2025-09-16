@@ -21,6 +21,7 @@ import { main_routes_paths } from '../../../main.routes';
 import { ExpenseService } from '../expense.service';
 import { Skeleton } from 'primeng/skeleton';
 import { UserPermissionService } from '../../../../../services/user-permission.service';
+import { PaginationService } from '../../../../../core/services/pagination.service';
 
 @Component({
   selector: 'app-expense-list',
@@ -48,23 +49,29 @@ export default class ExpenseListComponent {
   private router = inject(Router);
   private formBuilder = inject(FormBuilder);
   userPermissionService = inject(UserPermissionService);
+  private paginationService = inject(PaginationService);
+  
   dataSource: any[] = [];
 
   main_routes = main_routes_paths;
   displayedColumns: string[] = [];
   tableColumns: string[] = [];
   isLoading = false;
-
-  first: number = 0;
-  rows: number = 10;
-  totalRecords: number = 0;
-  page: number = 1;
+  
+  // Pagination properties - get from service
+  get first(): number { return this.paginationService.getPaginationState().first; }
+  get rows(): number { return this.paginationService.getPaginationState().rows; }
+  get totalRecords(): number { return this.paginationService.getPaginationState().totalRecords; }
+  get page(): number { return this.paginationService.getPaginationState().page; }
   filterForm: FormGroup = this.formBuilder.group({
     customer_name: [''],
     container_sequence: [''],
   });
 
   constructor() {
+    // Load initial data
+    this.getExpenseList();
+    
     effect(() => {
       this.ExpenseService.expenseDeleted();
       this.getExpenseList();
@@ -74,7 +81,9 @@ export default class ExpenseListComponent {
 
   applayFilter() {
     let filterData = this.filterForm.getRawValue();
-    this.getExpenseList(this.first + 1, this.rows, filterData);
+    // Reset pagination when filtering
+    this.paginationService.resetPagination();
+    this.getExpenseList(this.page, this.rows, filterData);
   }
 
   getExpenseList(page: number = 1, size: number = 10, filterData: any = {}) {
@@ -86,7 +95,8 @@ export default class ExpenseListComponent {
         this.dataSource = this.ExpenseService.apiModelToComponentModelList(
           data.results
         );
-        this.totalRecords = data.count;
+        // Set total records for pagination using the service
+        this.paginationService.setTotalRecords(data.count || 0);
         this.isLoading = false;
       },
       () => {
@@ -96,10 +106,11 @@ export default class ExpenseListComponent {
   }
 
   onPageChange(event: any) {
-    this.first = event.first;
-    this.rows = event.rows;
-    this.page = event.first / event.rows + 1;
-    this.getExpenseList(this.page, event.rows);
+    const paginationState = this.paginationService.handlePageChange(event);
+    
+    // Get current filter data to maintain filters during pagination
+    let filterData = this.filterForm.getRawValue();
+    this.getExpenseList(paginationState.page, paginationState.rows, filterData);
   }
 
   editExpense(expenseId: any) {

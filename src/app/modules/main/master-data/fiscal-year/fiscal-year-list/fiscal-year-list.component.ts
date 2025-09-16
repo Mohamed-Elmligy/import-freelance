@@ -15,6 +15,7 @@ import { main_routes_paths } from '../../../main.routes';
 import { FiscalYearService } from '../fiscal-year.service';
 import { Skeleton } from 'primeng/skeleton';
 import { FormBuilder, FormGroup, ReactiveFormsModule } from '@angular/forms';
+import { PaginationService } from '../../../../../core/services/pagination.service';
 
 @Component({
   selector: 'app-fiscal-year-list',
@@ -41,16 +42,19 @@ export default class FiscalYearListComponent {
   YearService = inject(FiscalYearService);
   private router = inject(Router);
   private formBuilder = inject(FormBuilder);
+  private paginationService = inject(PaginationService);
 
   dataSource: any[] = []; // Changed to array for PrimeNG table
   main_routes = main_routes_paths;
   displayedColumns: string[] = [];
   tableColumns: string[] = [];
   isLoading = false; // Add loading state
-  rows: number = 10;
-  first: number = 0;
-  totalRecords: number = 0;
-  page: number = 1;
+  
+  // Pagination properties - get from service
+  get first(): number { return this.paginationService.getPaginationState().first; }
+  get rows(): number { return this.paginationService.getPaginationState().rows; }
+  get totalRecords(): number { return this.paginationService.getPaginationState().totalRecords; }
+  get page(): number { return this.paginationService.getPaginationState().page; }
   stateOptions: any[] = [
     {
       label: this.languageService.layoutDir() == 'ltr' ? 'active' : 'نشط',
@@ -68,6 +72,9 @@ export default class FiscalYearListComponent {
   });
 
   constructor() {
+    // Load initial data
+    this.getYearList();
+    
     effect(() => {
       this.YearService.yearDeleted();
       this.getYearList();
@@ -77,7 +84,9 @@ export default class FiscalYearListComponent {
 
   applayFilter() {
     let filterData = this.filterForm.getRawValue();
-    this.getYearList(this.first + 1, this.rows, filterData);
+    // Reset pagination when filtering
+    this.paginationService.resetPagination();
+    this.getYearList(this.page, this.rows, filterData);
   }
 
   getYearList(page: number = 1, size: number = 10, filterData: any = {}) {
@@ -88,16 +97,18 @@ export default class FiscalYearListComponent {
       this.dataSource = this.YearService.apiModelToComponentModelList(
         data.results
       );
-      this.totalRecords = data.count;
+      // Set total records for pagination using the service
+      this.paginationService.setTotalRecords(data.count || 0);
       this.isLoading = false; // Set loading state to false
     });
   }
 
   onPageChange(event: any) {
-    this.first = event.first;
-    this.rows = event.rows;
-    this.page = event.first / event.rows + 1;
-    this.getYearList(this.page, event.rows);
+    const paginationState = this.paginationService.handlePageChange(event);
+    
+    // Get current filter data to maintain filters during pagination
+    let filterData = this.filterForm.getRawValue();
+    this.getYearList(paginationState.page, paginationState.rows, filterData);
   }
 
   editYear(yearId: any) {

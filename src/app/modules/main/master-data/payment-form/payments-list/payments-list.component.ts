@@ -64,6 +64,9 @@ export default class PaymentsListComponent {
   });
 
   constructor() {
+    // Load initial data
+    this.getPaymentList();
+    
     effect(() => {
       this.PaymentService.paymentDeleted();
       this.getPaymentList();
@@ -73,14 +76,20 @@ export default class PaymentsListComponent {
 
   applayFilter() {
     let filterData = this.filterForm.getRawValue();
-    this.getPaymentList(this.first + 1, this.rows, filterData);
+    // Reset pagination when filtering
+    this.first = 0;
+    this.page = 1;
+    this.getPaymentList(this.page, this.rows, filterData);
   }
 
   onPageChange(event: any) {
     this.first = event.first;
     this.rows = event.rows;
-    this.page = event.first / event.rows + 1;
-    this.getPaymentList(this.page, event.rows);
+    this.page = Math.floor(event.first / event.rows) + 1;
+    
+    // Get current filter data to maintain filters during pagination
+    let filterData = this.filterForm.getRawValue();
+    this.getPaymentList(this.page, event.rows, filterData);
   }
 
   getPaymentList(page: number = 1, size: number = 10, filterData: any = {}) {
@@ -92,6 +101,8 @@ export default class PaymentsListComponent {
         this.dataSource = this.PaymentService.apiModelToComponentModelList(
           data.results
         );
+        // Set total records for pagination
+        this.totalRecords = data.total || data.count || 0;
         this.isLoading = false;
       },
       () => {

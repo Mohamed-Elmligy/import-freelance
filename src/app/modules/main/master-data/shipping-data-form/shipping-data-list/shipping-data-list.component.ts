@@ -22,6 +22,7 @@ import { TooltipModule } from 'primeng/tooltip';
 import { TableModule } from 'primeng/table';
 import { SkeletonModule } from 'primeng/skeleton';
 import { UserPermissionService } from '../../../../../services/user-permission.service';
+import { PaginationService } from '../../../../../core/services/pagination.service';
 
 @Component({
   selector: 'app-shipping-data-list',
@@ -49,16 +50,19 @@ export default class ShippingDataListComponent {
   private formBuilder = inject(FormBuilder);
   private router = inject(Router);
   userPermissionService = inject(UserPermissionService);
+  private paginationService = inject(PaginationService);
 
   dataSource: any[] = [];
   main_routes = main_routes_paths;
   displayedColumns: string[] = [];
   tableColumns: string[] = [];
   isLoading: boolean = true;
-  first: number = 0;
-  rows: number = 10;
-  totalRecords: number = 0;
-  page: number = 1;
+  
+  // Pagination properties - get from service
+  get first(): number { return this.paginationService.getPaginationState().first; }
+  get rows(): number { return this.paginationService.getPaginationState().rows; }
+  get totalRecords(): number { return this.paginationService.getPaginationState().totalRecords; }
+  get page(): number { return this.paginationService.getPaginationState().page; }
 
   filterForm: FormGroup = this.formBuilder.group({
     customer_name: [''],
@@ -68,6 +72,9 @@ export default class ShippingDataListComponent {
   });
 
   constructor() {
+    // Load initial data
+    this.getShippingList();
+    
     effect(() => {
       this.shippingDataService.shippingDataDeleted();
       this.getShippingList();
@@ -77,14 +84,17 @@ export default class ShippingDataListComponent {
 
   applayFilter() {
     let filterData = this.filterForm.getRawValue();
-    this.getShippingList(this.first + 1, this.rows, filterData);
+    // Reset pagination when filtering
+    this.paginationService.resetPagination();
+    this.getShippingList(this.page, this.rows, filterData);
   }
 
   onPageChange(event: any) {
-    this.first = event.first;
-    this.rows = event.rows;
-    this.page = event.first / event.rows + 1;
-    this.getShippingList(this.page, event.rows);
+    const paginationState = this.paginationService.handlePageChange(event);
+    
+    // Get current filter data to maintain filters during pagination
+    let filterData = this.filterForm.getRawValue();
+    this.getShippingList(paginationState.page, paginationState.rows, filterData);
   }
 
   getShippingList(page: number = 1, size: number = 10, filterData: any = {}) {
@@ -97,6 +107,8 @@ export default class ShippingDataListComponent {
         this.dataSource = this.shippingDataService.apiModelToComponentModelList(
           data.results
         );
+        // Set total records for pagination using the service
+        this.paginationService.setTotalRecords(data.count || 0);
         this.isLoading = false;
       });
   }

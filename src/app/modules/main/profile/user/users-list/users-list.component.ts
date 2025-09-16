@@ -30,6 +30,7 @@ import { SkeletonModule } from 'primeng/skeleton';
 import { SelectButtonModule } from 'primeng/selectbutton';
 import { LanguagesService } from '../../../../shared/services/languages.service';
 import { UserPermissionService } from '../../../../../services/user-permission.service';
+import { PaginationService } from '../../../../../core/services/pagination.service';
 
 @Component({
   selector: 'app-users-list',
@@ -64,17 +65,21 @@ export default class UsersListComponent implements OnInit {
   private confirmService = inject(ConfirmSaveDeleteService);
   private languageService = inject(LanguagesService);
   userPermissionService = inject(UserPermissionService);
+  private paginationService = inject(PaginationService);
+  
   visible: boolean = false;
   userId: string = '';
 
   dataSource: any[] = [];
   tableColumns: string[] = [];
-  first: number = 0;
-  rows: number = 10;
-  totalRecords: number = 0;
   usersList: any[] = [];
   isLoading: boolean = false;
-  page: number = 1;
+  
+  // Pagination properties - get from service
+  get first(): number { return this.paginationService.getPaginationState().first; }
+  get rows(): number { return this.paginationService.getPaginationState().rows; }
+  get totalRecords(): number { return this.paginationService.getPaginationState().totalRecords; }
+  get page(): number { return this.paginationService.getPaginationState().page; }
 
   form = this.formBuilder.group({
     new_password: ['', [Validators.required]],
@@ -112,7 +117,9 @@ export default class UsersListComponent implements OnInit {
 
   applayFilter() {
     let filterData = this.filterForm.getRawValue();
-    this.getUsersList(this.first + 1, this.rows, filterData);
+    // Reset pagination when filtering
+    this.paginationService.resetPagination();
+    this.getUsersList(this.page, this.rows, filterData);
   }
 
   getUsersList(page = 1, size = 10, filter?: any) {
@@ -126,16 +133,18 @@ export default class UsersListComponent implements OnInit {
       .subscribe((data: any) => {
         this.tableColumns = this.usersList;
         this.dataSource = data.results;
-        this.totalRecords = data.count;
+        // Set total records for pagination using the service
+        this.paginationService.setTotalRecords(data.count || 0);
         this.isLoading = false;
       });
   }
 
   onPageChange(event: any) {
-    this.first = event.first;
-    this.rows = event.rows;
-    this.page = event.first / event.rows + 1;
-    this.getUsersList(this.page, event.rows);
+    const paginationState = this.paginationService.handlePageChange(event);
+    
+    // Get current filter data to maintain filters during pagination
+    let filterData = this.filterForm.getRawValue();
+    this.getUsersList(paginationState.page, paginationState.rows, filterData);
   }
 
   createUser() {

@@ -23,6 +23,7 @@ import { ItemsCategoryService } from '../items-category.service';
 import { HttpClient } from '@angular/common/http';
 import { TableModule } from 'primeng/table';
 import { Skeleton } from 'primeng/skeleton';
+import { PaginationService } from '../../../../../core/services/pagination.service';
 
 @Component({
   selector: 'app-items-list',
@@ -50,21 +51,28 @@ export default class ItemsListComponent {
   securityService = inject(SecurityService);
   private router = inject(Router);
   private formBuilder = inject(FormBuilder);
+  private paginationService = inject(PaginationService);
+  
   dataSource: any[] = []; // Changed to array for PrimeNG table
   isLoading = true; // Add loading state
 
   main_routes = main_routes_paths;
   displayedColumns: string[] = [];
   tableColumns: string[] = [];
-  first: number = 0;
-  rows: number = 10;
-  totalRecords: number = 0;
-  page: number = 1;
+  
+  // Pagination properties - get from service
+  get first(): number { return this.paginationService.getPaginationState().first; }
+  get rows(): number { return this.paginationService.getPaginationState().rows; }
+  get totalRecords(): number { return this.paginationService.getPaginationState().totalRecords; }
+  get page(): number { return this.paginationService.getPaginationState().page; }
   filterForm: FormGroup = this.formBuilder.group({
     item: [''],
   });
 
   constructor() {
+    // Load initial data
+    this.getItemsList();
+    
     effect(() => {
       this.ItemsCategoryService.itemDeleted();
       this.getItemsList();
@@ -74,14 +82,17 @@ export default class ItemsListComponent {
 
   applayFilter() {
     let filterData = this.filterForm.getRawValue();
-    this.getItemsList(this.first + 1, this.rows, filterData);
+    // Reset pagination when filtering
+    this.paginationService.resetPagination();
+    this.getItemsList(this.page, this.rows, filterData);
   }
 
   onPageChange(event: any) {
-    this.first = event.first;
-    this.rows = event.rows;
-    this.page = event.first / event.rows + 1;
-    this.getItemsList(this.page, event.rows);
+    const paginationState = this.paginationService.handlePageChange(event);
+    
+    // Get current filter data to maintain filters during pagination
+    let filterData = this.filterForm.getRawValue();
+    this.getItemsList(paginationState.page, paginationState.rows, filterData);
   }
 
   getItemsList(page: number = 1, size: number = 10, filterData: any = {}) {
@@ -92,7 +103,8 @@ export default class ItemsListComponent {
         this.displayedColumns = this.ItemsCategoryService.itemsHeaders;
         this.dataSource =
           this.ItemsCategoryService.apiModelToComponentModelList(data.results);
-        this.totalRecords = data.count;
+        // Set total records for pagination using the service
+        this.paginationService.setTotalRecords(data.count || 0);
         this.isLoading = false; // Set loading to false after fetching
       }
     );

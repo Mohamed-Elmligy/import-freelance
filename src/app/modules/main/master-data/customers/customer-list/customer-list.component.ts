@@ -22,6 +22,7 @@ import { main_routes_paths } from '../../../main.routes';
 import { CustomersService } from '../customers.service';
 import { Skeleton } from 'primeng/skeleton';
 import { UserPermissionService } from '../../../../../services/user-permission.service';
+import { PaginationService } from '../../../../../core/services/pagination.service';
 
 @Component({
   selector: 'app-customer-list',
@@ -50,15 +51,19 @@ export default class CustomerListComponent {
   userPernissions = inject(UserPermissionService);
   private router = inject(Router);
   private formBuilder = inject(FormBuilder);
+  private paginationService = inject(PaginationService);
+  
   dataSource: any[] = [];
   main_routes = main_routes_paths;
   displayedColumns: string[] = [];
   tableColumns: string[] = [];
   isLoading = true;
-  first: number = 0;
-  rows: number = 10;
-  page: number = 1;
-  totalRecords: number = 0;
+  
+  // Pagination properties - get from service
+  get first(): number { return this.paginationService.getPaginationState().first; }
+  get rows(): number { return this.paginationService.getPaginationState().rows; }
+  get totalRecords(): number { return this.paginationService.getPaginationState().totalRecords; }
+  get page(): number { return this.paginationService.getPaginationState().page; }
 
   filterForm: FormGroup = this.formBuilder.group({
     name: [''],
@@ -66,6 +71,9 @@ export default class CustomerListComponent {
   });
 
   constructor() {
+    // Load initial data
+    this.getCustomersList();
+    
     effect(() => {
       this.customerService.customerDeleted();
       this.getCustomersList();
@@ -75,7 +83,9 @@ export default class CustomerListComponent {
 
   applayFilter() {
     let filterData = this.filterForm.value;
-    this.getCustomersList(this.first + 1, this.rows, filterData);
+    // Reset pagination when filtering
+    this.paginationService.resetPagination();
+    this.getCustomersList(this.page, this.rows, filterData);
   }
 
   getCustomersList(page: number = 1, size: number = 10, filterData: any = {}) {
@@ -88,16 +98,18 @@ export default class CustomerListComponent {
         let ModifideData: any =
           this.customerService.apiModelToComponentModelList(data.results);
         this.dataSource = ModifideData;
-        this.totalRecords = data.count;
+        // Set total records for pagination using the service
+        this.paginationService.setTotalRecords(data.count || 0);
         this.isLoading = false;
       });
   }
 
   onPageChange(event: any) {
-    this.first = event.first;
-    this.rows = event.rows;
-    this.page = event.first / event.rows + 1;
-    this.getCustomersList(this.page, event.rows);
+    const paginationState = this.paginationService.handlePageChange(event);
+    
+    // Get current filter data to maintain filters during pagination
+    let filterData = this.filterForm.value;
+    this.getCustomersList(paginationState.page, paginationState.rows, filterData);
   }
 
   editCustomer(customerId: any) {

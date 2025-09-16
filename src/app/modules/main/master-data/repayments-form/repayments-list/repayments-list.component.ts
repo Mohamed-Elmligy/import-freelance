@@ -16,6 +16,7 @@ import { RepaymentService } from '../repayment.service';
 import { Skeleton } from 'primeng/skeleton';
 import { FormBuilder, FormGroup, ReactiveFormsModule } from '@angular/forms';
 import { UserPermissionService } from '../../../../../services/user-permission.service';
+import { PaginationService } from '../../../../../core/services/pagination.service';
 
 @Component({
   selector: 'app-repayments-list',
@@ -43,16 +44,19 @@ export default class RepaymentsListComponent {
   private router = inject(Router);
   private formBuilder = inject(FormBuilder);
   userPermissionService = inject(UserPermissionService);
+  private paginationService = inject(PaginationService);
 
   dataSource: any[] = [];
   main_routes = main_routes_paths;
   displayedColumns: string[] = [];
   tableColumns: string[] = [];
   isLoading: boolean = false; // Add loading state
-  first: number = 0;
-  rows: number = 10;
-  totalRecords: number = 0;
-  page: number = 1;
+  
+  // Pagination properties - get from service
+  get first(): number { return this.paginationService.getPaginationState().first; }
+  get rows(): number { return this.paginationService.getPaginationState().rows; }
+  get totalRecords(): number { return this.paginationService.getPaginationState().totalRecords; }
+  get page(): number { return this.paginationService.getPaginationState().page; }
 
   filterForm: FormGroup = this.formBuilder.group({
     customer_name: [''],
@@ -60,6 +64,9 @@ export default class RepaymentsListComponent {
   });
 
   constructor() {
+    // Load initial data
+    this.getTransactionList();
+    
     effect(() => {
       this.TransactionService.transactionDeleted();
       this.getTransactionList();
@@ -69,14 +76,17 @@ export default class RepaymentsListComponent {
 
   applayFilter() {
     let filterData = this.filterForm.getRawValue();
-    this.getTransactionList(this.first + 1, this.rows, filterData);
+    // Reset pagination when filtering
+    this.paginationService.resetPagination();
+    this.getTransactionList(this.page, this.rows, filterData);
   }
 
   onPageChange(event: any) {
-    this.first = event.first;
-    this.rows = event.rows;
-    this.page = event.first / event.rows + 1;
-    this.getTransactionList(this.page, event.rows);
+    const paginationState = this.paginationService.handlePageChange(event);
+    
+    // Get current filter data to maintain filters during pagination
+    let filterData = this.filterForm.getRawValue();
+    this.getTransactionList(paginationState.page, paginationState.rows, filterData);
   }
 
   getTransactionList(
@@ -92,7 +102,8 @@ export default class RepaymentsListComponent {
         this.dataSource = this.TransactionService.apiModelToComponentModelList(
           data.results
         );
-        this.totalRecords = data.count;
+        // Set total records for pagination using the service
+        this.paginationService.setTotalRecords(data.count || 0);
         this.isLoading = false; // Set loading to false after data is fetched
       },
       () => {

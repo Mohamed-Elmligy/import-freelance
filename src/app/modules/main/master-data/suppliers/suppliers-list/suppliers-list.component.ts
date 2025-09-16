@@ -23,6 +23,7 @@ import { main_routes_paths } from '../../../main.routes';
 import { SuppliersService } from '../suppliers.service';
 import { SkeletonModule } from 'primeng/skeleton';
 import { UserPermissionService } from '../../../../../services/user-permission.service';
+import { PaginationService } from '../../../../../core/services/pagination.service';
 
 @Component({
   selector: 'app-suppliers-list',
@@ -50,6 +51,7 @@ export default class SuppliersListComponent {
   private router = inject(Router);
   private formBuilder = inject(FormBuilder);
   userPermissionService = inject(UserPermissionService);
+  private paginationService = inject(PaginationService);
 
   dataSource: any[] = [];
 
@@ -57,10 +59,12 @@ export default class SuppliersListComponent {
   displayedColumns: string[] = [];
   tableColumns: string[] = [];
   isLoading = false;
-  first: number = 0;
-  rows: number = 10;
-  totalRecords: number = 0;
-  page: number = 1;
+  
+  // Pagination properties - get from service
+  get first(): number { return this.paginationService.getPaginationState().first; }
+  get rows(): number { return this.paginationService.getPaginationState().rows; }
+  get totalRecords(): number { return this.paginationService.getPaginationState().totalRecords; }
+  get page(): number { return this.paginationService.getPaginationState().page; }
 
   filterForm: FormGroup = this.formBuilder.group({
     name: [''],
@@ -69,6 +73,9 @@ export default class SuppliersListComponent {
   });
 
   constructor() {
+    // Load initial data
+    this.getSupplierList();
+    
     effect(() => {
       this.SupplierService.suppliertDeleted();
       this.getSupplierList();
@@ -78,7 +85,9 @@ export default class SuppliersListComponent {
 
   applayFilter() {
     const filterData = this.filterForm.value;
-    this.getSupplierList(this.first + 1, this.rows, filterData);
+    // Reset pagination when filtering
+    this.paginationService.resetPagination();
+    this.getSupplierList(this.page, this.rows, filterData);
   }
 
   getSupplierList(page: number = 1, size: number = 10, filterData: any = {}) {
@@ -90,7 +99,8 @@ export default class SuppliersListComponent {
         this.dataSource = this.SupplierService.apiModelToComponentModelList(
           data.results
         );
-        this.totalRecords = data.count;
+        // Set total records for pagination using the service
+        this.paginationService.setTotalRecords(data.count || 0);
         this.isLoading = false;
       },
       () => {
@@ -100,10 +110,11 @@ export default class SuppliersListComponent {
   }
 
   onPageChange(event: any) {
-    this.first = event.first;
-    this.rows = event.rows;
-    this.page = event.first / event.rows + 1;
-    this.getSupplierList(this.page, event.rows);
+    const paginationState = this.paginationService.handlePageChange(event);
+    
+    // Get current filter data to maintain filters during pagination
+    let filterData = this.filterForm.value;
+    this.getSupplierList(paginationState.page, paginationState.rows, filterData);
   }
 
   editSupplier(supplierId: any) {

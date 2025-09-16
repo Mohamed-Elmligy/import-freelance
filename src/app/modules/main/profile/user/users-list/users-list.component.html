@@ -64,7 +64,10 @@
     </ng-template>
   </p-toolbar>
 
-  @if (!isLoading) {
+  <!-- Add loading skeleton -->
+  @if (isLoading) { @for (_ of [].constructor(10); track $index) {
+  <p-skeleton styleClass="w-full my-4"></p-skeleton>
+  } } @if (!isLoading) {
   <p-table
     [value]="dataSource"
     [paginator]="true"
@@ -154,9 +157,7 @@
       </tr>
     </ng-template>
   </p-table>
-  } @else { @for (_ of [].constructor(10); track $index) {
-  <p-skeleton styleClass="w-full my-4"></p-skeleton>
-  } }
+  }
 </div>
 
 <!-- reset password section -->

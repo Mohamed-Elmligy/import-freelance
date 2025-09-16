@@ -73,9 +73,10 @@
     </ng-template>
   </p-toolbar>
 
+  <!-- Add loading skeleton -->
   @if (isLoading) { @for (_ of [].constructor(10); track $index) {
   <p-skeleton styleClass="w-full my-4"></p-skeleton>
-  } } @else {
+  } } @if (!isLoading) {
   <p-table
     [value]="dataSource"
     [paginator]="true"
