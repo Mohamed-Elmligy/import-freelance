@@ -186,7 +186,7 @@ export default class DownloadReportsComponent implements OnInit {
       customerFinancialReport: 'تقرير مالي للعميل',
       totalPaymentsReport: 'تقرير إجمالي المدفوعات',
       totalExpensesReport: 'تقرير إجمالي المصروفات',
-      supplierPayablesReport: 'تقرير المستحقات للمورد',
+      supplierPayablesReport: 'تقرير المستحقات ',
       transactionReport: 'تقرير التسديدات',
       officeBalanceReport: 'تقرير ميزانية المكتب',
     },
@@ -284,6 +284,7 @@ export default class DownloadReportsComponent implements OnInit {
       case 'supplierReport':
       case 'supplierPayablesReport':
         this.reportService.getListOfSuppliers();
+        this.reportService.getListOfCustomers();
         break;
 
       case 'customerFinancialReport':
@@ -376,7 +377,12 @@ export default class DownloadReportsComponent implements OnInit {
         params.supplier_id = supplier_id;
         break;
       case 'supplierPayablesReport':
-        params.supplier_id = supplier_id;
+        if (supplier_id) {
+          params.supplier_id = supplier_id;
+        }
+        if (customer_id) {
+          params.customer_id = customer_id;
+        }
         break;
     }
     const selectedFileName = this.reportsTypes?.find(

@@ -103,6 +103,20 @@
         ></p-select>
         <label for="supplier">{{ "SelectSupplier" | translate }}</label>
       </p-floatlabel>
+      <p-floatlabel class="w-full" variant="over">
+        <p-select
+          inputId="customer"
+          [options]="reportService.listOfCustomers()"
+          optionLabel="name"
+          optionValue="id"
+          [filter]="true"
+          filterBy="name"
+          formControlName="customer_id"
+          class="w-full"
+          [showClear]="true"
+        ></p-select>
+        <label for="customer">{{ "SelectCustomer" | translate }}</label>
+      </p-floatlabel>
       } @default { @if ([ 'customerFinancialReport', 'totalPaymentsReport',
       'totalExpensesReport' ].includes(selectedReport()?.code || '')) {
       <p-floatlabel class="w-full" variant="over">
