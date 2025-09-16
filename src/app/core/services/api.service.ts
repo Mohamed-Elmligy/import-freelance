@@ -110,6 +110,7 @@ export class ApiService {
         return { status: ProgressStatus.progress, message: percentDone };
 
       case HttpEventType.Response:
+        // Return the response body - handleDownloadDocument will only process 'done' status
         return { status: ProgressStatus.done, message: event.body };
 
       default:
@@ -126,26 +127,69 @@ export class ApiService {
     fileType: 'pdf' | 'xlsx'
   ) {
     if (!progress) return;
-    const url = URL.createObjectURL(progress.message as Blob);
     
-    if (fileType === 'pdf') {
-      // For PDFs, open in new tab
-      window.open(url, '_blank');
-    } else {
-      // For Excel files, download as before
-      const a = document.createElement('a');
-      a.style.display = 'none';
-      a.href = url;
-      a.download = `${fileName}.${fileType}`;
-      document.body.appendChild(a);
-      a.click();
-      document.body.removeChild(a);
+    // Only process the final response, not progress events
+    if (progress.status !== ProgressStatus.done) {
+      return;
+    }
+    
+    // Check if we have valid data to work with
+    if (!progress.message) {
+      console.error('No data received:', progress);
+      this.messages.add({
+        severity: 'error',
+        summary: 'Download Error',
+        detail: 'No file data received from server'
+      });
+      return;
     }
 
-    // Clean up the URL object
-    setTimeout(() => {
-      window.URL.revokeObjectURL(url);
-    }, 100);
+    try {
+      // Ensure we have a proper Blob object
+      let blobData = progress.message;
+      if (!(blobData instanceof Blob)) {
+        // If it's not a Blob, try to create one
+        if (blobData && typeof blobData === 'object') {
+          // Check if it has Blob-like properties
+          if (blobData.type && blobData.size !== undefined) {
+            blobData = new Blob([blobData], { type: blobData.type });
+          } else {
+            // Create a generic blob
+            blobData = new Blob([blobData]);
+          }
+        } else {
+          throw new Error('Invalid data type for blob creation');
+        }
+      }
+      
+      const url = URL.createObjectURL(blobData);
+      
+      if (fileType === 'pdf') {
+        // For PDFs, open in new tab
+        window.open(url, '_blank');
+      } else {
+        // For Excel files, download as before
+        const a = document.createElement('a');
+        a.style.display = 'none';
+        a.href = url;
+        a.download = `${fileName}.${fileType}`;
+        document.body.appendChild(a);
+        a.click();
+        document.body.removeChild(a);
+      }
+
+      // Clean up the URL object
+      setTimeout(() => {
+        window.URL.revokeObjectURL(url);
+      }, 100);
+    } catch (error) {
+      console.error('Error creating object URL:', error);
+      this.messages.add({
+        severity: 'error',
+        summary: 'Download Error',
+        detail: 'Failed to process file download'
+      });
+    }
   }
 
   downloadFile(URL: string, params?: {}) {

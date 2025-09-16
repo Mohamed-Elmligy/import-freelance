@@ -57,20 +57,30 @@ export class ReportsService {
 
   downloadReport(fileType: string, type: string, filter?: any, fileName?: any) {
     if (fileType == 'excel') {
-      this.api.downloadFile(type, filter).subscribe((res) => {
-        this.api.handleDownloadDocument(
-          res,
-          fileName + '_' + this.todayDate,
-          'xlsx'
-        );
+      this.api.downloadFile(type, filter).subscribe({
+        next: (res) => {
+          this.api.handleDownloadDocument(
+            res,
+            fileName + '_' + this.todayDate,
+            'xlsx'
+          );
+        },
+        error: (error) => {
+          console.error('Excel download error:', error);
+        }
       });
     } else if (fileType == 'pdf') {
-      this.api.downloadFile(type, filter).subscribe((res) => {
-        this.api.handleDownloadDocument(
-          res,
-          fileName + '_' + this.todayDate,
-          'pdf'
-        );
+      this.api.downloadFile(type, filter).subscribe({
+        next: (res) => {
+          this.api.handleDownloadDocument(
+            res,
+            fileName + '_' + this.todayDate,
+            'pdf'
+          );
+        },
+        error: (error) => {
+          console.error('PDF download error:', error);
+        }
       });
     }
   }
