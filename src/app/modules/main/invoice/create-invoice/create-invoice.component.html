@@ -497,8 +497,9 @@
 }@if(invoiceId && !isUpdate){
 <div class="surface-section">
   <p-card>
-    <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
-      <div class="col-span-2">
+    <div [class]="isAdmin ? 'grid grid-cols-1 md:grid-cols-3 gap-4' : 'grid grid-cols-1 gap-2'">
+      <div [class]="isAdmin ? 'col-span-2' : 'col-span-1'">
+        @if(isAdmin) {
         <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
           <div class="invoice-field">
             <h3>
@@ -578,6 +579,82 @@
             {{ invoiceData.total_store_cbm }}
           </div>
         </div>
+        } @else {
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-2">
+          <div class="invoice-field">
+            <h3>
+              <b>{{ "invoiceNumber" | translate }}</b>
+            </h3>
+            {{ invoiceData.invoice_number }}
+          </div>
+          <div class="invoice-field">
+            <h3>
+              <b>{{ "date" | translate }}</b>
+            </h3>
+            {{ invoiceData.invoice_date }}
+          </div>
+          <div class="invoice-field">
+            <h3>
+              <b>{{ "ITEMS_CATEGORY" | translate }}</b>
+            </h3>
+            {{ invoiceData.item_category }}
+          </div>
+          <div class="invoice-field">
+            <h3>
+              <b>{{ "customerName" | translate }}</b>
+            </h3>
+            {{ invoiceData.customer }}
+          </div>
+          <div class="invoice-field">
+            <h3>
+              <b>{{ "SUPPLIER_NAME" | translate }}</b>
+            </h3>
+            {{ invoiceData.supplier }}
+          </div>
+          <div class="invoice-field">
+            <h3>
+              <b>{{ "boxTotal" | translate }}</b>
+            </h3>
+            {{ invoiceData.total_boxes }}
+          </div>
+          <div class="invoice-field">
+            <h3>
+              <b>{{ "totalCBM" | translate }}</b>
+            </h3>
+            {{ invoiceData.total_cbm }}
+          </div>
+          <div class="invoice-field">
+            <h3>
+              <b>{{ "totalWeight" | translate }}</b>
+            </h3>
+            {{ invoiceData.total_weight }}
+          </div>
+          <div class="invoice-field">
+            <h3>
+              <b>{{ "total_invoice" | translate }}</b>
+            </h3>
+            {{ invoiceData.total_amount }}
+          </div>
+          <div class="invoice-field">
+            <h3>
+              <b>{{ "total_discount" | translate }}</b>
+            </h3>
+            {{ invoiceData.discount_amount }}
+          </div>
+          <div class="invoice-field">
+            <h3>
+              <b>{{ "net_invoice" | translate }}</b>
+            </h3>
+            {{ invoiceData.net_amount }}
+          </div>
+          <div class="invoice-field">
+            <h3>
+              <b>{{ "storeCBM" | translate }}</b>
+            </h3>
+            {{ invoiceData.total_store_cbm }}
+          </div>
+        </div>
+        }
       </div>
 
       @if(isAdmin) {
