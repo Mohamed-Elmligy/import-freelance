@@ -30,6 +30,7 @@ import { TableModule } from 'primeng/table';
 import { ConfirmSaveDeleteService } from '../../../../core/services/confirm-save-delete.service';
 import { PageHeaderComponent } from '../../../shared/components/page-header/page-header.component';
 import { CommonModule } from '@angular/common';
+import { userIsAdmin } from '../../../../core/guards/no-company-user.guard';
 
 @Component({
   selector: 'app-create-invoice',
@@ -88,6 +89,8 @@ export default class CreateInvoiceComponent {
   private activatedRoute = inject(ActivatedRoute);
   private lookupService = inject(LookupsService);
   private invoiceService = inject(InvoiceService);
+
+  isAdmin = userIsAdmin() === 'Admin';
 
   isUpdate = this.activatedRoute.snapshot.queryParams['edit'] == 'true';
   invoiceId = this.activatedRoute.snapshot.queryParams['invoiceId'];
