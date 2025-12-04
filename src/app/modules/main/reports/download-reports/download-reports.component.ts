@@ -174,7 +174,6 @@ export default class DownloadReportsComponent implements OnInit {
       'port_name',
       'customer_code',
       'customer_name',
-      'fiscal_year',
       'land_shipping_cost',
       'sea_shipping_cost',
       'customs_cost',
