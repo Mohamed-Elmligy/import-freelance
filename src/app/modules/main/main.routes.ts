@@ -246,6 +246,13 @@ const main_routes: Routes = [
         data: { reportType: 'officeBalanceReport' },
         canActivate: [noCompanyUserGuard],
       },
+      {
+        path: 'shipment-report',
+        loadComponent: () =>
+          import('./reports/download-reports/download-reports.component'),
+        data: { reportType: 'shipmentReport' },
+        canActivate: [noCompanyUserGuard],
+      },
     ],
   },
 ];
@@ -287,5 +294,6 @@ export const main_routes_paths = {
     totalExpensesReport: '/main/reports/total-expenses-report',
     transactionReport: '/main/reports/transaction-report',
     officeBalanceReport: '/main/reports/office-balance-report',
+    shipmentReport: '/main/reports/shipment-report',
   },
 } as const;

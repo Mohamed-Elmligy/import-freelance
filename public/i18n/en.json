@@ -259,5 +259,17 @@
   "usd_exchange_rate": "USD Exchange Rate",
   "customs_cost": "Customs Cost",
   "sea_shipping_cost": "Sea Shipping Cost",
-  "land_shipping_cost": "Land Shipping Cost"
+  "land_shipping_cost": "Land Shipping Cost",
+  "shipping_date": "Shipping Date",
+  "port_name": "Port Name",
+  "air_shipping_cost": "Air Shipping Cost",
+  "total_shipping_cost": "Total Shipping Cost",
+  "total_air_cost": "Total Air Cost",
+  "total_sea_cost": "Total Sea Cost",
+  "avg_usd_rate": "Average USD Rate",
+  "total_land_cost": "Total Land Cost",
+  "avg_rmb_rate": "Average RMB Rate",
+  "total_customs_cost": "Total Customs Cost",
+  "total_shipments": "Total Shipments",
+  "SHIPMENT_REPORT": "Shipment Report"
 }

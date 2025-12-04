@@ -5,6 +5,7 @@ import {
   CustomerList,
   InvoiceList,
   SupplierList,
+  FiscalYearList,
 } from './download-reports/download-reports.component';
 import { reportsApis } from './reports.apis';
 
@@ -17,6 +18,7 @@ export class ReportsService {
   listOfCustomers = signal<CustomerList[] | undefined>([]);
   listOfSuppliers = signal<SupplierList[] | undefined>([]);
   listOfInvoices = signal<InvoiceList[] | undefined>([]);
+  listOfFiscalYears = signal<FiscalYearList[] | undefined>([]);
   todayDate = new Date().toISOString().split('T')[0];
 
   getListOfCustomers() {
@@ -39,6 +41,14 @@ export class ReportsService {
     if (this.listOfInvoices()?.length == 0) {
       this.lookupService.getListOfLookups('invoices').subscribe((res) => {
         this.listOfInvoices.set(res);
+      });
+    }
+  }
+
+  getListOfFiscalYears() {
+    if (this.listOfFiscalYears()?.length == 0) {
+      this.lookupService.getListOfLookups('fiscal-years').subscribe((res) => {
+        this.listOfFiscalYears.set(res);
       });
     }
   }

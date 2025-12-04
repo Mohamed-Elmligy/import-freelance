@@ -263,5 +263,17 @@
   "usd_exchange_rate": "سعر صرف الدولار",
   "customs_cost": "تكلفة الجمارك",
   "sea_shipping_cost": "تكلفة الشحن البحري",
-  "land_shipping_cost": "تكلفة الشحن البري"
+  "land_shipping_cost": "تكلفة الشحن البري",
+  "shipping_date": "تاريخ الشحن",
+  "port_name": "اسم الميناء",
+  "air_shipping_cost": "تكلفة الشحن الجوي",
+  "total_shipping_cost": "إجمالي تكلفة الشحن",
+  "total_air_cost": "إجمالي تكلفة الشحن الجوي",
+  "total_sea_cost": "إجمالي تكلفة الشحن البحري",
+  "avg_usd_rate": "متوسط سعر صرف الدولار",
+  "total_land_cost": "إجمالي تكلفة الشحن البري",
+  "avg_rmb_rate": "متوسط سعر صرف اليوان",
+  "total_customs_cost": "إجمالي تكلفة الجمارك",
+  "total_shipments": "إجمالي عدد الشحنات",
+  "SHIPMENT_REPORT": "تقرير الشحنات"
 }

@@ -1,4 +1,5 @@
 import { Component, effect, inject, OnInit, signal } from '@angular/core';
+import { formatDate } from '@angular/common';
 import { ButtonModule } from 'primeng/button';
 import { InputTextModule } from 'primeng/inputtext';
 import { FloatLabel } from 'primeng/floatlabel';
@@ -16,6 +17,7 @@ import { TableModule } from 'primeng/table';
 import { CommonModule } from '@angular/common';
 import { TooltipModule } from 'primeng/tooltip';
 import { ActivatedRoute } from '@angular/router';
+import { DatePicker } from 'primeng/datepicker';
 
 @Component({
   selector: 'app-download-reports',
@@ -33,6 +35,7 @@ import { ActivatedRoute } from '@angular/router';
     CommonModule,
     TooltipModule,
     ReactiveFormsModule,
+    DatePicker,
   ],
   templateUrl: './download-reports.component.html',
 })
@@ -51,6 +54,9 @@ export default class DownloadReportsComponent implements OnInit {
       supplier_id: [null],
       selectedInvoice: [null],
       container_number: [null],
+      fiscal_year_id: [null],
+      start_date: [null],
+      end_date: [null],
     });
     this.ngOnInit();
   }
@@ -161,6 +167,22 @@ export default class DownloadReportsComponent implements OnInit {
       'expense',
       'customer_balance',
     ],
+    shipmentReport: [
+      'container_number',
+      'container_sequence',
+      'shipping_date',
+      'port_name',
+      'customer_code',
+      'customer_name',
+      'fiscal_year',
+      'land_shipping_cost',
+      'sea_shipping_cost',
+      'customs_cost',
+      'total_shipping_cost',
+      'usd_exchange_rate',
+      'rmb_exchange_rate',
+      'description',
+    ],
   };
 
   filterForm: any;
@@ -178,6 +200,7 @@ export default class DownloadReportsComponent implements OnInit {
       supplierPayablesReport: 'Supplier Payables Report',
       transactionReport: 'Transaction Report',
       officeBalanceReport: 'Office Balance Report',
+      shipmentReport: 'Shipment Report',
     },
     ar: {
       containerDetails: 'تقرير بيانات الحاوية',
@@ -189,6 +212,7 @@ export default class DownloadReportsComponent implements OnInit {
       supplierPayablesReport: 'تقرير المستحقات ',
       transactionReport: 'تقرير التسديدات',
       officeBalanceReport: 'تقرير ميزانية المكتب',
+      shipmentReport: 'تقرير الشحنات',
     },
   };
   ngOnInit(): void {
@@ -213,6 +237,7 @@ export default class DownloadReportsComponent implements OnInit {
       },
       { name: translation.transactionReport, code: 'transactionReport' },
       { name: translation.officeBalanceReport, code: 'officeBalanceReport' },
+      { name: translation.shipmentReport, code: 'shipmentReport' },
     ];
 
     // Get the report type from the route data
@@ -249,13 +274,29 @@ export default class DownloadReportsComponent implements OnInit {
       'totalPaymentsReport',
       'transactionReport',
       'officeBalanceReport',
+      'shipmentReport',
     ];
     if (
       notEmpityKey ||
       reportsWithoutParameters.includes(this.selectedReport()?.code || '')
     ) {
+      // Format dates for shipment report
+      const formValue = { ...this.filterForm.value };
+      if (this.selectedReport()?.code === 'shipmentReport') {
+        if (formValue.start_date) {
+          formValue.start_date = formatDate(
+            formValue.start_date,
+            'yyyy-MM-dd',
+            'en'
+          );
+        }
+        if (formValue.end_date) {
+          formValue.end_date = formatDate(formValue.end_date, 'yyyy-MM-dd', 'en');
+        }
+      }
+
       this.reportService
-        .reportApi(type, this.filterForm.value)
+        .reportApi(type, formValue)
         .subscribe((res: reportVewType) => {
           this.reportView = res;
           this.visible = true;
@@ -294,6 +335,10 @@ export default class DownloadReportsComponent implements OnInit {
         this.reportService.getListOfCustomers();
         break;
       case 'officeBalanceReport':
+        break;
+      case 'shipmentReport':
+        this.reportService.getListOfCustomers();
+        this.reportService.getListOfFiscalYears();
         break;
     }
     this.filterForm.reset();
@@ -384,6 +429,24 @@ export default class DownloadReportsComponent implements OnInit {
           params.customer_id = customer_id;
         }
         break;
+      case 'shipmentReport':
+        const fiscal_year_id = this.filterForm.get('fiscal_year_id')?.value;
+        const start_date = this.filterForm.get('start_date')?.value;
+        const end_date = this.filterForm.get('end_date')?.value;
+
+        if (customer_id) {
+          params.customer_id = customer_id;
+        }
+        if (fiscal_year_id) {
+          params.fiscal_year_id = fiscal_year_id;
+        }
+        if (start_date) {
+          params.start_date = formatDate(start_date, 'yyyy-MM-dd', 'en');
+        }
+        if (end_date) {
+          params.end_date = formatDate(end_date, 'yyyy-MM-dd', 'en');
+        }
+        break;
     }
     const selectedFileName = this.reportsTypes?.find(
       (report) => report.code === selectedReport.code
@@ -412,6 +475,9 @@ export default class DownloadReportsComponent implements OnInit {
       supplier_id: null,
       selectedInvoice: null,
       container_number: null,
+      fiscal_year_id: null,
+      start_date: null,
+      end_date: null,
     });
   }
 }
@@ -427,7 +493,8 @@ export interface ReportType {
     | 'totalExpensesReport'
     | 'supplierPayablesReport'
     | 'transactionReport'
-    | 'officeBalanceReport';
+    | 'officeBalanceReport'
+    | 'shipmentReport';
 }
 
 export interface CustomerList {
@@ -443,4 +510,9 @@ export interface SupplierList {
 export interface InvoiceList {
   id: number;
   invoice_name: string;
+}
+
+export interface FiscalYearList {
+  id: number;
+  name: string;
 }

@@ -34,4 +34,8 @@ export const reportsApis = {
   officeBalanceReport: 'reports/office-balance/download',
   get_officeBalanceReport: 'reports/office-balance',
   pdf_officeBalanceReport: 'reports/office-balance/pdf',
+
+  shipmentReport: 'reports/shipment-report/download',
+  get_shipmentReport: 'reports/shipment-report',
+  pdf_shipmentReport: 'reports/shipment-report/pdf',
 };

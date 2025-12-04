@@ -164,6 +164,58 @@
         <label for="supplier">{{ "SelectSupplier" | translate }}</label>
       </p-floatlabel>
       }
+      @case ('shipmentReport') {
+      <p-floatlabel class="w-full" variant="over">
+        <p-select
+          inputId="customer"
+          [options]="reportService.listOfCustomers()"
+          optionLabel="name"
+          optionValue="id"
+          [filter]="true"
+          filterBy="name"
+          formControlName="customer_id"
+          class="w-full"
+          [showClear]="true"
+        ></p-select>
+        <label for="customer">{{ "SelectCustomer" | translate }}</label>
+      </p-floatlabel>
+      <p-floatlabel class="w-full" variant="over">
+        <p-select
+          inputId="fiscal_year"
+          [options]="reportService.listOfFiscalYears()"
+          optionLabel="name"
+          optionValue="id"
+          [filter]="true"
+          filterBy="name"
+          formControlName="fiscal_year_id"
+          class="w-full"
+          [showClear]="true"
+        ></p-select>
+        <label for="fiscal_year">{{ "FISCAL_YEAR_NAME" | translate }}</label>
+      </p-floatlabel>
+      <p-floatlabel class="w-full" variant="over">
+        <p-datepicker
+          inputId="start_date"
+          formControlName="start_date"
+          [showIcon]="true"
+          dateFormat="yy-mm-dd"
+          [showClear]="true"
+          class="w-full"
+        ></p-datepicker>
+        <label for="start_date">{{ "from_date" | translate }}</label>
+      </p-floatlabel>
+      <p-floatlabel class="w-full" variant="over">
+        <p-datepicker
+          inputId="end_date"
+          formControlName="end_date"
+          [showIcon]="true"
+          dateFormat="yy-mm-dd"
+          [showClear]="true"
+          class="w-full"
+        ></p-datepicker>
+        <label for="end_date">{{ "to_date" | translate }}</label>
+      </p-floatlabel>
+      }
     }
     </form>
 

@@ -286,6 +286,16 @@ export class SidebarComponent {
                 ?.permissions?.reports?.includes('view_office_balance_reports') ??
               false,
           },
+          {
+            label: 'SHIPMENT_REPORT',
+            icon: 'pi pi-truck',
+            routerLink: this.mainRoutes.reports.shipmentReport,
+            visible:
+              this.userPermissionService
+                .userPermissions()
+                ?.permissions?.reports?.includes('view_shipment_reports') ??
+              false,
+          },
         ],
       },
       {
